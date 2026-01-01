@@ -57,7 +57,7 @@
 <article class="article-body">
 <h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
                         Demand Forecasting and Inventory Optimization using Python</h1>
-<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 19, 2025 • 5 min read</div>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Aug 21, 2025 • 5 min read</div>
 <!-- Navigation Top -->
 <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
 <a class="nav-prev" href="weather-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
@@ -116,7 +116,7 @@ plot_acf(differenced_series, ax=axes[0])
 plot_pacf(differenced_series, ax=axes[1])
 plt.show()</code></pre>
 <figure class="wp-block-image aligncenter size-full"><img alt="ACF and PACF for Demand and Inventory Optimization" class="wp-image-21219" data-attachment-id="21219" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Demand-Forecasting-and-Inventory-Optimization-3" data-orig-size="1002,374" data-recalc-dims="1" decoding="async" height="374" loading="lazy" sizes="auto, (max-width: 1002px) 100vw, 1002px" src="../assets/datasets/Demand-Forecasting-and-Inventory-Optimization-3.png" width="1002"/></figure>
-<p>The value of p, d, and q will be 1, 1, 1 here. You can learn more about calculating these values and time series forecasting <strong><a href="netflix-subscriptions-forecasting-using-python.html" target="">here</a></strong>. Now, let’s train the model and forecast demand for the next ten days:</p>
+<p>The value of p, d, and q will be 1, 1, 1 here. You can learn more about calculating these values and time series forecasting <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">here</a></strong>. Now, let’s train the model and forecast demand for the next ten days:</p>
 <pre><code class="language-python">order = (1, 1, 1)
 seasonal_order = (1, 1, 1, 2) #2 because the data contains a time period of 2 months only
 model = SARIMAX(time_series, order=order, seasonal_order=seasonal_order)

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Binary Search using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Binary Search using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Sep 23, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="find-missing-number-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="distance-between-two-locations-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Binary Search is an algorithm used to find an element in a sorted array by repeatedly dividing the search interval in half. In <a href="https://imp.i384100.net/4ekBLo" rel="noreferrer noopener" target="_blank"><strong>coding interviews</strong></a>, there is always a question on any search algorithm. So, if you want to learn how to use the binary search algorithm, this article is for you. In this article, I will take you through an implementation of the Binary Search algorithm using Python.</p>
+<h2 class="wp-block-heading">Binary Search Algorithm</h2>
+<p>The binary search algorithm is a searching algorithm used to find an element in a sorted array by repeatedly dividing the search interval in half. Below is how the Binary Search algorithm works:</p>
+<ol class="wp-block-list">
+<li>It starts by defining a search range that spans the entire array.</li>
+<li>Then compares the target value with the middle element of the search range.</li>
+<li>If the target value is equal to the middle element, the target is found and returns its index.</li>
+<li>If the target value is less than the middle element, the algorithm discards the upper half of the search range and repeats step 2 with the lower half.</li>
+<li>If the target value is greater than the middle element, the algorithm discards the lower half of the search range and repeats step 2 with the upper half.</li>
+<li>It repeats steps 2 through 5 until the target value is found or the search range is empty.</li>
+</ol>
+<p>Below is the kind of input and output you will see in the problem of binary search in your coding interviews:</p>
+<ul class="wp-block-list">
+<li>Input = [-1,0,3,5,9,12], target = 9 | Output = 4</li>
+</ul>
+<h2 class="wp-block-heading">Binary Search using Python</h2>
+<p>I hope you have understood the Binary Search algorithm and how it works. Below is how you can implement it using Python to solve problems based on searching:</p>
+<pre><code class="language-python">def search(nums, target):
+    low = 0
+    high = len(nums) - 1
+
+    while low &lt;= high:
+        mid = (low + high) // 2
+        if nums[mid] == target:
+            return mid
+        elif nums[mid] &lt; target:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1
+
+nums = [-1,0,3,5,9,12]
+target = 9
+
+print(search(nums, target))</code></pre>
+<pre class="wp-block-preformatted"><strong>Output: 4</strong></pre>
+<p>Below is how the above code works:</p>
+<ol class="wp-block-list">
+<li>We start with two variables low and high that define the search range as the entire array;</li>
+<li>We use a while loop to repeatedly halve the search interval until the target element is found or the search interval is empty;</li>
+<li>At each iteration of the loop, the index of the element in the middle of the search interval is calculated using the formula (low + high) // 2;</li>
+<li>We compare the target value with the middle element of the search range:
+<ul class="wp-block-list">
+<li>If the target value is equal to the middle element, we have found our target and can return its index;</li>
+<li>If the target value is less than the middle element, we discard the upper half of the search range and repeat the process with the lower half;</li>
+<li>If the target value is greater than the middle element, we discard the lower half of the search range and repeat the process with the upper half;</li>
+</ul>
+</li>
+<li>If the target element is not found after all iterations of the loop, we return a “not found” signal, which in this case is -1.</li>
+</ol>
+<p>So this is how you can implement the binary search algorithm using Python. You can find many more practice questions for coding interviews solved and explained using Python <a href="python-practice-questions-for-coding-interviews.html" rel="noreferrer noopener" target=""><strong>here</strong></a>.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>The binary search algorithm is a searching algorithm used to find an element in a sorted array by repeatedly dividing the search interval in half. I hope you liked this article on implementing the Binary Search algorithm using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="find-missing-number-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="distance-between-two-locations-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

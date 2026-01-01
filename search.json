@@ -20,7 +20,7 @@
     "description": "Data Augmentation is a fundamental technique in machine learning used to expand and diversify datasets by generating synthetic data. With the rise of ...",
     "url": "articles/data-augmentation-using-llms.html",
     "category": "Article",
-    "date": "Nov 18, 2025",
+    "date": "Aug 20, 2025",
     "image": "assets/datasets/image-3.png"
   },
   {
@@ -44,7 +44,7 @@
     "description": "Loan defaults pose a significant challenge for financial institutions by affecting profitability and cash flow. Using historical loan repayment data, ...",
     "url": "articles/smart-loan-recovery-system-with-machine-learning.html",
     "category": "Article",
-    "date": "Dec 02, 2025",
+    "date": "Sep 06, 2025",
     "image": "assets/datasets/image.png"
   },
   {
@@ -64,6 +64,14 @@
     "image": "assets/datasets/credit-score-1.png"
   },
   {
+    "title": "Number of Segments in a String using Python",
+    "description": "The problem of counting the number of segments in a string is a popular coding interview question. Here you will be given a string, and you have to co...",
+    "url": "articles/number-of-segments-in-a-string-using-python.html",
+    "category": "Article",
+    "date": "Oct 10, 2025",
+    "image": ""
+  },
+  {
     "title": "Quantitative Analysis of Stock Market using Python",
     "description": "Quantitative Analysis in the stock market involves the use of mathematical and statistical techniques to understand, predict, and make decisions about...",
     "url": "articles/quantitative-analysis-of-stock-market-using-python.html",
@@ -76,7 +84,7 @@
     "description": "Every time you type on your smartphone, you see three words pop up as suggestions. That\u2019s a predictive keyboard in action. These suggestions aren\u2019t ra...",
     "url": "articles/building-a-predictive-keyboard-model.html",
     "category": "Article",
-    "date": "Jan 01, 2026",
+    "date": "Oct 30, 2025",
     "image": ""
   },
   {
@@ -92,7 +100,7 @@
     "description": "A code generation model is a type of artificial intelligence that can automatically generate source code based on a given input, which can be natural ...",
     "url": "articles/code-generation-model-using-llms.html",
     "category": "Article",
-    "date": "Dec 06, 2025",
+    "date": "Sep 10, 2025",
     "image": "assets/datasets/image-7.png"
   },
   {
@@ -100,7 +108,7 @@
     "description": "Fine-tuning large language models (LLMs) involves adapting a pre-trained model to perform well on a specific task or to reflect a specialized domain o...",
     "url": "articles/fine-tuning-llms-guide.html",
     "category": "Article",
-    "date": "Nov 18, 2025",
+    "date": "Aug 20, 2025",
     "image": ""
   },
   {
@@ -108,7 +116,7 @@
     "description": "A Text Generation Model is a type of Natural Language Processing (NLP) model that automatically generates human-like text. It can produce coherent and...",
     "url": "articles/text-generation-model-using-python.html",
     "category": "Article",
-    "date": "Dec 05, 2025",
+    "date": "Sep 10, 2025",
     "image": ""
   },
   {
@@ -116,7 +124,7 @@
     "description": "CrewAI is an agent orchestration framework that allows you to coordinate multiple AI agents (each with a role, goal, memory, and tool access) to solve...",
     "url": "articles/building-ai-agents-with-crewai.html",
     "category": "Article",
-    "date": "Dec 27, 2025",
+    "date": "Oct 25, 2025",
     "image": ""
   },
   {
@@ -144,11 +152,35 @@
     "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-1.png?resize=1024%2C318&ssl=1"
   },
   {
+    "title": "Square Root using Python",
+    "description": "Finding the\u00a0square root\u00a0of a number is asked in the coding interviews by FAANG companies many times. A square root is a number that produces the speci...",
+    "url": "articles/square-root-using-python.html",
+    "category": "Article",
+    "date": "Sep 24, 2025",
+    "image": ""
+  },
+  {
+    "title": "License Key Formatting using Python",
+    "description": "The problem of License key formatting is a popular coding interview question. Here you will be given a license key, and you need to reformat the key s...",
+    "url": "articles/license-key-formatting-using-python.html",
+    "category": "Article",
+    "date": "Oct 11, 2025",
+    "image": ""
+  },
+  {
+    "title": "Reorder Routes using Python",
+    "description": "Reorder routes to make all paths lead to the city zero is a popular question in coding interviews. In this problem, you need to reorder the connection...",
+    "url": "articles/reorder-routes-using-python.html",
+    "category": "Article",
+    "date": "Oct 06, 2025",
+    "image": ""
+  },
+  {
     "title": "Generative AI Models Guide",
     "description": "The road to learning Generative AI starts with Machine Learning algorithms. However, some specialized models are used in Generative AI problems, that ...",
     "url": "articles/generative-ai-models-guide.html",
     "category": "Article",
-    "date": "Dec 20, 2025",
+    "date": "Oct 17, 2025",
     "image": "assets/datasets/image-4.png"
   },
   {
@@ -176,11 +208,19 @@
     "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2023/10/ARIMA-and-SARIMA-1.png?resize=857%2C525&ssl=1"
   },
   {
+    "title": "Binary Search using Python",
+    "description": "Binary Search is an algorithm used to find an element in a sorted array by repeatedly dividing the search interval in half. In coding interviews, ther...",
+    "url": "articles/binary-search-using-python.html",
+    "category": "Article",
+    "date": "Sep 23, 2025",
+    "image": ""
+  },
+  {
     "title": "Run a Powerful LLM Locally on Your Laptop",
     "description": "Did you know that you can run powerful, multi-billion-parameter large language models like Llama 3.1 and Mistral on your own laptop? Not long ago, thi...",
     "url": "articles/run-a-powerful-llm-locally-on-your-laptop.html",
     "category": "Article",
-    "date": "Dec 17, 2025",
+    "date": "Oct 15, 2025",
     "image": ""
   },
   {
@@ -188,7 +228,7 @@
     "description": "The conversation around AI is shifting. If 2024 was the year of chatting with AI, and 2025 is the year of integrating it, 2026 will be the year AI sta...",
     "url": "articles/why-your-2026-ai-roadmap-needs-more-than-just-llms.html",
     "category": "Article",
-    "date": "Dec 03, 2025",
+    "date": "Sep 07, 2025",
     "image": ""
   },
   {
@@ -197,6 +237,22 @@
     "url": "articles/how-to-actually-learn-ai-to-get-a-job.html",
     "category": "Article",
     "date": "Oct 23, 2025",
+    "image": ""
+  },
+  {
+    "title": "Pascal\u2019s Triangle using Python",
+    "description": "Pascal\u2019s Triangle is one of the popular coding interview questions. It is asked in the coding interviews by FAANG companies many times. In Pascal\u2019s Tr...",
+    "url": "articles/pascal-s-triangle-using-python.html",
+    "category": "Article",
+    "date": "Oct 02, 2025",
+    "image": "assets/datasets/Pascals-triangle.png"
+  },
+  {
+    "title": "Python Program to Count Most Frequent Words in a File",
+    "description": "Counting the number of specific words in a file is something you need to know as a coder. Counting the most frequent words in a file is one of the cod...",
+    "url": "articles/python-program-to-count-most-frequent-words-in-a-file.html",
+    "category": "Article",
+    "date": "Oct 08, 2025",
     "image": ""
   },
   {
@@ -212,7 +268,7 @@
     "description": "In Data Science, weather forecasting is an application of Time Series Forecasting where we use time-series data and algorithms to make forecasts for a...",
     "url": "articles/weather-forecasting-using-python.html",
     "category": "Article",
-    "date": "Nov 19, 2025",
+    "date": "Aug 21, 2025",
     "image": "assets/datasets/weather-forecasting-1.png"
   },
   {
@@ -244,7 +300,15 @@
     "description": "Large Language Models (LLMs) like GPT-4, LLaMA, and Mistral have revolutionized the way we interact with machines, write code, analyze documents, and ...",
     "url": "articles/llm-projects-for-all-levels.html",
     "category": "Article",
-    "date": "Dec 15, 2025",
+    "date": "Sep 20, 2025",
+    "image": ""
+  },
+  {
+    "title": "Single Number using Python",
+    "description": "The Single Number problem is one of the popular coding interview\u00a0questions. Here you will be given an array of integers where each item appears twice ...",
+    "url": "articles/single-number-using-python.html",
+    "category": "Article",
+    "date": "Oct 01, 2025",
     "image": ""
   },
   {
@@ -256,11 +320,27 @@
     "image": ""
   },
   {
+    "title": "Group Elements of Same Indices using Python",
+    "description": "Grouping elements of the same indices means grouping elements of two or more data structures according to their indices. It is a tricky problem for be...",
+    "url": "articles/group-elements-of-same-indices-using-python.html",
+    "category": "Article",
+    "date": "Sep 29, 2025",
+    "image": ""
+  },
+  {
     "title": "Building a Large Language Model from Scratch",
     "description": "Large Language Models (LLMs) are the backbone of modern AI applications, from chatbots to code generators. But how are large language models built? If...",
     "url": "articles/building-a-large-language-model-from-scratch.html",
     "category": "Article",
-    "date": "Dec 10, 2025",
+    "date": "Sep 14, 2025",
+    "image": ""
+  },
+  {
+    "title": "Valid Perfect Square using Python",
+    "description": "Validating perfect squares is a popular coding interview question. Here you will be given an integer, and you have to check if the integer is a perfec...",
+    "url": "articles/valid-perfect-square-using-python.html",
+    "category": "Article",
+    "date": "Sep 27, 2025",
     "image": ""
   },
   {
@@ -270,6 +350,14 @@
     "category": "Article",
     "date": "Nov 01, 2025",
     "image": "assets/datasets/ctr1.png"
+  },
+  {
+    "title": "Add Digits using Python",
+    "description": "The problem of adding digits is a popular coding interview\u00a0question. Here we need to add all the digits of the integer till we get to a single-digit i...",
+    "url": "articles/add-digits-using-python.html",
+    "category": "Article",
+    "date": "Sep 25, 2025",
+    "image": ""
   },
   {
     "title": "NLP Techniques Every Data Scientist Should Know",
@@ -284,8 +372,16 @@
     "description": "As a Data Scientist, having the ability to collect, process, and analyze live news data is a seriously valuable skill. It covers everything from query...",
     "url": "articles/real-time-news-data-collection-using-python.html",
     "category": "Article",
-    "date": "Nov 16, 2025",
+    "date": "Aug 18, 2025",
     "image": "assets/datasets/Word-Cloud-of-News-Headlines.png"
+  },
+  {
+    "title": "Excel Sheet Column Title using Python",
+    "description": "The excel sheet column title is one of the popular coding interview questions. Here we need to return the corresponding column title of an integer as ...",
+    "url": "articles/excel-sheet-column-title-using-python.html",
+    "category": "Article",
+    "date": "Oct 09, 2025",
+    "image": "assets/datasets/Excel-sheet-column-title.png"
   },
   {
     "title": "Explain Your ML Model Predictions with a Visualization",
@@ -300,7 +396,15 @@
     "description": "Learning data science isn\u2019t just about memorizing formulas and theories; it\u2019s about getting your hands dirty with real-world data. While online course...",
     "url": "articles/projects-to-learn-data-science-the-practical-way.html",
     "category": "Article",
-    "date": "Dec 16, 2025",
+    "date": "Sep 20, 2025",
+    "image": ""
+  },
+  {
+    "title": "Check Perfect Number using Python",
+    "description": "The problem of checking perfect numbers is a popular coding interview question. A perfect number is a positive integer equal to the sum of its positiv...",
+    "url": "articles/check-perfect-number-using-python.html",
+    "category": "Article",
+    "date": "Sep 27, 2025",
     "image": ""
   },
   {
@@ -308,7 +412,7 @@
     "description": "An End-to-End Machine Learning Model is a comprehensive system that contains all the stages of a machine learning project, from data collection and pr...",
     "url": "articles/build-an-end-to-end-machine-learning-model.html",
     "category": "Article",
-    "date": "Nov 28, 2025",
+    "date": "Aug 29, 2025",
     "image": "assets/datasets/image-1.png"
   },
   {
@@ -316,7 +420,7 @@
     "description": "The biggest hurdle for most aspiring data scientists isn\u2019t building a model; it\u2019s deploying it so that others can actually use it. As your mentor in t...",
     "url": "articles/machine-learning-projects-to-learn-deployment.html",
     "category": "Article",
-    "date": "Dec 18, 2025",
+    "date": "Oct 16, 2025",
     "image": ""
   },
   {
@@ -324,7 +428,7 @@
     "description": "With the rise of large language models like GPT-4o, building intelligent AI agents has never been more accessible. Using the OpenAI API, we can create...",
     "url": "articles/building-an-ai-agent-using-openai-api.html",
     "category": "Article",
-    "date": "Dec 09, 2025",
+    "date": "Sep 14, 2025",
     "image": ""
   },
   {
@@ -332,7 +436,7 @@
     "description": "While learning a new programming language, it is valuable to solve practice questions. When you solve questions, it develops problem-solving skills. I...",
     "url": "articles/python-practice-questions-for-coding-interviews.html",
     "category": "Article",
-    "date": "Oct 19, 2025",
+    "date": "Sep 03, 2025",
     "image": ""
   },
   {
@@ -340,7 +444,7 @@
     "description": "",
     "url": "articles/ai-agent-projects-to-build-this-weekend.html",
     "category": "Article",
-    "date": "Dec 22, 2025",
+    "date": "Oct 20, 2025",
     "image": ""
   },
   {
@@ -356,7 +460,7 @@
     "description": "Agentic AI refers to artificial intelligence systems that can perceive their environment, make decisions, and act autonomously to achieve a goal. Thes...",
     "url": "articles/building-an-ai-agent-using-agentic-ai.html",
     "category": "Article",
-    "date": "Dec 04, 2025",
+    "date": "Sep 09, 2025",
     "image": ""
   },
   {
@@ -364,8 +468,16 @@
     "description": "We have all been there. You have a messy CSV file, a deadline, and a head full of questions. But instead of finding answers, you find yourself trying ...",
     "url": "articles/build-your-personal-ai-data-analyst.html",
     "category": "Article",
-    "date": "Dec 25, 2025",
+    "date": "Oct 23, 2025",
     "image": "assets/datasets/image-5.png"
+  },
+  {
+    "title": "Find Duplicate Values using Python",
+    "description": "Finding duplicate values from an array or any other data structure is one of the popular coding interview questions that you can get in any coding int...",
+    "url": "articles/find-duplicate-values-using-python.html",
+    "category": "Article",
+    "date": "Oct 03, 2025",
+    "image": ""
   },
   {
     "title": "Audio Data Processing and Analysis with Python",
@@ -376,6 +488,14 @@
     "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Waveform.png?resize=800%2C400&ssl=1"
   },
   {
+    "title": "Find Missing Number using Python",
+    "description": "Finding the missing number in an array is a popular coding interview question. According to LeetCode, this question is popular in the interviews of co...",
+    "url": "articles/find-missing-number-using-python.html",
+    "category": "Article",
+    "date": "Sep 23, 2025",
+    "image": ""
+  },
+  {
     "title": "How Neural Network Works",
     "description": "A neural network is a computational structure that connects an input layer to an output layer. This computational structure is used in training deep l...",
     "url": "articles/how-neural-network-works.html",
@@ -384,11 +504,19 @@
     "image": "assets/datasets/input-hidden-and-output-layer.png"
   },
   {
+    "title": "Remove Duplicates from a Sorted Array using Python",
+    "description": "Removing duplicate values from a sorted array is one of the popular\u00a0coding interview questions. It is asked in coding interviews by companies like FAA...",
+    "url": "articles/remove-duplicates-from-a-sorted-array-using-python.html",
+    "category": "Article",
+    "date": "Oct 03, 2025",
+    "image": ""
+  },
+  {
     "title": "Machine Learning Projects to Stand Out",
     "description": "In 2025, mastering Machine Learning isn\u2019t enough; you need to build projects that can prove you are job-ready. Employers now look for ML engineers who...",
     "url": "articles/machine-learning-projects-to-stand-out.html",
     "category": "Article",
-    "date": "Dec 17, 2025",
+    "date": "Oct 14, 2025",
     "image": ""
   },
   {
@@ -396,8 +524,16 @@
     "description": "The gap between an ML model in your .ipynb file and a real, production-ready model is where your career starts as an ML Engineer. Deploying your ML mo...",
     "url": "articles/deploy-your-first-ml-model-as-a-rest-api.html",
     "category": "Article",
-    "date": "Dec 23, 2025",
+    "date": "Oct 21, 2025",
     "image": "assets/datasets/image-1.png"
+  },
+  {
+    "title": "Power of Two using Python",
+    "description": "The problem of\u00a0Power of Two\u00a0is a popular coding interview question. Here we need to check whether the input value is the power of two or not. So, if y...",
+    "url": "articles/power-of-two-using-python.html",
+    "category": "Article",
+    "date": "Sep 25, 2025",
+    "image": ""
   },
   {
     "title": "Feature Engineering Tricks for Time Series Data",
@@ -420,7 +556,7 @@
     "description": "Real Estate Price Prediction is the process of estimating or forecasting the future prices of real estate properties, such as houses, apartments, or c...",
     "url": "articles/real-estate-price-prediction-using-python.html",
     "category": "Article",
-    "date": "Nov 29, 2025",
+    "date": "Aug 31, 2025",
     "image": "assets/datasets/Real-Estate-Prices-1.png"
   },
   {
@@ -440,11 +576,19 @@
     "image": ""
   },
   {
+    "title": "Fundamentals of Python",
+    "description": "Python is a versatile programming language loved by so many data scientists, web developers, and even software engineers. To master Python for any pro...",
+    "url": "articles/fundamentals-of-python.html",
+    "category": "Article",
+    "date": "Sep 05, 2025",
+    "image": ""
+  },
+  {
     "title": "Generative AI Projects That Will Get You Hired",
     "description": "The current AI job market is flooded with prompt engineers and individuals who have only ever interacted with an API. To break into Generative AI, you...",
     "url": "articles/generative-ai-projects-that-will-get-you-hired.html",
     "category": "Article",
-    "date": "Dec 02, 2025",
+    "date": "Sep 07, 2025",
     "image": ""
   },
   {
@@ -460,7 +604,7 @@
     "description": "The single biggest problem with the AI everyone is so excited about is that it\u2019s confidently lying to you. You ask a powerful LLM a simple question ab...",
     "url": "articles/build-your-first-rag-system-from-scratch.html",
     "category": "Article",
-    "date": "Dec 30, 2025",
+    "date": "Oct 28, 2025",
     "image": ""
   },
   {
@@ -484,7 +628,7 @@
     "description": "Topic Modelling means assigning topic labels to a collection of text documents. The goal of topic modelling is to identify topics present in the text ...",
     "url": "articles/topic-modelling-using-python.html",
     "category": "Article",
-    "date": "Nov 22, 2025",
+    "date": "Aug 24, 2025",
     "image": ""
   },
   {
@@ -516,8 +660,16 @@
     "description": "Text classification is one of the most practical tasks in NLP. If you\u2019re starting out and want to build your first real-world text classification pipe...",
     "url": "articles/text-classification-pipeline-with-hugging-face-transformers.html",
     "category": "Article",
-    "date": "Jan 01, 2026",
+    "date": "Oct 30, 2025",
     "image": "assets/datasets/image-1.png"
+  },
+  {
+    "title": "Best Time to Buy and Sell Stock using Python",
+    "description": "Finding the best time to buy and sell stocks is one of the popular coding interview questions. Here we need to return the maximum profit we can achiev...",
+    "url": "articles/best-time-to-buy-and-sell-stock-using-python.html",
+    "category": "Article",
+    "date": "Sep 22, 2025",
+    "image": ""
   },
   {
     "title": "Data Science Projects to Master Storytelling",
@@ -540,7 +692,7 @@
     "description": "Python is one of the most popular programming languages today. It is preferred by Data Science professionals and Web Developers worldwide. If you are ...",
     "url": "articles/roadmap-to-learn-python.html",
     "category": "Article",
-    "date": "Oct 26, 2025",
+    "date": "Sep 06, 2025",
     "image": ""
   },
   {
@@ -548,7 +700,7 @@
     "description": "Just like large language models, the use of AI Agents is increasing to automate tasks where decision-making is required. Hiring managers will love to ...",
     "url": "articles/ai-agents-projects-for-resume.html",
     "category": "Article",
-    "date": "Dec 19, 2025",
+    "date": "Oct 16, 2025",
     "image": ""
   },
   {
@@ -560,11 +712,19 @@
     "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-1.png?resize=1024%2C609&ssl=1"
   },
   {
+    "title": "Group Anagrams using Python",
+    "description": "Anagrams are words formed by rearranging the letters of another word, For example, car and arc, cat and act, etc. Grouping anagrams is one of the popu...",
+    "url": "articles/group-anagrams-using-python.html",
+    "category": "Article",
+    "date": "Oct 08, 2025",
+    "image": ""
+  },
+  {
     "title": "Hybrid Machine Learning Model with Python",
     "description": "Hybrid machine learning models combine different types of algorithms to leverage their unique strengths, which results in improved predictive performa...",
     "url": "articles/hybrid-machine-learning-model-with-python.html",
     "category": "Article",
-    "date": "Nov 27, 2025",
+    "date": "Aug 29, 2025",
     "image": ""
   },
   {
@@ -604,7 +764,7 @@
     "description": "Recruiters often have to sort through hundreds of PDFs to find the right candidate. In this article, we\u2019ll create a local AI Resume Screener using Pyt...",
     "url": "articles/build-an-ai-resume-screener-with-python-llama-3.html",
     "category": "Article",
-    "date": "Dec 26, 2025",
+    "date": "Oct 24, 2025",
     "image": ""
   },
   {
@@ -644,7 +804,7 @@
     "description": "Demand Forecasting means estimating future customer demand for a product or service based on historical data and relevant factors. Inventory Optimizat...",
     "url": "articles/demand-forecasting-and-inventory-optimization-using-python.html",
     "category": "Article",
-    "date": "Nov 19, 2025",
+    "date": "Aug 21, 2025",
     "image": "assets/datasets/Demand-Forecasting-and-Inventory-Optimization-1.png"
   },
   {
@@ -669,6 +829,14 @@
     "url": "articles/machine-learning-projects-using-python.html",
     "category": "Article",
     "date": "Nov 05, 2025",
+    "image": ""
+  },
+  {
+    "title": "Relative Ranks using Python",
+    "description": "The problem of relative ranks is a popular coding interview question. Here you will be given an array of integers representing the scores of athletes,...",
+    "url": "articles/relative-ranks-using-python.html",
+    "category": "Article",
+    "date": "Sep 21, 2025",
     "image": ""
   },
   {
@@ -710,6 +878,14 @@
     "category": "Article",
     "date": "Oct 24, 2025",
     "image": "assets/datasets/linear-regression-graph.png"
+  },
+  {
+    "title": "Power of Three using Python",
+    "description": "The problem of the power of three is a popular coding interview question. Here we need to check whether the input value is the power of three or not. ...",
+    "url": "articles/power-of-three-using-python.html",
+    "category": "Article",
+    "date": "Sep 26, 2025",
+    "image": ""
   },
   {
     "title": "How to Add Memory to Your Chatbot Using LangChain",
@@ -764,7 +940,7 @@
     "description": "Food Delivery services like Zomato and Swiggy need to show the accurate time it will take to deliver your order to keep transparency with their custom...",
     "url": "articles/food-delivery-time-prediction-using-python.html",
     "category": "Article",
-    "date": "Nov 25, 2025",
+    "date": "Sep 02, 2025",
     "image": "assets/datasets/food-delivery1.png"
   },
   {
@@ -772,7 +948,7 @@
     "description": "Geospatial clustering is the process of grouping geographical points, such as delivery locations, store addresses, or sensor coordinates, into cluster...",
     "url": "articles/geospatial-clustering-with-python.html",
     "category": "Article",
-    "date": "Nov 23, 2025",
+    "date": "Aug 25, 2025",
     "image": "assets/datasets/image-4.png"
   },
   {
@@ -781,6 +957,22 @@
     "url": "articles/what-are-tokens-in-llms.html",
     "category": "Article",
     "date": "Dec 11, 2025",
+    "image": ""
+  },
+  {
+    "title": "Max Consecutive Ones using Python",
+    "description": "The problem of max consecutive ones is a popular coding interview question. Here you will be given a binary array, and you need to return the maximum ...",
+    "url": "articles/max-consecutive-ones-using-python.html",
+    "category": "Article",
+    "date": "Oct 05, 2025",
+    "image": ""
+  },
+  {
+    "title": "Counting Bits using Python",
+    "description": "Counting Bits is a popular coding interview question. Here you will be given an integer, and you have to return an array of length (length of the inte...",
+    "url": "articles/counting-bits-using-python.html",
+    "category": "Article",
+    "date": "Sep 28, 2025",
     "image": ""
   },
   {
@@ -820,7 +1012,7 @@
     "description": "Document analysis refers to extracting, interpreting, and understanding the information contained within a document. Traditionally, this involved manu...",
     "url": "articles/document-analysis-using-llms-with-python.html",
     "category": "Article",
-    "date": "Dec 09, 2025",
+    "date": "Sep 13, 2025",
     "image": ""
   },
   {
@@ -828,7 +1020,7 @@
     "description": "The landscape of Artificial Intelligence has shifted. We\u2019ve moved past simple chatbots; the industry now demands systems that can reason, plan, and ac...",
     "url": "articles/the-best-resources-to-learn-llms-and-ai-agents-in-2026.html",
     "category": "Article",
-    "date": "Dec 18, 2025",
+    "date": "Oct 15, 2025",
     "image": ""
   },
   {
@@ -836,7 +1028,7 @@
     "description": "You must have seen video chapters in a YouTube video. Video chaptering is\u00a0the process of\u00a0dividing a video into distinct segments, each labelled with a...",
     "url": "articles/video-chaptering-using-python.html",
     "category": "Article",
-    "date": "Nov 17, 2025",
+    "date": "Aug 19, 2025",
     "image": "assets/datasets/video-chapter-1.png"
   },
   {
@@ -844,7 +1036,15 @@
     "description": "Artificial Intelligence isn\u2019t the future anymore, it is the present. Every sector is on the lookout for top-tier AI talent, from financial giants and ...",
     "url": "articles/best-ai-internship-programs-for-summer-2025.html",
     "category": "Article",
-    "date": "Dec 20, 2025",
+    "date": "Oct 18, 2025",
+    "image": ""
+  },
+  {
+    "title": "Plus One using Python",
+    "description": "The Plus One problem is one of the popular coding interview questions. It is asked in the coding interviews by companies like FAANG many times. Here y...",
+    "url": "articles/plus-one-using-python.html",
+    "category": "Article",
+    "date": "Sep 30, 2025",
     "image": ""
   },
   {
@@ -884,7 +1084,7 @@
     "description": "Large Language Models (LLMs) are powerful, but they have a major limitation: their knowledge is static and limited to the data they were trained on. T...",
     "url": "articles/building-a-rag-pipeline-for-llms.html",
     "category": "Article",
-    "date": "Dec 08, 2025",
+    "date": "Sep 13, 2025",
     "image": ""
   },
   {
@@ -892,7 +1092,7 @@
     "description": "If you\u2019re looking to master AI and Machine Learning, there\u2019s no better way than building real-world projects. Whether you\u2019re a beginner exploring ML o...",
     "url": "articles/ai-ml-projects-with-python.html",
     "category": "Article",
-    "date": "Dec 07, 2025",
+    "date": "Sep 12, 2025",
     "image": ""
   },
   {
@@ -912,6 +1112,14 @@
     "image": "assets/datasets/word-cloud-for-stress-detection.png"
   },
   {
+    "title": "Distance Between Two Locations using Python",
+    "description": "Calculating the distance between two locations helps companies like Swiggy and Zomato calculate the delivery time for an order. If you want to learn h...",
+    "url": "articles/distance-between-two-locations-using-python.html",
+    "category": "Article",
+    "date": "Sep 24, 2025",
+    "image": ""
+  },
+  {
     "title": "Electric Vehicles Market Size Analysis using Python",
     "description": "Market size analysis is a crucial aspect of market research that determines the potential sales volume within a given market. It helps businesses unde...",
     "url": "articles/electric-vehicles-market-size-analysis-using-python.html",
@@ -928,6 +1136,14 @@
     "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/image-10.png?resize=684%2C308&ssl=1"
   },
   {
+    "title": "Set Mismatch using Python",
+    "description": "Set Mismatch is a popular question in coding interviews. In this problem, you need to find two numbers in an array that are missing or duplicated. So,...",
+    "url": "articles/set-mismatch-using-python.html",
+    "category": "Article",
+    "date": "Oct 07, 2025",
+    "image": ""
+  },
+  {
     "title": "Data Analysis Projects using Python",
     "description": "Data Analysis means understanding the story behind the numbers. It is a systematic process of examining, cleaning, transforming, and interpreting raw ...",
     "url": "articles/data-analysis-projects-using-python.html",
@@ -940,7 +1156,7 @@
     "description": "Multivariate Time Series Forecasting involves predicting future values of multiple time-dependent variables using historical data. Unlike univariate t...",
     "url": "articles/multivariate-time-series-forecasting-using-python.html",
     "category": "Article",
-    "date": "Nov 21, 2025",
+    "date": "Aug 23, 2025",
     "image": "assets/datasets/multivariate-time-series-1.png"
   },
   {
@@ -980,7 +1196,7 @@
     "description": "If you are a beginner in Machine Learning, you must have heard about Deep Learning, which we use for working with larger datasets based on tabular dat...",
     "url": "articles/image-classification-model-with-deep-learning.html",
     "category": "Article",
-    "date": "Nov 27, 2025",
+    "date": "Aug 28, 2025",
     "image": "assets/datasets/visualize-a-sample-of-the-data.png"
   },
   {
@@ -1020,7 +1236,7 @@
     "description": "A Machine Learning model is used to make predictions based on historical data. Similarly, a Generative AI model creates new original data by learning ...",
     "url": "articles/generative-ai-model-from-scratch-with-python.html",
     "category": "Article",
-    "date": "Dec 10, 2025",
+    "date": "Sep 15, 2025",
     "image": "assets/datasets/image.png"
   },
   {
@@ -1036,7 +1252,7 @@
     "description": "Data preprocessing is a critical step in\u00a0data science\u00a0tasks, ensuring that raw data is transformed into a clean, organized, and structured format suit...",
     "url": "articles/data-preprocessing-pipeline-using-python.html",
     "category": "Article",
-    "date": "Nov 15, 2025",
+    "date": "Aug 17, 2025",
     "image": ""
   },
   {
@@ -1044,7 +1260,15 @@
     "description": "As a Data Analyst, you usually help others make decisions by sharing insights. In contrast, as an AI Engineer, you create products and systems that wo...",
     "url": "articles/the-data-analyst-to-ai-engineer-roadmap.html",
     "category": "Article",
-    "date": "Dec 14, 2025",
+    "date": "Sep 19, 2025",
+    "image": ""
+  },
+  {
+    "title": "Two Sum using Python",
+    "description": "Two Sum is a popular problem in Leetcode. It is often asked in coding interviews from companies like FAANG. Here you need to return the indices of int...",
+    "url": "articles/two-sum-using-python.html",
+    "category": "Article",
+    "date": "Oct 01, 2025",
     "image": ""
   },
   {
@@ -1052,15 +1276,31 @@
     "description": "Rainfall is a critical element of India\u2019s climate system, which impacts agriculture, water resources, and the overall economy. Understanding rainfall ...",
     "url": "articles/rainfall-trends-in-india-analysis-with-python.html",
     "category": "Article",
-    "date": "Nov 20, 2025",
+    "date": "Aug 22, 2025",
     "image": "assets/datasets/Trend-in-Annual-Rainfall-in-India-1901-2015.png"
+  },
+  {
+    "title": "Reverse a String using Python",
+    "description": "A string is a sequence of characters enclosed in single or double-quotes. String inversion is one of the most common problems in computer science. Her...",
+    "url": "articles/reverse-a-string-using-python.html",
+    "category": "Article",
+    "date": "Oct 10, 2025",
+    "image": ""
+  },
+  {
+    "title": "Index of Maximum Value in a Python List",
+    "description": "Finding the index of the maximum value in a list or an array is one of the most common coding interview questions you can get in any coding interview....",
+    "url": "articles/index-of-maximum-value-in-a-python-list.html",
+    "category": "Article",
+    "date": "Sep 29, 2025",
+    "image": ""
   },
   {
     "title": "Build a Multi-Agent System With LangGraph",
     "description": "The future of AI isn\u2019t about building a smarter chatbot; it\u2019s about building a team. Today, we will build that team using LangGraph. We will create a ...",
     "url": "articles/build-a-multi-agent-system-with-langgraph.html",
     "category": "Article",
-    "date": "Dec 26, 2025",
+    "date": "Oct 24, 2025",
     "image": ""
   },
   {
@@ -1088,6 +1328,14 @@
     "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-1.png?resize=855%2C525&ssl=1"
   },
   {
+    "title": "Index of Minimum Value in a Python List",
+    "description": "Finding the index of the minimum value in a list or an array is one of the popular coding interview questions that you may get in any coding interview...",
+    "url": "articles/index-of-minimum-value-in-a-python-list.html",
+    "category": "Article",
+    "date": "Sep 28, 2025",
+    "image": ""
+  },
+  {
     "title": "Data Visualization Rules to Never Go Wrong",
     "description": "Visualizing data effectively is crucial for analysis and communication. There are some data visualization rules that you should always follow to ensur...",
     "url": "articles/data-visualization-rules-to-never-go-wrong.html",
@@ -1096,12 +1344,28 @@
     "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/data-visualization-rules-1.png?resize=1024%2C576&ssl=1"
   },
   {
+    "title": "Majority Element using Python",
+    "description": "The majority element problem is one of the popular coding interview questions. Here we need to find the element that appears more than the other eleme...",
+    "url": "articles/majority-element-using-python.html",
+    "category": "Article",
+    "date": "Oct 02, 2025",
+    "image": ""
+  },
+  {
     "title": "Cohort Analysis using Python",
     "description": "Cohort Analysis is a data analysis technique used to gain insights into the behaviour and characteristics of specific groups of users or customers ove...",
     "url": "articles/cohort-analysis-using-python.html",
     "category": "Article",
     "date": "Nov 10, 2025",
     "image": "assets/datasets/Cohort-1.png"
+  },
+  {
+    "title": "Move Zeroes using Python",
+    "description": "Moving zeroes is one of the popular questions in coding interviews. Here we need to move all the 0\u2019s in an array to the end of the array while keeping...",
+    "url": "articles/move-zeroes-using-python.html",
+    "category": "Article",
+    "date": "Oct 04, 2025",
+    "image": ""
   },
   {
     "title": "Hypothesis Testing for Data Scientists with Python",
@@ -1132,7 +1396,7 @@
     "description": "Have you ever thought about building live and shareable Machine Learning apps? As your mentor, I\u2019m here to tell you that the gap between a trained mod...",
     "url": "articles/build-a-live-machine-learning-app-in-5-minutes.html",
     "category": "Article",
-    "date": "Dec 24, 2025",
+    "date": "Oct 22, 2025",
     "image": "assets/datasets/image-1.png"
   },
   {
@@ -1140,7 +1404,7 @@
     "description": "As an aspiring ML engineer, you\u2019ve probably worked on single-agent models, like a chatbot that responds to a single query. But the next frontier in AI...",
     "url": "articles/building-a-multi-agent-system-using-gemini-api.html",
     "category": "Article",
-    "date": "Dec 27, 2025",
+    "date": "Oct 25, 2025",
     "image": "assets/datasets/image-2.png"
   },
   {
@@ -1164,7 +1428,7 @@
     "description": "If you\u2019ve been following the Generative AI wave, you\u2019ve probably seen AI generate images, text, and even code. You can use the same technology to crea...",
     "url": "articles/building-synthetic-medical-records-using-gans.html",
     "category": "Article",
-    "date": "Dec 28, 2025",
+    "date": "Oct 26, 2025",
     "image": ""
   },
   {
@@ -1176,6 +1440,14 @@
     "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/image.png?resize=1024%2C174&ssl=1"
   },
   {
+    "title": "Uncommon Words from Two Sentences using Python",
+    "description": "Finding uncommon words in two sentences is one of the problems in coding interviews. In this problem, you have to find all the words that appear only ...",
+    "url": "articles/uncommon-words-from-two-sentences-using-python.html",
+    "category": "Article",
+    "date": "Oct 13, 2025",
+    "image": ""
+  },
+  {
     "title": "T20 World Cup 2024 Match Analysis",
     "description": "If you want to practice data storytelling,\u00a0then\u00a0analyzing and summarizing the complete cricket match is one of the best tasks\u00a0you should try.\u00a0I recent...",
     "url": "articles/t20-world-cup-2024-match-analysis.html",
@@ -1184,11 +1456,19 @@
     "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-7.png?resize=1024%2C164&ssl=1"
   },
   {
+    "title": "Buddy Strings using Python",
+    "description": "Buddy Strings is a popular problem in coding interviews. In this problem, you need to check if it is possible to get two strings, different from exact...",
+    "url": "articles/buddy-strings-using-python.html",
+    "category": "Article",
+    "date": "Oct 13, 2025",
+    "image": ""
+  },
+  {
     "title": "Types of Neural Networks",
     "description": "A neural network is a subset of machine learning that mimics the workings of a human brain while solving a complex problem based on deep learning. Neu...",
     "url": "articles/types-of-neural-networks.html",
     "category": "Article",
-    "date": "Dec 12, 2025",
+    "date": "Sep 16, 2025",
     "image": ""
   },
   {
@@ -1196,7 +1476,7 @@
     "description": "Model packaging is an essential step in the Machine Learning deployment process, where the trained model is prepared in a format that can be easily de...",
     "url": "articles/packaging-machine-learning-models-with-python.html",
     "category": "Article",
-    "date": "Dec 03, 2025",
+    "date": "Sep 08, 2025",
     "image": "assets/datasets/image.png"
   },
   {
@@ -1220,7 +1500,7 @@
     "description": "A Fashion Recommendation System using Image Features leverages computer vision and machine learning techniques to analyze fashion items\u2019 visual aspect...",
     "url": "articles/fashion-recommendation-system-using-image-features.html",
     "category": "Article",
-    "date": "Dec 11, 2025",
+    "date": "Sep 15, 2025",
     "image": "assets/datasets/fashion-recommendations-1.png"
   },
   {
@@ -1232,11 +1512,19 @@
     "image": ""
   },
   {
+    "title": "Validate Anagrams using Python",
+    "description": "An Anagram is a word or phrase that forms a different word or phrase when the letters of a word are rearranged. For example, the words \u201cdespair\u201d and \u201c...",
+    "url": "articles/validate-anagrams-using-python.html",
+    "category": "Article",
+    "date": "Sep 04, 2025",
+    "image": ""
+  },
+  {
     "title": "Building a Diffusion Model From Scratch",
     "description": "The rise of Generative AI has been nothing short of explosive. Just a few years ago, generating high-quality images was the domain of complex and ofte...",
     "url": "articles/building-a-diffusion-model-from-scratch.html",
     "category": "Article",
-    "date": "Dec 29, 2025",
+    "date": "Oct 27, 2025",
     "image": "assets/datasets/how-diffusion-models-work.png"
   },
   {
@@ -1244,7 +1532,7 @@
     "description": "The world of AI is exploding, and if you\u2019re serious about mastering Deep Learning or NLP, you can\u2019t just watch tutorials or read research papers. You ...",
     "url": "articles/deep-learning-nlp-project-ideas.html",
     "category": "Article",
-    "date": "Dec 21, 2025",
+    "date": "Oct 19, 2025",
     "image": ""
   },
   {
@@ -1252,7 +1540,7 @@
     "description": "LSTM stands for Long Short Term Memory Networks. It is a type of recurrent neural network that is commonly used for regression and time series forecas...",
     "url": "articles/stock-price-prediction-with-lstm.html",
     "category": "Article",
-    "date": "Dec 22, 2025",
+    "date": "Oct 19, 2025",
     "image": "assets/datasets/apple-stocks-price-prediction-with-lstm.png"
   },
   {
@@ -1272,11 +1560,19 @@
     "image": "assets/datasets/google-stocks-ARIMA.png"
   },
   {
+    "title": "The Most Popular Coding Interview Questions using Python",
+    "description": "Most of the popular coding interview questions are based on the concepts of data structures and algorithms. It doesn\u2019t matter whether you want to beco...",
+    "url": "articles/the-most-popular-coding-interview-questions-using-python.html",
+    "category": "Article",
+    "date": "Sep 04, 2025",
+    "image": ""
+  },
+  {
     "title": "Credit Score Classification with Machine Learning",
     "description": "Banks and credit card companies calculate your credit score to determine your creditworthiness. It helps banks and credit card companies immediately t...",
     "url": "articles/credit-score-classification-with-machine-learning.html",
     "category": "Article",
-    "date": "Nov 30, 2025",
+    "date": "Sep 01, 2025",
     "image": "assets/datasets/newplot-15.png"
   },
   {
@@ -1300,7 +1596,7 @@
     "description": "Multimodal AI is one of the most exciting fields in artificial intelligence today. It\u2019s powering some smartest systems, like Google Lens to ChatGPT-4o...",
     "url": "articles/building-a-multimodal-ai-model.html",
     "category": "Article",
-    "date": "Dec 30, 2025",
+    "date": "Oct 28, 2025",
     "image": ""
   },
   {
@@ -1328,11 +1624,19 @@
     "image": "assets/datasets/CLTV-1.png"
   },
   {
+    "title": "Types of Algorithms",
+    "description": "The sequence of steps we need to take to solve a particular problem is known as an algorithm. There are so many algorithms in computer science that fa...",
+    "url": "articles/types-of-algorithms.html",
+    "category": "Article",
+    "date": "Sep 03, 2025",
+    "image": ""
+  },
+  {
     "title": "Python Problems for Coding Interviews",
     "description": "Python is preferred in various fields in the industry like Data Science, Web Development, and API Development. If you are learning Python for any of t...",
     "url": "articles/python-problems-for-coding-interviews.html",
     "category": "Article",
-    "date": "Oct 19, 2025",
+    "date": "Oct 20, 2025",
     "image": ""
   },
   {
@@ -1344,11 +1648,19 @@
     "image": ""
   },
   {
+    "title": "Hamming Distance using Python",
+    "description": "The problem of hamming distance between two integers is a popular\u00a0coding interview\u00a0question. Here you will be given two integers, and you need to calc...",
+    "url": "articles/hamming-distance-using-python.html",
+    "category": "Article",
+    "date": "Oct 05, 2025",
+    "image": ""
+  },
+  {
     "title": "Build a Real-Time Voice AI Assistant",
     "description": "We\u2019ve all watched Iron Man and quietly envied Tony Stark\u2019s banter with JARVIS. There is something profoundly magical about speaking to a machine and h...",
     "url": "articles/build-a-real-time-voice-ai-assistant.html",
     "category": "Article",
-    "date": "Dec 25, 2025",
+    "date": "Oct 23, 2025",
     "image": "assets/datasets/image.png"
   },
   {
@@ -1356,7 +1668,7 @@
     "description": "A chatbot is a computer program that understands the intent of your query to answer with a solution. Chatbots are the most popular applications of Nat...",
     "url": "articles/end-to-end-chatbot-using-python.html",
     "category": "Article",
-    "date": "Dec 04, 2025",
+    "date": "Sep 08, 2025",
     "image": "assets/datasets/chatbot-output.png"
   },
   {
@@ -1365,6 +1677,14 @@
     "url": "articles/building-an-etl-pipeline-using-pyspark.html",
     "category": "Article",
     "date": "Nov 10, 2025",
+    "image": ""
+  },
+  {
+    "title": "Assign Cookies using Python",
+    "description": "The problem of assigning cookies is a popular coding interview question. Here you will be given a list of children with their greed factors and a list...",
+    "url": "articles/assign-cookies-using-python.html",
+    "category": "Article",
+    "date": "Oct 06, 2025",
     "image": ""
   },
   {
@@ -1380,7 +1700,7 @@
     "description": "Dynamic Pricing is an application of data science that involves adjusting the prices of a product or service based on various factors in real time. It...",
     "url": "articles/dynamic-pricing-strategy-using-python.html",
     "category": "Article",
-    "date": "Nov 20, 2025",
+    "date": "Aug 22, 2025",
     "image": "assets/datasets/dynamic-pricing-1.png"
   },
   {
@@ -1420,7 +1740,7 @@
     "description": "In Machine Learning, imbalanced data refers to a situation in classification problems where the number of observations in each class significantly dif...",
     "url": "articles/classification-on-imbalanced-data-using-python.html",
     "category": "Article",
-    "date": "Nov 25, 2025",
+    "date": "Aug 27, 2025",
     "image": "assets/datasets/classification-on-imbalanced-data-1.png"
   },
   {
@@ -1428,7 +1748,7 @@
     "description": "Credit card clustering is the task of grouping credit card holders based on their buying habits, credit limits, and many other financial factors. If y...",
     "url": "articles/credit-card-clustering-with-machine-learning.html",
     "category": "Article",
-    "date": "Nov 28, 2025",
+    "date": "Aug 30, 2025",
     "image": "assets/datasets/credit-card-segments.png"
   },
   {
@@ -1452,7 +1772,7 @@
     "description": "Deploying a Machine Learning model is the last mile problem of AI, and solving it is one of the most valuable skills you can learn. You must have hear...",
     "url": "articles/deploy-a-machine-learning-model-with-docker.html",
     "category": "Article",
-    "date": "Dec 23, 2025",
+    "date": "Oct 21, 2025",
     "image": "assets/datasets/image-3.png"
   },
   {
@@ -1492,7 +1812,7 @@
     "description": "The rent of a house depends on a lot of factors. With appropriate data and Machine Learning techniques, many real estate platforms find the housing op...",
     "url": "articles/house-rent-prediction-with-machine-learning.html",
     "category": "Article",
-    "date": "Nov 30, 2025",
+    "date": "Aug 31, 2025",
     "image": "assets/datasets/house-rent-1.png"
   },
   {
@@ -1500,7 +1820,7 @@
     "description": "Synthetic data is artificially generated data that mimics real-world data. It is created by algorithms, models, or simulations rather than being colle...",
     "url": "articles/synthetic-data-generation-with-generative-ai.html",
     "category": "Article",
-    "date": "Dec 07, 2025",
+    "date": "Sep 11, 2025",
     "image": "assets/datasets/image-1.png"
   },
   {
@@ -1516,7 +1836,7 @@
     "description": "The comparison of multiple Machine Learning models refers to training, evaluating, and analyzing the performance of different algorithms on the same d...",
     "url": "articles/compare-multiple-machine-learning-models.html",
     "category": "Article",
-    "date": "Nov 23, 2025",
+    "date": "Aug 25, 2025",
     "image": "assets/datasets/image-17.png"
   },
   {
@@ -1524,7 +1844,7 @@
     "description": "Not everyone is always available on social media all the time. Some people limit the use of social media during festive seasons, while some avoid soci...",
     "url": "articles/instagram-reach-forecasting-using-python.html",
     "category": "Article",
-    "date": "Nov 21, 2025",
+    "date": "Aug 23, 2025",
     "image": "assets/datasets/instagram-forecast-1.png"
   },
   {
@@ -1532,7 +1852,7 @@
     "description": "A typical RAG system quickly searches your uploaded tax documents or technical manuals to find a relevant snippet, even for something as simple as a c...",
     "url": "articles/building-an-agentic-rag-pipeline.html",
     "category": "Article",
-    "date": "Dec 15, 2025",
+    "date": "Sep 19, 2025",
     "image": ""
   },
   {
@@ -1540,7 +1860,7 @@
     "description": "Next Word Prediction means predicting the most likely word or phrase that will come next in a sentence or text. It is like having an inbuilt feature o...",
     "url": "articles/next-word-prediction-model-using-python.html",
     "category": "Article",
-    "date": "Dec 05, 2025",
+    "date": "Sep 09, 2025",
     "image": "assets/datasets/IMG_0876.jpg"
   },
   {
@@ -1556,7 +1876,7 @@
     "description": "Generative AI is changing fast, and recruiters want people who can make these large models do useful things, not just explain how they work. If you\u2019re...",
     "url": "articles/4-llm-project-ideas-for-your-resume.html",
     "category": "Article",
-    "date": "Dec 12, 2025",
+    "date": "Sep 17, 2025",
     "image": ""
   },
   {
@@ -1564,7 +1884,7 @@
     "description": "Moving from following tutorials to actually writing code for a company can seem like a huge leap. The good news is that internships make this transiti...",
     "url": "articles/remote-ai-ml-internships-this-week.html",
     "category": "Article",
-    "date": "Dec 13, 2025",
+    "date": "Sep 18, 2025",
     "image": ""
   },
   {
@@ -1572,7 +1892,7 @@
     "description": "Search Queries Anomaly Detection means identifying queries that are outliers according to their performance metrics. It is valuable for businesses to ...",
     "url": "articles/search-queries-anomaly-detection-using-python.html",
     "category": "Article",
-    "date": "Nov 26, 2025",
+    "date": "Aug 28, 2025",
     "image": "assets/datasets/search-queries-1.png"
   },
   {
@@ -1580,7 +1900,23 @@
     "description": "If you\u2019ve ever wanted to build your own real-time AI assistant that can answer questions from your documents, websites, PDFs, notes, or knowledge base...",
     "url": "articles/build-a-real-time-ai-assistant-using-rag-langchain.html",
     "category": "Article",
-    "date": "Dec 24, 2025",
+    "date": "Oct 22, 2025",
+    "image": ""
+  },
+  {
+    "title": "Transpose Matrix using Python",
+    "description": "Transpose Matrix is one of the popular problems in coding interviews. This problem requires you to manipulate a matrix by flipping its rows and column...",
+    "url": "articles/transpose-matrix-using-python.html",
+    "category": "Article",
+    "date": "Oct 14, 2025",
+    "image": ""
+  },
+  {
+    "title": "Python Program to Count Capital Letters in a File",
+    "description": "Counting the number of specific letters from a file is something that every coder should know. One of the most popular coding interview questions base...",
+    "url": "articles/python-program-to-count-capital-letters-in-a-file.html",
+    "category": "Article",
+    "date": "Oct 07, 2025",
     "image": ""
   },
   {
@@ -1612,7 +1948,7 @@
     "description": "Consumer Complaint Classification means classifying the nature of the complaint reported by the consumer. It is helpful for consumer care departments ...",
     "url": "articles/consumer-complaint-classification-with-machine-learning.html",
     "category": "Article",
-    "date": "Nov 24, 2025",
+    "date": "Aug 26, 2025",
     "image": ""
   },
   {
@@ -1628,7 +1964,7 @@
     "description": "Applications like Instagram still lack a caption-generation tool because most LLMs don\u2019t write captions; they describe the image instead. This is wher...",
     "url": "articles/ai-image-caption-recommendation-system.html",
     "category": "Article",
-    "date": "Dec 08, 2025",
+    "date": "Sep 12, 2025",
     "image": "assets/datasets/aman.png"
   },
   {
@@ -1644,7 +1980,7 @@
     "description": "Diffusion models are generative models that create new data (like images). At a high level, diffusion models start with pure noise (like a static TV s...",
     "url": "articles/ai-image-generation-using-diffusion-models.html",
     "category": "Article",
-    "date": "Dec 29, 2025",
+    "date": "Oct 27, 2025",
     "image": "assets/datasets/generated_image.png"
   },
   {
@@ -1652,7 +1988,7 @@
     "description": "The use of Machine Learning Algorithms is not required for every dataset, but every dataset does require some data cleaning steps. So, building a data...",
     "url": "articles/data-cleaning-pipeline-using-pandas.html",
     "category": "Article",
-    "date": "Nov 15, 2025",
+    "date": "Aug 17, 2025",
     "image": "assets/datasets/image-3.png"
   },
   {
@@ -1684,7 +2020,7 @@
     "description": "As an aspiring AI & ML Engineer, it\u2019s vital to understand the foundational concepts behind AI agents. Think of AI agents as software entities that can...",
     "url": "articles/types-of-ai-agents-you-should-know.html",
     "category": "Article",
-    "date": "Dec 19, 2025",
+    "date": "Oct 17, 2025",
     "image": "assets/datasets/ai-agents-1.jpg"
   },
   {
@@ -1728,11 +2064,27 @@
     "image": "assets/datasets/IMG_1003.jpg"
   },
   {
+    "title": "Repeated Substring Pattern using Python",
+    "description": "The problem of the Repeated Substring Pattern is a popular coding interview question. Here you will be given a string, and you need to check if the gi...",
+    "url": "articles/repeated-substring-pattern-using-python.html",
+    "category": "Article",
+    "date": "Oct 12, 2025",
+    "image": ""
+  },
+  {
+    "title": "Validate Palindrome Words using Python",
+    "description": "Palindrome words are words that are read the same backward as forward. For example, mom, dad, and madam are palindrome words. Validating palindrome wo...",
+    "url": "articles/validate-palindrome-words-using-python.html",
+    "category": "Article",
+    "date": "Oct 09, 2025",
+    "image": ""
+  },
+  {
     "title": "How I Decide Whether a Dataset Is Worth Using",
     "description": "The saying \u2018Garbage In, Garbage Out\u2019 is common in Data Science, and for good reason. From my experience, picking the right dataset matters more than p...",
     "url": "articles/how-i-decide-whether-a-dataset-is-worth-using.html",
     "category": "Article",
-    "date": "Dec 14, 2025",
+    "date": "Sep 18, 2025",
     "image": "assets/datasets/data-leakage-example.png"
   },
   {
@@ -1756,7 +2108,7 @@
     "description": "For years, the idea of truly customizing a Large Language Model felt like a privilege reserved for tech giants with bottomless budgets. The barrier to...",
     "url": "articles/fine-tuning-llms-using-lora.html",
     "category": "Article",
-    "date": "Dec 31, 2025",
+    "date": "Oct 29, 2025",
     "image": "assets/datasets/image-7.png"
   },
   {
@@ -1772,7 +2124,15 @@
     "description": "The single most significant gap between a beginner and a pro in machine learning isn\u2019t more courses; it\u2019s hands-on experience. It\u2019s about getting your...",
     "url": "articles/machine-learning-projects-for-all-levels.html",
     "category": "Article",
-    "date": "Dec 16, 2025",
+    "date": "Sep 21, 2025",
+    "image": ""
+  },
+  {
+    "title": "Merge Two Sorted Lists using Python",
+    "description": "Merging two sorted lists is one of the popular problems in Leetcode. It is asked in coding interviews by companies like FAANG many times. Here you nee...",
+    "url": "articles/merge-two-sorted-lists-using-python.html",
+    "category": "Article",
+    "date": "Sep 30, 2025",
     "image": ""
   },
   {
@@ -1780,8 +2140,16 @@
     "description": "Music popularity prediction involves developing machine learning models to estimate the popularity of music tracks based on their audio features. Pred...",
     "url": "articles/music-popularity-prediction-with-python.html",
     "category": "Article",
-    "date": "Dec 01, 2025",
+    "date": "Sep 02, 2025",
     "image": "assets/datasets/music-features-1.png"
+  },
+  {
+    "title": "First Unique Character using Python",
+    "description": "The problem of finding the first unique character in a string is a popular coding interview question. Here you will be given a string, and you have to...",
+    "url": "articles/first-unique-character-using-python.html",
+    "category": "Article",
+    "date": "Oct 11, 2025",
+    "image": ""
   },
   {
     "title": "Best Datasets for Generative AI Projects",
@@ -1796,7 +2164,7 @@
     "description": "In machine learning, classification means categorizing the known classes, For example, categorizing the most profitable and non-interested customers f...",
     "url": "articles/classification-with-neural-networks-using-python.html",
     "category": "Article",
-    "date": "Nov 24, 2025",
+    "date": "Aug 26, 2025",
     "image": "assets/datasets/mnistsample.png"
   },
   {
@@ -1824,11 +2192,19 @@
     "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-Feature-Selection-1.png?resize=1024%2C886&ssl=1"
   },
   {
+    "title": "Ugly Number using Python",
+    "description": "Ugly numbers are the numbers whose prime factors are limited to 2, 3, and 5. Finding the Ugly number is a popular question in coding interviews. Here ...",
+    "url": "articles/ugly-number-using-python.html",
+    "category": "Article",
+    "date": "Sep 26, 2025",
+    "image": ""
+  },
+  {
     "title": "Connecting Python to OpenAI (Step-by-Step)",
     "description": "Using ChatGPT in your browser is very different from building with it in code. By connecting Python to OpenAI, you move from just using AI to actually...",
     "url": "articles/connecting-python-to-openai-step-by-step.html",
     "category": "Article",
-    "date": "Dec 13, 2025",
+    "date": "Sep 17, 2025",
     "image": ""
   },
   {
@@ -1844,7 +2220,7 @@
     "description": "A text summarization model takes a long text and creates a shorter version while preserving its main points. It works by extracting key sentences dire...",
     "url": "articles/text-summarization-model-using-llms.html",
     "category": "Article",
-    "date": "Dec 06, 2025",
+    "date": "Sep 11, 2025",
     "image": ""
   },
   {
@@ -1852,7 +2228,7 @@
     "description": "Large Language Models like BERT, RoBERTa, and GPT have been pretrained on massive text corpora. But when it comes to solving specific tasks, like clas...",
     "url": "articles/fine-tuning-llms-on-your-own-data.html",
     "category": "Article",
-    "date": "Dec 31, 2025",
+    "date": "Oct 29, 2025",
     "image": "assets/datasets/image.png"
   },
   {
@@ -1888,6 +2264,14 @@
     "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-1.png?resize=1024%2C483&ssl=1"
   },
   {
+    "title": "Detect Capital using Python",
+    "description": "The problem of detecting capital is a popular question in coding interviews. A word is written in capital letters if all of its letters are uppercase ...",
+    "url": "articles/detect-capital-using-python.html",
+    "category": "Article",
+    "date": "Oct 12, 2025",
+    "image": ""
+  },
+  {
     "title": "Market Basket Analysis using Python",
     "description": "Market Basket Analysis is a data-driven technique used to uncover patterns and relationships within large transactional datasets, particularly in reta...",
     "url": "articles/market-basket-analysis-using-python.html",
@@ -1908,7 +2292,7 @@
     "description": "In today\u2019s fast-paced e-commerce industry, fast and efficient order delivery is crucial to business success. To ensure seamless order fulfilment, busi...",
     "url": "articles/b2b-courier-charges-accuracy-analysis-using-python.html",
     "category": "Article",
-    "date": "Nov 16, 2025",
+    "date": "Aug 18, 2025",
     "image": "assets/datasets/b2b-accuracy-plot.png"
   },
   {
@@ -1924,7 +2308,7 @@
     "description": "Loan Approval Prediction is one of the problems that Machine Learning has solved in fintech businesses like banks and financial institutions. Loan app...",
     "url": "articles/loan-approval-prediction-using-python.html",
     "category": "Article",
-    "date": "Dec 01, 2025",
+    "date": "Sep 01, 2025",
     "image": "assets/datasets/newplot-8.png"
   },
   {
@@ -1932,7 +2316,7 @@
     "description": "Recommendation systems are the invisible engine behind the success of platforms like Netflix, Amazon, Spotify, and YouTube. They personalize your expe...",
     "url": "articles/recommendation-system-using-python-and-tensorflow.html",
     "category": "Article",
-    "date": "Dec 11, 2025",
+    "date": "Sep 16, 2025",
     "image": "assets/datasets/image.png"
   },
   {
@@ -1972,7 +2356,7 @@
     "description": "Anomaly detection in transactions means identifying unusual or unexpected patterns within transactions or related activities. These patterns, known as...",
     "url": "articles/anomaly-detection-in-transactions-using-python.html",
     "category": "Article",
-    "date": "Nov 26, 2025",
+    "date": "Aug 27, 2025",
     "image": "assets/datasets/Anomaly-Detection-1.png"
   },
   {
@@ -1988,7 +2372,7 @@
     "description": "Large Language Models (LLMs) are no longer just academic experiments, they are powering everything from enterprise automation to creative tools. So, i...",
     "url": "articles/5-real-world-llm-project-ideas.html",
     "category": "Article",
-    "date": "Dec 21, 2025",
+    "date": "Oct 18, 2025",
     "image": ""
   },
   {
@@ -1997,6 +2381,14 @@
     "url": "articles/small-language-models.html",
     "category": "Article",
     "date": "Dec 22, 2025",
+    "image": ""
+  },
+  {
+    "title": "Climbing Stairs using Python",
+    "description": "Climbing Stairs is one of the popular coding interview questions. It is asked in the coding interviews by FAANG companies many times. In the climbing ...",
+    "url": "articles/climbing-stairs-using-python.html",
+    "category": "Article",
+    "date": "Sep 22, 2025",
     "image": ""
   },
   {
@@ -2012,7 +2404,7 @@
     "description": "Do you know how AI opponents in video games seem to think, adapt, and sometimes, even outsmart you? The secret behind this is a powerful branch of AI ...",
     "url": "articles/build-an-ai-agent-to-master-a-game.html",
     "category": "Article",
-    "date": "Dec 28, 2025",
+    "date": "Oct 26, 2025",
     "image": "assets/datasets/what-is-an-AI-Agent.png"
   },
   {
@@ -2028,7 +2420,7 @@
     "description": "Machine Learning Operations (MLOps) integrates machine learning model development and deployment into a robust, automated pipeline. Every machine Lear...",
     "url": "articles/mlops-pipeline-using-apache-airflow.html",
     "category": "Article",
-    "date": "Nov 17, 2025",
+    "date": "Aug 19, 2025",
     "image": ""
   },
   {
@@ -2036,7 +2428,7 @@
     "description": "User profiling refers to creating detailed profiles that represent the behaviours and preferences of users, and segmentation divides the user base int...",
     "url": "articles/user-profiling-and-segmentation-using-python.html",
     "category": "Article",
-    "date": "Nov 22, 2025",
+    "date": "Aug 24, 2025",
     "image": "assets/datasets/user-profiling-1.png"
   },
   {
@@ -2044,8 +2436,16 @@
     "description": "Clustering is a machine learning technique to group data points characterized by specific features. Clustering music genres is a task of grouping musi...",
     "url": "articles/clustering-music-genres-with-machine-learning.html",
     "category": "Article",
-    "date": "Nov 29, 2025",
+    "date": "Aug 30, 2025",
     "image": "assets/datasets/music-clusters.png"
+  },
+  {
+    "title": "Third Maximum Number using Python",
+    "description": "The problem of finding the third maximum number is a popular coding interview question. Here you will be given an array, and you have to return the th...",
+    "url": "articles/third-maximum-number-using-python.html",
+    "category": "Article",
+    "date": "Oct 04, 2025",
+    "image": ""
   },
   {
     "title": "YouTube Data Collection and Analysis with Python",

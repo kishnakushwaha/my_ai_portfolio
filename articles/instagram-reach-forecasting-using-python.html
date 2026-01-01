@@ -57,7 +57,7 @@
 <article class="article-body">
 <h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
                         Instagram Reach Forecasting using Python</h1>
-<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 21, 2025 • 5 min read</div>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Aug 23, 2025 • 5 min read</div>
 <!-- Navigation Top -->
 <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
 <a class="nav-prev" href="rainfall-trends-in-india-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
@@ -180,7 +180,7 @@ fig = result.plot()
 fig = mpl_to_plotly(fig)
 fig.show()</code></pre>
 <figure class="wp-block-image aligncenter size-full"><img alt="Seasonality for Time Series" class="wp-image-20162" data-attachment-id="20162" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="instagram-forecast-5" data-orig-size="640,480" data-recalc-dims="1" decoding="async" height="480" loading="lazy" sizes="auto, (max-width: 640px) 100vw, 640px" src="../assets/datasets/instagram-forecast-5.png" width="640"/></figure>
-<p>The reach is affected by seasonality, so we can use the SARIMA model to forecast the reach of the Instagram account. We need to find p, d, and q values to forecast the reach of Instagram. To find the value of d, we can use the autocorrelation plot, and to find the value of q, we can use a partial autocorrelation plot. The value of d will be 1. You can learn more about finding these values <strong><a href="time-series-forecasting-with-arima.html" target="">here</a></strong>.</p>
+<p>The reach is affected by seasonality, so we can use the SARIMA model to forecast the reach of the Instagram account. We need to find p, d, and q values to forecast the reach of Instagram. To find the value of d, we can use the autocorrelation plot, and to find the value of q, we can use a partial autocorrelation plot. The value of d will be 1. You can learn more about finding these values <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">here</a></strong>.</p>
 <p>Now here’s how to visualize an autocorrelation plot to find the value of p:</p>
 <pre><code class="language-python">pd.plotting.autocorrelation_plot(data["Instagram reach"])</code></pre>
 <figure class="wp-block-image aligncenter size-full"><img alt="Partial Autocorrelation for Time Series" class="wp-image-20163" data-attachment-id="20163" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="instagram-forecast-6" data-orig-size="587,438" data-recalc-dims="1" decoding="async" height="438" loading="lazy" sizes="auto, (max-width: 587px) 100vw, 587px" src="../assets/datasets/instagram-forecast-6.png" width="587"/><figcaption class="wp-element-caption"><strong>P = 8</strong></figcaption></figure>

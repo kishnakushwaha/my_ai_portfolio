@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Reverse a String using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Reverse a String using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 10, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="validate-palindrome-words-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="number-of-segments-in-a-string-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>A string is a sequence of characters enclosed in single or double-quotes. String inversion is one of the most common problems in computer science. Here we need to reverse the characters of a string. So, if you want to learn how to reverse a string, this article is for you. In this article, I will walk you through a tutorial on how to reverse a string using <a href="fundamentals-of-python.html" rel="noreferrer noopener" target=""><strong>Python</strong></a>.</p>
+<h2 class="wp-block-heading">Reverse a String using Python</h2>
+<p>There are many ways to reverse a string using Python. You can use any method that you find easy unless you are told to use a specific method.</p>
+<p>You must have heard of the concept of <a href="https://python-reference.readthedocs.io/en/latest/docs/brackets/slicing.html" rel="noreferrer noopener" target="_blank"><strong>slicing</strong></a> in Python. Here I will show you how to use string slicing to reverse a string using Python:</p>
+<pre><code class="language-python">def reverse_string(string):
+    return string[::-1]
+
+a = "lawrahK namA"
+print(reverse_string(a))</code></pre>
+<pre class="wp-block-preformatted"><strong>Output:
+Aman Kharwal</strong></pre>
+<p>The first character in the string has index 0, and the last character has index n-1, where n is the length of the string. The string slicing operator “::” reads all the characters of the string, and -1, in the end, reverses the order of the characters. This is how we can reverse a string.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So this is how we can use string slicing for reversing the order of the characters of a string. String inversion is one of the most common problems in computer science. I hope you liked this article on a tutorial on reversing a string using the Python programming language. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="validate-palindrome-words-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="number-of-segments-in-a-string-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

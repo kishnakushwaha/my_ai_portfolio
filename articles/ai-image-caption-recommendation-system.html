@@ -57,14 +57,14 @@
 <article class="article-body">
 <h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
                         AI Image Caption Recommendation System</h1>
-<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 08, 2025 • 5 min read</div>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Sep 12, 2025 • 5 min read</div>
 <!-- Navigation Top -->
 <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
 <a class="nav-prev" href="ai-ml-projects-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
 <a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
 <a class="nav-next" href="building-a-rag-pipeline-for-llms.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
 </div>
-<p>Applications like Instagram still lack a caption-generation tool because most LLMs don’t write captions; they describe the image instead. This is where a caption recommendation system can help, using a library of captions to find the caption that goes well with the image. So, in this article, I’ll take you through how to build an AI Image caption recommendation system, where we will use LLMs and <strong><a href="50-projects-to-master-ai-ml-with-python.html" target="">Machine Learning</a></strong> using Python.</p>
+<p>Applications like Instagram still lack a caption-generation tool because most LLMs don’t write captions; they describe the image instead. This is where a caption recommendation system can help, using a library of captions to find the caption that goes well with the image. So, in this article, I’ll take you through how to build an AI Image caption recommendation system, where we will use LLMs and <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">Machine Learning</a></strong> using Python.</p>
 <h2 class="wp-block-heading">AI Image Caption Recommendation System: An Overview</h2>
 <p>I will build an AI Image Caption Recommendation System using a retrieval-based approach, leveraging CLIP (Contrastive Language–Image Pre-training) for both image and text understanding.</p>
 <p>First, the input image will be preprocessed and fed into the CLIP image encoder to generate a high-dimensional feature vector representing the image’s visual content. A similar process will be applied to a set of candidate captions, using the CLIP text encoder to generate text embeddings for each caption. Next, the cosine similarity between the image embedding and each caption embedding will be calculated. This similarity score will quantify how well each caption aligns with the visual content of the image.</p>

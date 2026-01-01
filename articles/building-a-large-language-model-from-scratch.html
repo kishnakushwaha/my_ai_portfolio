@@ -57,7 +57,7 @@
 <article class="article-body">
 <h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
                         Building a Large Language Model from Scratch</h1>
-<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 10, 2025 • 5 min read</div>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Sep 14, 2025 • 5 min read</div>
 <!-- Navigation Top -->
 <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
 <a class="nav-prev" href="building-an-ai-agent-using-openai-api.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
@@ -253,7 +253,7 @@ predicted_token = torch.argmax(output[:, -1, :]).item()
 print(f"Input: {input_text}, Predicted: {list(vocab.keys())[list(vocab.values()).index(predicted_token)]}")</code></pre>
 <pre class="wp-block-preformatted"><strong>Input: hello world how, Predicted: are</strong></pre>
 <h3 class="wp-block-heading">How to Build an Actual LLM with this?</h3>
-<p>To scale up this model into a practical <strong><a href="best-resources-to-learn-llms.html" target="">LLM</a></strong>, several key changes are needed. First, the vocabulary size must expand from just 6 words to 50,000+ words or subwords using techniques like <strong><a href="https://huggingface.co/learn/nlp-course/en/chapter6/5" rel="noreferrer noopener" target="_blank">Byte-Pair Encoding</a></strong> (BPE) and tokenizers from libraries like Hugging Face. Instead of two sentences, real-world training requires millions of sentences sourced from books, Wikipedia, or large datasets.</p>
+<p>To scale up this model into a practical <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">LLM</a></strong>, several key changes are needed. First, the vocabulary size must expand from just 6 words to 50,000+ words or subwords using techniques like <strong><a href="https://huggingface.co/learn/nlp-course/en/chapter6/5" rel="noreferrer noopener" target="_blank">Byte-Pair Encoding</a></strong> (BPE) and tokenizers from libraries like Hugging Face. Instead of two sentences, real-world training requires millions of sentences sourced from books, Wikipedia, or large datasets.</p>
 <p>The embedding dimension should increase from 16 to 512 or 1024 for richer word representations, while the hidden dimension should grow from 32 to at least 2048 for greater processing power. The number of transformer layers needs to scale from 2 to 12–96, similar to models like GPT-3.</p>
 <p>Instead of simple self-attention, multi-head attention should be implemented using <strong>nn.MultiheadAttention</strong> for better contextual understanding. Training also becomes significantly more complex, moving from 100 CPU epochs to multi-GPU/TPU training over days or weeks, requiring optimizations like batching (DataLoader), gradient clipping, and learning rate schedulers.</p>
 <p>Hardware-wise, a real LLM demands multiple high-end GPUs (e.g., 8+ A100s) and frameworks like PyTorch Lightning or DeepSpeed for efficient scaling.</p>

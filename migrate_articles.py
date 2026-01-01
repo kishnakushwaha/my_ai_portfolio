@@ -153,7 +153,7 @@ print("Starting recursive migration...")
 
 max_articles = 150 # Safety limit
 count = 0
-date_cursor = datetime.date.today()
+date_cursor = datetime.date(2025, 10, 30)
 
 while processing_queue and count < max_articles:
     current_art = processing_queue.pop(0)
