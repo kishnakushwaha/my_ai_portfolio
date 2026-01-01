@@ -1,46 +1,54 @@
 <!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multimodal AI Systems | Kishna Kushwaha</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Multimodal AI Systems | Kishna Kushwaha</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../css/style.css" rel="stylesheet"/>
 </head>
-
 <body>
-    <header>
-        <div class="container nav-container">
-            <a href="../index.html" class="logo">
-                <div class="logo-circle"></div> Kishna Kushwaha
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div> Kishna Kushwaha
             </a>
-            <ul class="nav-links">
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="../about.html">About</a></li>
-                <li><a href="../articles.html" class="active">Articles</a></li>
-                <li><a href="../projects/machine_learning.html">Projects</a></li>
-                <li><a href="../index.html#courses">Recommended Resources</a></li>
-            </ul>
-        </div>
-    </header>
-    <main>
-        <div class="single-article-container">
-            <div class="article-main">
-                <article class="article-body">
-                    <h1 style="font-size: 2.5rem; font-weight: 800;">Multimodal AI Systems</h1>
-                    <div class="article-meta-small" style="margin-bottom: 2rem;">Dec 24, 2025 • 9 min read</div>
-                    <p class="lead" style="font-size: 1.25rem; color: #4B5563;">Beyond text: How models like Gemini and
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a class="active" href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li></ul>
+</div>
+</header>
+<main>
+<div class="single-article-container">
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; font-weight: 800;">Multimodal AI Systems</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 24, 2025 • 9 min read</div>
+<p class="lead" style="font-size: 1.25rem; color: #4B5563;">Beyond text: How models like Gemini and
                         GPT-4o process images, audio, and video simultaneously.</p>
-                </article>
-            </div>
-            <aside class="sidebar-area">
-                <div class="sticky-sidebar-content">
-                    <div class="ad-unit ad-sidebar-vertical"><span>Advertisement</span></div>
-                </div>
-            </aside>
-        </div>
-    </main>
-</body>
-
+</article>
+</div>
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<div class="ad-unit ad-sidebar-vertical"><span>Advertisement</span></div>
+</div>
+</aside>
+</div>
+</main>
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div><script src="../js/search.js"></script></body>
 </html>

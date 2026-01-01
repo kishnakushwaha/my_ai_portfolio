@@ -36,7 +36,11 @@
 <li><a class="active" href="../articles.html">Articles</a></li>
 <li><a href="../projects/machine_learning.html">Projects</a></li>
 <li><a href="../index.html#courses">Recommended Resources</a></li>
-</ul>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li></ul>
 </div>
 </header>
 <main>
@@ -136,5 +140,11 @@
 <!-- Highlight.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
 <script>hljs.highlightAll();</script>
-</body>
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div><script src="../js/search.js"></script></body>
 </html>

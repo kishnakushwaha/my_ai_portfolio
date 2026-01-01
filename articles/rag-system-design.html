@@ -1,65 +1,68 @@
 <!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAG System Design | Kishna Kushwaha</title>
-    <!-- Fonts & Icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/style.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RAG System Design | Kishna Kushwaha</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="../css/style.css" rel="stylesheet"/>
 </head>
-
 <body>
-    <!-- Navigation (Same as Template) -->
-    <header>
-        <div class="container nav-container">
-            <a href="../index.html" class="logo">
-                <div class="logo-circle"></div> Kishna Kushwaha
+<!-- Navigation (Same as Template) -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div> Kishna Kushwaha
             </a>
-            <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
-            <ul class="nav-links">
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="../about.html">About</a></li>
-                <li><a href="../articles.html" class="active">Articles</a></li>
-                <li><a href="../projects/machine_learning.html">Projects</a></li>
-                <li><a href="../index.html#courses">Recommended Resources</a></li>
-            </ul>
-        </div>
-    </header>
-
-    <main>
-        <div class="container" style="margin-top:2rem;">
-            <div class="ad-unit ad-leaderboard"><span>Advertisement</span></div>
-        </div>
-
-        <div class="single-article-container">
-            <div class="article-main">
-                <article class="article-body">
-                    <h1
-                        style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+<button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a class="active" href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li></ul>
+</div>
+</header>
+<main>
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard"><span>Advertisement</span></div>
+</div>
+<div class="single-article-container">
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
                         Advanced RAG System Design</h1>
-                    <div class="article-meta-small" style="margin-bottom: 2rem;">Dec 20, 2025 • 12 min read</div>
-
-                    <p class="lead" style="font-size: 1.25rem; color: #4B5563; margin-bottom: 2rem;">
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 20, 2025 • 12 min read</div>
+<p class="lead" style="font-size: 1.25rem; color: #4B5563; margin-bottom: 2rem;">
                         Retrieval-Augmented Generation (RAG) is the gold standard for connecting LLMs to private data.
                         But Naive RAG often fails in production.
                     </p>
-                    <p>We discuss Hybrid Search, Re-ranking, and Knowledge Graphs.</p>
-                </article>
-            </div>
-
-            <aside class="sidebar-area">
-                <div class="sticky-sidebar-content">
-                    <div class="ad-unit ad-sidebar-vertical"><span>Advertisement</span></div>
-                </div>
-            </aside>
-        </div>
-    </main>
-    <script src="../js/script.js"></script>
-</body>
-
+<p>We discuss Hybrid Search, Re-ranking, and Knowledge Graphs.</p>
+</article>
+</div>
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<div class="ad-unit ad-sidebar-vertical"><span>Advertisement</span></div>
+</div>
+</aside>
+</div>
+</main>
+<script src="../js/script.js"></script>
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div><script src="../js/search.js"></script></body>
 </html>
