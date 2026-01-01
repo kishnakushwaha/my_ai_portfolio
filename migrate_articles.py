@@ -176,8 +176,8 @@ max_articles = 150 # Safety limit
 count = 0
 count_special = 0
 
-# Normal Date Cursor (From Today)
-date_normal = datetime.date.today()
+# Normal Date Cursor (From previous setting)
+date_normal = datetime.date(2025, 10, 30)
 # Special Date Cursor (Requested Oct 25, 2025)
 date_special = datetime.date(2025, 10, 25)
 
