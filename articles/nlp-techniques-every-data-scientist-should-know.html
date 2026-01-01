@@ -70,7 +70,7 @@
 </ol>
 <p>Let’s explore all these NLP techniques in detail with implementation using Python.</p>
 <h4 class="wp-block-heading">Tokenization</h4>
-<p>Tokenization is the process of breaking down text into smaller pieces, called tokens, which could be words, sentences, or other units. It’s often the first step in text preprocessing for tasks like <strong><a href="https://my-ai-portfolio.com/2023/12/04/app-reviews-sentiment-analysis-using-python/">sentiment analysis</a></strong> or <strong><a href="https://my-ai-portfolio.com/2023/02/13/topic-modelling-using-python/">topic modelling</a></strong>.</p>
+<p>Tokenization is the process of breaking down text into smaller pieces, called tokens, which could be words, sentences, or other units. It’s often the first step in text preprocessing for tasks like <strong><a href="https://my-ai-portfolio.com/2023/12/04/app-reviews-sentiment-analysis-using-python/">sentiment analysis</a></strong> or <strong><a href="https://my-ai-portfolio.com/2topic-modelling-using-pythonkishna023/02/13/topic-modelling-using-python/">topic modelling</a></strong>.</p>
 <p>It converts text into a structured form that algorithms can manipulate.</p>
 <p>Here’s how to implement tokenization using Python:</p>
 <pre><code class="language-python">import nltk
@@ -95,7 +95,7 @@ text = "Hi, my name is Kishna Kushwaha."
 tokens = word_tokenize(text)
 filtered_tokens = [word for word in tokens if not word in stop_words]
 print(filtered_tokens)</code></pre>
-<pre class="wp-block-preformatted has-small-font-size"><strong>['Hi', ',', 'name', 'Aman', 'Kharwal', '.']</strong></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>['Hi', ',', 'name', 'Kishna', 'Kushwaha', '.']</strong></pre>
 <h4 class="wp-block-heading">Stemming and Lemmatization</h4>
 <p>These techniques are used to reduce words to their base or root form. Stemming might not always produce actual words but cuts off prefixes and suffixes (e.g., “running” becomes “run”).</p>
 <p>On the other hand, Lemmatization reduces words to their lexicographically correct base form based on their usage in a sentence (e.g., “better” becomes “good” when used as an adjective).</p>
