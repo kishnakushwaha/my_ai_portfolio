@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Build Your First RAG System From Scratch | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Build Your First RAG System From Scratch</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 30, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="building-a-multimodal-ai-model.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="fine-tuning-llms-using-lora.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>The single biggest problem with the AI everyone is so excited about is that it’s confidently lying to you. You ask a powerful <strong><a href="fine-tuning-llms-using-lora.html" target="">LLM</a></strong> a simple question about your data: a PDF, a company doc, or even just this morning’s news, and it either invents a plausible-sounding, completely wrong answer or just gives up. We call this <strong>hallucination</strong>, and it’s the single biggest problem holding AI back from being truly useful. The fix is surprisingly simple. We don’t need a bigger model; we need to give our model an <strong>open-book exam.</strong> This is the core idea behind a technique called <strong>Retrieval-Augmented Generation (RAG)</strong>. Today, I’ll show you exactly how to build your first RAG system from scratch using Python.</p>
+<h2 class="wp-block-heading">Let’s Build Your First RAG System From Scratch</h2>
+<p>Forget expensive APIs and proprietary databases. We’re doing this with the tools that real engineers use to build powerful, scalable systems. Here are the tools we will be using:</p>
+<ol class="wp-block-list">
+<li><strong>transformers (Hugging Face):</strong> To get our powerful, free LLM.</li>
+<li><strong>sentence-transformers:</strong> The easiest way to get a top-tier embedding model.</li>
+<li><strong>faiss-cpu:</strong> Facebook AI’s blazing-fast, free vector search library. It’s our vector store.</li>
+<li><strong>langchain:</strong> We’ll only use its text splitter, which is a smart shortcut that saves us hours of regex pain.</li>
+</ol>
+<p>Open your Google Colab and let’s get set up:</p>
+<pre class="wp-block-preformatted"><strong>!pip install transformers sentence-transformers faiss-cpu langchain</strong></pre>
+<h4 class="wp-block-heading">Step 1: Our Data</h4>
+<p>First, we need some custom knowledge. Let’s create a simple text file named <strong>my_knowledge.txt</strong>. Put this inside and upload it on your Colab notebook:</p>
+<pre class="wp-block-preformatted"><strong>Company Policy Manual:<br/>- WFH Policy: All employees are eligible for a hybrid WFH schedule. Employees must be in the office on Tuesdays, Wednesdays, and Thursdays. Mondays and Fridays are optional remote days.<br/>- PTO Policy: Full-time employees receive 20 days of Paid Time Off (PTO) per year. PTO accrues monthly.<br/>- Tech Stack: The official backend language is Python, and the official frontend framework is React. For mobile development, we use React Native.</strong></pre>
+<p>This is our book. The LLM has no idea this information exists.</p>
+<h4 class="wp-block-heading">Step 2: Chunking</h4>
+<p>We can’t feed the whole book to the model at once. We need to split it into index cards (chunks). Don’t just split by \n (newlines). You’ll cut sentences in half. We’ll use a smart splitter:</p>
+<pre><code class="language-python">import os
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+# Load our document
+with open("my_knowledge.txt") as f:
+    knowledge_text = f.read()
+
+# 1. Initialize the Text Splitter
+# This splitter is smart. It tries to split on paragraphs ("\n\n"),
+# then newlines ("\n"), then spaces (" "), to keep semantically
+# related text together as much as possible.
+text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=150,  # Max size of a chunk
+    chunk_overlap=20, # Overlap to maintain context between chunks
+    length_function=len
+)
+
+# 2. Create the chunks
+chunks = text_splitter.split_text(knowledge_text)
+
+print(f"We have {len(chunks)} chunks:")
+for i, chunk in enumerate(chunks):
+    print(f"--- Chunk {i+1} ---\n{chunk}\n")</code></pre>
+<pre class="wp-block-preformatted"><strong>We have 4 chunks:<br/>--- Chunk 1 ---<br/>Company Policy Manual: - WFH Policy: All employees are eligible for a hybrid WFH schedule. Employees must be in the office on Tuesdays, Wednesdays,<br/><br/>--- Chunk 2 ---<br/>Wednesdays, and Thursdays. Mondays and Fridays are optional remote days. - PTO Policy: Full-time employees receive 20 days of Paid Time Off (PTO) per<br/><br/>--- Chunk 3 ---<br/>Time Off (PTO) per year. PTO accrues monthly. - Tech Stack: The official backend language is Python, and the official frontend framework is React.<br/><br/>--- Chunk 4 ---<br/>framework is React. For mobile development, we use React Native.}</strong></pre>
+<p>You’ll see it intelligently broke our file into small, overlapping pieces.</p>
+<h4 class="wp-block-heading">Step 3: Embeddings</h4>
+<p>Now we turn those text chunks into numbers (vectors). We’ll use a popular, lightweight sentence-transformer model. It’s brilliant at understanding the meaning of a sentence:</p>
+<pre><code class="language-python">from sentence_transformers import SentenceTransformer
+
+# 1. Load the embedding model
+# 'all-MiniLM-L6-v2' is a fantastic, fast, and small model.
+# It runs 100% on your local machine.
+model = SentenceTransformer('all-MiniLM-L6-v2')
+
+# 2. Embed all our chunks
+# This will take a moment as it "reads" and "understands" each chunk.
+chunk_embeddings = model.encode(chunks)
+
+print(f"Shape of our embeddings: {chunk_embeddings.shape}")</code></pre>
+<pre class="wp-block-preformatted"><strong>Shape of our embeddings: (4, 384)</strong></pre>
+<h4 class="wp-block-heading">Step 4: Vector Store with FAISS</h4>
+<p>We have our vectors. Now we need a database to store them in a way we can search by similarity. It is where <strong>FAISS</strong> comes in. Don’t be intimidated; it’s just a few lines of code:</p>
+<pre><code class="language-python">import faiss
+import numpy as np
+
+# Get the dimension of our vectors (e.g., 384)
+d = chunk_embeddings.shape[1]
+
+# 1. Create a FAISS index
+# IndexFlatL2 is the simplest, most basic index. It calculates
+# the exact distance (L2 distance) between our query and all vectors.
+index = faiss.IndexFlatL2(d)
+
+# 2. Add our chunk embeddings to the index
+# We must convert to float32 for FAISS
+index.add(np.array(chunk_embeddings).astype('float32'))
+
+print(f"FAISS index created with {index.ntotal} vectors.")</code></pre>
+<p>That’s it. You just created an in-memory vector database.</p>
+<pre class="wp-block-preformatted"><strong>FAISS index created with 4 vectors.</strong></pre>
+<h4 class="wp-block-heading">Step 5: Retrieve, Augment, Generate</h4>
+<p>This is the final part. Here the user will ask a question. Let’s trace the full pipeline:</p>
+<pre><code class="language-python">from transformers import pipeline
+
+# 1. Load a "Question-Answering" or "Text-Generation" model
+# We'll use a small, instruction-tuned model from Google.
+generator = pipeline('text2text-generation', model='google/flan-t5-small')
+
+# --- This is our RAG pipeline function ---
+def answer_question(query):
+    # 1. RETRIEVE
+    # Embed the user's query
+    query_embedding = model.encode([query]).astype('float32')
+
+    # Search the FAISS index for the top k (e.g., k=2) most similar chunks
+    k = 2
+    distances, indices = index.search(query_embedding, k)
+
+    # Get the actual text chunks from our original 'chunks' list
+    retrieved_chunks = [chunks[i] for i in indices[0]]
+    context = "\n\n".join(retrieved_chunks)
+
+    # 2. AUGMENT
+    # This is the "magic prompt." We combine the retrieved context
+    # with the user's query.
+    prompt_template = f"""
+    Answer the following question using *only* the provided context.
+    If the answer is not in the context, say "I don't have that information."
+
+    Context:
+    {context}
+
+    Question:
+    {query}
+
+    Answer:
+    """
+
+    # 3. GENERATE
+    # Feed the augmented prompt to our generative model
+    answer = generator(prompt_template, max_length=100)
+    print(f"--- CONTEXT ---\n{context}\n")
+    return answer[0]['generated_text']</code></pre>
+<p>Now, let’s ask our system some questions:</p>
+<pre><code class="language-python">query_1 = "What is the WFH policy?"
+print(f"Query: {query_1}")
+print(f"Answer: {answer_question(query_1)}\n")</code></pre>
+<pre class="wp-block-preformatted"><strong>Query: What is the WFH policy?<br/><br/>--- CONTEXT ---<br/>Company Policy Manual: - WFH Policy: All employees are eligible for a hybrid WFH schedule. Employees must be in the office on Tuesdays, Wednesdays,<br/><br/>Wednesdays, and Thursdays. Mondays and Fridays are optional remote days. - PTO Policy: Full-time employees receive 20 days of Paid Time Off (PTO) per<br/><br/>Answer: All employees are eligible for a hybrid WFH schedule. Employees must be in the office on Tuesdays, Wednesdays, Wednesdays, and Thursdays. Mondays and Fridays are optional remote days. - PTO Policy: Full-time employees receive 20 days of Paid Time Off (PTO)</strong></pre>
+<p><strong>It worked!</strong> It didn’t just guess, it found the exact text and synthesized the answer.</p>
+<p>Now, let’s ask a question the context cannot answer:</p>
+<pre><code class="language-python">query_2 = "What is the company's dental plan?"
+print(f"Query: {query_2}")
+print(f"Answer: {answer_question(query_2)}\n")</code></pre>
+<pre class="wp-block-preformatted"><strong>Query: What is the company's dental plan?</strong><br/><strong><br/>--- CONTEXT ---<br/>Company Policy Manual: - WFH Policy: All employees are eligible for a hybrid WFH schedule. Employees must be in the office on Tuesdays, Wednesdays,<br/><br/>Wednesdays, and Thursdays. Mondays and Fridays are optional remote days. - PTO Policy: Full-time employees receive 20 days of Paid Time Off (PTO) per<br/><br/>Answer: I don't have that information.</strong></pre>
+<p>It is critical. Because of our prompt (“only use the provided context”), the LLM didn’t hallucinate. It correctly stated it couldn’t find the answer.</p>
+<h3 class="wp-block-heading">Final Words</h3>
+<p>Take a step back. What you just built in a few dozen lines of Python is the foundation of the next generation of AI. You solved the three biggest problems with LLMs:</p>
+<ol class="wp-block-list">
+<li><strong>Hallucinations:</strong> You grounded the model in reality.</li>
+<li><strong>Stale Knowledge:</strong> You can update the knowledge! Just re-run the indexing (Steps 1-4) on new documents.</li>
+<li><strong>Data Privacy:</strong> No data ever left your computer. The embedding model and the LLM all ran locally.</li>
+</ol>
+<p>This blueprint is how you chat with your codebase, summarize your legal documents, or ask questions about your 1,000 unread emails.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="building-a-multimodal-ai-model.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="fine-tuning-llms-using-lora.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Building a RAG Pipeline for LLMs | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Building a RAG Pipeline for LLMs</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 08, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="ai-image-caption-recommendation-system.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="document-analysis-using-llms-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Large Language Models (LLMs) are powerful, but they have a major limitation: <strong>their knowledge is static</strong> and limited to the data they were trained on. This is where <strong>Retrieval-Augmented Generation (RAG)</strong> comes in. So, if you want to learn how to enhance LLMs by retrieving <strong>relevant external knowledge</strong> before generating responses, this article is for you. In this article, I’ll take you through building a RAG Pipeline for LLMs using Hugging Face Transformers and Python.</p>
+<h2 class="wp-block-heading">So, What is a RAG Pipeline?</h2>
+<p>A Retrieval-Augmented Generation (RAG) pipeline consists of two key components:</p>
+<ol class="wp-block-list">
+<li><strong>Retriever:</strong> Searches a knowledge base for relevant documents based on the user’s query.</li>
+<li><strong>Generator:</strong> Uses retrieved documents as context to generate accurate and relevant responses.</li>
+</ol>
+<p>RAG improves LLMs by <strong>reducing hallucinations</strong> through real-world context, ensuring responses are <strong>more accurate and grounded in factual information</strong>. It also <strong>keeps answers up-to-date</strong> by retrieving the latest knowledge, eliminating the need for frequent retraining. Additionally, by incorporating external data sources, RAG significantly <strong>enhances the factual accuracy</strong> of AI-generated responses, which makes LLMs more reliable and context-aware.</p>
+<h2 class="wp-block-heading">Building a RAG Pipeline for LLMs: Getting Started</h2>
+<p>In our implementation, we will:</p>
+<ol class="wp-block-list">
+<li>Use <strong>Wikipedia</strong> as our external knowledge source.</li>
+<li>Employ <strong>Sentence Transformers</strong> for embedding text and FAISS for efficient similarity search.</li>
+<li>Utilize <strong>Hugging Face’s question-answering pipeline</strong> to extract answers from retrieved documents.</li>
+</ol>
+<p>Let’s import the necessary Python libraries to get started:</p>
+<pre><code class="language-python">import wikipedia
+from transformers import AutoTokenizer, AutoModelForQuestionAnswering, pipeline
+from sentence_transformers import SentenceTransformer
+import faiss
+import numpy as np</code></pre>
+<h4 class="wp-block-heading">Step 1: Retrieving Knowledge</h4>
+<p>To simulate an external knowledge base, we’ll fetch relevant Wikipedia articles based on a given topic:</p>
+<pre><code class="language-python">def get_wikipedia_content(topic):
+    try:
+        page = wikipedia.page(topic)
+        return page.content
+    except wikipedia.exceptions.PageError:
+        return None
+    except wikipedia.exceptions.DisambiguationError as e:
+        # handle cases where the topic is ambiguous
+        print(f"Ambiguous topic. Please be more specific. Options: {e.options}")
+        return None
+
+# user input
+topic = input("Enter a topic to learn about: ")
+document = get_wikipedia_content(topic)
+
+if not document:
+    print("Could not retrieve information.")
+    exit()</code></pre>
+<pre class="wp-block-preformatted"><strong>Enter a topic to learn about: Apple Computers</strong></pre>
+<p>Here, we are retrieving Wikipedia content based on a user-provided topic using the Wikipedia API. If the topic is valid, the function returns the page content; otherwise, it handles errors by either notifying the user of an ambiguous topic with multiple options or exiting if no relevant page is found.</p>
+<p>Since Wikipedia articles can be long, we will split the text into smaller<strong> overlapping chunks</strong> for better retrieval:</p>
+<pre><code class="language-python">tokenizer = AutoTokenizer.from_pretrained("sentence-transformers/all-mpnet-base-v2")
+
+def split_text(text, chunk_size=256, chunk_overlap=20):
+    tokens = tokenizer.tokenize(text)
+    chunks = []
+    start = 0
+    while start &lt; len(tokens):
+        end = min(start + chunk_size, len(tokens))
+        chunks.append(tokenizer.convert_tokens_to_string(tokens[start:end]))
+        if end == len(tokens):
+            break
+        start = end - chunk_overlap
+    return chunks
+
+chunks = split_text(document)
+print(f"Number of chunks: {len(chunks)}")</code></pre>
+<p>Here, we are tokenizing the retrieved Wikipedia content and splitting it into smaller overlapping chunks for efficient retrieval. We used a <strong>pre-trained tokenizer</strong> (all-mpnet-base-v2) to break the text into tokens, then divided it into <strong>fixed-size segments (256 tokens each) with an overlap of 20 tokens</strong> to maintain context between chunks.</p>
+<h4 class="wp-block-heading">Step 2: Storing and Retrieving Knowledge</h4>
+<p>To efficiently search for relevant chunks, we will use <strong>Sentence Transformers</strong> to convert text into embeddings and store them in a <strong><a href="https://ai.meta.com/tools/faiss/" rel="noreferrer noopener" target="_blank">FAISS</a> index:</strong></p>
+<pre><code class="language-python">embedding_model = SentenceTransformer("sentence-transformers/all-mpnet-base-v2")
+embeddings = embedding_model.encode(chunks)
+
+dimension = embeddings.shape[1]
+index = faiss.IndexFlatL2(dimension)
+index.add(np.array(embeddings))</code></pre>
+<p>Here, we converted the text chunks into numerical embeddings using the <strong>Sentence Transformer model (all-mpnet-base-v2)</strong>, which captures their semantic meaning. We then created a <strong>FAISS index</strong> with an <strong>L2 (Euclidean) distance metric</strong> and stored the embeddings in it. This will allow us to efficiently retrieve the most relevant chunks based on a user’s query.</p>
+<h4 class="wp-block-heading">Step 3: Querying the RAG Pipeline</h4>
+<p>Now, we will take user input for the RAG pipeline. When a user asks a question, we will:</p>
+<ol class="wp-block-list">
+<li>Convert the query into an embedding.</li>
+<li>Retrieve the <strong>top-k</strong> most relevant chunks using FAISS.</li>
+<li>Use an<strong> LLM-powered question-answering model</strong> to generate the answer.</li>
+</ol>
+<pre><code class="language-python">query = input("Ask a question about the topic: ")
+query_embedding = embedding_model.encode([query])
+
+k = 3
+distances, indices = index.search(np.array(query_embedding), k)
+retrieved_chunks = [chunks[i] for i in indices[0]]
+print("Retrieved chunks:")
+for chunk in retrieved_chunks:
+    print("- " + chunk)</code></pre>
+<pre class="wp-block-preformatted"><strong>Ask a question about the topic: Legal Cases Against Apple Computers</strong></pre>
+<h4 class="wp-block-heading">Step 4: Answering the Question with an LLM</h4>
+<p>Now, we will use a <strong>pre-trained question-answering model</strong> to extract the final answer from the retrieved context:</p>
+<pre><code class="language-python">qa_model_name = "deepset/roberta-base-squad2"
+qa_tokenizer = AutoTokenizer.from_pretrained(qa_model_name)
+qa_model = AutoModelForQuestionAnswering.from_pretrained(qa_model_name)
+qa_pipeline = pipeline("question-answering", model=qa_model, tokenizer=qa_tokenizer)
+
+context = " ".join(retrieved_chunks)
+answer = qa_pipeline(question=query, context=context)
+print(f"Answer: {answer['answer']}")</code></pre>
+<pre class="wp-block-preformatted"><strong>Answer: siri assistant violated user privacy</strong></pre>
+<p>So, this is how you now have a <strong>fully functional RAG pipeline for LLMs</strong> that can be used in <strong>real-world AI applications</strong>.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>In this article, we built a Retrieval-Augmented Generation (RAG) pipeline for LLMs using:</p>
+<ol class="wp-block-list">
+<li>Wikipedia as an external knowledge base</li>
+<li>Sentence Transformers for embedding generation</li>
+<li>FAISS for fast and efficient retrieval</li>
+<li>Hugging Face’s QA pipeline to extract final answers</li>
+</ol>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="ai-image-caption-recommendation-system.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="document-analysis-using-llms-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

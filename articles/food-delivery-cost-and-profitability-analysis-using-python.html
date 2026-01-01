@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Food Delivery Cost and Profitability Analysis using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Food Delivery Cost and Profitability Analysis using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 03, 2025 • 5 min read</div>
+<p>Food Delivery Cost and Profitability Analysis is a comprehensive evaluation aimed at understanding and optimizing the financial dynamics of a food delivery operation. The goal is to identify areas where the service can reduce costs, increase revenue, and implement pricing or commission strategies that enhance profitability. So, if you want to learn how to perform cost and profitability analysis of a business operation, this article is for you. In this article, I’ll take you through the task of Food Delivery Cost and Profitability Analysis using <strong><a href="https://my-ai-portfolio.com/2022/07/15/python-practice-questions-for-coding-interviews/">Python</a></strong>.</p>
+<h2 class="wp-block-heading">Food Delivery Cost and Profitability Analysis: Process We Can Follow</h2>
+<p>Food Delivery Cost and Profitability Analysis involves examining all the costs associated with delivering food orders, from direct expenses like delivery fees and packaging to indirect expenses like discounts offered to customers and commission fees paid by restaurants. By juxtaposing these costs against the revenue generated (primarily through order values and commission fees), the analysis aims to provide insights into how profitable the food delivery service is on a per-order basis.</p>
+<p>Below is the process we can follow for the task of Food Delivery Cost and Profitability Analysis:</p>
+<ol class="wp-block-list">
+<li>Start by gathering comprehensive data related to all aspects of food delivery operations.</li>
+<li>Clean the dataset for inconsistencies, missing values, or irrelevant information.</li>
+<li>Extract relevant features that could impact cost and profitability.</li>
+<li>Break down the costs associated with each order, including fixed costs (like packaging) and variable costs (like delivery fees and discounts).</li>
+<li>Determine the revenue generated from each order, focusing on commission fees and the order value before discounts.</li>
+<li>For each order, calculate the profit by subtracting the total costs from the revenue. Analyze the distribution of profitability across all orders to identify trends.</li>
+<li>Based on the cost and profitability analysis, develop strategic recommendations aimed at enhancing profitability.</li>
+<li>Use the data to simulate the financial impact of proposed changes, such as adjusting discount or commission rates.</li>
+</ol>
+<p>So, the process starts with collecting a dataset. I found an ideal dataset for this task. You can download the dataset from <a href="../assets/datasets/food_orders-1.zip" rel="noreferrer noopener" target="_blank"><strong>here</strong></a>.</p>
+<h2 class="wp-block-heading">Food Delivery Cost and Profitability Analysis using Python</h2>
+<p>Now, let’s get started with the task of Food Delivery Cost and Profitability Analysis by importing the necessary Python libraries and the <a href="../assets/datasets/food_orders-1.zip" rel="noreferrer noopener" target="_blank"><strong>dataset</strong></a>:</p>
+<pre><code class="language-python">import pandas as pd
+
+food_orders = pd.read_csv("food_orders_new_delhi.csv")
+print(food_orders.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>   Order ID Customer ID Restaurant ID  Order Date and Time  \<br/>0         1       C8270         R2924  2024-02-01 01:11:52   <br/>1         2       C1860         R2054  2024-02-02 22:11:04   <br/>2         3       C6390         R2870  2024-01-31 05:54:35   <br/>3         4       C6191         R2642  2024-01-16 22:52:49   <br/>4         5       C6734         R2799  2024-01-29 01:19:30   <br/><br/>  Delivery Date and Time  Order Value  Delivery Fee    Payment Method  \<br/>0    2024-02-01 02:39:52         1914             0       Credit Card   <br/>1    2024-02-02 22:46:04          986            40    Digital Wallet   <br/>2    2024-01-31 06:52:35          937            30  Cash on Delivery   <br/>3    2024-01-16 23:38:49         1463            50  Cash on Delivery   <br/>4    2024-01-29 02:48:30         1992            30  Cash on Delivery   <br/><br/>  Discounts and Offers  Commission Fee  Payment Processing Fee  \<br/>0            5% on App             150                      47   <br/>1                  10%             198                      23   <br/>2         15% New User             195                      45   <br/>3                 None             146                      27   <br/>4         50 off Promo             130                      50   <br/><br/>   Refunds/Chargebacks  <br/>0                    0  <br/>1                    0  <br/>2                    0  <br/>3                    0  <br/>4                    0  </strong></pre>
+<pre><code class="language-python">print(food_orders.info())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>&lt;class 'pandas.core.frame.DataFrame'&gt;<br/>RangeIndex: 1000 entries, 0 to 999<br/>Data columns (total 12 columns):<br/> #   Column                  Non-Null Count  Dtype <br/>---  ------                  --------------  ----- <br/> 0   Order ID                1000 non-null   int64 <br/> 1   Customer ID             1000 non-null   object<br/> 2   Restaurant ID           1000 non-null   object<br/> 3   Order Date and Time     1000 non-null   object<br/> 4   Delivery Date and Time  1000 non-null   object<br/> 5   Order Value             1000 non-null   int64 <br/> 6   Delivery Fee            1000 non-null   int64 <br/> 7   Payment Method          1000 non-null   object<br/> 8   Discounts and Offers    1000 non-null   object<br/> 9   Commission Fee          1000 non-null   int64 <br/> 10  Payment Processing Fee  1000 non-null   int64 <br/> 11  Refunds/Chargebacks     1000 non-null   int64 <br/>dtypes: int64(6), object(6)<br/>memory usage: 93.9+ KB<br/>None</strong></pre>
+<p>The dataset contains 1,000 entries and 12 columns, with no missing values in any of the columns. Now, we need to perform some <strong><a href="https://my-ai-portfolio.com/2023/08/08/data-cleaning-using-python/">data cleaning</a></strong> and preparation. Below are the necessary cleaning steps we need to take:</p>
+<ul class="wp-block-list">
+<li>Convert “Order Date and Time” and “Delivery Date and Time” to a datetime format.</li>
+<li>Convert “Discounts and Offers” to a consistent numeric value (if applicable) or calculate the discount amounts.</li>
+<li>Ensure all monetary values are in a suitable format for calculations.</li>
+</ul>
+<p>Let’s perform these data preparation steps:</p>
+<pre><code class="language-python">from datetime import datetime
+
+# convert date and time columns to datetime
+food_orders['Order Date and Time'] = pd.to_datetime(food_orders['Order Date and Time'])
+food_orders['Delivery Date and Time'] = pd.to_datetime(food_orders['Delivery Date and Time'])
+
+# first, let's create a function to extract numeric values from the 'Discounts and Offers' string
+def extract_discount(discount_str):
+    if 'off' in discount_str:
+        # Fixed amount off
+        return float(discount_str.split(' ')[0])
+    elif '%' in discount_str:
+        # Percentage off
+        return float(discount_str.split('%')[0])
+    else:
+        # No discount
+        return 0.0
+
+# apply the function to create a new 'Discount Value' column
+food_orders['Discount Percentage'] = food_orders['Discounts and Offers'].apply(lambda x: extract_discount(x))
+
+# for percentage discounts, calculate the discount amount based on the order value
+food_orders['Discount Amount'] = food_orders.apply(lambda x: (x['Order Value'] * x['Discount Percentage'] / 100)
+                                                   if x['Discount Percentage'] &gt; 1
+                                                   else x['Discount Percentage'], axis=1)
+
+# adjust 'Discount Amount' for fixed discounts directly specified in the 'Discounts and Offers' column
+food_orders['Discount Amount'] = food_orders.apply(lambda x: x['Discount Amount'] if x['Discount Percentage'] &lt;= 1
+                                                   else x['Order Value'] * x['Discount Percentage'] / 100, axis=1)
+
+print(food_orders[['Order Value', 'Discounts and Offers', 'Discount Percentage', 'Discount Amount']].head(), food_orders.dtypes)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>   Order Value Discounts and Offers  Discount Percentage  Discount Amount<br/>0         1914            5% on App                  5.0            95.70<br/>1          986                  10%                 10.0            98.60<br/>2          937         15% New User                 15.0           140.55<br/>3         1463                 None                  0.0             0.00<br/>4         1992         50 off Promo                 50.0           996.00 </strong><br/><br/><strong>Order ID                           int64<br/>Customer ID                       object<br/>Restaurant ID                     object<br/>Order Date and Time       datetime64[ns]<br/>Delivery Date and Time    datetime64[ns]<br/>Order Value                        int64<br/>Delivery Fee                       int64<br/>Payment Method                    object<br/>Discounts and Offers              object<br/>Commission Fee                     int64<br/>Payment Processing Fee             int64<br/>Refunds/Chargebacks                int64<br/>Discount Percentage              float64<br/>Discount Amount                  float64<br/>dtype: object</strong></pre>
+<p>The data is now ready with the following adjustments:</p>
+<ul class="wp-block-list">
+<li>Order Date and Time and Delivery Date and Time columns have been converted to datetime format.</li>
+<li>A new column, Discount Amount, has been calculated based on the Discounts and Offers column. This was achieved by extracting percentage discounts or fixed amounts and applying them to the order value.</li>
+<li>Discount Percentage has been added to represent the discount rate or fixed amount discount directly.</li>
+</ul>
+<h2 class="wp-block-heading">Cost and Profitability Analysis</h2>
+<p>For the cost analysis, we’ll consider the following costs associated with each order:</p>
+<ul class="wp-block-list">
+<li><strong>Delivery Fee</strong>: The fee charged for delivering the order.</li>
+<li><strong>Payment Processing Fee</strong>: The fee for processing the payment.</li>
+<li><strong>Discount Amount</strong>: The discount provided on the order.</li>
+</ul>
+<p>We’ll calculate the total cost for the platform per order and then aggregate this data to understand the overall cost structure.</p>
+<p>The revenue for the platform is mainly derived from the <strong>Commission Fee</strong>. We’ll calculate the net profit by subtracting the total costs (including discounts) from the revenue generated through commission fees.</p>
+<p>Let’s proceed with the cost and profitability analysis:</p>
+<pre><code class="language-python"># calculate total costs and revenue per order
+food_orders['Total Costs'] = food_orders['Delivery Fee'] + food_orders['Payment Processing Fee'] + food_orders['Discount Amount']
+food_orders['Revenue'] = food_orders['Commission Fee']
+food_orders['Profit'] = food_orders['Revenue'] - food_orders['Total Costs']
+
+# aggregate data to get overall metrics
+total_orders = food_orders.shape[0]
+total_revenue = food_orders['Revenue'].sum()
+total_costs = food_orders['Total Costs'].sum()
+total_profit = food_orders['Profit'].sum()
+
+overall_metrics = {
+    "Total Orders": total_orders,
+    "Total Revenue": total_revenue,
+    "Total Costs": total_costs,
+    "Total Profit": total_profit
+}
+
+print(overall_metrics)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>{'Total Orders': 1000, 'Total Revenue': 126990, 'Total Costs': 232709.85, 'Total Profit': -105719.85}</strong></pre>
+<p>Based on the analysis, here are the overall metrics for the food delivery operations:</p>
+<ul class="wp-block-list">
+<li>Total Orders: 1,000</li>
+<li>Total Revenue (from Commission Fees): 126,990 INR</li>
+<li>Total Costs: 232,709.85 INR (including delivery fees, payment processing fees, and discounts)</li>
+<li>Total Profit: -105,719.85 INR</li>
+</ul>
+<p>The analysis indicates that the total costs associated with the food delivery operations exceed the total revenue generated from commission fees, resulting in a net loss. It suggests that the current commission rates, delivery fees, and discount strategies might not be sustainable for profitability.</p>
+<p>To better understand the distribution of costs, revenue, and profit, let’s plot:</p>
+<ol class="wp-block-list">
+<li>A histogram of profits per order to visualize the distribution of profitable and unprofitable orders.</li>
+<li>A pie chart to visualize the proportion of total costs (delivery fees, payment processing fees, and discounts).</li>
+<li>A bar chart to compare total revenue, total costs, and total profit</li>
+</ol>
+<p>Let’s plot the histogram first:</p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+
+# histogram of profits per order
+plt.figure(figsize=(10, 6))
+plt.hist(food_orders['Profit'], bins=50, color='skyblue', edgecolor='black')
+plt.title('Profit Distribution per Order in Food Delivery')
+plt.xlabel('Profit')
+plt.ylabel('Number of Orders')
+plt.axvline(food_orders['Profit'].mean(), color='red', linestyle='dashed', linewidth=1)
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="Food Delivery Cost and Profitability Analysis: Profit Distribution per Order in Food Delivery" class="wp-image-22577" data-attachment-id="22577" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Food-Delivery-Cost-and-Profitability-Analysis-1" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-1.png?fit=850%2C547&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-1.png?fit=300%2C193&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-1.png?fit=850%2C547&amp;ssl=1" data-orig-size="850,547" data-permalink="https://my-ai-portfolio.com/2024/02/12/food-delivery-cost-and-profitability-analysis-using-python/food-delivery-cost-and-profitability-analysis-1/" data-recalc-dims="1" decoding="async" height="547" sizes="(max-width: 850px) 100vw, 850px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-1.png?resize=850%2C547&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-1.png?w=850&amp;ssl=1 850w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-1.png?resize=300%2C193&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-1.png?resize=768%2C494&amp;ssl=1 768w" style="width:691px;height:auto" width="850"/></figure>
+<p>The histogram shows a wide distribution of profit per order, with a noticeable number of orders resulting in a loss (profits below 0). The red dashed line indicates the average profit, which is in the negative territory, highlighting the overall loss-making situation.</p>
+<p>Now, let’s have a look at the proportion of total costs:</p>
+<pre><code class="language-python"># pie chart for the proportion of total costs
+costs_breakdown = food_orders[['Delivery Fee', 'Payment Processing Fee', 'Discount Amount']].sum()
+plt.figure(figsize=(7, 7))
+plt.pie(costs_breakdown, labels=costs_breakdown.index, autopct='%1.1f%%', startangle=140, colors=['tomato', 'gold', 'lightblue'])
+plt.title('Proportion of Total Costs in Food Delivery')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="Proportion of Total Costs in Food Delivery" class="wp-image-22579" data-attachment-id="22579" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Food-Delivery-Cost-and-Profitability-Analysis-2" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-2.png?fit=754%2C581&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-2.png?fit=300%2C231&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-2.png?fit=754%2C581&amp;ssl=1" data-orig-size="754,581" data-permalink="https://my-ai-portfolio.com/2024/02/12/food-delivery-cost-and-profitability-analysis-using-python/food-delivery-cost-and-profitability-analysis-2/" data-recalc-dims="1" decoding="async" height="581" sizes="(max-width: 754px) 100vw, 754px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-2.png?resize=754%2C581&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-2.png?w=754&amp;ssl=1 754w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-2.png?resize=300%2C231&amp;ssl=1 300w" style="width:659px;height:auto" width="754"/></figure>
+<p>The pie chart illustrates the breakdown of total costs into delivery fees, payment processing fees, and discount amounts. Discounts constitute a significant portion of the costs, suggesting that promotional strategies might be heavily impacting overall profitability.</p>
+<p>Now, let’s compare total revenue, total costs, and total profit (net loss in our case):</p>
+<pre><code class="language-python"># bar chart for total revenue, costs, and profit
+totals = ['Total Revenue', 'Total Costs', 'Total Profit']
+values = [total_revenue, total_costs, total_profit]
+
+plt.figure(figsize=(8, 6))
+plt.bar(totals, values, color=['green', 'red', 'blue'])
+plt.title('Total Revenue, Costs, and Profit')
+plt.ylabel('Amount (INR)')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="Food Delivery Cost and Profitability Analysis: Total Revenue, Costs, and Profit" class="wp-image-22582" data-attachment-id="22582" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Food-Delivery-Cost-and-Profitability-Analysis-3" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-3.png?fit=733%2C528&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-3.png?fit=300%2C216&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-3.png?fit=733%2C528&amp;ssl=1" data-orig-size="733,528" data-permalink="https://my-ai-portfolio.com/2024/02/12/food-delivery-cost-and-profitability-analysis-using-python/food-delivery-cost-and-profitability-analysis-3/" data-recalc-dims="1" decoding="async" height="528" loading="lazy" sizes="auto, (max-width: 733px) 100vw, 733px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-3.png?resize=733%2C528&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-3.png?w=733&amp;ssl=1 733w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-3.png?resize=300%2C216&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-3.png?resize=140%2C100&amp;ssl=1 140w" style="width:677px;height:auto" width="733"/></figure>
+<p>The bar chart compares total revenue, total costs, and total profit. It visually represents the gap between revenue and costs, clearly showing that the costs surpass the revenue, leading to a total loss.</p>
+<h2 class="wp-block-heading">A New Strategy for Profits</h2>
+<p>From the analysis so far we understood that the discounts on food orders are resulting in huge losses. Now, we need to find a new strategy for profitability. We need to find a sweet spot for offering discounts and charging commissions. To find a sweet spot for commission and discount percentages, we can analyze the characteristics of profitable orders more deeply. Specifically, we need to look for:</p>
+<ol class="wp-block-list">
+<li>A new average commission percentage based on profitable orders.</li>
+<li>A new average discount percentage for profitable orders, that could serve as a guideline for what level of discount still allows for profitability.</li>
+</ol>
+<p>Given these new averages, we can suggest adjustments that might not only make individual orders profitable but also apply broadly across all orders to improve overall profitability. Let’s calculate:</p>
+<ul class="wp-block-list">
+<li>The average commission percentage for profitable orders.</li>
+<li>The average discount percentage for profitable orders.</li>
+</ul>
+<pre><code class="language-python"># filter the dataset for profitable orders
+profitable_orders = food_orders[food_orders['Profit'] &gt; 0]
+
+# calculate the average commission percentage for profitable orders
+profitable_orders['Commission Percentage'] = (profitable_orders['Commission Fee'] / profitable_orders['Order Value']) * 100
+
+# calculate the average discount percentage for profitable orders
+profitable_orders['Effective Discount Percentage'] = (profitable_orders['Discount Amount'] / profitable_orders['Order Value']) * 100
+
+# calculate the new averages
+new_avg_commission_percentage = profitable_orders['Commission Percentage'].mean()
+new_avg_discount_percentage = profitable_orders['Effective Discount Percentage'].mean()
+
+print(new_avg_commission_percentage, new_avg_discount_percentage)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>30.508436145149435 5.867469879518072</strong></pre>
+<p>Based on the analysis of profitable orders, we find a new set of averages that could represent a “sweet spot” for commission and discount percentages:</p>
+<ul class="wp-block-list">
+<li>New Average Commission Percentage: 30.51%</li>
+<li>New Average Discount Percentage: 5.87%</li>
+</ul>
+<p>The average commission percentage for profitable orders is significantly higher than the overall average across all orders. It suggests that a higher commission rate on orders might be a key factor in achieving profitability. The average discount percentage for profitable orders is notably lower than the overall average, indicating that lower discounts might contribute to profitability without significantly deterring order volume.</p>
+<p>Based on this analysis, a strategy that aims for a commission rate closer to <strong>30%</strong> and a discount rate around <strong>6%</strong> could potentially improve profitability across the board.</p>
+<p>Now, let’s visualize a comparison of profitability using actual versus recommended discounts and commissions across all orders. For this, we need to:</p>
+<ol class="wp-block-list">
+<li>Calculate the profitability per order using the actual discounts and commissions already present in the dataset.</li>
+<li>Simulate profitability per order using the recommended discounts (6%) and commissions (30%) to see the potential impact on profitability.</li>
+</ol>
+<p>This comparison will help illustrate the potential impact of adopting the recommended discount and commission rates on the overall profitability of orders. Here’s how to visualize this comparison:</p>
+<pre><code class="language-python"># simulate profitability with recommended discounts and commissions
+recommended_commission_percentage = 30.0  # 30%
+recommended_discount_percentage = 6.0    # 6%
+
+# calculate the simulated commission fee and discount amount using recommended percentages
+food_orders['Simulated Commission Fee'] = food_orders['Order Value'] * (recommended_commission_percentage / 100)
+food_orders['Simulated Discount Amount'] = food_orders['Order Value'] * (recommended_discount_percentage / 100)
+
+# recalculate total costs and profit with simulated values
+food_orders['Simulated Total Costs'] = (food_orders['Delivery Fee'] +
+                                        food_orders['Payment Processing Fee'] +
+                                        food_orders['Simulated Discount Amount'])
+
+food_orders['Simulated Profit'] = (food_orders['Simulated Commission Fee'] -
+                                   food_orders['Simulated Total Costs'])
+
+# visualizing the comparison
+import seaborn as sns
+
+plt.figure(figsize=(14, 7))
+
+# actual profitability
+sns.kdeplot(food_orders['Profit'], label='Actual Profitability', fill=True, alpha=0.5, linewidth=2)
+
+# simulated profitability
+sns.kdeplot(food_orders['Simulated Profit'], label='Estimated Profitability with Recommended Rates', fill=True, alpha=0.5, linewidth=2)
+
+plt.title('Comparison of Profitability in Food Delivery: Actual vs. Recommended Discounts and Commissions')
+plt.xlabel('Profit')
+plt.ylabel('Density')
+plt.legend(loc='upper left')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Food Delivery Cost and Profitability Analysis: Comparison of Profitability in Food Delivery" class="wp-image-22586" data-attachment-id="22586" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Food-Delivery-Cost-and-Profitability-Analysis-4" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-4.png?fit=1024%2C541&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-4.png?fit=300%2C158&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-4.png?fit=1182%2C624&amp;ssl=1" data-orig-size="1182,624" data-permalink="https://my-ai-portfolio.com/2024/02/12/food-delivery-cost-and-profitability-analysis-using-python/food-delivery-cost-and-profitability-analysis-4/" data-recalc-dims="1" decoding="async" height="541" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-4.png?resize=1024%2C541&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-4.png?resize=1024%2C541&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-4.png?resize=300%2C158&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-4.png?resize=768%2C405&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-4.png?w=1182&amp;ssl=1 1182w" style="width:689px;height:auto" width="1024"/></figure>
+<p>The visualization compares the distribution of profitability per order using actual discounts and commissions versus the simulated scenario with recommended discounts (6%) and commissions (30%).</p>
+<p>The actual profitability distribution shows a mix, with a significant portion of orders resulting in losses (profit &lt; 0) and a broad spread of profit levels for orders. The simulated scenario suggests a shift towards higher profitability per order. The distribution is more skewed towards positive profit, indicating that the recommended adjustments could lead to a higher proportion of profitable orders.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, this is how you can analyze the cost and profitability of a food delivery company. Food Delivery Cost and Profitability Analysis involves examining all the costs associated with delivering food orders, from direct expenses like delivery fees and packaging to indirect expenses like discounts offered to customers and commission fees paid by restaurants. By juxtaposing these costs against the revenue generated (primarily through order values and commission fees), the analysis aims to provide insights into how profitable the food delivery service is on a per-order basis.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="batting-intent-analysis-in-ipl-2025-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="audio-data-processing-and-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Instagram Reach Forecasting using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Instagram Reach Forecasting using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 21, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="rainfall-trends-in-india-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="multivariate-time-series-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Not everyone is always available on social media all the time. Some people limit the use of social media during festive seasons, while some avoid social media during their examinations. So, as Content creators, we need to decide when to make the most valuable piece of content and when not. That is where Instagram Reach Forecasting can help content creators and everyone who uses Instagram professionally. In this article, I will take you through the task of Instagram Reach Forecasting using Python.</p>
+<h2 class="wp-block-heading">Instagram Reach Forecasting</h2>
+<p>Instagram reach forecasting is the process of predicting the number of people that an Instagram post, story, or other content will be reached, based on historical data and various other factors.</p>
+<p>For content creators and anyone using Instagram professionally, predicting the reach can be valuable for planning and optimizing their social media strategy. By understanding how their content is performing, creators can make informed decisions about when to publish, what types of content to create, and how to engage their audience. It can lead to increased engagement, better performance metrics, and ultimately, greater success on the platform.</p>
+<p>For the task of Instagram Reach Forecasting, we need to have data about Instagram reach for a particular time period. I found an ideal dataset for this task that you can download <a href="https://statso.io/social-media-reach-forecasting-case-study/" rel="noreferrer noopener" target="_blank"><strong>here</strong></a>.</p>
+<p>In the section below, I will take you through the task of Instagram Reach Forecasting using Python.</p>
+<h2 class="wp-block-heading">Instagram Reach Forecasting using Python</h2>
+<p>Let’s start this task by importing the necessary Python libraries and the <a href="https://statso.io/social-media-reach-forecasting-case-study/" rel="noreferrer noopener" target="_blank"><strong>dataset</strong></a>:</p>
+<pre><code class="language-python">import pandas as pd
+import plotly.graph_objs as go
+import plotly.express as px
+import plotly.io as pio
+pio.templates.default = "plotly_white"
+
+data = pd.read_csv("Instagram-Reach.csv", encoding = 'latin-1')
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted"><strong>                  Date  Instagram reach
+0  2022-04-01T00:00:00             7620
+1  2022-04-02T00:00:00            12859
+2  2022-04-03T00:00:00            16008
+3  2022-04-04T00:00:00            24349
+4  2022-04-05T00:00:00            20532</strong></pre>
+<p>I’ll convert the Date column into datetime datatype to move forward:</p>
+<pre><code class="language-python">data['Date'] = pd.to_datetime(data['Date'])
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted"><strong>        Date  Instagram reach
+0 2022-04-01             7620
+1 2022-04-02            12859
+2 2022-04-03            16008
+3 2022-04-04            24349
+4 2022-04-05            20532</strong></pre>
+<h2 class="wp-block-heading">Analyzing Reach</h2>
+<p>Let’s analyze the trend of Instagram reach over time using a line chart:</p>
+<pre><code class="language-python">fig = go.Figure()
+fig.add_trace(go.Scatter(x=data['Date'], 
+                         y=data['Instagram reach'], 
+                         mode='lines', name='Instagram reach'))
+fig.update_layout(title='Instagram Reach Trend', xaxis_title='Date', 
+                  yaxis_title='Instagram Reach')
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Instagram Reach Trend" class="wp-image-20152" data-attachment-id="20152" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="instagram-forecast-1" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="../assets/datasets/instagram-forecast-1.png" width="857"/></figure>
+<p>Now let’s analyze Instagram reach for each day using a bar chart:</p>
+<pre><code class="language-python">fig = go.Figure()
+fig.add_trace(go.Bar(x=data['Date'], 
+                     y=data['Instagram reach'], 
+                     name='Instagram reach'))
+fig.update_layout(title='Instagram Reach by Day', 
+                  xaxis_title='Date', 
+                  yaxis_title='Instagram Reach')
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="Instagram Reach by Day" class="wp-image-20154" data-attachment-id="20154" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="instagram-forecast-2" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="../assets/datasets/instagram-forecast-2.png" width="857"/></figure>
+<p>Now let’s analyze the distribution of Instagram reach using a box plot:</p>
+<pre><code class="language-python">fig = go.Figure()
+fig.add_trace(go.Box(y=data['Instagram reach'], 
+                     name='Instagram reach'))
+fig.update_layout(title='Instagram Reach Box Plot', 
+                  yaxis_title='Instagram Reach')
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Instagram Reach Box Plot" class="wp-image-20156" data-attachment-id="20156" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="instagram-forecast-3" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/instagram-forecast-3.png" width="857"/></figure>
+<p>Now let’s create a day column and analyze reach based on the days of the week. To create a day column, we can use the dt.day_name() method to extract the day of the week from the Date column:</p>
+<pre><code class="language-python">data['Day'] = data['Date'].dt.day_name()
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted"><strong>        Date  Instagram reach       Day
+0 2022-04-01             7620    Friday
+1 2022-04-02            12859  Saturday
+2 2022-04-03            16008    Sunday
+3 2022-04-04            24349    Monday
+4 2022-04-05            20532   Tuesday</strong></pre>
+<p>Now let’s analyze the reach based on the days of the week. For this, we can group the DataFrame by the Day column and calculate the mean, median, and standard deviation of the Instagram reach column for each day:</p>
+<pre><code class="language-python">import numpy as np
+
+day_stats = data.groupby('Day')['Instagram reach'].agg(['mean', 'median', 'std']).reset_index()
+print(day_stats)</code></pre>
+<pre class="wp-block-preformatted"><strong>         Day          mean   median           std
+0     Friday  46666.849057  35574.0  29856.943036
+1     Monday  52621.692308  46853.0  32296.071347
+2   Saturday  47374.750000  40012.0  27667.043634
+3     Sunday  53114.173077  47797.0  30906.162384
+4   Thursday  48570.923077  39150.0  28623.220625
+5    Tuesday  54030.557692  48786.0  32503.726482
+6  Wednesday  51017.269231  42320.5  29047.869685</strong></pre>
+<p>Now, let’s create a bar chart to visualize the reach for each day of the week:</p>
+<pre><code class="language-python">fig = go.Figure()
+fig.add_trace(go.Bar(x=day_stats['Day'], 
+                     y=day_stats['mean'], 
+                     name='Mean'))
+fig.add_trace(go.Bar(x=day_stats['Day'], 
+                     y=day_stats['median'], 
+                     name='Median'))
+fig.add_trace(go.Bar(x=day_stats['Day'], 
+                     y=day_stats['std'], 
+                     name='Standard Deviation'))
+fig.update_layout(title='Instagram Reach by Day of the Week', 
+                  xaxis_title='Day', 
+                  yaxis_title='Instagram Reach')
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Instagram Reach by Day of the Week" class="wp-image-20159" data-attachment-id="20159" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="instagram-forecast-4" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/instagram-forecast-4.png" width="857"/></figure>
+<h2 class="wp-block-heading">Instagram Reach Forecasting using Time Series Forecasting</h2>
+<p>To forecast reach, we can use Time Series Forecasting. Let’s see how to use Time Series Forecasting to forecast the reach of my Instagram account step-by-step.</p>
+<p>Let’s look at the Trends and Seasonal patterns of Instagram reach:</p>
+<pre><code class="language-python">from plotly.tools import mpl_to_plotly
+import matplotlib.pyplot as plt
+from statsmodels.tsa.seasonal import seasonal_decompose
+
+data = data[["Date", "Instagram reach"]]
+
+result = seasonal_decompose(data['Instagram reach'], 
+                            model='multiplicative', 
+                            period=100)
+
+fig = plt.figure()
+fig = result.plot()
+
+fig = mpl_to_plotly(fig)
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Seasonality for Time Series" class="wp-image-20162" data-attachment-id="20162" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="instagram-forecast-5" data-orig-size="640,480" data-recalc-dims="1" decoding="async" height="480" loading="lazy" sizes="auto, (max-width: 640px) 100vw, 640px" src="../assets/datasets/instagram-forecast-5.png" width="640"/></figure>
+<p>The reach is affected by seasonality, so we can use the SARIMA model to forecast the reach of the Instagram account. We need to find p, d, and q values to forecast the reach of Instagram. To find the value of d, we can use the autocorrelation plot, and to find the value of q, we can use a partial autocorrelation plot. The value of d will be 1. You can learn more about finding these values <strong><a href="time-series-forecasting-with-arima.html" target="">here</a></strong>.</p>
+<p>Now here’s how to visualize an autocorrelation plot to find the value of p:</p>
+<pre><code class="language-python">pd.plotting.autocorrelation_plot(data["Instagram reach"])</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Partial Autocorrelation for Time Series" class="wp-image-20163" data-attachment-id="20163" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="instagram-forecast-6" data-orig-size="587,438" data-recalc-dims="1" decoding="async" height="438" loading="lazy" sizes="auto, (max-width: 587px) 100vw, 587px" src="../assets/datasets/instagram-forecast-6.png" width="587"/><figcaption class="wp-element-caption"><strong>P = 8</strong></figcaption></figure>
+<p>And now here’s how to visualize a partial autocorrelation plot to find the value of q:</p>
+<pre><code class="language-python">from statsmodels.graphics.tsaplots import plot_pacf
+plot_pacf(data["Instagram reach"], lags = 100)</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Partial Autocorrelation for Time Series" class="wp-image-20165" data-attachment-id="20165" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="instagram-forecast-7" data-orig-size="568,435" data-recalc-dims="1" decoding="async" height="435" loading="lazy" sizes="auto, (max-width: 568px) 100vw, 568px" src="../assets/datasets/instagram-forecast-7.png" width="568"/><figcaption class="wp-element-caption"><strong>q = 2</strong></figcaption></figure>
+<p>Now here’s how to train a model using SARIMA:</p>
+<pre><code class="language-python">p, d, q = 8, 1, 2
+
+import statsmodels.api as sm
+import warnings
+model=sm.tsa.statespace.SARIMAX(data['Instagram reach'],
+                                order=(p, d, q),
+                                seasonal_order=(p, d, q, 12))
+model=model.fit()
+print(model.summary())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>                                     SARIMAX Results                                      
+==========================================================================================
+Dep. Variable:                    Instagram reach   No. Observations:                  365
+Model:             SARIMAX(8, 1, 2)x(8, 1, 2, 12)   Log Likelihood               -3938.515
+Date:                            Mon, 24 Apr 2023   AIC                           7919.031
+Time:                                    03:57:47   BIC                           8000.167
+Sample:                                         0   HQIC                          7951.319
+                                            - 365                                         
+Covariance Type:                              opg                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+ar.L1          0.1913      6.555      0.029      0.977     -12.657      13.040
+ar.L2          0.4707      6.092      0.077      0.938     -11.469      12.411
+ar.L3         -0.1190      1.403     -0.085      0.932      -2.868       2.630
+ar.L4          0.0424      0.259      0.164      0.870      -0.465       0.550
+ar.L5         -0.0213      0.189     -0.113      0.910      -0.393       0.350
+ar.L6          0.0317      0.271      0.117      0.907      -0.499       0.562
+ar.L7          0.0084      0.424      0.020      0.984      -0.823       0.840
+ar.L8         -0.0139      0.242     -0.057      0.954      -0.488       0.460
+ma.L1         -0.2250      6.551     -0.034      0.973     -13.066      12.616
+ma.L2         -0.7081      6.290     -0.113      0.910     -13.037      11.621
+ar.S.L12      -1.0857      1.529     -0.710      0.478      -4.082       1.911
+ar.S.L24      -1.7461      2.231     -0.783      0.434      -6.118       2.626
+ar.S.L36      -1.4312      1.916     -0.747      0.455      -5.186       2.323
+ar.S.L48      -1.0845      1.562     -0.694      0.488      -4.147       1.978
+ar.S.L60      -0.7839      1.114     -0.704      0.481      -2.967       1.399
+ar.S.L72      -0.4491      0.789     -0.569      0.569      -1.995       1.097
+ar.S.L84      -0.2227      0.504     -0.442      0.659      -1.211       0.765
+ar.S.L96      -0.0539      0.246     -0.219      0.827      -0.536       0.428
+ma.S.L12       0.2244      1.530      0.147      0.883      -2.774       3.223
+ma.S.L24       0.8247      1.275      0.647      0.518      -1.674       3.324
+sigma2      4.863e+08   1.39e-07    3.5e+15      0.000    4.86e+08    4.86e+08
+===================================================================================
+Ljung-Box (L1) (Q):                   0.01   Jarque-Bera (JB):               214.00
+Prob(Q):                              0.93   Prob(JB):                         0.00
+Heteroskedasticity (H):               0.71   Skew:                             0.29
+Prob(H) (two-sided):                  0.07   Kurtosis:                         6.78
+===================================================================================</strong></pre>
+<p>Now let’s make predictions using the model and have a look at the forecasted reach:</p>
+<pre><code class="language-python">predictions = model.predict(len(data), len(data)+100)
+
+trace_train = go.Scatter(x=data.index, 
+                         y=data["Instagram reach"], 
+                         mode="lines", 
+                         name="Training Data")
+trace_pred = go.Scatter(x=predictions.index, 
+                        y=predictions, 
+                        mode="lines", 
+                        name="Predictions")
+
+layout = go.Layout(title="Instagram Reach Time Series and Predictions", 
+                   xaxis_title="Date", 
+                   yaxis_title="Instagram Reach")
+
+fig = go.Figure(data=[trace_train, trace_pred], layout=layout)
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Instagram Reach Forecasting" class="wp-image-20169" data-attachment-id="20169" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="instagram-forecast-8" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/instagram-forecast-8.png" width="857"/></figure>
+<p>So this is how we can forecast the reach of an Instagram account using Time Series Forecasting.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>Instagram reach prediction is the process of predicting the number of people that an Instagram post, story, or other content will be reached, based on historical data and various other factors. I hope you liked this article on Instagram Reach Forecasting using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="rainfall-trends-in-india-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="multivariate-time-series-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>ARIMA and SARIMA for Time Series Forecasting | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        ARIMA and SARIMA for Time Series Forecasting</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 17, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="data-science-projects.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="stock-market-portfolio-optimization-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Time Series Forecasting is a statistical technique used to make predictions based on historical time-ordered data points. It’s valuable when dealing with data that changes over time, such as stock prices, sales figures, weather data, or economic indicators. ARIMA and SARIMA are widely used techniques for time series forecasting. If you want to learn how to use ARIMA and SARIMA for Time Series Forecasting, this article is for you. In this article, I’ll take you through a complete guide to ARIMA and SARIMA with implementation using Python.</p>
+<h2 class="wp-block-heading">Understanding ARIMA and SARIMA for Time Series Forecasting</h2>
+<p>ARIMA (AutoRegressive Integrated Moving Average) and SARIMA (Seasonal AutoRegressive Integrated Moving Average) are widely used techniques for time series forecasting. Let’s understand both these techniques one by one.</p>
+<h4 class="wp-block-heading">ARIMA (AutoRegressive Integrated Moving Average)</h4>
+<p>ARIMA is a statistical method for modelling and forecasting time series data. <strong>AutoRegressive (AR)</strong> models the relationship between the current value and past values in the time series. In simple words, it looks at how past observations influence future ones. <strong>The Integrated (I)</strong> component involves differencing the time series data to make it stationary. Stationarity is a critical assumption for ARIMA models. <strong>The moving Average (MA)</strong> part models the relationship between the current value and past forecast errors. It helps account for short-term fluctuations in the data.</p>
+<p>ARIMA models are effective for time series data with trends and non-seasonal patterns.</p>
+<h4 class="wp-block-heading">SARIMA (Seasonal AutoRegressive Integrated Moving Average)</h4>
+<p>SARIMA extends ARIMA by including seasonal components to account for seasonality in the data. Seasonal patterns are often observed in many time series data, such as quarterly sales or monthly temperature data.</p>
+<p>SARIMA models are well-suited for data that exhibits both non-seasonal and seasonal patterns.</p>
+<h2 class="wp-block-heading">How to Implement ARIMA and SARIMA?</h2>
+<p>Below are the steps you should follow while implementing ARIMA and SARIMA:</p>
+<ul class="wp-block-list">
+<li>Start with data collection and preprocessing.</li>
+<li>Analyze the data to determine whether it exhibits trends and seasonality.</li>
+<li>If trends are present, apply differencing to make the data stationary.</li>
+<li>Identify appropriate values for AR, I, and MA orders based on autocorrelation and partial autocorrelation plots.</li>
+<li>For SARIMA, also determine seasonal orders.</li>
+<li>Estimate the model parameters using historical data.</li>
+<li>Finally, use the model for forecasting future data points.</li>
+</ul>
+<h2 class="wp-block-heading">ARIMA and SARIMA using Python</h2>
+<p>In this section, I’ll take you through how to implement ARIMA and SARIMA using Python.</p>
+<p>Before applying ARIMA, it is essential to ensure that the time series data is stationary, as ARIMA assumes stationarity. Stationarity can be assessed using statistical tests or visual inspection of the data. If the data is non-stationary (i.e., exhibits trends or seasonality), differencing is applied to transform the data to achieve stationarity. Differencing involves computing the difference between consecutive observations at a certain lag (usually 1) to remove trends and make the time series stationary.</p>
+<p>Selecting appropriate values for the p, d, and q parameters is critical for building an effective ARIMA model. This process involves analyzing the autocorrelation and partial autocorrelation plots of the time series data to identify the appropriate values for p and q. The value of d is determined based on the number of differencing steps needed to achieve stationarity. Generally, if the data is stationary, the value of d is 0, and if the data is not stationary, the value of d is 1.</p>
+<p>Implementing ARIMA models in Python can be done using libraries like statsmodels or pandas. Statsmodels provides a comprehensive set of tools for time series analysis, including ARIMA modelling. Below is a simplified example of implementing ARIMA using statsmodels on my Instagram reach data <strong>(you can download the data from </strong><a href="https://statso.io/social-media-reach-forecasting-case-study/" rel="noreferrer noopener" target="_blank"><strong>here</strong></a><strong>):</strong></p>
+<pre><code class="language-python"># Importing Necessay Python libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import plotly.graph_objs as go
+import plotly.express as px
+import plotly.io as pio
+pio.templates.default = "plotly_white"
+from statsmodels.tsa.arima.model import ARIMA
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf</code></pre>
+<p>Here, we are just importing the necessary Python libraries required for the task of Time Series Forecasting using ARIMA. Now, let’s read the data:</p>
+<pre><code class="language-python"># reading the data
+data = pd.read_csv('Instagram-Reach.csv')
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>                  Date  Instagram reach
+0  2022-04-01T00:00:00             7620
+1  2022-04-02T00:00:00            12859
+2  2022-04-03T00:00:00            16008
+3  2022-04-04T00:00:00            24349
+4  2022-04-05T00:00:00            20532</strong></pre>
+<p>Now, we will extract only date values from the date column:</p>
+<pre><code class="language-python"># extracting only date values from the date cloumn
+
+data["Date"] = pd.to_datetime(data["Date"])
+
+
+# Extract only the date part from the "Date" column
+data["Date"] = data["Date"].dt.date</code></pre>
+<p>Now, let’s visualize the trend of the data:</p>
+<pre><code class="language-python"># visualizing the trend of the data
+
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=data['Date'],
+                         y=data['Instagram reach'],
+                         mode='lines', name='Instagram reach'))
+
+
+fig.update_layout(title='Instagram Reach Trend', xaxis_title='Date', yaxis_title='Instagram Reach')
+
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="ARIMA and SARIMA: Instagram Reach Trend" class="wp-image-21635" data-attachment-id="21635" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ARIMA-and-SARIMA-1" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2023/10/ARIMA-and-SARIMA-1.png?fit=857%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2023/10/ARIMA-and-SARIMA-1.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2023/10/ARIMA-and-SARIMA-1.png?fit=857%2C525&amp;ssl=1" data-orig-size="857,525" data-permalink="https://my-ai-portfolio.com/2023/10/18/arima-and-sarima-for-time-series-forecasting/arima-and-sarima-1/" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2023/10/ARIMA-and-SARIMA-1.png?resize=857%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2023/10/ARIMA-and-SARIMA-1.png?w=857&amp;ssl=1 857w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2023/10/ARIMA-and-SARIMA-1.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2023/10/ARIMA-and-SARIMA-1.png?resize=768%2C470&amp;ssl=1 768w" width="857"/></figure>
+<p>You can see that this data is not stationary, and it’s not appropriate to use the ARIMA model on such data. On such data, we can use the SARIMA model, which we will explore later in the next section. For now, let’s continue with the implementation of ARIMA on this dataset only:</p>
+<pre><code class="language-python"># resetting index
+time_series = data.set_index('Date')['Instagram reach']
+
+
+# Differencing
+differenced_series = time_series.diff().dropna()
+
+
+# Plot ACF and PACF of differenced time series
+fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+plot_acf(differenced_series, ax=axes[0])
+plot_pacf(differenced_series, ax=axes[1])
+plt.show()</code></pre>
+<p>Here, we performed differencing and visualized the autocorrelation and partial autocorrelation plots which will help us in identifying the p and q values. Below is the output of the above code:</p>
+<figure class="wp-block-image aligncenter size-full"><img alt="Autocorrelation and partial autocorrelation for Time Series Forecasting" class="wp-image-21637" data-attachment-id="21637" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ARIMA-and-SARIMA-2" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2023/10/ARIMA-and-SARIMA-2.png?fit=1002%2C374&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2023/10/ARIMA-and-SARIMA-2.png?fit=300%2C112&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2023/10/ARIMA-and-SARIMA-2.png?fit=1002%2C374&amp;ssl=1" data-orig-size="1002,374" data-permalink="https://my-ai-portfolio.com/2023/10/18/arima-and-sarima-for-time-series-forecasting/arima-and-sarima-2/" data-recalc-dims="1" decoding="async" height="374" sizes="(max-width: 1002px) 100vw, 1002px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2023/10/ARIMA-and-SARIMA-2.png?resize=1002%2C374&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2023/10/ARIMA-and-SARIMA-2.png?w=1002&amp;ssl=1 1002w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2023/10/ARIMA-and-SARIMA-2.png?resize=300%2C112&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2023/10/ARIMA-and-SARIMA-2.png?resize=768%2C287&amp;ssl=1 768w" width="1002"/></figure>
+<p>In the above graphs, the ACF plot cuts off at lag 1, indicating q=1. The PACF plot also cuts off at lag 1, indicating p=1. Now, here’s how to implement the ARIMA model to forecast time series:</p>
+<pre><code class="language-python">p, d, q = 1, 1, 1 # d = 1 because the data is non-stationary
+model = ARIMA(time_series, order=(p, d, q))
+results = model.fit()
+
+print(results.summary())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>
+                               SARIMAX Results                                
+==============================================================================
+Dep. Variable:        Instagram reach   No. Observations:                  365
+Model:                 ARIMA(1, 1, 1)   Log Likelihood               -4026.336
+Date:                Wed, 18 Oct 2023   AIC                           8058.672
+Time:                        05:57:29   BIC                           8070.364
+Sample:                    04-01-2022   HQIC                          8063.319
+                         - 03-31-2023                                         
+Covariance Type:                  opg                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+ar.L1          0.7791      0.046     17.084      0.000       0.690       0.869
+ma.L1         -0.9607      0.022    -44.607      0.000      -1.003      -0.918
+sigma2      2.559e+08   2.81e-11   9.11e+18      0.000    2.56e+08    2.56e+08
+===================================================================================
+Ljung-Box (L1) (Q):                   3.81   Jarque-Bera (JB):               297.33
+Prob(Q):                              0.05   Prob(JB):                         0.00
+Heteroskedasticity (H):               0.83   Skew:                             0.18
+Prob(H) (two-sided):                  0.30   Kurtosis:                         7.41
+===================================================================================</strong></pre>
+<p>Now, here’s how we can see the predicted values for the next 100 days:</p>
+<pre><code class="language-python"># Predict future values
+future_steps = 100
+predictions = results.predict(len(time_series), len(time_series) + future_steps - 1)
+print(predictions)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>2023-04-01    23434.362332
+2023-04-02    24541.004432
+2023-04-03    25403.218747
+2023-04-04    26074.992871
+2023-04-05    26598.389971
+                  ...     
+2023-07-05    28444.663196
+2023-07-06    28444.663196
+2023-07-07    28444.663196
+2023-07-08    28444.663196
+2023-07-09    28444.663196
+Freq: D, Name: predicted_mean, Length: 100, dtype: float64</strong></pre>
+<p>To implement the SARIMA model, we need to follow the same process we followed to implement the ARIMA model. Below are the changes you need to make in your implementation of ARIMA to implement the SARIMA model.</p>
+<p>Import the SARIMAX class:</p>
+<pre><code class="language-python">from statsmodels.tsa.statespace.sarimax import SARIMAX</code></pre>
+<p>Now, to implement SARIMA, change your model from ARIMA to SARIMA and add seasonality parameters as shown in the code below:</p>
+<pre><code class="language-python">p, d, q, s = 1, 1, 1, 12
+
+
+model = SARIMAX(time_series, order=(p, d, q), seasonal_order=(p, d, q, s))
+results = model.fit()
+print(results.summary())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>                                     SARIMAX Results                                      
+==========================================================================================
+Dep. Variable:                    Instagram reach   No. Observations:                  365
+Model:             SARIMAX(1, 1, 1)x(1, 1, 1, 12)   Log Likelihood               -3944.546
+Date:                            Wed, 18 Oct 2023   AIC                           7899.092
+Time:                                    05:58:37   BIC                           7918.410
+Sample:                                04-01-2022   HQIC                          7906.779
+                                     - 03-31-2023                                         
+Covariance Type:                              opg                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+ar.L1          0.7847      0.086      9.116      0.000       0.616       0.953
+ma.L1         -0.9596      0.045    -21.472      0.000      -1.047      -0.872
+ar.S.L12      -0.0685      0.117     -0.587      0.557      -0.297       0.160
+ma.S.L12      -0.8396      0.073    -11.537      0.000      -0.982      -0.697
+sigma2      5.067e+08   3.24e-11   1.57e+19      0.000    5.07e+08    5.07e+08
+===================================================================================
+Ljung-Box (L1) (Q):                   3.77   Jarque-Bera (JB):               237.09
+Prob(Q):                              0.05   Prob(JB):                         0.00
+Heteroskedasticity (H):               0.77   Skew:                             0.34
+Prob(H) (two-sided):                  0.17   Kurtosis:                         6.96
+===================================================================================
+</strong></pre>
+<p>The value of s in SARIMA represents the seasonal period or the number of time steps in each seasonal cycle. In time series data, seasonality often occurs at regular intervals. For example, in monthly data, the seasonality repeats every 12 months, while in daily data, it may repeat every 7 days (weekly seasonality) or every 30 days (monthly seasonality).</p>
+<p>In the provided SARIMA example, the value of s is set to 12, indicating that the time series data exhibits seasonality with a repeating pattern every 12-time steps. It typically corresponds to a seasonal cycle of 12 months, suggesting that the data has yearly seasonality.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>ARIMA is a statistical method for modelling and forecasting time series data. <strong>AutoRegressive (AR)</strong> models the relationship between the current value and past values in the time series. In simple words, it looks at how past observations influence future ones. <strong>The Integrated (I)</strong> component involves differencing the time series data to make it stationary. Stationarity is a critical assumption for ARIMA models. <strong>The moving Average (MA)</strong> part models the relationship between the current value and past forecast errors. It helps account for short-term fluctuations in the data. SARIMA extends ARIMA by including seasonal components to account for seasonality in the data. Seasonal patterns are often observed in many time series data, such as quarterly sales or monthly temperature data.</p>
+<p>I hope you liked this article on ARIMA and SARIMA for Time Series Forecasting with implementation using Python. You can learn many more concepts in detail from my book on <strong><a href="https://my-ai-portfolio.com/2023/09/22/introducing-machine-learning-algorithms-handbook/">Machine Learning Algorithms</a></strong>. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="data-science-projects.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="stock-market-portfolio-optimization-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

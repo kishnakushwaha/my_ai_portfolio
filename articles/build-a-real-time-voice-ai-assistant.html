@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Build a Real-Time Voice AI Assistant | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Build a Real-Time Voice AI Assistant</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 25, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="build-your-personal-ai-data-analyst.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="build-a-multi-agent-system-with-langgraph.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>We’ve all watched Iron Man and quietly envied Tony Stark’s banter with JARVIS. There is something profoundly magical about speaking to a machine and having it understand, think, and reply, not with a pre-programmed script, but with genuine intelligence. For a long time, building something like that required a PhD or massive cloud subscriptions. Today, we can make it in an afternoon with a few lines of Python. In this article, we will build a voice AI assistant that listens to you, thinks using a powerful local AI model (Llama 3), and responds to you.</p>
+<h2 class="wp-block-heading">How a Voice AI Assistant Works in Real-time?</h2>
+<p>Before we write the code, let’s understand what we are building. An AI voice assistant is essentially a loop of three distinct biological functions replicated by code:</p>
+<ol class="wp-block-list">
+<li><strong>The Ears (Speech-to-Text):</strong> We capture audio vibrations and translate them into text.</li>
+<li><strong>The Brain (LLM Inference):</strong> We send that text to a Large Language Model (Ollama/Llama 3) to generate a smart response.</li>
+<li><strong>The Mouth (Text-to-Speech):</strong> We convert the AI’s text response back into audio so we can hear it.</li>
+</ol>
+<p>Let’s understand it practically by building a real-time voice AI assistant using Python.</p>
+<h2 class="wp-block-heading">Building a Real-Time Voice AI Assistant</h2>
+<p>To get it running, we are relying on three key libraries. You will need to install them via your terminal:</p>
+<pre class="wp-block-preformatted"><strong>pip install speechrecognition ollama pyttsx3 pyaudio</strong></pre>
+<p><strong>You must have the Ollama application installed on your computer and the Llama 3 model pulled (ollama pull llama3) for the brain part of our code to work. Here’s a <a href="run-a-powerful-llm-locally-on-your-laptop.html" rel="noreferrer noopener" target="">tutorial</a> if you are a first timer.</strong></p>
+<h4 class="wp-block-heading">Step 1: Importing the Tools</h4>
+<p>Here we are grabbing our tools. Think of this as laying out your ingredients before cooking. <strong>sr</strong> is our listener, <strong>ollama</strong> is our thinker, and <strong>pyttsx3</strong> is our speaker:</p>
+<pre><code class="language-python">import speech_recognition as sr
+import ollama
+import pyttsx3</code></pre>
+<h4 class="wp-block-heading">Step 2: The Ears</h4>
+<p>This function is responsible for the physical world interface, the microphone:</p>
+<pre><code class="language-python">def listen():
+    recognizer = sr.Recognizer()
+
+    try:
+        with sr.Microphone() as source:
+            print("Listening... (Speak now)")
+            # Adjust for ambient noise
+            recognizer.adjust_for_ambient_noise(source, duration=0.5)
+
+            # Listen for audio input
+            audio = recognizer.listen(source, timeout=5, phrase_time_limit=10)
+            print("Processing...")
+
+        # Recognize speech using Google's free API
+        text = recognizer.recognize_google(audio)
+        print(f"You said: {text}")
+        return text
+
+    except sr.WaitTimeoutError:
+        print("No speech detected (timeout).")
+        return None
+    except sr.UnknownValueError:
+        print("Sorry, I didn't catch that.")
+        return None
+    except sr.RequestError:
+        print("Speech recognition service unavailable.")
+        return None
+    except Exception as e:
+        print(f"An error occurred in listen(): {e}")
+        return None</code></pre>
+<p>Here’s what’s happening:</p>
+<ol class="wp-block-list">
+<li><strong>adjust_for_ambient_noise</strong>: Microphones pick up fan hums and static. This line tells the code to listen to the silence for 0.5 seconds to understand the room’s baseline noise, which makes the actual recognition much more accurate.</li>
+<li><strong>recognize_google</strong>: We are using Google’s Web Speech API to convert audio to text. It’s free and generally very accurate, though it does require an internet connection.</li>
+</ol>
+<h4 class="wp-block-heading">Step 3: The Brain</h4>
+<p>This is the key part of our assistant. We take the raw text and give it intelligence:</p>
+<pre><code class="language-python">def think(text: str):
+    if not text:
+        return None
+
+    print("Thinking...")
+
+    try:
+        # Ensure you have pulled the model via: ollama pull llama3
+        response = ollama.chat(
+            model="llama3",
+            messages=[
+                {
+                    "role": "user",
+                    "content": text,
+                }
+            ],
+        )
+
+        response_text = response["message"]["content"]
+        print(f"AI: {response_text}")
+        return response_text
+
+    except Exception as e:
+        print(f"An error occurred in think(): {e}")
+        return "Sorry, something went wrong while thinking."</code></pre>
+<p>Here’s what’s happening:</p>
+<ol class="wp-block-list">
+<li><strong>ollama.chat</strong>: This is the interface to your local Llama 3 model. We send a list of messages (in this case, just one from the “user”) and wait for the model to complete the pattern.</li>
+</ol>
+<ul class="wp-block-list">
+<li><strong>Latency</strong>: Since Llama 3 is running locally on your device, this might take a second or two, depending on your GPU/CPU, but it’s completely private. No data is sent to a cloud server for thinking.</li>
+</ul>
+<h4 class="wp-block-heading">Step 4: The Mouth</h4>
+<p>An assistant isn’t an assistant if you have to read the screen. Here’s how to give it the ability to speak:</p>
+<pre><code class="language-python">def speak(text: str):
+    if not text:
+        return
+
+    try:
+        engine = pyttsx3.init()
+
+        # Optional: Change voice properties
+        voices = engine.getProperty("voices")
+        if voices:
+            # Try changing index 0 -&gt; 1 for alternative voice
+            engine.setProperty("voice", voices[0].id)
+
+        engine.setProperty("rate", 175)  # Speed of speech
+
+        engine.say(text)
+        engine.runAndWait()
+
+    except Exception as e:
+        print(f"An error occurred in speak(): {e}")</code></pre>
+<p>Here’s what’s happening:</p>
+<ol class="wp-block-list">
+<li><strong>pyttsx3.init()</strong>: This initialises the speech engine driver on your OS (sapi5 on Windows, nsss on Mac, espeak on Linux).</li>
+<li><strong>engine.runAndWait()</strong>: This is critical. It blocks the code execution until the speaking is done. Without this, the program might try to listen while it’s still speaking, causing it to hear itself!</li>
+</ol>
+<h4 class="wp-block-heading">Step 5: The Main Function</h4>
+<p>Finally, we stitch the organs together into a living body:</p>
+<pre><code class="language-python">def main():
+    print("--- Voice Assistant Started ---")
+    speak("Hello, I am ready. You can start speaking.")
+
+    while True:
+        # 1. Listen
+        user_input = listen()
+
+        # Skip if nothing heard
+        if not user_input:
+            continue
+
+        # 2. Check for exit keywords
+        if user_input.lower().strip() in ["exit", "stop", "quit"]:
+            speak("Goodbye!")
+            print("Exiting...")
+            break
+
+        # 3. Think
+        ai_response = think(user_input)
+
+        # 4. Speak
+        speak(ai_response)
+
+
+if __name__ == "__main__":
+    main()</code></pre>
+<p>Here’s what’s happening:</p>
+<ol class="wp-block-list">
+<li><strong>The while True Loop</strong>: This creates the always-on behaviour. The program enters a cycle of Listen -&gt; Think -&gt; Speak, and then immediately goes back to Listen.</li>
+<li><strong>Exit Strategy</strong>: We added a simple check for exit or stop so you can gracefully shut down the assistant without force-quitting the terminal.</li>
+</ol>
+<p>Here’s the output with an example:</p>
+<figure class="wp-block-image aligncenter size-large"><img alt="Real-Time Voice AI Assistant: output" class="wp-image-28702" data-attachment-id="28702" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="1788,888" data-recalc-dims="1" decoding="async" height="509" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/image.png" width="1024"/></figure>
+<h3 class="wp-block-heading">Closing Thoughts</h3>
+<p>When you run this script and hear the AI respond to your voice, take a moment to appreciate what just happened. You essentially built a synthetic neocortex (Llama 3) and gave it sensory organs (mic/speakers).</p>
+<p>Today it’s just chatting; tomorrow, you could hook the think() function up to your calendar API or email client, turning this from a chatbot into a true proactive agent.</p>
+<p>I hope you liked this article on building a voice AI assistant that listens to you, thinks using a powerful local AI model, and speaks back to you. <strong>Follow me on <a href="https://www.instagram.com/amankharwal.official/" rel="noreferrer noopener" target="_blank">Instagram</a> for many more resources</strong>.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="build-your-personal-ai-data-analyst.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="build-a-multi-agent-system-with-langgraph.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

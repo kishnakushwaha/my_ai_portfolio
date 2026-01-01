@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Building a Large Language Model from Scratch | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Building a Large Language Model from Scratch</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 10, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="building-an-ai-agent-using-openai-api.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="generative-ai-model-from-scratch-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Large Language Models <strong><a href="https://play.google.com/store/books/details?id=LCAqEQAAQBAJ">(LLMs)</a></strong> are the backbone of modern AI applications, from chatbots to code generators. But how are large language models built? If you want to learn about building a large language model from scratch, this article is for you. In this article, I’ll explain how to build a large language model from scratch using Python.</p>
+<h2 class="wp-block-heading">Building a Large Language Model from Scratch</h2>
+<p>Modern language models (like GPT-4) use <strong>transformers</strong>, a deep learning architecture that learns word relationships through self-attention. We’ll build a basic transformer-based model to understand how to build a large language model from scratch. The goal of our language model will be to predict the next word.</p>
+<p>Here are the <strong>six main components</strong> we’ll cover:</p>
+<ol class="wp-block-list">
+<li><strong>Tokenization</strong></li>
+<li><strong>Embedding Layer</strong></li>
+<li><strong>Positional Encoding</strong></li>
+<li><strong>Self-Attention</strong></li>
+<li><strong>Transformer Block</strong></li>
+<li><strong>Full Language Model</strong></li>
+</ol>
+<h4 class="wp-block-heading">Step 1: Tokenization</h4>
+<p>Computers can’t understand words directly, so we map each word to a unique number (ID). This process is called<strong> tokenization</strong>. Here’s how to tokenize text:</p>
+<pre><code class="language-python">import torch
+import torch.nn as nn
+import torch.optim as optim
+import math
+
+def tokenize(text, vocab):
+    return [vocab.get(word, vocab["&lt;UNK&gt;"]) for word in text.split()]</code></pre>
+<p>Here’s how this works:</p>
+<ol class="wp-block-list">
+<li><strong>text.split()</strong>: Splits a sentence into words (e.g., “hello world”: [“hello”, “world”]).</li>
+<li><strong>vocab</strong>: A dictionary that assigns numbers to words (e.g., {“hello”: 0, “world”: 1, “&lt;UNK&gt;”: 2}).</li>
+<li><strong>vocab.get(word, vocab[“&lt;UNK&gt;”])</strong>: Returns a word’s assigned number. If it’s missing, assigns &lt;UNK&gt; (unknown).</li>
+</ol>
+<p>Think of this as giving each word an ID, so the model can work with numbers instead of text.</p>
+<h4 class="wp-block-heading">Step 2: Embedding Layer</h4>
+<p>Numbers alone (like 0 and 1) don’t carry meaning. An <strong>embedding layer</strong> transforms these numbers into <strong>vectors</strong> (lists of numbers), allowing words with similar meanings to have similar representations. Here’s how to implement it:</p>
+<pre><code class="language-python">class Embedding(nn.Module):
+    def __init__(self, vocab_size, embedding_dim):
+        super(Embedding, self).__init__()
+        self.embedding = nn.Embedding(vocab_size, embedding_dim)
+
+    def forward(self, x):
+        return self.embedding(x)</code></pre>
+<p>Here’s how the embedding layer works:</p>
+<ol class="wp-block-list">
+<li><strong>nn.Embedding(vocab_size, embedding_dim)</strong>: Creates a table where each word ID maps to a vector.</li>
+<li><strong>embedding_dim</strong>: Defines the length of each vector (e.g., 16 numbers per word).</li>
+</ol>
+<p>Think of embeddings as assigning each word a personality, so words like happy and joyful get similar vectors.</p>
+<h4 class="wp-block-heading">Step 3: Positional Encoding</h4>
+<p>Transformers process all words at once, so they <strong>don’t naturally understand order</strong> (e.g., “I love you” ≠ “You love I”). Positional encoding fixes this by adding a unique “position signal” to each word. Here’s how to implement positional encoding:</p>
+<pre><code class="language-python">class PositionalEncoding(nn.Module):
+    def __init__(self, embedding_dim, max_seq_len=5000):
+        super(PositionalEncoding, self).__init__()
+        self.embedding_dim = embedding_dim
+        pe = torch.zeros(max_seq_len, embedding_dim)
+        position = torch.arange(0, max_seq_len, dtype=torch.float).unsqueeze(1)
+        div_term = torch.exp(torch.arange(0, embedding_dim, 2).float() * (-math.log(10000.0) / embedding_dim))
+        pe[:, 0::2] = torch.sin(position * div_term)
+        pe[:, 1::2] = torch.cos(position * div_term)
+        pe = pe.unsqueeze(0).transpose(0, 1)
+        self.register_buffer('pe', pe)
+
+    def forward(self, x):
+        return x + self.pe[:x.size(0), :]</code></pre>
+<p>Here’s how the above function works:</p>
+<ol class="wp-block-list">
+<li><strong>embedding_dim</strong>: Matches the vector size from the embedding layer.</li>
+<li><strong>max_seq_len</strong>: The longest sentence we’ll handle (e.g., 5000 words).</li>
+<li><strong>Math (sine and cosine)</strong>: Creates a pattern of numbers that change based on position (e.g., word 1 gets one pattern, word 2 gets another).</li>
+<li><strong>forward</strong>: Adds these position numbers to the word vectors.</li>
+</ol>
+<p>Think of this as tagging each word with a position stamp so the model understands word order.</p>
+<h4 class="wp-block-heading">Step 4: Self-Attention</h4>
+<p>Self-attention helps the model focus on important words. For example, in “The cat sat on the mat”, “sat” relates more to “cat” than “mat”. Here’s how to implement it:</p>
+<pre><code class="language-python">class SelfAttention(nn.Module):
+    def __init__(self, embedding_dim):
+        super(SelfAttention, self).__init__()
+        self.query = nn.Linear(embedding_dim, embedding_dim)
+        self.key = nn.Linear(embedding_dim, embedding_dim)
+        self.value = nn.Linear(embedding_dim, embedding_dim)
+
+    def forward(self, x):
+        queries = self.query(x)
+        keys = self.key(x)
+        values = self.value(x)
+        scores = torch.bmm(queries, keys.transpose(1, 2)) / torch.sqrt(torch.tensor(x.size(-1), dtype=torch.float32))
+        attention_weights = torch.softmax(scores, dim=-1)
+        attended_values = torch.bmm(attention_weights, values)
+        return attended_values</code></pre>
+<p>Here’s how self-attention works:</p>
+<ol class="wp-block-list">
+<li><strong>query, key, value</strong>: Three transformations of the input vectors. Think of them as asking “What do I care about?” (query), “What’s available?” (key), and “What do I take?” (value).</li>
+<li><strong>scores</strong>: Measures how much each word relates to every other word.</li>
+<li><strong>attention_weights</strong>: Turns scores into probabilities (e.g., 70% focus on “how”, 30% on “are”).</li>
+<li><strong>attended_values</strong>: Combines the important parts of the sentence.</li>
+</ol>
+<p>Think of self-attention as a smart highlighter that finds important words to focus on.</p>
+<h4 class="wp-block-heading">Step 5: Transformer Block</h4>
+<p>A single attention layer isn’t enough. <strong>Transformer blocks</strong> combine attention with deeper processing. Here’s how to implement a transformer block:</p>
+<pre><code class="language-python">class TransformerBlock(nn.Module):
+    def __init__(self, embedding_dim, hidden_dim):
+        super(TransformerBlock, self).__init__()
+        self.attention = SelfAttention(embedding_dim)
+        self.feed_forward = nn.Sequential(
+            nn.Linear(embedding_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, embedding_dim)
+        )
+        self.norm1 = nn.LayerNorm(embedding_dim)
+        self.norm2 = nn.LayerNorm(embedding_dim)
+
+    def forward(self, x):
+        attended = self.attention(x)
+        x = self.norm1(x + attended)
+        forwarded = self.feed_forward(x)
+        x = self.norm2(x + forwarded)
+        return x</code></pre>
+<p>Here’s how the transformer block works:</p>
+<ol class="wp-block-list">
+<li><strong>attention</strong>: The self-attention we just built.</li>
+<li><strong>feed_forward</strong>: A small neural network to process each word further.</li>
+<li><strong>norm1, norm2</strong>: Normalizes the numbers so they don’t get too big or small (like keeping everyone on the same scale).</li>
+<li><strong>x + attended</strong>: Adds the original input to the attention output (a trick called “residual connection”).</li>
+</ol>
+<p>This is like a brain cell, it listens (attention), thinks (feed-forward), and keeps things stable (normalization).</p>
+<h4 class="wp-block-heading">Step 6: Full Language Model</h4>
+<p>Now, we will combine all the pieces into one model that predicts the next word:</p>
+<pre><code class="language-python">class SimpleLLM(nn.Module):
+    def __init__(self, vocab_size, embedding_dim, hidden_dim, num_layers):
+        super(SimpleLLM, self).__init__()
+        self.embedding = Embedding(vocab_size, embedding_dim)
+        self.positional_encoding = PositionalEncoding(embedding_dim)
+        self.transformer_blocks = nn.Sequential(*[TransformerBlock(embedding_dim, hidden_dim) for _ in range(num_layers)])
+        self.output = nn.Linear(embedding_dim, vocab_size)
+
+    def forward(self, x):
+        x = self.embedding(x)
+        x = x.transpose(0, 1) # Transpose for positional encoding
+        x = self.positional_encoding(x)
+        x = x.transpose(0, 1) # Transpose back
+        x = self.transformer_blocks(x)
+        x = self.output(x)
+        return x</code></pre>
+<p>Some key components you should know:</p>
+<ol class="wp-block-list">
+<li><strong>num_layers</strong>: How many transformer blocks to stack (more layers = deeper thinking).</li>
+<li><strong>output</strong>: Turns the final vectors back into word predictions (e.g., probabilities for each word in the vocab).</li>
+</ol>
+<p>This is the final system, it reads the sentence, understands it, and guesses the next word.</p>
+<h4 class="wp-block-heading">Step 7: Training the Model</h4>
+<p>Now, we will teach the model by showing it examples and correcting its mistakes:</p>
+<pre><code class="language-python">vocab = {"hello": 0, "world": 1, "how": 2, "are": 3, "you": 4, "&lt;UNK&gt;": 5}
+vocab_size = len(vocab)
+embedding_dim = 16
+hidden_dim = 32
+num_layers = 2
+
+model = SimpleLLM(vocab_size, embedding_dim, hidden_dim, num_layers)
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+
+data = ["hello world how are you", "how are you hello world"]
+tokenized_data = [tokenize(sentence, vocab) for sentence in data]
+
+for epoch in range(100):
+    for sentence in tokenized_data:
+        for i in range(1, len(sentence)):
+            input_seq = torch.tensor(sentence[:i]).unsqueeze(0)
+            target = torch.tensor(sentence[i]).unsqueeze(0)
+            optimizer.zero_grad()
+            output = model(input_seq)
+            loss = criterion(output[:, -1, :], target)
+            loss.backward()
+            optimizer.step()
+    if epoch % 10 == 0:
+        print(f"Epoch {epoch}, Loss: {loss.item()}")</code></pre>
+<pre class="wp-block-preformatted"><strong>Epoch 0, Loss: 1.7691224813461304<br/>Epoch 10, Loss: 0.6396194696426392<br/>Epoch 20, Loss: 0.2903057932853699<br/>Epoch 30, Loss: 0.1653764843940735<br/>Epoch 40, Loss: 0.10594221949577332<br/>Epoch 50, Loss: 0.07302528619766235<br/>Epoch 60, Loss: 0.05297106131911278<br/>Epoch 70, Loss: 0.039956752210855484<br/>Epoch 80, Loss: 0.031084876507520676<br/>Epoch 90, Loss: 0.024792836979031563</strong></pre>
+<p>Some key components you should know:</p>
+<ol class="wp-block-list">
+<li><strong>input_seq</strong>: The words so far (e.g., [0, 1] for “hello world”).</li>
+<li><strong>target</strong>: The next word (e.g., 2 for “how”).</li>
+<li><strong>loss</strong>: How far off the prediction was.</li>
+<li><strong>optimizer.step()</strong>: Updates the model to improve.</li>
+</ol>
+<h4 class="wp-block-heading">Step 8: Using the Model</h4>
+<p>Now, let’s predict the next word using our model:</p>
+<pre><code class="language-python">input_text = "hello world how"
+input_tokens = tokenize(input_text, vocab)
+input_tensor = torch.tensor(input_tokens).unsqueeze(0)
+output = model(input_tensor)
+predicted_token = torch.argmax(output[:, -1, :]).item()
+print(f"Input: {input_text}, Predicted: {list(vocab.keys())[list(vocab.values()).index(predicted_token)]}")</code></pre>
+<pre class="wp-block-preformatted"><strong>Input: hello world how, Predicted: are</strong></pre>
+<h3 class="wp-block-heading">How to Build an Actual LLM with this?</h3>
+<p>To scale up this model into a practical <strong><a href="best-resources-to-learn-llms.html" target="">LLM</a></strong>, several key changes are needed. First, the vocabulary size must expand from just 6 words to 50,000+ words or subwords using techniques like <strong><a href="https://huggingface.co/learn/nlp-course/en/chapter6/5" rel="noreferrer noopener" target="_blank">Byte-Pair Encoding</a></strong> (BPE) and tokenizers from libraries like Hugging Face. Instead of two sentences, real-world training requires millions of sentences sourced from books, Wikipedia, or large datasets.</p>
+<p>The embedding dimension should increase from 16 to 512 or 1024 for richer word representations, while the hidden dimension should grow from 32 to at least 2048 for greater processing power. The number of transformer layers needs to scale from 2 to 12–96, similar to models like GPT-3.</p>
+<p>Instead of simple self-attention, multi-head attention should be implemented using <strong>nn.MultiheadAttention</strong> for better contextual understanding. Training also becomes significantly more complex, moving from 100 CPU epochs to multi-GPU/TPU training over days or weeks, requiring optimizations like batching (DataLoader), gradient clipping, and learning rate schedulers.</p>
+<p>Hardware-wise, a real LLM demands multiple high-end GPUs (e.g., 8+ A100s) and frameworks like PyTorch Lightning or DeepSpeed for efficient scaling.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="building-an-ai-agent-using-openai-api.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="generative-ai-model-from-scratch-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

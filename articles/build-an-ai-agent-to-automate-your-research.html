@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Build an AI Agent to Automate Your Research | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Build an AI Agent to Automate Your Research</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 25, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="machine-learning-roadmap.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="machine-learning-guided-projects-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>If you’re a student or working in <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">AI</a></strong>, you probably feel overwhelmed by the amount of information out there. The answers exist, but sorting through and making sense of them takes a lot of time. Imagine if you could create an AI agent to handle that first round of research for you. In this guide, we’ll build an AI agent to automate research that takes your question, searches the web, reads the top results, and gives you the most relevant passages along with a short summary.</p>
+<h2 class="wp-block-heading">How will our AI Agent for Research Work?</h2>
+<p>The agent we’re building is a fantastic example of a simple <strong>Retrieval-Augmented</strong> system. The core idea isn’t just to find pages with the right keywords (like a simple Ctrl+F), but to find passages with the right meaning.</p>
+<p>We will use <strong>vector embeddings</strong>. Think of an embedding as a coordinate of meaning in a vast, high-dimensional space. The sentence-transformers library provides models that are experts at turning any piece of text into a list of numbers (a vector) that represents its location in that meaning space.</p>
+<p>Our agent’s entire job is to:</p>
+<ol class="wp-block-list">
+<li>Turn your query into a vector.</li>
+<li>Search the web, scrape the text, and turn all the content into more vectors.</li>
+<li>Find the text vectors whose coordinates are closest to your query’s coordinates.</li>
+</ol>
+<p>That’s it. It’s just very clever math, and you can build it in about 100 lines of Python.</p>
+<h2 class="wp-block-heading">Now, Let’s Build an AI Agent to Automate Your Research</h2>
+<p>First, create a new Python file and install the dependencies:</p>
+<pre class="wp-block-preformatted">pip install ddgs requests beautifulsoup4 sentence-transformers numpy </pre>
+<h4 class="wp-block-heading">Step 1:  Import Libraries and Configure Parameters</h4>
+<p>The top of your file will define all imports and key settings:</p>
+<pre><code class="language-python">import re
+import urllib.parse
+from ddgs import DDGS          # package name is 'ddgs' (duckduckgo_search renamed)
+import requests
+from bs4 import BeautifulSoup
+from sentence_transformers import SentenceTransformer
+import numpy as np
+import time</code></pre>
+<p>Next, configure constants like search results, summary size, and embedding model:</p>
+<pre><code class="language-python">SEARCH_RESULTS = 6        # How many URLs to check
+PASSAGES_PER_PAGE = 4     # How many passages to pull from each URL
+EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2" # Fast, high-quality model
+TOP_PASSAGES = 5          # How many relevant passages to use for the summary
+SUMMARY_SENTENCES = 3     # How many sentences in the final summary
+TIMEOUT = 8               # How long to wait for a webpage to load</code></pre>
+<h4 class="wp-block-heading">Step 2: Search and Fetch Web Pages</h4>
+<p>We’ll use <strong>DuckDuckGo Search</strong> for free, API-less search results:</p>
+<pre><code class="language-python">def unwrap_ddg(url):
+    """If DuckDuckGo returns a redirect wrapper, extract the real URL."""
+    try:
+        parsed = urllib.parse.urlparse(url)
+        if "duckduckgo.com" in parsed.netloc:
+            qs = urllib.parse.parse_qs(parsed.query)
+            uddg = qs.get("uddg")
+            if uddg:
+                return urllib.parse.unquote(uddg[0])
+    except Exception:
+        pass
+    return url
+
+def search_web(query, max_results=SEARCH_RESULTS):
+    """Search the web and return a list of URLs."""
+    urls = []
+    with DDGS() as ddgs:
+        for r in ddgs.text(query, max_results=max_results):
+            url = r.get("href") or r.get("url")
+            if not url:
+                continue
+            url = unwrap_ddg(url) # Clean up DDG redirect links
+            urls.append(url)
+    return urls</code></pre>
+<p>Then, fetch and clean the page with requests and BeautifulSoup:</p>
+<pre><code class="language-python">def fetch_text(url, timeout=TIMEOUT):
+    """Fetch and clean text content from a URL."""
+    headers = {"User-Agent": "Mozilla/5.0 (research-agent)"}
+    try:
+        r = requests.get(url, timeout=timeout, headers=headers, allow_redirects=True)
+        if r.status_code != 200:
+            return ""
+        ct = r.headers.get("content-type", "")
+        if "html" not in ct.lower(): # Skip non-HTML content
+            return ""
+        
+        soup = BeautifulSoup(r.text, "html.parser")
+        
+        # Remove all annyoing tags
+        for tag in soup(["script", "style", "noscript", "header", "footer", "svg", "iframe", "nav", "aside"]):
+            tag.extract()
+            
+        # Get all paragraph text
+        paragraphs = [p.get_text(" ", strip=True) for p in soup.find_all("p")]
+        text = " ".join([p for p in paragraphs if p])
+        
+        if text.strip():
+            # Clean up whitespace
+            return re.sub(r"\s+", " ", text).strip()
+            
+        # --- Fallback logic if &lt;p&gt; tags fail ---
+        meta = soup.find("meta", attrs={"name": "description"}) or soup.find("meta", attrs={"property": "og:description"})
+        if meta and meta.get("content"):
+            return meta["content"].strip()
+        if soup.title and soup.title.string:
+            return soup.title.string.strip()
+            
+    except Exception:
+        return "" # Fail silently
+    return ""</code></pre>
+<h4 class="wp-block-heading">Step 3: Chunk, Embed, and Rank Passages</h4>
+<p>We’ll break long articles into smaller passages and embed them using SentenceTransformer:</p>
+<pre><code class="language-python">def chunk_passages(text, max_words=120):
+    """Split long text into smaller passages."""
+    words = text.split()
+    if not words:
+        return []
+    chunks = []
+    i = 0
+    while i &lt; len(words):
+        chunk = words[i : i + max_words]
+        chunks.append(" ".join(chunk))
+        i += max_words
+    return chunks
+
+def split_sentences(text):
+    """A simple sentence splitter."""
+    parts = re.split(r'(?&lt;=[.!?])\s+', text)
+    return [p.strip() for p in parts if p.strip()]
+  
+class ShortResearchAgent:
+    def __init__(self, embed_model=EMBEDDING_MODEL):
+        print(f"Loading embedder: {embed_model}...")
+        # This downloads the model on first run
+        self.embedder = SentenceTransformer(embed_model)
+
+    def run(self, query):
+        start = time.time()
+        
+        # 1. Search
+        urls = search_web(query)
+        print(f"Found {len(urls)} urls.")
+        
+        # 2. Fetch &amp; Chunk
+        docs = []
+        for u in urls:
+            txt = fetch_text(u)
+            if not txt:
+                continue
+            chunks = chunk_passages(txt, max_words=120)
+            for c in chunks[:PASSAGES_PER_PAGE]:
+                docs.append({"url": u, "passage": c})
+        
+        if not docs:
+            print("No documents fetched.")
+            return {"query": query, "passages": [], "summary": ""}</code></pre>
+<p>Now, initialize the embedding model and compute cosine similarity:</p>
+<pre><code class="language-python"># 3. Embed (Turn text into numbers)
+        texts = [d["passage"] for d in docs]
+        emb_texts = self.embedder.encode(texts, convert_to_numpy=True, show_progress_bar=False)
+        q_emb = self.embedder.encode([query], convert_to_numpy=True)[0]
+        
+        # 4. Rank (Find similarity)
+        def cosine(a, b): 
+            return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b) + 1e-10)
+            
+        sims = [cosine(e, q_emb) for e in emb_texts]
+        top_idx = np.argsort(sims)[::-1][:TOP_PASSAGES]
+        top_passages = [{"url": docs[i]["url"], "passage": docs[i]["passage"], "score": float(sims[i])} for i in top_idx]</code></pre>
+<h4 class="wp-block-heading">Step 4: Generate a Mini Summary</h4>
+<p>Now, extract and rank sentences within top passages to form a concise summary:</p>
+<pre><code class="language-python">        # 5. Summarize (Extractive)
+        sentences = []
+        for tp in top_passages:
+            for s in split_sentences(tp["passage"]):
+                sentences.append({"sent": s, "url": tp["url"]})
+        
+        if not sentences:
+            summary = "No summary could be generated."
+        else:
+            sent_texts = [s["sent"] for s in sentences]
+            sent_embs = self.embedder.encode(sent_texts, convert_to_numpy=True, show_progress_bar=False)
+            sent_sims = [cosine(e, q_emb) for e in sent_embs]
+            
+            top_sent_idx = np.argsort(sent_sims)[::-1][:SUMMARY_SENTENCES]
+            chosen = [sentences[idx] for idx in top_sent_idx]
+
+            # De-duplicate and format
+            seen = set()
+            lines = []
+            for s in chosen:
+                key = s["sent"].lower()[:80] # Check first 80 chars for duplication
+                if key in seen:
+                    continue
+                seen.add(key)
+                lines.append(f"{s['sent']} (Source: {s['url']})")
+            summary = " ".join(lines)
+
+        elapsed = time.time() - start
+        return {"query": query, "passages": top_passages, "summary": summary, "time": elapsed}</code></pre>
+<h4 class="wp-block-heading">Step 5: Run the Agent</h4>
+<p>Finally, run the AI agent with any query:</p>
+<pre><code class="language-python">if __name__ == "__main__":
+    agent = ShortResearchAgent()
+    q = "What causes urban heat islands and how can cities reduce them?"
+    
+    print(f"Running query: {q}\n")
+    out = agent.run(q)
+    
+    print("\nTop passages:")
+    for p in out["passages"]:
+        print(f"- score {p['score']:.3f} src {p['url']}\n  {p['passage'][:200]}...\n")
+        
+    print("--- Extractive summary ---")
+    print(out["summary"])
+    print("--------------------------")
+    print(f"\nDone in {out['time']:.1f}s")</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="" class="wp-image-28526" data-attachment-id="28526" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="2388,1122" data-recalc-dims="1" decoding="async" height="481" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/image-3.png" width="1024"/><figcaption class="wp-element-caption">Output</figcaption></figure>
+<h3 class="wp-block-heading">Final Words</h3>
+<p>You have just built the core logic of <strong>RAG</strong>, the architecture behind many of the most powerful GenAI systems today. First, you built the <strong>Retriever</strong> (Search, Fetch, Chunk); next, you built the <strong>Ranker</strong> (Embed, Cosine Similarity); and then, you built a simple <strong>Generator</strong> (the extractive summarizer).</p>
+<p>The journey from a simple script to a powerful AI system is just a series of small, understandable steps. You just took the first and most important one.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="machine-learning-roadmap.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="machine-learning-guided-projects-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

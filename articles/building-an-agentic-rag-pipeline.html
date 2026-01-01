@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Building an Agentic RAG Pipeline | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Building an Agentic RAG Pipeline</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 15, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="the-data-analyst-to-ai-engineer-roadmap.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="llm-projects-for-all-levels.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>A typical RAG system quickly searches your uploaded tax documents or technical manuals to find a relevant snippet, even for something as simple as a casual greeting. Agentic RAG works differently. Instead of always looking up information, the agent stops to consider whether it really needs to search or if it can answer on its own. In this article, I’ll show you how to build an Agentic RAG pipeline using Python and LangChain.</p>
+<h2 class="wp-block-heading">Agentic RAG Pipeline: Getting Started</h2>
+<p>In this guide, we’ll build a local, privacy-friendly Agentic RAG pipeline using Python, LangChain, and a lightweight Google model. We’ll go beyond just writing code to create a system that acts a bit more like a person.</p>
+<p>We’ll use LangChain to manage the process, ChromaDB for storing vectors, and Google’s Flan-T5 as our local language model. Everything runs on your own computer, so you don’t need any API keys.</p>
+<p>You will need a few libraries installed. In your terminal:</p>
+<pre class="wp-block-preformatted">pip install langchain langchain-community langchain-chroma transformers sentence-transformers pypdf</pre>
+<h4 class="wp-block-heading">Step 1: Loading the Knowledge</h4>
+<p>First, we need to give our AI something to read. We use a function to scan a folder for PDFs:</p>
+<pre><code class="language-python">import os
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_chroma import Chroma
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from transformers import pipeline
+
+# Load PDFs from a folder
+def load_docs(folder_path):
+    docs = []
+    for file in os.listdir(folder_path):
+        if file.endswith(".pdf"):
+            loader = PyPDFLoader(os.path.join(folder_path, file))
+            docs.extend(loader.load())
+    return docs
+
+# Update this path to where your PDFs are stored
+docs = load_docs("/Users/amankharwal/aiagent/data")
+print("PDF Pages Loaded:", len(docs))</code></pre>
+<p>In this step, we go through a folder, find PDF files, and load them one page at a time. It’s like stacking books on your desk before you start studying.</p>
+<h4 class="wp-block-heading">Step 2: Chunking</h4>
+<p>LLMs can only read a certain amount of text at once, called the context window. Even if they could handle more, giving them a whole 500-page book to answer one question isn’t efficient:</p>
+<pre><code class="language-python"># Split PDFs into chunks
+text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=500,
+    chunk_overlap=80
+)
+chunks = text_splitter.split_documents(docs)
+print("Chunks Created:", len(chunks))</code></pre>
+<p>Notice chunk_overlap=80. Instead of just cutting the text, we let the chunks overlap a bit. This way, sentences aren’t split in half at the edge of a chunk, so the meaning (or semantic context) is preserved across breaks.</p>
+<h4 class="wp-block-heading">Step 3: Embeddings &amp; Vector Store</h4>
+<p>Now we convert text into numbers, called vectors, that the computer can understand. We store these in Chroma, which is a vector database:</p>
+<pre><code class="language-python"># Embeddings
+embedding_model = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+
+# Save texts into Chroma vector DB
+texts = [c.page_content for c in chunks]
+db = Chroma(
+    collection_name="rag_store",
+    embedding_function=embedding_model
+)
+db.add_texts(texts)
+
+# Retriever
+retriever = db.as_retriever(search_kwargs={"k": 3})</code></pre>
+<p>We’re using all-MiniLM-L6-v2. It’s a small, fast model that’s great for local development. It puts similar concepts close together in space. When we search later, we won’t be matching keywords; we’ll be matching meanings.</p>
+<h4 class="wp-block-heading">Step 4: The Brain</h4>
+<p>We need a model to generate the actual answers. We are using google/flan-t5-base:</p>
+<pre><code class="language-python"># Local LLM
+llm = pipeline(
+    "text2text-generation",              
+    model="google/flan-t5-base",
+    max_new_tokens=150
+)</code></pre>
+<p>Flan-T5 is a “seq2seq” model. It’s great at following instructions like “Summarize this” or “Answer this,” which makes it ideal for RAG tasks even though it’s smaller.</p>
+<h4 class="wp-block-heading">Step 5: The Agent</h4>
+<p>This is the key part. This simple function is what makes the pipeline Agentic:</p>
+<pre><code class="language-python"># Agent brain
+def agent_controller(query):
+    q = query.lower()
+    if any(word in q for word in ["pdf", "document", "data", "summarize", "information", "find"]):
+        return "search"
+    return "direct"</code></pre>
+<p>Instead of sending everything to the database, this controller analyzes the user’s intent:</p>
+<ol class="wp-block-list">
+<li>Does the user want data from the file? <strong>Action: Search</strong></li>
+<li>Is the user just chatting or asking for general knowledge? <strong>Action: Direct</strong></li>
+</ol>
+<p>In a production system, you might use a powerful LLM to make this decision. But for learning, this keyword-based method is a great way to show the <strong>Routing Pattern</strong> in agentic AI.</p>
+<h4 class="wp-block-heading">Step 6: The Execution Loop</h4>
+<p>Finally, we tie it all together:</p>
+<pre><code class="language-python"># RAG
+def rag_answer(query):
+    action = agent_controller(query)
+
+    if action == "search":
+        print(f"🕵️ Agent decided to SEARCH document for: '{query}'")
+        results = retriever.invoke(query)           
+        context = "\n".join([r.page_content for r in results])
+        final_prompt = f"Use this context:\n{context}\n\nAnswer:\n{query}"
+    else:
+        print(f"🤖 Agent decided to answer DIRECTLY: '{query}'")
+        final_prompt = query
+
+    response = llm(final_prompt)[0]["generated_text"]
+    return response
+  
+# Test 1: A document-specific question
+query = "Give me a 5-point summary from the PDF"
+print(rag_answer(query))
+
+print("-" * 20)
+
+# Test 2: A general knowledge question
+print(rag_answer("What is an Ideal Resume Format? Explain in 50 words."))  </code></pre>
+<p>In the first case, the agent sees the word “PDF” or “summary” and uses the retriever. In the second case, it knows it doesn’t need your documents to explain a resume format, so it answers using its own pre-trained knowledge.</p>
+<h3 class="wp-block-heading">Closing Thoughts</h3>
+<p>When I first started working with AI, I thought bigger was better. I wanted the largest model and the biggest database. But over time, I learned that <strong>intelligence is really about efficiency, not just raw power.</strong></p>
+<p>By building this Agentic router, you save computing resources and reduce latency. Most importantly, you create a system that respects the user’s context.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="the-data-analyst-to-ai-engineer-roadmap.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="llm-projects-for-all-levels.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

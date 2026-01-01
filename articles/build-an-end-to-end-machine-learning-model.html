@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Build An End-to-End Machine Learning Model | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Build An End-to-End Machine Learning Model</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 28, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="hybrid-machine-learning-model-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="credit-card-clustering-with-machine-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>An End-to-End <strong><a href="https://play.google.com/store/books/details?id=gPPUEAAAQBAJ">Machine Learning</a></strong> Model is a comprehensive system that contains all the stages of a machine learning project, from data collection and preprocessing to model development, deployment, and ongoing maintenance. If you want to learn how to build an end-to-end Machine Learning model, this article is for you. In this article, I’ll take you through how to build an end-to-end Machine Learning model using Python and Dash (a UI framework).</p>
+<h2 class="wp-block-heading">Building an End-to-End Machine Learning Model: Process We Can Follow</h2>
+<p>To build an end-to-end Machine Learning model, you first need to train a Machine Learning model as you do in every Machine Learning problem you solve. Once you have trained your model, below is the process you can follow to turn your Machine Learning model into an end-to-end solution using the dash framework:</p>
+<ol class="wp-block-list">
+<li>Set up a new Dash application.</li>
+<li>Create the layout of the app using Dash’s HTML and Core Components. It includes input fields, buttons, and output display areas.</li>
+<li>Write callback functions to define the interactivity of the app, such as taking user inputs, running the model prediction, and displaying the results.</li>
+<li>Load the model within the app to use for predictions.</li>
+</ol>
+<p>So, the process starts with building a Machine Learning model. To save time, I will be using a Machine Learning model I have trained before. I recently wrote an article on Real Estate Price Prediction. I will use the model I trained to predict the real estate prices to build an end-to-end solution. You can find that article <a href="real-estate-price-prediction-using-python.html" rel="noreferrer noopener" target=""><strong>here</strong></a>.</p>
+<h2 class="wp-block-heading">Now Let’s Build an end-to-end Machine Learning Model</h2>
+<p>Now, let’s start building an End-to-End Machine Learning model using Python. I will start this task by reading the <a href="https://statso.io/real-estate-prediction-case-study/" rel="noreferrer noopener" target="_blank"><strong>dataset</strong></a> and training the Machine Learning model:</p>
+<pre><code class="language-python">import pandas as pd
+
+# Load the dataset
+real_estate_data = pd.read_csv("/Users/amankharwal/Coding/Real_Estate.csv") #replace the path with your path
+
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Selecting features and target variable
+features = ['Distance to the nearest MRT station', 'Number of convenience stores', 'Latitude', 'Longitude']
+target = 'House price of unit area'
+
+X = real_estate_data[features]
+y = real_estate_data[target]
+
+# Splitting the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Model initialization
+model = LinearRegression()
+
+# Training the model
+model.fit(X_train, y_train)</code></pre>
+<p>Here, I have just trained the model. To understand the model training process in detail, please refer to this detailed article on <a href="real-estate-price-prediction-using-python.html" rel="noreferrer noopener" target=""><strong>Real Estate Price Prediction</strong></a>.</p>
+<p>Now, here’s how we can create an end-to-end solution for our Machine Learning model by using the dash framework:</p>
+<pre><code class="language-python">import dash
+from dash import html, dcc, Input, Output, State
+import pandas as pd
+
+# Initialize the Dash app
+app = dash.Dash(__name__)
+
+# Define the layout of the app
+app.layout = html.Div([
+    html.Div([
+        html.H1("Real Estate Price Prediction", style={'text-align': 'center'}),
+        
+        html.Div([
+            dcc.Input(id='distance_to_mrt', type='number', placeholder='Distance to MRT Station (meters)',
+                      style={'margin': '10px', 'padding': '10px'}),
+            dcc.Input(id='num_convenience_stores', type='number', placeholder='Number of Convenience Stores',
+                      style={'margin': '10px', 'padding': '10px'}),
+            dcc.Input(id='latitude', type='number', placeholder='Latitude',
+                      style={'margin': '10px', 'padding': '10px'}),
+            dcc.Input(id='longitude', type='number', placeholder='Longitude',
+                      style={'margin': '10px', 'padding': '10px'}),
+            html.Button('Predict Price', id='predict_button', n_clicks=0,
+                        style={'margin': '10px', 'padding': '10px', 'background-color': '#007BFF', 'color': 'white'}),
+        ], style={'text-align': 'center'}),
+        
+        html.Div(id='prediction_output', style={'text-align': 'center', 'font-size': '20px', 'margin-top': '20px'})
+    ], style={'width': '50%', 'margin': '0 auto', 'border': '2px solid #007BFF', 'padding': '20px', 'border-radius': '10px'})
+])
+
+# Define callback to update output
+@app.callback(
+    Output('prediction_output', 'children'),
+    [Input('predict_button', 'n_clicks')],
+    [State('distance_to_mrt', 'value'), 
+     State('num_convenience_stores', 'value'),
+     State('latitude', 'value'),
+     State('longitude', 'value')]
+)
+def update_output(n_clicks, distance_to_mrt, num_convenience_stores, latitude, longitude):
+    if n_clicks &gt; 0 and all(v is not None for v in [distance_to_mrt, num_convenience_stores, latitude, longitude]):
+        # Prepare the feature vector
+        features = pd.DataFrame([[distance_to_mrt, num_convenience_stores, latitude, longitude]], 
+                                columns=['distance_to_mrt', 'num_convenience_stores', 'latitude', 'longitude'])
+        # Predict
+        prediction = model.predict(features)[0]
+        return f'Predicted House Price of Unit Area: {prediction:.2f}'
+    elif n_clicks &gt; 0:
+        return 'Please enter all values to get a prediction'
+    return ''
+
+# Run the app
+if __name__ == '__main__':
+    app.run_server(debug=True)</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Build An End-to-End Machine Learning Model: UI of End to End Machine Learning Model" class="wp-image-22120" data-attachment-id="22120" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image-1" data-orig-size="1068,920" data-recalc-dims="1" decoding="async" height="882" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/image-1.png" style="width:533px;height:auto" width="1024"/></figure>
+<p><strong>Now, let’s break down this code and understand each part of the code:</strong></p>
+<pre class="wp-block-preformatted"><strong>import dash</strong><br/><strong>from dash import html, dcc, Input, Output, State</strong><br/><strong>import pandas as pd</strong></pre>
+<p>In this code, “dash” is the main Dash library. The html and dcc (Dash Core Components) are used to create HTML and interactive components. The Input, Output, and State are used for creating callbacks in Dash (interactivity).</p>
+<pre class="wp-block-preformatted"><strong>app = dash.Dash(__name__) </strong></pre>
+<p>This line initializes a new Dash app.</p>
+<pre class="wp-block-preformatted"><strong>app.layout = html.Div([...])</strong></pre>
+<p>This part defines the HTML structure of the app using Dash’s HTML components. Our layout includes a title (html.H1), input fields for the distance to the MRT station, number of convenience stores, latitude, and longitude (dcc.Input), and a button to trigger the prediction (html.Button). </p>
+<pre class="wp-block-preformatted"><strong>@app.callback(<br/>    Output('prediction_output', 'children'),<br/>    [Input('predict_button', 'n_clicks')],<br/>    [State('distance_to_mrt', 'value'), <br/>     State('num_convenience_stores', 'value'),<br/>     State('latitude', 'value'),<br/>     State('longitude', 'value')]<br/>)<br/>def update_output(n_clicks, distance_to_mrt, num_convenience_stores, latitude, longitude):<br/>    ...</strong></pre>
+<p>It’s a callback function that updates the output (prediction result) when the ‘Predict Price’ button is clicked. Output(‘prediction_output’, ‘children’) indicates that the inner content (children) of the component with id prediction_output will be updated by this callback.</p>
+<p>The callback takes the number of button clicks as Input and the values of the four input fields as State. The function update_output is executed when the button is clicked, using the input values to generate a prediction. </p>
+<p>Inside the update_output function, the inputs are first checked to ensure they are not None. The inputs are then arranged into a Pandas DataFrame, matching the expected format for the model. The model.predict method is called to generate a prediction. This assumes that a trained model named model exists and is accessible within this script. The function returns either the predicted price or a prompt to enter all values.</p>
+<pre class="wp-block-preformatted"><strong>if __name__ == '__main__':<br/>    app.run_server(debug=True)</strong></pre>
+<p>This part runs the app server when the script is executed directly (__name__ == ‘__main__’). debug=True enables the debug mode, which provides an interactive debugger in the browser and auto-reloads the server on code changes.</p>
+<p>Here’s an example of giving inputs and executing this End-to-End Machine Learning model:</p>
+<blockquote class="twitter-tweet"><p dir="ltr" lang="en">Learn how to build an End to End Machine Learning model using Python!<br/><br/>Link: <a href="https://t.co/EyI5p1v3Ss">https://t.co/EyI5p1v3Ss</a><a href="https://twitter.com/hashtag/Data?src=hash&amp;ref_src=twsrc%5Etfw">#Data</a> <a href="https://twitter.com/hashtag/DataScience?src=hash&amp;ref_src=twsrc%5Etfw">#DataScience</a> <a href="https://twitter.com/hashtag/dataanalysis?src=hash&amp;ref_src=twsrc%5Etfw">#dataanalysis</a> <a href="https://twitter.com/hashtag/DataAnalytics?src=hash&amp;ref_src=twsrc%5Etfw">#DataAnalytics</a> <a href="https://twitter.com/hashtag/dataScientist?src=hash&amp;ref_src=twsrc%5Etfw">#dataScientist</a> <a href="https://twitter.com/hashtag/machinelearning?src=hash&amp;ref_src=twsrc%5Etfw">#machinelearning</a> <a href="https://twitter.com/hashtag/python?src=hash&amp;ref_src=twsrc%5Etfw">#python</a> <a href="https://twitter.com/hashtag/ArtificialIntelligence?src=hash&amp;ref_src=twsrc%5Etfw">#ArtificialIntelligence</a> <a href="https://t.co/pfiXb57LyT">pic.twitter.com/pfiXb57LyT</a></p>— Aman Kharwal (@amankk_9) <a href="https://twitter.com/amankk_9/status/1736649600176443536?ref_src=twsrc%5Etfw">December 18, 2023</a></blockquote>
+<p>So, this is how you can build an End-to-End Machine Learning model using Python.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>An End-to-End Machine Learning Model is a comprehensive system that contains all the stages of a machine learning project, from data collection and preprocessing to model development, deployment, and ongoing maintenance. I hope you liked this article on how to build an end-to-end Machine Learning model using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="hybrid-machine-learning-model-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="credit-card-clustering-with-machine-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

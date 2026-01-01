@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Car Insurance Modelling using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Car Insurance Modelling using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 02, 2025 • 5 min read</div>
+<p>Car insurance modelling refers to the use of statistical and mathematical models to accurately predict events such as the frequency of claims, the severity of claims, or the total cost associated with claims, which in turn helps in pricing insurance products, managing risk, and optimizing business strategies. If you want to learn how to perform Car Insurance Modelling, this article is for you. In this article, I’ll take you through the task of Car Insurance Modelling using Python.</p>
+<h2 class="wp-block-heading">Car Insurance Modelling: Process We Can Follow</h2>
+<p>The end goal of Car Insurance Modelling is to create a model that minimizes prediction errors and provides valuable insights into the factors influencing claim frequencies or claim amounts. </p>
+<p>Below is the process we can follow for the task of Car Insurance Modelling:</p>
+<ol class="wp-block-list">
+<li>Understand what the business aims to achieve with the model, whether it’s reducing risk, optimizing pricing, increasing competitiveness, or a combination of objectives.</li>
+<li>Collect data from internal systems (claims history, customer records) and external sources (public vehicle records, geographic information systems).</li>
+<li>Create new features that might be predictive of risk or claim cost, such as aggregating past claims to calculate claim frequency or severity.</li>
+<li>Choose appropriate statistical or <a href="https://play.google.com/store/books/details?id=gPPUEAAAQBAJ" rel="noreferrer noopener" target="_blank"><strong>machine learning algorithms</strong></a> based on the problem characteristics. Common choices might include linear regression, generalized linear models, decision trees, or ensemble methods.</li>
+<li>Ensure that the model meets business objectives and risk thresholds.</li>
+</ol>
+<p>To get started with the task of Car Insurance Modelling, we need a dataset based on car insurance claims. I found an ideal dataset for this task. You can download the dataset from <a href="https://statso.io/car-insurance-modelling-case-study/" rel="noreferrer noopener" target="_blank"><strong>here</strong></a>.</p>
+<h2 class="wp-block-heading">Car Insurance Modelling using Python</h2>
+<p>Now, let’s get started with the task of Car Insurance Modelling by importing the necessary Python libraries and the <a href="https://statso.io/car-insurance-modelling-case-study/" rel="noreferrer noopener" target="_blank"><strong>dataset</strong></a>:</p>
+<pre><code class="language-python">import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import statsmodels.api as sm
+
+# Load the data
+insurance_data = pd.read_csv("insurance_claims.csv")
+
+# Displaying the first few rows of the dataset
+print(insurance_data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>   age_of_driver  car_age    region  number_of_claims<br/>0             30        7     Urban                 0<br/>1             33       10     Rural                 2<br/>2             39       11  Suburban                 1<br/>3             18       12     Urban                 0<br/>4             21        8     Urban                 0</strong></pre>
+<p>The dataset consists of the following columns:</p>
+<ol class="wp-block-list">
+<li><strong>age_of_driver</strong>: The age of the driver.</li>
+<li><strong>car_age</strong>: The age of the car.</li>
+<li><strong>region</strong>: The region where the driver is located (Urban, Rural, Suburban).</li>
+<li><strong>number_of_claims</strong>: The number of claims made.</li>
+</ol>
+<p>So, the objective of this Car Insurance Modelling task will be to predict the frequency of insurance claims made by drivers.</p>
+<p>Now, let’s analyze the summary statistics and then move on to missing values and distribution analysis:</p>
+<pre><code class="language-python"># Summary statistics of the dataset
+summary_stats = insurance_data.describe(include='all')
+
+# Checking for missing values
+missing_values = insurance_data.isnull().sum()
+
+print(summary_stats)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>        age_of_driver      car_age region  number_of_claims<br/>count     1000.000000  1000.000000   1000       1000.000000<br/>unique            NaN          NaN      3               NaN<br/>top               NaN          NaN  Rural               NaN<br/>freq              NaN          NaN    343               NaN<br/>mean        33.112000     6.673000    NaN          0.675000<br/>std          9.253598     4.377583    NaN          0.822223<br/>min         18.000000     0.000000    NaN          0.000000<br/>25%         25.000000     3.000000    NaN          0.000000<br/>50%         33.000000     6.000000    NaN          0.000000<br/>75%         41.000000    11.000000    NaN          1.000000<br/>max         49.000000    14.000000    NaN          5.000000</strong></pre>
+<pre><code class="language-python">print(missing_values)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>age_of_driver       0<br/>car_age             0<br/>region              0<br/>number_of_claims    0<br/>dtype: int64</strong></pre>
+<p>Now, let’s proceed with visualizing the distributions and analyzing the categorical variables:</p>
+<pre><code class="language-python"># Set the aesthetic style of the plots
+sns.set_style("whitegrid")
+
+# Plotting distributions of numerical variables
+fig, ax = plt.subplots(1, 3, figsize=(18, 5))
+
+sns.histplot(insurance_data['age_of_driver'], kde=True, bins=15, ax=ax[0])
+ax[0].set_title('Age of Driver Distribution')
+
+sns.histplot(insurance_data['car_age'], kde=True, bins=15, ax=ax[1])
+ax[1].set_title('Car Age Distribution')
+
+sns.histplot(insurance_data['number_of_claims'], kde=False, bins=range(6), ax=ax[2])
+ax[2].set_title('Number of Claims Distribution')
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Car Insurance Modelling Analysis" class="wp-image-22243" data-attachment-id="22243" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="car-insurance" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/car-insurance.png?fit=1024%2C280&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/car-insurance.png?fit=300%2C82&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/car-insurance.png?fit=1789%2C490&amp;ssl=1" data-orig-size="1789,490" data-permalink="https://my-ai-portfolio.com/2024/01/08/car-insurance-modelling-using-python/car-insurance/" data-recalc-dims="1" decoding="async" height="280" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/car-insurance.png?resize=1024%2C280&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/car-insurance.png?resize=1024%2C280&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/car-insurance.png?resize=300%2C82&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/car-insurance.png?resize=768%2C210&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/car-insurance.png?resize=1536%2C421&amp;ssl=1 1536w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/car-insurance.png?resize=1200%2C329&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/car-insurance.png?w=1789&amp;ssl=1 1789w" width="1024"/></figure>
+<h5 class="wp-block-heading">Observations:</h5>
+<ol class="wp-block-list">
+<li><strong>Age of Driver</strong>: Appears approximately normally distributed around the 30s.</li>
+<li><strong>Car Age</strong>: Also seems fairly normally distributed with a slight right skew.</li>
+<li><strong>Number of Claims</strong>: Most drivers have 0 claims, indicating a right-skewed distribution which is common in count data like insurance claims.</li>
+</ol>
+<h2 class="wp-block-heading">Data Preprocessing</h2>
+<p>The ‘region’ variable in the dataset is categorical and should be converted to a numerical format suitable for modelling. One-hot encoding is a common approach we can use here. Once <a href="https://my-ai-portfolio.com/2023/06/19/data-preprocessing-pipeline-using-python/" rel="noreferrer noopener" target="_blank"><strong>preprocessing</strong></a> is complete, we’ll proceed to build the GLM model focusing on a Poisson or Negative Binomial distribution, as these are common for modelling count data like insurance claims.</p>
+<p>Let’s start with preprocessing the data:</p>
+<pre><code class="language-python">from sklearn.model_selection import train_test_split
+
+# One-Hot Encoding for 'region' variable
+insurance_data_encoded = pd.get_dummies(insurance_data, columns=['region'], drop_first=True)
+
+# Splitting the data into training and testing sets
+train, test = train_test_split(insurance_data_encoded, test_size=0.2, random_state=42)
+
+print(train.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>     age_of_driver  car_age  number_of_claims  region_Suburban  region_Urban<br/>29              26       13                 1                0             0<br/>535             42        9                 2                1             0<br/>695             44        8                 1                0             0<br/>557             41        3                 1                1             0<br/>836             31       12                 0                0             1</strong></pre>
+<p>The ‘region’ variable has been one-hot encoded, resulting in two new variables region_Suburban and region_Urban (with region_Rural being the baseline category implicitly). The data has also been split into training (80%) and testing (20%) sets.</p>
+<h2 class="wp-block-heading">Car Insurance Modelling for Event Frequency</h2>
+<p>For modelling event frequency, especially for count data like number of claims, Poisson or Negative Binomial regression is typically used. The choice between them usually depends on the variance of the count data:</p>
+<ul class="wp-block-list">
+<li><strong>Poisson Regression</strong>: Assumes the mean and variance of the count data are equal. Suitable when data does not exhibit overdispersion.</li>
+<li><strong>Negative Binomial Regression</strong>: More flexible, can handle overdispersion (variance greater than mean) in the count data.</li>
+</ul>
+<p>We’ll start with Poisson Regression and check if it’s a suitable model based on its fit and diagnostics. If needed, we can then consider the Negative Binomial Regression.</p>
+<p>Let’s proceed to build the Poisson GLM model using the training data. We’ll consider ‘age_of_driver’, ‘car_age’, ‘region_Suburban’, and ‘region_Urban’ as predictors and ‘number_of_claims’ as the response variable:</p>
+<pre><code class="language-python"># Preparing the data for modeling
+X_train = train.drop('number_of_claims', axis=1)
+y_train = train['number_of_claims']
+
+# Adding constant to the predictor variables
+X_train_const = sm.add_constant(X_train)
+
+# Building the Poisson GLM model
+poisson_glm = sm.GLM(y_train, X_train_const, family=sm.families.Poisson()).fit()
+
+# Displaying the model summary
+poisson_glm.summary()</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Generalized Linear Model Regression Results<br/>Dep. Variable:	number_of_claims	No. Observations:	800<br/>Model:	GLM	Df Residuals:	795<br/>Model Family:	Poisson	Df Model:	4<br/>Link Function:	Log	Scale:	1.0000<br/>Method:	IRLS	Log-Likelihood:	-845.44<br/>Date:	Sun, 07 Jan 2024	Deviance:	829.41<br/>Time:	11:17:53	Pearson chi2:	770.<br/>No. Iterations:	5	Pseudo R-squ. (CS):	0.02749<br/>Covariance Type:	nonrobust		<br/>coef	std err	z	P&gt;|z|	[0.025	0.975]<br/>const	0.0906	0.181	0.502	0.616	-0.263	0.444<br/>age_of_driver	-0.0205	0.005	-4.321	0.000	-0.030	-0.011<br/>car_age	0.0152	0.010	1.539	0.124	-0.004	0.035<br/>region_Suburban	0.0799	0.106	0.755	0.450	-0.127	0.287<br/>region_Urban	0.0861	0.108	0.794	0.427	-0.126	0.298<br/></strong></pre>
+<p>The Poisson GLM has been fit with the following results:</p>
+<ul class="wp-block-list">
+<li><strong>const</strong>: Represents the intercept. The estimate is 0.0906, but it’s not statistically significant (p-value: 0.616).</li>
+<li><strong>age_of_driver</strong>: The coefficient is -0.0205, indicating that with each additional year of the driver’s age, the log of expected claims decreases. It’s statistically significant (p-value &lt; 0.001), suggesting a strong relationship between the age of the driver and the number of claims.</li>
+<li><strong>car_age</strong>: The coefficient is 0.0152, suggesting that older cars tend to have slightly higher expected claims, although this effect is not statistically significant (p-value: 0.124).</li>
+<li><strong>region_Suburban and region_Urban</strong>: The coefficients for these categories are 0.0799 and 0.0861, respectively. Both are compared to the baseline “Rural” category and indicate slightly higher expected claims in suburban and urban areas. However, neither is statistically significant (p-values: 0.450 and 0.427, respectively).</li>
+</ul>
+<p>The model suggests that as drivers get older, the expected number of claims decreases significantly. There’s some indication that car age might affect the number of claims, with older cars having more claims, but this isn’t statistically significant in this model. The model does not find statistically significant evidence that being in suburban or urban regions affects the number of claims compared to being in a rural area.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, car insurance modelling refers to the use of statistical and mathematical models to accurately predict events such as the frequency of claims, the severity of claims, or the total cost associated with claims, which in turn helps in pricing insurance products, managing risk, and optimizing business strategies. I hope you liked this article on Car Insurance Modelling using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="audio-data-processing-and-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="price-optimization-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

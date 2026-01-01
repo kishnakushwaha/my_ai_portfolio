@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Health Monitoring and Analysis using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Health Monitoring and Analysis using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 21, 2025 • 5 min read</div>
+<p>Health Monitoring and Analysis refers to the systematic use of health data to track and evaluate the health status of individuals or populations over time. It contains a range of activities from real-time physiological data collection (like heart rate, blood pressure, and temperature) to the analysis of more complex health records (including patient history, lifestyle choices, and genetic information). So, if you want to learn how to perform Health Monitoring and Analysis, this article is for you. In this article, I’ll take you through the task of Health Monitoring and Analysis using Python.</p>
+<h2 class="wp-block-heading">Health Monitoring and Analysis: Getting Started</h2>
+<p>The problem I am working on in this article is my take on a problem statement I found at <strong><a href="https://statso.io/community/">statso</a></strong>. The dataset we are working with contains the following columns:</p>
+<ul class="wp-block-list">
+<li>PatientID: Numerical identifier for the patient.</li>
+<li>Age: Age of the patient in years.</li>
+<li>Gender: Gender of the patient.</li>
+<li>HeartRate: Heart rate in beats per minute.</li>
+<li>BloodPressure: Blood pressure readings, formatted inconsistently.</li>
+<li>RespiratoryRate: Respiratory rate in breaths per minute.</li>
+<li>BodyTemperature: Body temperature in Fahrenheit.</li>
+<li>ActivityLevel: Activity level at the time of the measurement.</li>
+<li>OxygenSaturation: Oxygen saturation percentage.</li>
+<li>SleepQuality: Quality of sleep reported by the patient.</li>
+<li>StressLevel: Reported level of stress.</li>
+<li>Timestamp: Date and time of the measurement.</li>
+</ul>
+<p><strong>You can download the dataset and read the problem statement <a href="https://statso.io/healthcare-analysis-case-study/">here</a>.</strong></p>
+<p>For the task of Health Monitoring and Analysis, we will aim to monitor the health of the patients in the data, analyze the patterns found in different types of patients and group them based on their health standards.</p>
+<h2 class="wp-block-heading">Health Monitoring and Analysis using Python</h2>
+<p>Now, let’s get started with the task of Health Monitoring and Analysis by importing the necessary Python libraries and the dataset:</p>
+<pre><code class="language-python">import pandas as pd
+health_data = pd.read_csv('healthmonitoring.csv')
+print(health_data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>   PatientID  Age  Gender  HeartRate BloodPressure  RespiratoryRate  \<br/>0          1   69    Male  60.993428        130/85               15   <br/>1          2   32    Male  98.723471        120/80               23   <br/>2          3   78  Female  82.295377        130/85               13   <br/>3          4   38  Female  80.000000        111/78               19   <br/>4          5   41    Male  87.531693        120/80               14   <br/><br/>   BodyTemperature ActivityLevel  OxygenSaturation SleepQuality StressLevel  \<br/>0        98.885236       resting              95.0    excellent         low   <br/>1        98.281883       walking              97.0         good        high   <br/>2        98.820286       resting              98.0         fair        high   <br/>3        98.412594       running              98.0         poor    moderate   <br/>4        99.369871       resting              98.0         good         low   <br/><br/>                    Timestamp  <br/>0  2024-04-26 17:28:55.286711  <br/>1  2024-04-26 17:23:55.286722  <br/>2  2024-04-26 17:18:55.286726  <br/>3  2024-04-26 17:13:55.286728  <br/>4  2024-04-26 17:08:55.286731  </strong></pre>
+<p>Let’s have a look at whether the data contains any null values or not:</p>
+<pre><code class="language-python">health_data.isnull().sum()</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>PatientID             0<br/>Age                   0<br/>Gender                0<br/>HeartRate             0<br/>BloodPressure         0<br/>RespiratoryRate       0<br/>BodyTemperature      18<br/>ActivityLevel         0<br/>OxygenSaturation    163<br/>SleepQuality          0<br/>StressLevel           0<br/>Timestamp             0<br/>dtype: int64</strong></pre>
+<p>So, the data contains null values in body temperature and oxygen saturation columns. For simplicity, I’ll fill the null values using the median value:</p>
+<pre><code class="language-python"># calculate medians
+median_body_temp = health_data['BodyTemperature'].median()
+median_oxygen_sat = health_data['OxygenSaturation'].median()
+
+# fill missing values
+health_data['BodyTemperature'].fillna(median_body_temp, inplace=True)
+health_data['OxygenSaturation'].fillna(median_oxygen_sat, inplace=True)</code></pre>
+<p>Next, we will examine summary statistics and the distribution of the numerical health metrics (Age, Heart Rate, Respiratory Rate, Body Temperature, and Oxygen Saturation). It will help us understand the typical values and the spread of the data. I’ll also include some visualizations to better understand these distributions:</p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+import seaborn as sns
+sns.set(style="whitegrid")
+
+# summary statistics
+summary_stats = health_data.describe()
+
+# plotting distributions of numerical features
+fig, axes = plt.subplots(3, 2, figsize=(14, 18))
+sns.histplot(health_data['Age'], bins=20, kde=True, ax=axes[0, 0])
+axes[0, 0].set_title('Age Distribution')
+
+sns.histplot(health_data['HeartRate'], bins=20, kde=True, ax=axes[0, 1])
+axes[0, 1].set_title('Heart Rate Distribution')
+
+sns.histplot(health_data['RespiratoryRate'], bins=20, kde=True, ax=axes[1, 0])
+axes[1, 0].set_title('Respiratory Rate Distribution')
+
+sns.histplot(health_data['BodyTemperature'], bins=20, kde=True, ax=axes[1, 1])
+axes[1, 1].set_title('Body Temperature Distribution')
+
+sns.histplot(health_data['OxygenSaturation'], bins=10, kde=True, ax=axes[2, 0])
+axes[2, 0].set_title('Oxygen Saturation Distribution')
+
+fig.delaxes(axes[2,1])  # remove unused subplot
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Health Monitoring and Analysis: graph 1" class="wp-image-23291" data-attachment-id="23291" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="health-1" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-1.png?fit=794%2C1024&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-1.png?fit=233%2C300&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-1.png?fit=1384%2C1784&amp;ssl=1" data-orig-size="1384,1784" data-permalink="https://my-ai-portfolio.com/2024/04/29/health-monitoring-and-analysis-using-python/health-1/" data-recalc-dims="1" decoding="async" height="1024" sizes="(max-width: 794px) 100vw, 794px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-1.png?resize=794%2C1024&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-1.png?resize=794%2C1024&amp;ssl=1 794w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-1.png?resize=233%2C300&amp;ssl=1 233w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-1.png?resize=768%2C990&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-1.png?resize=1192%2C1536&amp;ssl=1 1192w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-1.png?resize=1200%2C1547&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-1.png?w=1384&amp;ssl=1 1384w" style="width:699px;height:auto" width="794"/></figure>
+<pre><code class="language-python">print(summary_stats)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>        PatientID         Age   HeartRate  RespiratoryRate  BodyTemperature  \<br/>count  500.000000  500.000000  500.000000       500.000000       500.000000   <br/>mean   250.500000   51.146000   80.131613        17.524000        98.584383   <br/>std    144.481833   19.821566    9.606273         3.382352         0.461502   <br/>min      1.000000   18.000000   60.169259        12.000000        97.094895   <br/>25%    125.750000   34.000000   75.000000        15.000000        98.281793   <br/>50%    250.500000   51.000000   80.000000        17.500000        98.609167   <br/>75%    375.250000   69.000000   86.276413        20.000000        98.930497   <br/>max    500.000000   84.000000   99.925508        23.000000        99.489150   <br/><br/>       OxygenSaturation  <br/>count        500.000000  <br/>mean          96.296000  <br/>std            1.408671  <br/>min           94.000000  <br/>25%           96.000000  <br/>50%           96.000000  <br/>75%           97.000000  <br/>max           99.000000  </strong></pre>
+<p>Now, let’s have a look at the gender distribution in the data and the correlation between the numerical columns in the dataset:</p>
+<pre><code class="language-python"># gender Distribution
+gender_counts = health_data['Gender'].value_counts()
+
+# correlation Matrix for numerical health metrics
+correlation_matrix = health_data[['Age', 'HeartRate', 'RespiratoryRate', 'BodyTemperature', 'OxygenSaturation']].corr()
+
+# plotting the findings
+fig, axes = plt.subplots(1, 2, figsize=(12, 6))
+
+# gender distribution plot
+gender_counts.plot(kind='pie', ax=axes[0], autopct='%1.1f%%', startangle=90, colors=['#ff9999','#66b3ff'])
+axes[0].set_ylabel('')
+axes[0].set_title('Gender Distribution')
+
+# correlation matrix plot
+sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap='coolwarm', ax=axes[1])
+axes[1].set_title('Correlation Matrix')
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Correlation and gender distribution in the dataset" class="wp-image-23294" data-attachment-id="23294" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="health-2" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-2.png?fit=1024%2C531&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-2.png?fit=300%2C155&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-2.png?fit=1127%2C584&amp;ssl=1" data-orig-size="1127,584" data-permalink="https://my-ai-portfolio.com/2024/04/29/health-monitoring-and-analysis-using-python/health-2/" data-recalc-dims="1" decoding="async" height="531" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-2.png?resize=1024%2C531&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-2.png?resize=1024%2C531&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-2.png?resize=300%2C155&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-2.png?resize=768%2C398&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-2.png?w=1127&amp;ssl=1 1127w" width="1024"/></figure>
+<p>The pie chart indicates a nearly even split between male and female subjects in the dataset, with males comprising a slight majority at 51.2%. The correlation matrix shows no strong correlations between the variables, as all the values are close to zero. Specifically, none of the health metrics (Age, Heart Rate, Respiratory Rate, Body Temperature, and Oxygen Saturation) display a strong positive or negative linear relationship with one another in this particular dataset. It suggests that, for this group of individuals, changes in one metric are not strongly associated with changes in the others.</p>
+<p>Now, let’s have a look at the heart rate by activity level:</p>
+<pre><code class="language-python"># heart Rate by activity level
+plt.figure(figsize=(10, 6))
+sns.boxplot(x='ActivityLevel', y='HeartRate', data=health_data)
+plt.title('Heart Rate by Activity Level')
+plt.ylabel('Heart Rate (beats per minute)')
+plt.xlabel('Activity Level')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="Health Monitoring and Analysis: Heart Rate by Activity Level" class="wp-image-23296" data-attachment-id="23296" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="health-3" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-3.png?fit=860%2C556&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-3.png?fit=300%2C194&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-3.png?fit=860%2C556&amp;ssl=1" data-orig-size="860,556" data-permalink="https://my-ai-portfolio.com/2024/04/29/health-monitoring-and-analysis-using-python/health-3/" data-recalc-dims="1" decoding="async" height="556" loading="lazy" sizes="auto, (max-width: 860px) 100vw, 860px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-3.png?resize=860%2C556&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-3.png?w=860&amp;ssl=1 860w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-3.png?resize=300%2C194&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-3.png?resize=768%2C497&amp;ssl=1 768w" style="width:651px;height:auto" width="860"/></figure>
+<p>It shows that the median heart rate increases from resting to walking, which is expected as physical activity increases. However, the median heart rate does not significantly increase further during running compared to walking, which is unusual since we would expect a higher median heart rate for a more strenuous activity. Additionally, there is considerable overlap in the interquartile ranges between walking and running, suggesting similar variability in heart rates for these activities within the sampled population. The presence of outliers in the resting category indicates that some individuals have resting heart rates that are much higher than the typical range for the rest of the group.</p>
+<p>Now, let’s have a look at the distribution of blood pressure levels and some health metrics by gender:</p>
+<pre><code class="language-python"># extracting systolic and diastolic blood pressure for analysis
+health_data[['SystolicBP', 'DiastolicBP']] = health_data['BloodPressure'].str.split('/', expand=True).astype(int)
+
+# blood pressure distribution
+plt.figure(figsize=(12, 6))
+sns.histplot(health_data['SystolicBP'], color="skyblue", label="Systolic", kde=True)
+sns.histplot(health_data['DiastolicBP'], color="red", label="Diastolic", kde=True)
+plt.title('Blood Pressure Distribution')
+plt.xlabel('Blood Pressure (mmHg)')
+plt.legend()
+plt.show()
+
+# health metrics by gender
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+sns.boxplot(x='Gender', y='HeartRate', data=health_data, ax=axes[0])
+axes[0].set_title('Heart Rate by Gender')
+axes[0].set_xlabel('Gender')
+axes[0].set_ylabel('Heart Rate (beats per minute)')
+
+sns.boxplot(x='Gender', y='OxygenSaturation', data=health_data, ax=axes[1])
+axes[1].set_title('Oxygen Saturation by Gender')
+axes[1].set_xlabel('Gender')
+axes[1].set_ylabel('Oxygen Saturation (%)')
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="Blood Pressure Distribution" class="wp-image-23298" data-attachment-id="23298" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="health-5" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-5.png?fit=1015%2C556&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-5.png?fit=300%2C164&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-5.png?fit=1015%2C556&amp;ssl=1" data-orig-size="1015,556" data-permalink="https://my-ai-portfolio.com/2024/04/29/health-monitoring-and-analysis-using-python/health-5/" data-recalc-dims="1" decoding="async" height="556" loading="lazy" sizes="auto, (max-width: 1015px) 100vw, 1015px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-5.png?resize=1015%2C556&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-5.png?w=1015&amp;ssl=1 1015w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-5.png?resize=300%2C164&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-5.png?resize=768%2C421&amp;ssl=1 768w" style="width:652px;height:auto" width="1015"/></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Oxygen Saturation and heart rate by Gender" class="wp-image-23299" data-attachment-id="23299" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="health-4" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-4.png?fit=1024%2C432&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-4.png?fit=300%2C127&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-4.png?fit=1384%2C584&amp;ssl=1" data-orig-size="1384,584" data-permalink="https://my-ai-portfolio.com/2024/04/29/health-monitoring-and-analysis-using-python/health-4/" data-recalc-dims="1" decoding="async" height="432" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-4.png?resize=1024%2C432&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-4.png?resize=1024%2C432&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-4.png?resize=300%2C127&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-4.png?resize=768%2C324&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-4.png?resize=1200%2C506&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-4.png?w=1384&amp;ssl=1 1384w" style="width:659px;height:auto" width="1024"/></figure>
+<p>The systolic blood pressure, represented in blue, shows a more spread-out distribution with peaks suggesting common readings around 120 mmHg and 140 mmHg. The diastolic blood pressure, in red, appears to have a narrower distribution, with a significant peak around 80 mmHg. The spread of systolic values is broader than the diastolic ones, which is typical as systolic pressure tends to vary more with factors like activity level and stress. This distribution is consistent with general population trends where a systolic reading of around 120 mmHg and a diastolic reading of around 80 mmHg are considered normal.</p>
+<p>For heart rate, both males and females show similar median values with a relatively similar interquartile range, indicating no significant difference in heart rate between genders within this dataset. In terms of oxygen saturation, again, both genders exhibit nearly identical medians and interquartile ranges, suggesting that oxygen saturation does not differ notably between males and females in this sample. There are a few outliers in oxygen saturation for both genders, indicating a few individuals with lower than typical values, but these do not seem to affect the overall distribution significantly.</p>
+<p>Now, let’s analyze heart rate and oxygen saturation by sleep quality and stress levels:</p>
+<pre><code class="language-python"># categorizing sleep quality and stress level for better analysis
+sleep_quality_order = ['excellent', 'good', 'fair', 'poor']
+stress_level_order = ['low', 'moderate', 'high']
+
+# creating plots to examine relationships
+fig, axes = plt.subplots(2, 2, figsize=(16, 12))
+
+# heart rate by sleep quality
+sns.boxplot(x='SleepQuality', y='HeartRate', data=health_data, order=sleep_quality_order, ax=axes[0, 0])
+axes[0, 0].set_title('Heart Rate by Sleep Quality')
+axes[0, 0].set_xlabel('Sleep Quality')
+axes[0, 0].set_ylabel('Heart Rate (beats per minute)')
+
+# heart rate by stress level
+sns.boxplot(x='StressLevel', y='HeartRate', data=health_data, order=stress_level_order, ax=axes[0, 1])
+axes[0, 1].set_title('Heart Rate by Stress Level')
+axes[0, 1].set_xlabel('Stress Level')
+axes[0, 1].set_ylabel('Heart Rate (beats per minute)')
+
+# oxygen saturation by sleep quality
+sns.boxplot(x='SleepQuality', y='OxygenSaturation', data=health_data, order=sleep_quality_order, ax=axes[1, 0])
+axes[1, 0].set_title('Oxygen Saturation by Sleep Quality')
+axes[1, 0].set_xlabel('Sleep Quality')
+axes[1, 0].set_ylabel('Oxygen Saturation (%)')
+
+# oxygen saturation by stress level
+sns.boxplot(x='StressLevel', y='OxygenSaturation', data=health_data, order=stress_level_order, ax=axes[1, 1])
+axes[1, 1].set_title('Oxygen Saturation by Stress Level')
+axes[1, 1].set_xlabel('Stress Level')
+axes[1, 1].set_ylabel('Oxygen Saturation (%)')
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="health monitoring and analysis: heart rate and oxygen saturation by sleep quality and stress levels" class="wp-image-23301" data-attachment-id="23301" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="health-6" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-6.png?fit=1024%2C765&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-6.png?fit=300%2C224&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-6.png?fit=1584%2C1184&amp;ssl=1" data-orig-size="1584,1184" data-permalink="https://my-ai-portfolio.com/2024/04/29/health-monitoring-and-analysis-using-python/health-6/" data-recalc-dims="1" decoding="async" height="765" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-6.png?resize=1024%2C765&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-6.png?resize=1024%2C765&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-6.png?resize=300%2C224&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-6.png?resize=768%2C574&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-6.png?resize=1536%2C1148&amp;ssl=1 1536w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-6.png?resize=400%2C300&amp;ssl=1 400w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-6.png?resize=200%2C150&amp;ssl=1 200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-6.png?resize=1200%2C897&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-6.png?w=1584&amp;ssl=1 1584w" style="width:697px;height:auto" width="1024"/></figure>
+<p>Heart rate appears relatively consistent across different levels of sleep quality and stress, with a slight increase in variation for those reporting poor sleep. Oxygen saturation shows a minimal decrease in median values from excellent to poor sleep quality, with some outliers indicating lower saturation for excellent and good sleep. When correlated with stress levels, oxygen saturation remains largely unchanged. Overall, while there are outliers, the central tendencies suggest that neither heart rate nor oxygen saturation is greatly affected by sleep quality or stress level within this dataset.</p>
+<p>Now, let’s analyze the respiratory rate and body temperature by activity levels:</p>
+<pre><code class="language-python"># creating plots to examine relationships between activity level and other health metrics
+fig, axes = plt.subplots(1, 2, figsize=(16, 6))
+
+# respiratory rate by activity level
+sns.boxplot(x='ActivityLevel', y='RespiratoryRate', data=health_data, ax=axes[0])
+axes[0].set_title('Respiratory Rate by Activity Level')
+axes[0].set_xlabel('Activity Level')
+axes[0].set_ylabel('Respiratory Rate (breaths per minute)')
+
+# body temperature by activity level
+sns.boxplot(x='ActivityLevel', y='BodyTemperature', data=health_data, ax=axes[1])
+axes[1].set_title('Body Temperature by Activity Level')
+axes[1].set_xlabel('Activity Level')
+axes[1].set_ylabel('Body Temperature (°F)')
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="respiratory rate and body temperature by activity levels" class="wp-image-23303" data-attachment-id="23303" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="health-7" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-7.png?fit=1024%2C378&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-7.png?fit=300%2C111&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-7.png?fit=1584%2C584&amp;ssl=1" data-orig-size="1584,584" data-permalink="https://my-ai-portfolio.com/2024/04/29/health-monitoring-and-analysis-using-python/health-7/" data-recalc-dims="1" decoding="async" height="378" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-7.png?resize=1024%2C378&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-7.png?resize=1024%2C378&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-7.png?resize=300%2C111&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-7.png?resize=768%2C283&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-7.png?resize=1536%2C566&amp;ssl=1 1536w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-7.png?resize=1200%2C442&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-7.png?w=1584&amp;ssl=1 1584w" width="1024"/></figure>
+<p>The respiratory rate tends to increase with activity level, as indicated by higher median rates for walking and running compared to resting. It aligns with physiological responses to exercise, where the breathing rate increases to meet oxygen demands. For body temperature, there is a slight upward trend from resting to running, which is consistent with the body heating up during physical exertion. There are outliers in body temperature at the resting and running levels, suggesting some individuals have temperatures outside the typical range for these activities. Overall, the trends observed are in line with expected physiological responses to varying levels of activity.</p>
+<h2 class="wp-block-heading">Grouping Patients</h2>
+<p>The data is not so complicated enough that we need to use a clustering algorithm to group patients. So, let’s group patients based on:</p>
+<ol class="wp-block-list">
+<li><strong>Age Group</strong>: Young, Middle-aged, Senior</li>
+<li><strong>Blood Pressure Category</strong>: Normal, Elevated, Hypertension Stage 1, Hypertension Stage 2</li>
+<li><strong>Heart Rate Category</strong>: Low, Normal, High</li>
+<li><strong>Oxygen Saturation Category</strong>: Normal, Low</li>
+</ol>
+<pre><code class="language-python"># function to categorize Age
+def age_group(age):
+    if age &lt;= 35:
+        return 'Young'
+    elif age &lt;= 55:
+        return 'Middle-aged'
+    else:
+        return 'Senior'
+
+# function to categorize Blood Pressure
+def bp_category(systolic, diastolic):
+    if systolic &lt; 120 and diastolic &lt; 80:
+        return 'Normal'
+    elif 120 &lt;= systolic &lt; 140 or 80 &lt;= diastolic &lt; 90:
+        return 'Elevated'
+    elif 140 &lt;= systolic &lt; 160 or 90 &lt;= diastolic &lt; 100:
+        return 'Hypertension Stage 1'
+    else:
+        return 'Hypertension Stage 2'
+
+# function to categorize Heart Rate
+def hr_category(hr):
+    if hr &lt; 60:
+        return 'Low'
+    elif hr &lt;= 100:
+        return 'Normal'
+    else:
+        return 'High'
+
+# function to categorize Oxygen Saturation
+def oxy_category(oxy):
+    if oxy &lt; 94:
+        return 'Low'
+    else:
+        return 'Normal'
+
+# applying categorizations
+health_data['AgeGroup'] = health_data['Age'].apply(age_group)
+health_data['BPCategory'] = health_data.apply(lambda x: bp_category(x['SystolicBP'], x['DiastolicBP']), axis=1)
+health_data['HRCategory'] = health_data['HeartRate'].apply(hr_category)
+health_data['OxyCategory'] = health_data['OxygenSaturation'].apply(oxy_category)
+
+print(health_data[['Age', 'AgeGroup', 'SystolicBP', 'DiastolicBP', 'BPCategory', 'HeartRate', 'HRCategory', 'OxygenSaturation', 'OxyCategory']].head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>   Age     AgeGroup  SystolicBP  DiastolicBP BPCategory  HeartRate HRCategory  \<br/>0   69       Senior         130           85   Elevated  60.993428     Normal   <br/>1   32        Young         120           80   Elevated  98.723471     Normal   <br/>2   78       Senior         130           85   Elevated  82.295377     Normal   <br/>3   38  Middle-aged         111           78     Normal  80.000000     Normal   <br/>4   41  Middle-aged         120           80   Elevated  87.531693     Normal   <br/><br/>   OxygenSaturation OxyCategory  <br/>0              95.0      Normal  <br/>1              97.0      Normal  <br/>2              98.0      Normal  <br/>3              98.0      Normal  <br/>4              98.0      Normal  </strong></pre>
+<p>Now, let’s visualize the groups:</p>
+<pre><code class="language-python">fig, axes = plt.subplots(2, 2, figsize=(16, 12))
+
+# Age Group count plot
+sns.countplot(x='AgeGroup', data=health_data, ax=axes[0, 0])
+axes[0, 0].set_title('Distribution of Age Groups')
+
+# Blood Pressure Category count plot
+sns.countplot(x='BPCategory', data=health_data, ax=axes[0, 1])
+axes[0, 1].set_title('Distribution of Blood Pressure Categories')
+
+# Heart Rate Category count plot
+sns.countplot(x='HRCategory', data=health_data, ax=axes[1, 0])
+axes[1, 0].set_title('Distribution of Heart Rate Categories')
+
+# Oxygen Saturation Category count plot
+sns.countplot(x='OxyCategory', data=health_data, ax=axes[1, 1])
+axes[1, 1].set_title('Distribution of Oxygen Saturation Categories')
+
+# Show the plots
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Health Monitoring and Analysis" class="wp-image-23306" data-attachment-id="23306" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="health-8" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-8.png?fit=1024%2C765&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-8.png?fit=300%2C224&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-8.png?fit=1584%2C1184&amp;ssl=1" data-orig-size="1584,1184" data-permalink="https://my-ai-portfolio.com/2024/04/29/health-monitoring-and-analysis-using-python/health-8/" data-recalc-dims="1" decoding="async" height="765" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-8.png?resize=1024%2C765&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-8.png?resize=1024%2C765&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-8.png?resize=300%2C224&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-8.png?resize=768%2C574&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-8.png?resize=1536%2C1148&amp;ssl=1 1536w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-8.png?resize=400%2C300&amp;ssl=1 400w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-8.png?resize=200%2C150&amp;ssl=1 200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-8.png?resize=1200%2C897&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-8.png?w=1584&amp;ssl=1 1584w" style="width:697px;height:auto" width="1024"/></figure>
+<h4 class="wp-block-heading">Observation:</h4>
+<ol class="wp-block-list">
+<li><strong>Distribution of Age Groups:</strong> The count plot shows that the ‘Senior’ category has the highest count, followed by the ‘Young’ and ‘Middle-aged’ categories. It suggests that seniors are the largest age group in this dataset.</li>
+<li><strong>Distribution of Blood Pressure Categories:</strong> The majority of the dataset falls under ‘Normal’ blood pressure, with fewer instances in the ‘Elevated’ and ‘Hypertension Stage 1’. ‘Hypertension Stage 2’ has the lowest count, indicating that severe hypertension is less common among the participants.</li>
+<li><strong>Distribution of Heart Rate Categories:</strong> Most individuals have a ‘Normal’ heart rate, with very few falling into the ‘Low’ or ‘High’ categories. It indicates that most individuals in this dataset have a heart rate that falls within the expected range.</li>
+<li><strong>Distribution of Oxygen Saturation Categories:</strong> Almost everyone has ‘Normal’ oxygen saturation levels, with very few instances of ‘Low’ saturation. It suggests that oxygen deprivation is not a common issue in this group.</li>
+</ol>
+<p>So, this is how you can perform Health Monitoring and Analysis using Python.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, Health Monitoring and Analysis contains a range of activities from real-time physiological data collection (like heart rate, blood pressure, and temperature) to the analysis of more complex health records (including patient history, lifestyle choices, and genetic information).</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="statistical-modelling-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="eda-for-feature-selection-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

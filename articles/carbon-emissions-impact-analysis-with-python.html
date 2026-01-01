@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Carbon Emissions Impact Analysis with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Carbon Emissions Impact Analysis with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 08, 2025 • 5 min read</div>
+<p>Climate change is one of the most critical challenges of our time, with rising carbon emissions playing a pivotal role in driving global temperature anomalies. Analyzing the relationship between CO₂ concentrations and temperature changes provides valuable insights into the underlying patterns and trends that shape our planet’s climate. So, in this article, I’ll take you through a detailed analysis of the impact of carbon emissions worldwide. We will use <strong><a href="python-problems-for-coding-interviews.html" target="">Python</a></strong> to analyze the impact of carbon emissions.</p>
+<h2 class="wp-block-heading">Carbon Emissions Impact Analysis: Overview and Dataset</h2>
+<p>In this analysis, we aim to explore the impact of carbon emissions on global temperatures. The focus will be on identifying historical trends, detecting anomalies, and simulating potential future scenarios to understand how changes in CO₂ concentrations influence temperature anomalies.</p>
+<p>For this, we will work with two primary datasets:</p>
+<ol class="wp-block-list">
+<li>One containing annual temperature changes across multiple countries and decades,</li>
+<li>Another featuring monthly CO₂ concentrations measured globally.</li>
+</ol>
+<p>By combining these datasets, we will investigate correlations, detect patterns over decades, and use predictive modelling to simulate “what-if” scenarios. This data-driven approach will provide actionable insights into the connection between carbon emissions and climate change, which can offer valuable context for sustainable policy-making. You can download the dataset from <strong><a href="../assets/datasets/bb808-carbon-emissions.zip" rel="noreferrer noopener" target="_blank">here</a></strong>.</p>
+<h2 class="wp-block-heading">Carbon Emissions Impact Analysis with Python</h2>
+<p>Now, let’s get started with the task of Carbon Emissions Impact Analysis by importing the necessary Python libraries and the <strong><a href="../assets/datasets/bb808-carbon-emissions.zip" rel="noreferrer noopener" target="_blank">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+
+# load the datasets
+temperature_data = pd.read_csv('/content/temperature.csv')
+co2_data = pd.read_csv('/content/carbon_emmission.csv')
+
+temperature_data_preview = temperature_data.head()
+co2_data_preview = co2_data.head()
+
+temperature_data_preview, co2_data_preview</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>(   ObjectId                       Country ISO2 ISO3  F1961  F1962  F1963  \<br/> 0         1  Afghanistan, Islamic Rep. of   AF  AFG -0.113 -0.164  0.847   <br/> 1         2                       Albania   AL  ALB  0.627  0.326  0.075   <br/> 2         3                       Algeria   DZ  DZA  0.164  0.114  0.077   <br/> 3         4                American Samoa   AS  ASM  0.079 -0.042  0.169   <br/> 4         5      Andorra, Principality of   AD  AND  0.736  0.112 -0.752   <br/> <br/>    F1964  F1965  F1966  ...  F2013  F2014  F2015  F2016  F2017  F2018  F2019  \<br/> 0 -0.764 -0.244  0.226  ...  1.281  0.456  1.093  1.555  1.540  1.544  0.910   <br/> 1 -0.166 -0.388  0.559  ...  1.333  1.198  1.569  1.464  1.121  2.028  1.675   <br/> 2  0.250 -0.100  0.433  ...  1.192  1.690  1.121  1.757  1.512  1.210  1.115   <br/> 3 -0.140 -0.562  0.181  ...  1.257  1.170  1.009  1.539  1.435  1.189  1.539   <br/> 4  0.308 -0.490  0.415  ...  0.831  1.946  1.690  1.990  1.925  1.919  1.964   <br/> <br/>    F2020  F2021  F2022  <br/> 0  0.498  1.327  2.012  <br/> 1  1.498  1.536  1.518  <br/> 2  1.926  2.330  1.688  <br/> 3  1.430  1.268  1.256  <br/> 4  2.562  1.533  3.243  <br/> <br/> [5 rows x 66 columns],<br/>    ObjectId Country     Date   Value<br/> 0         1   World  1958M03  315.70<br/> 1         2   World  1958M04  317.45<br/> 2         3   World  1958M05  317.51<br/> 3         4   World  1958M06  317.24<br/> 4         5   World  1958M07  315.86)</strong></pre>
+<p>We are using two datasets:</p>
+<ol class="wp-block-list">
+<li><strong>Temperature Data</strong>: Annual temperature anomalies measured in degrees Celsius across decades.</li>
+<li><strong>CO₂ Data</strong>: Monthly global atmospheric CO₂ concentrations in parts per million (ppm).</li>
+</ol>
+<p>Now, let’s calculate key statistics for temperature changes and CO₂ concentrations, such as mean, median, and variance:</p>
+<pre><code class="language-python"># selecting and computing statistics for temperature changes
+temperature_values = temperature_data.filter(regex='^F').stack()  # extracting all year columns
+temperature_stats = {
+    "Mean": temperature_values.mean(),
+    "Median": temperature_values.median(),
+    "Variance": temperature_values.var()
+}
+
+# computing statistics for CO2 concentrations
+co2_values = co2_data["Value"]  # extracting the Value column
+co2_stats = {
+    "Mean": co2_values.mean(),
+    "Median": co2_values.median(),
+    "Variance": co2_values.var()
+}
+
+temperature_stats, co2_stats</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>({'Mean': 0.5377713483146068, 'Median': 0.47, 'Variance': 0.4294524831504378},<br/> {'Mean': 180.71615286624203,<br/>  'Median': 313.835,<br/>  'Variance': 32600.00200469294})</strong></pre>
+<p>The mean temperature change is approximately <strong>0.54°C</strong>, with a median of<strong> 0.47°C</strong> and a variance of <strong>0.43</strong>, indicating slight variability in temperature anomalies. For CO₂ concentrations, the mean is<strong> 180.72 ppm</strong>, the median is significantly higher at <strong>313.84 ppm</strong>, and the variance is<strong> 32,600</strong>, which reflects substantial variability in CO₂ levels over the dataset’s timeframe. This highlights the stronger fluctuation in CO₂ data compared to temperature changes.</p>
+<h4 class="wp-block-heading">Time-Series Analysis</h4>
+<p>Next, we’ll examine how temperature changes and CO₂ concentrations have evolved overtime and the relationships between them:</p>
+<pre><code class="language-python">import plotly.graph_objects as go
+import plotly.express as px
+
+# extracting time-series data for plotting
+# temperature: averaging across countries for each year
+temperature_years = temperature_data.filter(regex='^F').mean(axis=0)
+temperature_years.index = temperature_years.index.str.replace('F', '').astype(int)
+
+# CO2: parsing year and averaging monthly data
+co2_data['Year'] = co2_data['Date'].str[:4].astype(int)
+co2_yearly = co2_data.groupby('Year')['Value'].mean()
+
+# time-series plot for temperature and CO2 levels
+fig = go.Figure()
+fig.add_trace(go.Scatter(
+    x=temperature_years.index, y=temperature_years.values,
+    mode='lines+markers', name="Temperature Change (°C)"
+))
+fig.add_trace(go.Scatter(
+    x=co2_yearly.index, y=co2_yearly.values,
+    mode='lines+markers', name="CO₂ Concentration (ppm)", line=dict(dash='dash')
+))
+fig.update_layout(
+    title="Time-series of Temperature Change and CO₂ Concentrations",
+    xaxis_title="Year",
+    yaxis_title="Values",
+    template="plotly_white",
+    legend_title="Metrics"
+)
+fig.show()
+
+# correlation heatmap
+merged_data = pd.DataFrame({
+    "Temperature Change": temperature_years,
+    "CO₂ Concentration": co2_yearly
+}).dropna()
+
+heatmap_fig = px.imshow(
+    merged_data.corr(),
+    text_auto=".2f",
+    color_continuous_scale="RdBu",  # diverging colormap similar to coolwarm
+    title="Correlation Heatmap"
+)
+heatmap_fig.update_layout(
+    template="plotly_white"
+)
+heatmap_fig.show()
+
+# scatter plot: temperature vs CO2 concentrations
+scatter_fig = px.scatter(
+    merged_data,
+    x="CO₂ Concentration", y="Temperature Change",
+    labels={"CO₂ Concentration": "CO₂ Concentration (ppm)", "Temperature Change": "Temperature Change (°C)"},
+    title="Temperature Change vs CO₂ Concentration",
+    template="plotly_white"
+)
+scatter_fig.update_traces(marker=dict(size=10, opacity=0.7))
+scatter_fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Time-series of Temperature Change and CO₂ Concentrations" class="wp-image-25288" data-attachment-id="25288" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Time-series of Temperature Change and CO₂ Concentrations" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Time-series-of-Temperature-Change-and-CO%E2%82%82-Concentrations.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Time-series-of-Temperature-Change-and-CO%E2%82%82-Concentrations.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Time-series-of-Temperature-Change-and-CO%E2%82%82-Concentrations.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/11/25/carbon-emissions-impact-analysis-with-python/time-series-of-temperature-change-and-co%e2%82%82-concentrations/" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Time-series-of-Temperature-Change-and-CO%E2%82%82-Concentrations.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Time-series-of-Temperature-Change-and-CO%E2%82%82-Concentrations.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Time-series-of-Temperature-Change-and-CO%E2%82%82-Concentrations.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Time-series-of-Temperature-Change-and-CO%E2%82%82-Concentrations.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The time-series graph shows a consistent increase in CO₂ concentrations (measured in ppm) over the years, which indicates the accumulation of greenhouse gases in the atmosphere. Simultaneously, a slight upward trend in global temperature change suggests that rising CO₂ levels are associated with global warming. The temporal alignment supports the hypothesis of CO₂’s significant contribution to temperature increase.</p>
+<figure class="wp-block-image aligncenter size-full"><img alt="Carbon Emissions Impact Analysis: Correlation Heatmap" class="wp-image-25289" data-attachment-id="25289" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Correlation Heatmap" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Correlation-Heatmap.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Correlation-Heatmap.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Correlation-Heatmap.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/11/25/carbon-emissions-impact-analysis-with-python/correlation-heatmap/" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Correlation-Heatmap.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Correlation-Heatmap.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Correlation-Heatmap.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Correlation-Heatmap.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The heatmap reveals a strong positive correlation (0.96) between CO₂ concentrations and temperature changes. This statistical relationship reinforces the observation that higher CO₂ levels are closely linked with increasing global temperatures, which highlights the importance of addressing carbon emissions to mitigate climate change.</p>
+<figure class="wp-block-image aligncenter size-full"><img alt="Temperature Change vs CO₂ Concentration" class="wp-image-25291" data-attachment-id="25291" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Temperature Change vs CO₂ Concentration" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Temperature-Change-vs-CO%E2%82%82-Concentration.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Temperature-Change-vs-CO%E2%82%82-Concentration.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Temperature-Change-vs-CO%E2%82%82-Concentration.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/11/25/carbon-emissions-impact-analysis-with-python/temperature-change-vs-co%e2%82%82-concentration/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Temperature-Change-vs-CO%E2%82%82-Concentration.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Temperature-Change-vs-CO%E2%82%82-Concentration.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Temperature-Change-vs-CO%E2%82%82-Concentration.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Temperature-Change-vs-CO%E2%82%82-Concentration.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The scatter plot shows a clear linear trend, where higher CO₂ concentrations correspond to greater temperature changes. This visual evidence underscores the direct relationship between CO₂ emissions and global warming, which provides further support for policies targeting reductions in carbon emissions to combat climate impacts.</p>
+<h4 class="wp-block-heading">Trends and Seasonal Variations Analysis</h4>
+<p>Now, let’s identify long-term trends and seasonal variations in the data using linear regression:</p>
+<pre><code class="language-python">from scipy.stats import linregress
+
+# temperature trend
+temp_trend = linregress(temperature_years.index, temperature_years.values)
+temp_trend_line = temp_trend.slope * temperature_years.index + temp_trend.intercept
+
+# CO2 trend
+co2_trend = linregress(co2_yearly.index, co2_yearly.values)
+co2_trend_line = co2_trend.slope * co2_yearly.index + co2_trend.intercept
+
+fig_trends = go.Figure()
+
+fig_trends.add_trace(go.Scatter(
+    x=temperature_years.index, y=temperature_years.values,
+    mode='lines+markers', name="Temperature Change (°C)"
+))
+fig_trends.add_trace(go.Scatter(
+    x=temperature_years.index, y=temp_trend_line,
+    mode='lines', name=f"Temperature Trend (Slope: {temp_trend.slope:.2f})", line=dict(dash='dash')
+))
+fig_trends.add_trace(go.Scatter(
+    x=co2_yearly.index, y=co2_yearly.values,
+    mode='lines+markers', name="CO₂ Concentration (ppm)"
+))
+fig_trends.add_trace(go.Scatter(
+    x=co2_yearly.index, y=co2_trend_line,
+    mode='lines', name=f"CO₂ Trend (Slope: {co2_trend.slope:.2f})", line=dict(dash='dash')
+))
+
+fig_trends.update_layout(
+    title="Trends in Temperature Change and CO₂ Concentrations",
+    xaxis_title="Year",
+    yaxis_title="Values",
+    template="plotly_white",
+    legend_title="Metrics"
+)
+fig_trends.show()
+
+# seasonal variations in CO2 concentrations
+co2_data['Month'] = co2_data['Date'].str[-2:].astype(int)
+co2_monthly = co2_data.groupby('Month')['Value'].mean()
+
+fig_seasonal = px.line(
+    co2_monthly,
+    x=co2_monthly.index,
+    y=co2_monthly.values,
+    labels={"x": "Month", "y": "CO₂ Concentration (ppm)"},
+    title="Seasonal Variations in CO₂ Concentrations",
+    markers=True
+)
+fig_seasonal.update_layout(
+    xaxis=dict(tickmode="array", tickvals=list(range(1, 13))),
+    template="plotly_white"
+)
+fig_seasonal.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Carbon Emissions Impact Analysis: Trends in Temperature Change and CO₂ Concentrations" class="wp-image-25293" data-attachment-id="25293" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Trends in Temperature Change and CO₂ Concentrations" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Trends-in-Temperature-Change-and-CO%E2%82%82-Concentrations.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Trends-in-Temperature-Change-and-CO%E2%82%82-Concentrations.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Trends-in-Temperature-Change-and-CO%E2%82%82-Concentrations.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/11/25/carbon-emissions-impact-analysis-with-python/trends-in-temperature-change-and-co%e2%82%82-concentrations/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Trends-in-Temperature-Change-and-CO%E2%82%82-Concentrations.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Trends-in-Temperature-Change-and-CO%E2%82%82-Concentrations.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Trends-in-Temperature-Change-and-CO%E2%82%82-Concentrations.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Trends-in-Temperature-Change-and-CO%E2%82%82-Concentrations.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The graph shows the linear trends in both temperature change and CO₂ concentrations over time, represented by their respective slopes. The CO₂ trend has a much steeper slope (0.32) compared to temperature (0.03), which indicates a faster rate of increase in CO₂ emissions relative to temperature change. This suggests that while CO₂ levels are rising rapidly, the temperature impact, though slower, is accumulating steadily and may have long-term consequences.</p>
+<figure class="wp-block-image aligncenter size-full"><img alt="Seasonal Variations in CO₂ Concentrations" class="wp-image-25295" data-attachment-id="25295" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Seasonal Variations in CO₂ Concentrations" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Seasonal-Variations-in-CO%E2%82%82-Concentrations.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Seasonal-Variations-in-CO%E2%82%82-Concentrations.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Seasonal-Variations-in-CO%E2%82%82-Concentrations.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/11/25/carbon-emissions-impact-analysis-with-python/seasonal-variations-in-co%e2%82%82-concentrations/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Seasonal-Variations-in-CO%E2%82%82-Concentrations.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Seasonal-Variations-in-CO%E2%82%82-Concentrations.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Seasonal-Variations-in-CO%E2%82%82-Concentrations.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Seasonal-Variations-in-CO%E2%82%82-Concentrations.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The above graph highlights the seasonal fluctuations in CO₂ concentrations, which peak during late spring and early summer (around May) and reach the lowest levels in fall (around September). These variations are likely due to natural processes such as plant photosynthesis, which absorbs CO₂ during the growing season, and respiration, which releases CO₂ in the off-season. This seasonal cycle underscores the role of natural carbon sinks in moderating atmospheric CO₂ levels.</p>
+<h4 class="wp-block-heading">Correlation and Causality Analysis</h4>
+<p>To quantify the relationship between CO₂ and temperature anomalies, we will now compute <strong>Pearson</strong> and<strong> Spearman correlation coefficients.</strong> And to investigate whether changes in CO₂ cause temperature anomalies, we will perform <strong>Granger Causality tests:</strong></p>
+<pre><code class="language-python">from scipy.stats import pearsonr, spearmanr
+from statsmodels.tsa.stattools import grangercausalitytests
+
+# pearson and spearman correlation coefficients
+pearson_corr, _ = pearsonr(merged_data["CO₂ Concentration"], merged_data["Temperature Change"])
+spearman_corr, _ = spearmanr(merged_data["CO₂ Concentration"], merged_data["Temperature Change"])
+
+# granger causality test
+granger_data = merged_data.diff().dropna()  # first differencing to make data stationary
+granger_results = grangercausalitytests(granger_data, maxlag=3, verbose=False)
+
+# extracting p-values for causality
+granger_p_values = {f"Lag {lag}": round(results[0]['ssr_chi2test'][1], 4)
+                    for lag, results in granger_results.items()}
+
+pearson_corr, spearman_corr, granger_p_values</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>(0.9554282559257312,<br/> 0.9379013371609882,<br/> {'Lag 1': 0.0617, 'Lag 2': 0.6754, 'Lag 3': 0.2994})</strong></pre>
+<p><strong>Pearson Correlation</strong> (0.9554) indicates a very strong linear relationship between CO₂ concentrations and temperature changes.<strong> Spearman Correlation</strong> (0.9379) indicates a very strong monotonic relationship between CO₂ concentrations and temperature changes.</p>
+<p><strong>Granger Causality Test</strong>: The p-values for lags 1, 2, and 3 are as follows:</p>
+<ul class="wp-block-list">
+<li><strong>Lag 1</strong>: 0.0617 (slightly above the common significance threshold of 0.05, suggesting weak evidence for causality).</li>
+<li><strong>Lag 2</strong>: 0.6754 (not significant, no evidence of causality).</li>
+<li><strong>Lag 3</strong>: 0.2994 (not significant, no evidence of causality).</li>
+</ul>
+<p>There is a very strong correlation between CO₂ concentrations and temperature changes. However, Granger Causality tests do not provide strong evidence that changes in CO₂ concentrations directly cause changes in temperature within the lags tested.</p>
+<h4 class="wp-block-heading">Lagged Effects Analysis</h4>
+<p>Now, we will analyze whether CO₂ concentrations from previous years (lagged values) influence current temperature anomalies. To do this, we will create lagged variables for CO₂ concentrations, specifically shifting the data by 1, 2, and 3 years. These lagged values will allow us to test if historical CO₂ levels have a delayed impact on temperature changes.</p>
+<p>After creating these lagged variables, we will fit an <strong>Ordinary Least Squares (OLS)</strong> regression model. This model will use current and lagged CO₂ levels as predictors to estimate their contribution to current temperature anomalies. By examining the regression results, we will determine:</p>
+<ol class="wp-block-list">
+<li>How strongly current CO₂ levels affect temperature changes.</li>
+<li>Whether CO₂ levels from previous years have a significant impact</li>
+</ol>
+<pre><code class="language-python">import statsmodels.api as sm
+
+# creating lagged CO2 data to investigate lagged effects
+merged_data['CO₂ Lag 1'] = merged_data["CO₂ Concentration"].shift(1)
+merged_data['CO₂ Lag 2'] = merged_data["CO₂ Concentration"].shift(2)
+merged_data['CO₂ Lag 3'] = merged_data["CO₂ Concentration"].shift(3)
+
+# dropping rows with NaN due to lags
+lagged_data = merged_data.dropna()
+
+X = lagged_data[['CO₂ Concentration', 'CO₂ Lag 1', 'CO₂ Lag 2', 'CO₂ Lag 3']]
+y = lagged_data['Temperature Change']
+X = sm.add_constant(X)  # adding a constant for intercept
+
+model = sm.OLS(y, X).fit()
+
+model_summary = model.summary()
+model_summary</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="Carbon Emissions Impact Analysis: Lagged Effects Analysis" class="wp-image-25297" data-attachment-id="25297" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/image-5.png?fit=890%2C878&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/image-5.png?fit=300%2C296&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/image-5.png?fit=890%2C878&amp;ssl=1" data-orig-size="890,878" data-permalink="https://my-ai-portfolio.com/2024/11/25/carbon-emissions-impact-analysis-with-python/image-195/" data-recalc-dims="1" decoding="async" height="878" loading="lazy" sizes="auto, (max-width: 890px) 100vw, 890px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/image-5.png?resize=890%2C878&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/image-5.png?w=890&amp;ssl=1 890w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/image-5.png?resize=300%2C296&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/image-5.png?resize=768%2C758&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/image-5.png?resize=50%2C50&amp;ssl=1 50w" style="width:566px;height:auto" width="890"/></figure>
+<p>The OLS regression results indicate a strong relationship between CO₂ concentration and temperature change, with an R-squared value of 0.949, meaning 94.9% of the variance in temperature change is explained by the model. The coefficient for CO₂ concentration (0.3245) is statistically significant (p &lt; 0.05), which suggests a positive association between CO₂ levels and temperature change.</p>
+<h4 class="wp-block-heading">Clustering Climate Patterns</h4>
+<p>Next, we group years based on similarities in temperature anomalies and CO₂ concentrations using <strong>K-Means clustering:</strong></p>
+<pre><code class="language-python">from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+import numpy as np
+
+# preparing the data for clustering
+clustering_data = merged_data[["Temperature Change", "CO₂ Concentration"]].dropna()
+
+scaler = StandardScaler()
+scaled_data = scaler.fit_transform(clustering_data)
+
+# applying K-Means clustering
+kmeans = KMeans(n_clusters=3, random_state=42)  # assuming 3 clusters for simplicity
+clustering_data['Cluster'] = kmeans.fit_predict(scaled_data)
+
+# adding labels for periods with similar climate patterns
+clustering_data['Label'] = clustering_data['Cluster'].map({
+    0: 'Moderate Temp &amp; CO₂',
+    1: 'High Temp &amp; CO₂',
+    2: 'Low Temp &amp; CO₂'
+})
+
+import plotly.express as px
+
+fig_clusters = px.scatter(
+    clustering_data,
+    x="CO₂ Concentration",
+    y="Temperature Change",
+    color="Label",
+    color_discrete_sequence=px.colors.qualitative.Set2,
+    labels={
+        "CO₂ Concentration": "CO₂ Concentration (ppm)",
+        "Temperature Change": "Temperature Change (°C)",
+        "Label": "Climate Pattern"
+    },
+    title="Clustering of Years Based on Climate Patterns"
+)
+
+fig_clusters.update_layout(
+    template="plotly_white",
+    legend_title="Climate Pattern"
+)
+
+fig_clusters.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Clustering of Years Based on Climate Patterns" class="wp-image-25305" data-attachment-id="25305" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot (22)" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/newplot-22.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/newplot-22.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/newplot-22.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/11/25/carbon-emissions-impact-analysis-with-python/newplot-22-2/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/newplot-22.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/newplot-22.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/newplot-22.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/newplot-22.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The clustering graph segments years into three distinct climate patterns based on CO₂ concentration and temperature change: low CO₂ and temperature (green), moderate CO₂ and temperature (orange), and high CO₂ and temperature (blue). The progression from green to orange and then to blue clusters reflects a clear trend of increasing temperature change corresponding to rising CO₂ levels, effectively illustrating the correlation between greenhouse gas concentrations and global temperature variations.</p>
+<p>This clustering emphasizes the cumulative and escalating impact of carbon emissions on global temperature patterns, which illustrates the need for targeted interventions to mitigate future increases.</p>
+<h4 class="wp-block-heading">Predicting Temperature Changes Under What If Analysis</h4>
+<p>Now, we will use a simple linear regression model to simulate how changes in CO₂ concentrations might influence global temperatures. By leveraging the historical relationship between CO₂ concentrations and temperature anomalies, this model allows us to predict the potential impact of different emission scenarios.</p>
+<p>First, we will train a linear regression model with <strong>CO₂ concentrations</strong> as the input and <strong>temperature anomalies</strong> as the output. Once the model is trained, we can simulate hypothetical scenarios where CO₂ concentrations increase or decrease by a specific percentage.</p>
+<p>For each scenario, we will adjust the current average CO₂ concentration by the specified percentage, feed it into the model, and predict the corresponding temperature anomaly. The scenarios we simulate include:</p>
+<ol class="wp-block-list">
+<li><strong>Increase CO₂ by 10%</strong>: Predict the rise in temperature anomalies.</li>
+<li><strong>Decrease CO₂ by 10%</strong>: Estimate the cooling effect.</li>
+<li><strong>Increase CO₂ by 20%</strong>: Analyze the impact of more aggressive emissions growth.</li>
+<li><strong>Decrease CO₂ by 20%</strong>: Evaluate the benefit of significant emission reductions.</li>
+</ol>
+<pre><code class="language-python"># setting up a simple predictive model using linear regression
+from sklearn.linear_model import LinearRegression
+
+# Preparing data
+X = merged_data[["CO₂ Concentration"]].values  # CO₂ concentration as input
+y = merged_data["Temperature Change"].values   # temperature change as target
+
+model = LinearRegression()
+model.fit(X, y)
+
+# function to simulate "what-if" scenarios
+def simulate_temperature_change(co2_percentage_change):
+    # Calculate new CO2 concentrations
+    current_mean_co2 = merged_data["CO₂ Concentration"].mean()
+    new_co2 = current_mean_co2 * (1 + co2_percentage_change / 100)
+
+    # predict temperature change
+    predicted_temp = model.predict([[new_co2]])
+    return predicted_temp[0]
+
+# simulating scenarios
+scenarios = {
+    "Increase CO₂ by 10%": simulate_temperature_change(10),
+    "Decrease CO₂ by 10%": simulate_temperature_change(-10),
+    "Increase CO₂ by 20%": simulate_temperature_change(20),
+    "Decrease CO₂ by 20%": simulate_temperature_change(-20),
+}
+
+scenarios</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>{'Increase CO₂ by 10%': 1.0866445037958163,<br/> 'Decrease CO₂ by 10%': -0.059993041237237144,<br/> 'Increase CO₂ by 20%': 1.6599632763123422,<br/> 'Decrease CO₂ by 20%': -0.6333118137537621}</strong></pre>
+<p>A 10% increase in CO₂ results in a notable rise in temperature anomalies, which demonstrates the sensitivity of global temperatures to CO₂ levels. Conversely, a 10-20% reduction in CO₂ could lead to significant cooling effects, which will potentially reverse some warming trends.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>Our analysis highlights a strong positive correlation between rising CO₂ concentrations and global temperature anomalies, with CO₂ levels increasing at a faster rate than temperature changes. Time-series and clustering analyses reveal clear trends of escalating emissions driving temperature increases, while seasonal variations underscore the moderating role of natural carbon sinks. Lagged effects suggest that current CO₂ levels have the most significant impact on temperature changes, with diminishing influence from past emissions. Simulating “what-if” scenarios demonstrate the sensitivity of global temperatures to CO₂ levels, which emphasizes that even modest reductions in emissions could significantly mitigate global warming. These findings underline the urgent need for actionable policies to address climate change effectively.</p>
+<p>I hope you liked this article on Carbon Emissions Impact Analysis with Python. Feel free to ask valuable questions in the comments section below. You can follow me on <strong><a href="https://www.instagram.com/amankharwal.official/" rel="noreferrer noopener" target="_blank">Instagram</a></strong> for many more resources.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="youtube-data-collection-and-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="a-guide-to-rfm-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

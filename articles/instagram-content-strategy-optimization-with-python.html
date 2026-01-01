@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Instagram Content Strategy Optimization with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Instagram Content Strategy Optimization with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 09, 2025 • 5 min read</div>
+<p>Many people see Instagram as a social media app, but for businesses, it’s more than that. For businesses, it’s a platform which gives the idea of content to commerce, which means converting followers into customers through a brand story and informative content. In this article, I’ll analyze <strong><a href="https://www.instagram.com/amankharwal.official/" rel="noreferrer noopener" target="_blank">my Instagram</a></strong> reach in 2024 for Instagram Content Strategy Optimization using <strong><a href="python-problems-for-coding-interviews.html" rel="noreferrer noopener" target="">Python</a></strong>.</p>
+<h2 class="wp-block-heading">Instagram Content Strategy Optimization: Overview and Dataset</h2>
+<p>This analysis aims to optimize Instagram content strategies by leveraging data-driven insights to enhance engagement metrics such as Impressions, Reach, Likes, Shares, Saves, Comments and Follows. The scope includes identifying high-performing post types, optimal posting times, and themes or topics that drive the most interactions. Additionally, we will analyze seasonal trends and define a dynamic posting strategy tailored to audience behaviour.</p>
+<p>The dataset we will use for this task contains detailed information about 446 Instagram posts, including post types (Reels, Carousels, Images), timestamps, engagement metrics, and post descriptions. <strong>You can download the dataset from <a href="../assets/datasets/Instagram-data.csv" rel="noreferrer noopener" target="_blank">here</a>.</strong></p>
+<h2 class="wp-block-heading">Instagram Content Strategy Optimization with Python</h2>
+<p>Now, let’s get started with the task of Instagram Content Strategy Optimization by importing the <strong><a href="../assets/datasets/Instagram-data.csv">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+import plotly.graph_objects as go
+import plotly.io as pio
+pio.templates.default = "plotly_white"
+
+instagram_data = pd.read_csv('Instagram Data.csv')
+
+instagram_data.head()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Instagram Content Strategy dataset" class="wp-image-25698" data-attachment-id="25698" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/image.png?fit=1024%2C587&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/image.png?fit=300%2C172&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/image.png?fit=1678%2C962&amp;ssl=1" data-orig-size="1678,962" data-permalink="https://my-ai-portfolio.com/2025/01/06/instagram-content-strategy-optimization-with-python/image-204/" data-recalc-dims="1" decoding="async" height="587" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/image.png?resize=1024%2C587&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/image.png?resize=1024%2C587&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/image.png?resize=300%2C172&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/image.png?resize=768%2C440&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/image.png?resize=1536%2C881&amp;ssl=1 1536w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/image.png?resize=1200%2C688&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/image.png?w=1678&amp;ssl=1 1678w" width="1024"/><figcaption class="wp-element-caption"><strong>The dataset contains more columns.</strong></figcaption></figure>
+<h4 class="wp-block-heading">Analyzing Content Performance</h4>
+<p>Let’s get straight into the analysis of the content performance. Let’s analyze what type of content (like reels vs. carousels) performs best in terms of engagement metrics:</p>
+<pre><code class="language-python">import plotly.express as px
+
+# filter data for relevant metrics and post types
+engagement_metrics = ['Impressions', 'Reach', 'Likes', 'Shares', 'Follows', 'Comments', 'Saves']
+content_performance = instagram_data[['Post type'] + engagement_metrics]
+
+# group by 'Post type' and calculate average engagement metrics
+performance_summary = content_performance.groupby('Post type').mean().reset_index()
+
+# melt the data for easier plotting
+performance_melted = performance_summary.melt(id_vars=['Post type'], var_name='Metric', value_name='Average Value')
+
+# plotting engagement metrics by post type
+fig = px.bar(
+    performance_melted,
+    x='Metric',
+    y='Average Value',
+    color='Post type',
+    barmode='group',
+    title='Average Engagement Metrics by Post Type',
+    labels={'Metric': 'Engagement Metric', 'Average Value': 'Average Value'},
+    text_auto='.2s'
+)
+
+fig.update_layout(
+    title_font_size=16,
+    xaxis_title_font_size=12,
+    yaxis_title_font_size=12,
+    legend_title='Post Type',
+    xaxis_tickangle=45
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Instagram Content Strategy Optimization: Average Engagement Metrics by Post Type" class="wp-image-25701" data-attachment-id="25701" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Average Engagement Metrics by Post Type" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-Engagement-Metrics-by-Post-Type.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-Engagement-Metrics-by-Post-Type.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-Engagement-Metrics-by-Post-Type.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2025/01/06/instagram-content-strategy-optimization-with-python/average-engagement-metrics-by-post-type/" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-Engagement-Metrics-by-Post-Type.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-Engagement-Metrics-by-Post-Type.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-Engagement-Metrics-by-Post-Type.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-Engagement-Metrics-by-Post-Type.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>Excluding IG images, as their results are influenced by promotions, IG reels perform best in terms of engagement metrics, particularly in likes (1.1k), saves (600), and comments (14). While IG carousels have higher impressions (27k) and reach (22k) compared to reels, the reels drive more active user engagement.</p>
+<p>It suggests that reels are the most effective content type for organic engagement, while carousels are better for visibility.</p>
+<p>Now, let’s analyze what time of the day or day of the week maximizes reach or impressions:</p>
+<pre><code class="language-python"># extracting and converting publish time to datetime
+instagram_data['Publish time'] = pd.to_datetime(instagram_data['Publish time'])
+
+# creating additional time-based features
+instagram_data['Day of Week'] = instagram_data['Publish time'].dt.day_name()
+instagram_data['Hour of Day'] = instagram_data['Publish time'].dt.hour
+
+# grouping data by day of the week and hour of the day for Reach and Impressions
+time_analysis = instagram_data[['Day of Week', 'Hour of Day', 'Impressions', 'Reach']]
+
+# aggregating metrics
+day_of_week_summary = time_analysis.groupby('Day of Week')[['Impressions', 'Reach']].mean().reindex(
+    ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+)
+hour_of_day_summary = time_analysis.groupby('Hour of Day')[['Impressions', 'Reach']].mean()
+
+# visualization: Day of the Week
+fig_day = go.Figure()
+fig_day.add_trace(go.Bar(
+    x=day_of_week_summary.index,
+    y=day_of_week_summary['Impressions'],
+    name='Impressions',
+    marker_color='steelblue'
+))
+fig_day.add_trace(go.Bar(
+    x=day_of_week_summary.index,
+    y=day_of_week_summary['Reach'],
+    name='Reach',
+    marker_color='orange'
+))
+fig_day.update_layout(
+    title='Average Reach and Impressions by Day of the Week',
+    xaxis_title='Day of the Week',
+    yaxis_title='Average Value',
+    barmode='group',
+    xaxis_tickangle=45
+)
+
+fig_day.show()
+
+# visualization: Hour of the Day
+fig_hour = go.Figure()
+fig_hour.add_trace(go.Scatter(
+    x=hour_of_day_summary.index,
+    y=hour_of_day_summary['Impressions'],
+    mode='lines+markers',
+    name='Impressions',
+    line=dict(color='steelblue')
+))
+fig_hour.add_trace(go.Scatter(
+    x=hour_of_day_summary.index,
+    y=hour_of_day_summary['Reach'],
+    mode='lines+markers',
+    name='Reach',
+    line=dict(color='orange')
+))
+fig_hour.update_layout(
+    title='Average Reach and Impressions by Hour of the Day',
+    xaxis_title='Hour of the Day',
+    yaxis_title='Average Value',
+    xaxis=dict(tickmode='linear', tick0=0, dtick=1)
+)
+
+fig_hour.show()</code></pre>
+<figure class="wp-block-gallery has-nested-images columns-default is-cropped wp-block-gallery-1 is-layout-flex wp-block-gallery-is-layout-flex" data-carousel-extra='{"blog_id":1,"permalink":"https://my-ai-portfolio.com/2025/01/06/instagram-content-strategy-optimization-with-python/"}'>
+<figure class="wp-block-image aligncenter size-large"><img alt="Average Reach and Impressions by Day of the Week" class="wp-image-25703" data-attachment-id="25703" data-comments-opened="1" data-id="25703" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Average reach and impressions" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-reach-and-impressions.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-reach-and-impressions.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-reach-and-impressions.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2025/01/06/instagram-content-strategy-optimization-with-python/average-reach-and-impressions/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-reach-and-impressions.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-reach-and-impressions.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-reach-and-impressions.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-reach-and-impressions.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<figure class="wp-block-image aligncenter size-large"><img alt="Average Reach and Impressions by Hour of the Day" class="wp-image-25704" data-attachment-id="25704" data-comments-opened="1" data-id="25704" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="hour of the day" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/hour-of-the-day.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/hour-of-the-day.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/hour-of-the-day.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2025/01/06/instagram-content-strategy-optimization-with-python/hour-of-the-day/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/hour-of-the-day.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/hour-of-the-day.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/hour-of-the-day.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/hour-of-the-day.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+</figure>
+<p>The first graph shows that Fridays and Saturdays maximize reach and impressions, with Friday having the highest average values for both metrics.</p>
+<p>The second graph reveals that the early hours of the day, particularly around 1 AM and 7-8 AM US time (11:30 AM and 5:30-6:30 PM IST), see peaks in both reach and impressions, while engagement significantly drops between late morning (9-11 AM US time or 7:30-9:30 PM IST) and early afternoon.</p>
+<h4 class="wp-block-heading">Topic-Based Analysis</h4>
+<p>Now, let’s analyze which topics or descriptions generate the most user interactions (comments, likes, saves). We’ll find the intent of the posts and create broader categories for all posts:</p>
+<pre><code class="language-python"># clean the descriptions by removing hashtags
+instagram_data['Cleaned Description'] = instagram_data['Description'].str.replace(r'#\S+', '', regex=True)
+interaction_metrics = ['Likes', 'Comments', 'Saves']
+
+# define topics and their associated keywords
+topics = {
+    "Projects": ["projects", "solved", "explained", "ideas"],
+    "Learning and Education": ["learning", "science", "learn", "python", "analysis"],
+    "Problem-Solving": ["problems", "using", "algorithms"],
+    "Actionable Content": ["try", "use", "list", "let"],
+    "Career Growth": ["link", "bio"],
+}
+
+# aggregate engagement metrics by topic
+topic_engagement = {
+    topic: instagram_data[
+        instagram_data['Cleaned Description']
+        .str.contains('|'.join(keywords), case=False, na=False)][interaction_metrics].mean()
+    for topic, keywords in topics.items()
+}
+
+# convert to DataFrame
+topic_engagement_df = pd.DataFrame(topic_engagement).T.reset_index()
+topic_engagement_df.columns = ['Topic', 'Likes', 'Comments', 'Saves']
+
+# melt DataFrame for Plotly
+topic_engagement_melted = topic_engagement_df.melt(
+    id_vars='Topic', var_name='Engagement Metric', value_name='Average Value'
+)
+
+fig = px.bar(
+    topic_engagement_melted,
+    x='Topic',
+    y='Average Value',
+    color='Engagement Metric',
+    barmode='group',
+    title='Average User Interactions by Topic',
+    labels={'Average Value': 'Average Interactions'},
+    text_auto='.2s',
+)
+
+fig.update_layout(
+    title_font_size=16,
+    xaxis_title='Topic',
+    yaxis_title='Average Interactions',
+    legend_title='Engagement Metric',
+    xaxis_tickangle=45
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Instagram Content Strategy Optimization: Average User Interactions by Topic" class="wp-image-25707" data-attachment-id="25707" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Average User Interactions by Topic" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-User-Interactions-by-Topic.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-User-Interactions-by-Topic.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-User-Interactions-by-Topic.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2025/01/06/instagram-content-strategy-optimization-with-python/average-user-interactions-by-topic/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-User-Interactions-by-Topic.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-User-Interactions-by-Topic.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-User-Interactions-by-Topic.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-User-Interactions-by-Topic.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The graph indicates that:</p>
+<ol class="wp-block-list">
+<li>Content related to <strong>Projects</strong> generates the highest user interactions, particularly in terms of saves (1.5k) and likes (900).</li>
+<li><strong>Career Growth</strong> also performs well, with significant saves (1.3k) and likes (910).</li>
+<li><strong>Actionable Content</strong> stands out for its balance across saves (1.2k) and likes (910).</li>
+<li>In contrast, <strong>Learning and Education and Problem-Solving</strong> generate comparatively fewer interactions, particularly in saves and comments.</li>
+</ol>
+<p>These findings suggest focusing on Projects and Career Growth topics to maximize user engagement.</p>
+<p>Now, let’s analyze which types of posts lead to the highest number of new followers:</p>
+<pre><code class="language-python">follows_by_post_type = instagram_data.groupby('Post type')['Follows'].mean().sort_values(ascending=False).reset_index()
+
+# plotting follows by post type using a donut chart
+fig = px.pie(
+    follows_by_post_type,
+    names='Post type',
+    values='Follows',
+    title='Average New Follows by Post Type',
+    hole=0.4,
+    labels={'Post type': 'Post Type', 'Follows': 'Average New Follows'},
+)
+
+fig.update_traces(
+    textinfo='percent+label',  # display percentage and label on the chart
+    pull=[0.1 if i == follows_by_post_type['Follows'].idxmax() else 0 for i in range(len(follows_by_post_type))]
+)  # highlight the post type with the highest average follows
+
+fig.update_layout(
+    title_font_size=16,
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Average New Follows by Post Type" class="wp-image-25708" data-attachment-id="25708" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Average New Follows by Post Type" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-New-Follows-by-Post-Type.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-New-Follows-by-Post-Type.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-New-Follows-by-Post-Type.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2025/01/06/instagram-content-strategy-optimization-with-python/average-new-follows-by-post-type/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-New-Follows-by-Post-Type.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-New-Follows-by-Post-Type.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-New-Follows-by-Post-Type.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Average-New-Follows-by-Post-Type.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The graph shows that IG reels lead to the highest number of new follows, accounting for 47.4% of the total, followed by IG images at 34.7% (which usually comes from promotions). IG carousels contribute the least, with 17.9% of new followers.</p>
+<p>This indicates that reels are the most effective post type for attracting new followers, likely due to their engaging and dynamic format.</p>
+<p>Now, let’s analyze what characteristics make a post go viral:</p>
+<pre><code class="language-python">import plotly.express as px
+
+# define "viral" posts as those with impressions in the top 10% of the dataset
+viral_threshold = instagram_data['Impressions'].quantile(0.90)
+viral_posts = instagram_data[instagram_data['Impressions'] &gt;= viral_threshold].copy()
+
+# assign topics based on keywords in descriptions
+def assign_topic(desc):
+    desc = desc.lower() if isinstance(desc, str) else ""
+    if 'projects' in desc:
+        return 'Projects'
+    elif any(word in desc for word in ['learn', 'science', 'analysis', 'python']):
+        return 'Learning and Education'
+    elif any(word in desc for word in ['problems', 'using', 'algorithms']):
+        return 'Problem-Solving'
+    elif any(word in desc for word in ['list', 'try', 'let', 'use']):
+        return 'Actionable Content'
+    elif any(word in desc for word in ['bio', 'link']):
+        return 'Career Growth'
+    else:
+        return 'Other'
+
+viral_posts['Topic'] = viral_posts['Cleaned Description'].apply(assign_topic)
+
+# aggregating viral posts by topic and day of the week
+viral_topic_day = viral_posts.groupby(['Topic', 'Day of Week'])[['Impressions']].mean().reset_index()
+
+# visualization: Viral posts by topic and day of the week
+fig = px.bar(
+    viral_topic_day,
+    x='Day of Week',
+    y='Impressions',
+    color='Topic',
+    barmode='group',
+    title='Viral Posts by Topic and Day of the Week (Impressions)',
+    labels={'Impressions': 'Average Impressions', 'Day of Week': 'Day of the Week'},
+    text_auto='.2s'
+)
+
+fig.update_layout(
+    title_font_size=16,
+    xaxis_title='Day of the Week',
+    yaxis_title='Average Impressions',
+    legend_title='Topic',
+    xaxis_tickangle=45
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Instagram Content Strategy Optimization: Viral Posts by Topic and Day of the Week" class="wp-image-25710" data-attachment-id="25710" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Viral Posts by Topic and Day of the Week" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Viral-Posts-by-Topic-and-Day-of-the-Week.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Viral-Posts-by-Topic-and-Day-of-the-Week.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Viral-Posts-by-Topic-and-Day-of-the-Week.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2025/01/06/instagram-content-strategy-optimization-with-python/viral-posts-by-topic-and-day-of-the-week/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Viral-Posts-by-Topic-and-Day-of-the-Week.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Viral-Posts-by-Topic-and-Day-of-the-Week.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Viral-Posts-by-Topic-and-Day-of-the-Week.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Viral-Posts-by-Topic-and-Day-of-the-Week.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The graph shows that posts on Career Growth and Projects tend to go viral, which achieves the highest impressions of 210k. Career Growth performs exceptionally well on Wednesdays, while Projects dominate on Fridays and Saturdays. In contrast, Learning and Education consistently receive lower impressions across all days, peaking at 130k on Thursdays.</p>
+<p>It suggests that focusing on actionable and relatable topics like career growth and project insights, combined with strategic posting on high-engagement days like Wednesday, Friday, and Saturday, increases the likelihood of a post going viral.</p>
+<h4 class="wp-block-heading">Seasonal Trends in Engagement</h4>
+<p>Now, let’s analyze if there are seasonal or recurring trends in engagement metrics:</p>
+<pre><code class="language-python"># extract month and week from the Publish time for seasonal trend analysis
+instagram_data['Month'] = instagram_data['Publish time'].dt.month_name()
+instagram_data['Week'] = instagram_data['Publish time'].dt.isocalendar().week
+
+# group data by month and week to analyze trends in engagement metrics
+monthly_engagement = instagram_data.groupby('Month')[engagement_metrics].mean().reindex(
+    ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+).reset_index()
+
+weekly_engagement = instagram_data.groupby('Week')[engagement_metrics].mean().reset_index()
+
+# visualization: Monthly engagement trends
+fig_monthly = px.line(
+    monthly_engagement.melt(id_vars='Month', var_name='Engagement Metric', value_name='Average Value'),
+    x='Month',
+    y='Average Value',
+    color='Engagement Metric',
+    markers=True,
+    title='Monthly Trends in Engagement Metrics',
+    labels={'Average Value': 'Average Engagement', 'Month': 'Month'}
+)
+
+fig_monthly.update_layout(
+    title_font_size=16,
+    xaxis_title='Month',
+    yaxis_title='Average Engagement Metrics',
+    xaxis_tickangle=45
+)
+
+# visualization: Weekly engagement trends
+fig_weekly = px.line(
+    weekly_engagement.melt(id_vars='Week', var_name='Engagement Metric', value_name='Average Value'),
+    x='Week',
+    y='Average Value',
+    color='Engagement Metric',
+    markers=True,
+    title='Weekly Trends in Engagement Metrics',
+    labels={'Average Value': 'Average Engagement', 'Week': 'Week of the Year'}
+)
+
+fig_weekly.update_layout(
+    title_font_size=16,
+    xaxis_title='Week of the Year',
+    yaxis_title='Average Engagement Metrics',
+    xaxis_tickmode='linear',
+    xaxis_dtick=5
+)
+
+fig_monthly.show()
+fig_weekly.show()</code></pre>
+<figure class="wp-block-gallery has-nested-images columns-default is-cropped wp-block-gallery-2 is-layout-flex wp-block-gallery-is-layout-flex" data-carousel-extra='{"blog_id":1,"permalink":"https://my-ai-portfolio.com/2025/01/06/instagram-content-strategy-optimization-with-python/"}'>
+<figure class="wp-block-image aligncenter size-large"><img alt="Monthly Trends in Engagement Metrics" class="wp-image-25713" data-attachment-id="25713" data-comments-opened="1" data-id="25713" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Monthly trends" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Monthly-trends.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Monthly-trends.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Monthly-trends.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2025/01/06/instagram-content-strategy-optimization-with-python/monthly-trends/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Monthly-trends.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Monthly-trends.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Monthly-trends.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/Monthly-trends.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<figure class="wp-block-image aligncenter size-large"><img alt="Weekly Trends in Engagement Metrics" class="wp-image-25714" data-attachment-id="25714" data-comments-opened="1" data-id="25714" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="weekly trends" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/weekly-trends.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/weekly-trends.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/weekly-trends.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2025/01/06/instagram-content-strategy-optimization-with-python/weekly-trends/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/weekly-trends.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/weekly-trends.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/weekly-trends.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/weekly-trends.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+</figure>
+<p>The graphs reveal seasonal and recurring trends in engagement metrics. Monthly data shows a peak in impressions and reach during February and March, followed by a gradual decline through the year, indicating heightened activity in the early months. Weekly data highlights spikes in engagement during the initial weeks of the year, with fluctuations throughout and a general stabilization in later weeks.</p>
+<p>This suggests that engagement is higher at the beginning of the year, possibly due to new campaigns or audience activity, and decreases over time with smaller periodic peaks.</p>
+<h4 class="wp-block-heading">Finding a Data-Driven Strategy for Instagram Content Optimization</h4>
+<p>Now, we will find a data-driven strategy for Instagram Content Optimization. Our strategy will be focused on:</p>
+<ol class="wp-block-list">
+<li>Finding which post type drives the most followers for each day.</li>
+<li>Finding the post type that engages the audience best (Likes, Comments, Shares, Saves).</li>
+<li>And, determining the best hour to post to achieve the highest impressions and reach.</li>
+</ol>
+<p>Here’s how to build such a data-driven strategy:</p>
+<pre><code class="language-python"># group data by post type and calculate average engagement metrics
+post_type_summary = instagram_data.groupby('Post type')[
+    ['Follows', 'Likes', 'Comments', 'Shares', 'Saves', 'Impressions', 'Reach']
+].mean()
+
+# add day of the week and hour of the day to the dataset
+day_time_summary = instagram_data.copy()
+day_time_summary['Day of Week'] = day_time_summary['Publish time'].dt.day_name()
+day_time_summary['Hour of Day'] = day_time_summary['Publish time'].dt.hour
+
+# group data by day of the week and post type to calculate daily engagement metrics
+daily_post_type_summary = day_time_summary.groupby(['Day of Week', 'Post type'])[
+    ['Follows', 'Likes', 'Comments', 'Shares', 'Saves', 'Impressions', 'Reach']
+].mean()
+
+# prepare a list to store daily best strategies
+daily_best_summary = []
+
+# generate a summary for each day of the week
+for day in day_time_summary['Day of Week'].unique():
+    # Filter data for the specific day
+    day_data = day_time_summary[day_time_summary['Day of Week'] == day]
+    
+    # group by post type for the day
+    post_type_day = daily_post_type_summary.loc[day]
+    
+    # find the best post type for follower growth and overall interactions
+    best_post_follows = post_type_day['Follows'].idxmax()
+    best_post_interactions = post_type_day[['Likes', 'Comments', 'Shares', 'Saves']].mean(axis=1).idxmax()
+    
+    # find the best posting hour based on impressions and reach
+    hourly_summary = day_data.groupby('Hour of Day')[['Impressions', 'Reach']].mean()
+    best_hour = hourly_summary.mean(axis=1).idxmax()
+    
+    # append results for the day
+    daily_best_summary.append({
+        "Day": day,
+        "Best Post Type for Follower Growth": best_post_follows,
+        "Best Post Type for Interactions": best_post_interactions,
+        "Best Posting Hour": f"{best_hour}:00"
+    })
+
+# convert the list of summaries to a DataFrame
+daily_summary_table = pd.DataFrame(daily_best_summary)
+daily_summary_table</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="a Data-Driven Strategy for Instagram Content Optimization" class="wp-image-25717" data-attachment-id="25717" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/image-1.png?fit=1024%2C341&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/image-1.png?fit=300%2C100&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/image-1.png?fit=1662%2C554&amp;ssl=1" data-orig-size="1662,554" data-permalink="https://my-ai-portfolio.com/2025/01/06/instagram-content-strategy-optimization-with-python/image-205/" data-recalc-dims="1" decoding="async" height="341" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/image-1.png?resize=1024%2C341&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/image-1.png?resize=1024%2C341&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/image-1.png?resize=300%2C100&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/image-1.png?resize=768%2C256&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/image-1.png?resize=1536%2C512&amp;ssl=1 1536w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/image-1.png?resize=1200%2C400&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/image-1.png?w=1662&amp;ssl=1 1662w" width="1024"/></figure>
+<p>The data-driven strategy highlights that IG reels consistently outperform other content types for both follower growth and interactions across most days, with the best times varying by day (e.g., 0:00 on Tuesday, 20:00 on Friday, and 7:00 on Thursday). IG carousels are effective on Mondays for both follower growth and interactions, while IG images perform best on Saturdays.</p>
+<p>So, to optimize content creation, prioritize IG reels, post at the specified best hours for each day, and strategically use carousels and images on their most effective days.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="netflix-content-strategy-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="youtube-data-collection-and-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

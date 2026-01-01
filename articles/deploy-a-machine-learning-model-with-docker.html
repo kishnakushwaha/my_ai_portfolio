@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Deploy a Machine Learning Model with Docker | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Deploy a Machine Learning Model with Docker</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 23, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="ai-agent-projects-to-build-this-weekend.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="deploy-your-first-ml-model-as-a-rest-api.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Deploying a Machine Learning model is the last mile problem of AI, and solving it is one of the most valuable skills you can learn. You must have heard about Docker. In this article, I’ll guide you through the process of taking a trained model, wrapping it in a robust API, and then containerize and deploy the Machine Learning model with Docker.</p>
+<h2 class="wp-block-heading">Deploy a Machine Learning Model with Docker: Our Strategy</h2>
+<p>Before we dive into the code, let’s understand our toolkit and strategy:</p>
+<ol class="wp-block-list">
+<li>We will train a Machine Learning model using Scikit-learn. It will be our brain.</li>
+<li>Next, we will use FastAPI. It will create a web API so other applications can communicate with our model using standard HTTP requests, the language of the internet.</li>
+<li>Next, we will create a Dockerfile. It will package our model, our API, and all their dependencies into a single, isolated unit that can run anywhere.</li>
+</ol>
+<p>In simple terms, we’re taking the model, giving it a voice with FastAPI, and then packaging it in a self-sufficient container with Docker, so anyone can use it.</p>
+<h4 class="wp-block-heading">Step 1: Train and Save Your Model</h4>
+<p>Create a file named <strong>model.py </strong>inside a directory (in my case, I am naming my directory “dock”).</p>
+<p>This is the part you’re likely most familiar with. The goal here isn’t just to train a model, but to <strong>serialize it, </strong>saving its learned state to a file:</p>
+<pre><code class="language-python"># model.py
+
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.datasets import fetch_california_housing
+import joblib
+
+def train_and_save_model():    
+    print("Loading data and training the model...")
+
+    # 1. Load the California Housing dataset
+    housing = fetch_california_housing()
+    X, y = housing.data, housing.target
+
+    # 2. Initialize and train the model
+    # We're using Gradient Boosting, a powerful ensemble method for regression.
+    # The parameters here are just examples; in a real project, you'd tune them.
+    model = GradientBoostingRegressor(n_estimators=100, learning_rate=0.1, max_depth=3)
+    model.fit(X, y)
+
+    # 3. Save the trained model to a file
+    joblib.dump(model, 'housing_model.pkl')
+
+    print("Model trained and saved as housing_model.pkl!")
+    print("Feature names:", housing.feature_names) # To help us with testing later
+
+if __name__ == "__main__":
+    train_and_save_model()</code></pre>
+<p>The key here is <strong>joblib.dump(model, ‘housing_model.pkl’)</strong>. We use joblib (or pickle) to convert our trained Python object into a byte stream that can be saved to a file. This file, housing_model.pkl, now contains all the knowledge our model gained during training. We only need to run this script once. The resulting .pkl file is the asset we’ll deploy.</p>
+<h4 class="wp-block-heading">Step 2: Build the API Endpoint</h4>
+<p>Now, create a file named <strong>main.py</strong>. Now we need a way for the outside world to send data to our model and get a prediction back.</p>
+<p>This is where FastAPI comes in. It’s incredibly fast and creates interactive documentation for us automatically:</p>
+<pre><code class="language-python"># main.py
+
+from fastapi import FastAPI
+import joblib
+from pydantic import BaseModel
+import numpy as np
+
+# 1. Create a FastAPI app instance
+app = FastAPI(title="California Housing Price Predictor")
+
+# 2. Load the trained model
+model = joblib.load('housing_model.pkl')
+
+# 3. Define the request body structure using Pydantic
+# These are the features our model was trained on.
+class HousingFeatures(BaseModel):
+    MedInc: float
+    HouseAge: float
+    AveRooms: float
+    AveBedrms: float
+    Population: float
+    AveOccup: float
+    Latitude: float
+    Longitude: float
+
+# 4. Define the prediction endpoint
+@app.post("/predict", tags=["Predictions"])
+async def predict_price(features: HousingFeatures):
+    
+    # Convert the input data from the request into a NumPy array
+    # The order of features must be the same as during training!
+    data = np.array([[
+        features.MedInc,
+        features.HouseAge,
+        features.AveRooms,
+        features.AveBedrms,
+        features.Population,
+        features.AveOccup,
+        features.Latitude,
+        features.Longitude
+    ]])
+
+    # Make a prediction
+    # The output is a price in units of 100,000 USD
+    prediction = model.predict(data)[0]
+
+    # Return the prediction
+    return {"predicted_median_value": f"${prediction * 100000:.2f}"}
+
+# Root endpoint
+@app.get("/", tags=["General"])
+async def read_root():
+    return {"message": "Welcome to the California Housing Price Predictor API!"}</code></pre>
+<p>Here’s what we are doing in this Python file:</p>
+<ol class="wp-block-list">
+<li><strong>model = joblib.load(…)</strong>: We load our saved model into memory the moment the API starts.</li>
+<li><strong>class HousingFeatures(BaseModel)</strong>: Here, we’re creating a strict data contract. Our API will automatically validate incoming requests.</li>
+<li><strong>@app.post(“/predict”)</strong>: This decorator tells FastAPI that any POST request to the /predict URL should be handled by the predict_price function.</li>
+</ol>
+<p>The function takes the validated features, converts them into the exact NumPy array format our Scikit-Learn model expects, calls model.predict(), and returns the result as a clean JSON object.</p>
+<p><strong>Before moving forward, make sure to create a text file named requirements.txt. Write this information in that file:</strong></p>
+<pre class="wp-block-preformatted"><strong>fastapi<br/>uvicorn[standard]<br/>scikit-learn<br/>joblib<br/>numpy</strong></pre>
+<h4 class="wp-block-heading">Step 3: Containerize with Docker</h4>
+<p>Now, make sure you have Docker installed on your system. You can download it from <strong><a href="https://docs.docker.com/desktop/setup/install/windows-install/" rel="noreferrer noopener" target="_blank">here</a></strong>.</p>
+<p>Once you have installed Docker, <strong>create a file named “Dockerfile” (no extension needed).</strong> This is where the real deployment happens. A Dockerfile is a set of instructions for building a Docker image. It’s like a recipe for creating our self-contained application environment.</p>
+<p>Write this in your Dockerfile:</p>
+<pre><code class="language-python"># Dockerfile
+
+# 1. Use an official Python runtime as a parent image
+FROM python:3.9-slim
+
+# 2. Set the working directory inside the container
+WORKDIR /app
+
+# 3. Copy the dependencies file and install them
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 4. Copy the rest of the application code into the container
+COPY . .
+
+# 5. Expose the port the app runs on
+EXPOSE 80
+
+# 6. Define the command to run the application
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]</code></pre>
+<p>Notice we copy requirements.txt and run pip install before copying the rest of our code. Docker builds in layers. If our Python code (main.py, model.py) changes but our dependencies (requirements.txt) don’t, Docker will reuse the already-installed layer, making our subsequent builds much faster!</p>
+<p><strong>Now, before moving forward, make sure your directory looks like this:</strong></p>
+<figure class="wp-block-image aligncenter size-full"><img alt="directory of my project on deploying a machine learning model with docker" class="wp-image-27955" data-attachment-id="27955" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="892,314" data-recalc-dims="1" decoding="async" height="314" sizes="(max-width: 892px) 100vw, 892px" src="../assets/datasets/image-3.png" width="892"/></figure>
+<h4 class="wp-block-heading">Final Step: Build and Run</h4>
+<p>With these four files in a single directory, you are ready to launch. Open your terminal in that directory and run this command:</p>
+<pre class="wp-block-preformatted"><strong>docker build -t dock .</strong></pre>
+<p>This command reads your Dockerfile and builds the self-contained image. We’ll tag (-t) it with the name dock. Here, dock is the name of my directory.</p>
+<p><strong>That’s it!</strong> Your machine learning model is now a live, running API. You can also see it in your Docker application. It will look like this:</p>
+<figure class="wp-block-image aligncenter size-large"><img alt="model running in docker container" class="wp-image-27957" data-attachment-id="27957" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="PHOTO-2025-09-22-19-44-40" data-orig-size="2560,1600" data-recalc-dims="1" decoding="async" height="640" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/PHOTO-2025-09-22-19-44-40.jpg" width="1024"/></figure>
+<p>You can now open your browser and navigate to <strong><a href="http://localhost:8081/docs" rel="nofollow">http://localhost:8081/docs</a></strong>. You’ll see FastAPI’s beautiful, interactive API documentation, where you can even test your prediction endpoint directly. It will look like this:</p>
+<figure class="wp-block-image aligncenter size-large"><img alt="Deployment using Docker" class="wp-image-27959" data-attachment-id="27959" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="PHOTO-2025-09-22-19-42-42" data-orig-size="1280,678" data-recalc-dims="1" decoding="async" height="542" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="../assets/datasets/PHOTO-2025-09-22-19-42-42.jpg" width="1024"/></figure>
+<figure class="wp-block-image aligncenter size-large"><img alt="Output using Docker" class="wp-image-27961" data-attachment-id="27961" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="PHOTO-2025-09-22-19-44-01" data-orig-size="1280,661" data-recalc-dims="1" decoding="async" height="529" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="../assets/datasets/PHOTO-2025-09-22-19-44-01.jpg" width="1024"/></figure>
+<h3 class="wp-block-heading">Final Words</h3>
+<p>You’ve just gone from being a Machine Learning Engineer to an architect. You’ve taken a static model and transformed it into a dynamic, reliable, and distributable service. This process, <strong>Train, Serialize, Build the API, Containerize, </strong>is the fundamental workflow of modern MLOps.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="ai-agent-projects-to-build-this-weekend.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="deploy-your-first-ml-model-as-a-rest-api.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

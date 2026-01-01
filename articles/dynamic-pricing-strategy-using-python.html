@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Dynamic Pricing Strategy using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Dynamic Pricing Strategy using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 20, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="demand-forecasting-and-inventory-optimization-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="rainfall-trends-in-india-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Dynamic Pricing is an application of <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">data science</a></strong> that involves adjusting the prices of a product or service based on various factors in real time. It is used by companies to optimize revenue by setting flexible prices that respond to market demand, demographics, customer behaviour and competitor prices. So, if you want to learn how to build a data-driven Dynamic Pricing Strategy, this article is for you. In this article, I will take you through building a Dynamic Pricing Strategy using Python.</p>
+<h2 class="wp-block-heading">What is Dynamic Pricing?</h2>
+<p>Dynamic Pricing is an application of Data Science that involves adjusting product or service prices based on various factors in real time. It is employed by businesses to optimize their revenue and profitability by setting flexible prices that respond to market demand, customer behaviour, and competitor pricing.</p>
+<p>Using data-driven insights and algorithms, businesses can dynamically modify prices to achieve the most favourable outcomes.</p>
+<p>For example, consider a ride-sharing company operating in a metropolitan area. The company wants to optimize its pricing strategy to maximize revenue and improve customer satisfaction. The traditional pricing model used by the business is based on fixed rates per kilometre, which does not account for fluctuations in supply and demand.</p>
+<p>By implementing a dynamic pricing strategy, the company can leverage data science techniques to analyze various factors such as historical trip data, real-time demand, traffic patterns, and events happening in the area.</p>
+<p>Using Machine Learning algorithms, the company can analyze data and adjust its prices in real-time. When demand is high, such as during rush hours or major events, the algorithm can increase the cost of the rides to incentivize more drivers to be available and balance the supply and demand. Conversely, during periods of low demand, the algorithm can lower the prices to attract more customers.</p>
+<h2 class="wp-block-heading">Dynamic Pricing Strategy: Overview</h2>
+<p>So, in a dynamic pricing strategy, the aim is to maximize revenue and profitability by pricing items at the right level that balances supply and demand dynamics. It allows businesses to adjust prices dynamically based on factors like time of day, day of the week, customer segments, inventory levels, seasonal fluctuations, competitor pricing, and market conditions.</p>
+<p>To implement a data-driven dynamic pricing strategy, businesses typically require data that can provide insights into customer behaviour, market trends, and other influencing factors. So to create a dynamic pricing strategy, we need to have a dataset based on:</p>
+<ol class="wp-block-list">
+<li>historical sales data</li>
+<li>customer purchase patterns</li>
+<li>market demand forecasts</li>
+<li>cost data</li>
+<li>customer segmentation data, </li>
+<li>and real-time market data.</li>
+</ol>
+<p>I found an ideal dataset to create a Dynamic Pricing Strategy based on the example we discussed above. You can download the data from <a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;"><strong>here</strong></a>.</p>
+<h2 class="wp-block-heading">Dynamic Pricing Strategy using Python</h2>
+<p>Let’s start the task of building a dynamic pricing strategy by importing the necessary Python libraries and the <a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;"><strong>dataset</strong></a>:</p>
+<pre><code class="language-python">import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+
+data = pd.read_csv("dynamic_pricing.csv")
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>   Number_of_Riders  Number_of_Drivers Location_Category  \
+0                90                 45             Urban   
+1                58                 39          Suburban   
+2                42                 31             Rural   
+3                89                 28             Rural   
+4                78                 22             Rural   
+
+  Customer_Loyalty_Status  Number_of_Past_Rides  Average_Ratings  \
+0                  Silver                    13             4.47   
+1                  Silver                    72             4.06   
+2                  Silver                     0             3.99   
+3                 Regular                    67             4.31   
+4                 Regular                    74             3.77   
+
+  Time_of_Booking Vehicle_Type  Expected_Ride_Duration  \
+0           Night      Premium                      90   
+1         Evening      Economy                      43   
+2       Afternoon      Premium                      76   
+3       Afternoon      Premium                     134   
+4       Afternoon      Economy                     149   
+
+   Historical_Cost_of_Ride  
+0               284.257273  
+1               173.874753  
+2               329.795469  
+3               470.201232  
+4               579.681422  </strong></pre>
+<h2 class="wp-block-heading">Exploratory Data Analysis</h2>
+<p>Let’s have a look at the descriptive statistics of the data:</p>
+<pre><code class="language-python">print(data.describe())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>       Number_of_Riders  Number_of_Drivers  Number_of_Past_Rides  \
+count       1000.000000        1000.000000           1000.000000   
+mean          60.372000          27.076000             50.031000   
+std           23.701506          19.068346             29.313774   
+min           20.000000           5.000000              0.000000   
+25%           40.000000          11.000000             25.000000   
+50%           60.000000          22.000000             51.000000   
+75%           81.000000          38.000000             75.000000   
+max          100.000000          89.000000            100.000000   
+
+       Average_Ratings  Expected_Ride_Duration  Historical_Cost_of_Ride  
+count      1000.000000              1000.00000              1000.000000  
+mean          4.257220                99.58800               372.502623  
+std           0.435781                49.16545               187.158756  
+min           3.500000                10.00000                25.993449  
+25%           3.870000                59.75000               221.365202  
+50%           4.270000               102.00000               362.019426  
+75%           4.632500               143.00000               510.497504  
+max           5.000000               180.00000               836.116419  </strong></pre>
+<p>Now let’s have a look at the relationship between expected ride duration and the historical cost of the ride:</p>
+<pre><code class="language-python">fig = px.scatter(data, x='Expected_Ride_Duration', 
+                 y='Historical_Cost_of_Ride',
+                 title='Expected Ride Duration vs. Historical Cost of Ride', 
+                 trendline='ols')
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Expected Ride Duration vs. Historical Cost of Ride" class="wp-image-20672" data-attachment-id="20672" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="dynamic-pricing-1" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="../assets/datasets/dynamic-pricing-1.png" width="857"/></figure>
+<p>Now let’s have a look at the distribution of the historical cost of rides based on the vehicle type:</p>
+<pre><code class="language-python">fig = px.box(data, x='Vehicle_Type', 
+             y='Historical_Cost_of_Ride',
+             title='Historical Cost of Ride Distribution by Vehicle Type')
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Dynamic Pricing Strategy: Historical Cost of Ride Distribution by Vehicle Type" class="wp-image-20674" data-attachment-id="20674" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="dynamic-pricing-2" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="../assets/datasets/dynamic-pricing-2.png" width="857"/></figure>
+<p>Now let’s have a look at the correlation matrix:</p>
+<pre><code class="language-python">corr_matrix = data.corr()
+
+fig = go.Figure(data=go.Heatmap(z=corr_matrix.values, 
+                                x=corr_matrix.columns, 
+                                y=corr_matrix.columns,
+                                colorscale='Viridis'))
+fig.update_layout(title='Correlation Matrix')
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Dynamic Pricing: Correlation Matrix" class="wp-image-20676" data-attachment-id="20676" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="dynamic-pricing-3" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/dynamic-pricing-3.png" width="857"/></figure>
+<h2 class="wp-block-heading">Implementing a Dynamic Pricing Strategy</h2>
+<p>The data provided by the company states that the company uses a pricing model that only takes the expected ride duration as a factor to determine the price for a ride. Now, we will implement a dynamic pricing strategy aiming to adjust the ride costs dynamically based on the demand and supply levels observed in the data. It will capture high-demand periods and low-supply scenarios to increase prices, while low-demand periods and high-supply situations will lead to price reductions.</p>
+<p>Here’s how to implement this dynamic pricing strategy using Python:</p>
+<pre><code class="language-python">import numpy as np
+
+# Calculate demand_multiplier based on percentile for high and low demand
+high_demand_percentile = 75
+low_demand_percentile = 25
+
+data['demand_multiplier'] = np.where(data['Number_of_Riders'] &gt; np.percentile(data['Number_of_Riders'], high_demand_percentile),
+                                     data['Number_of_Riders'] / np.percentile(data['Number_of_Riders'], high_demand_percentile),
+                                     data['Number_of_Riders'] / np.percentile(data['Number_of_Riders'], low_demand_percentile))
+
+# Calculate supply_multiplier based on percentile for high and low supply
+high_supply_percentile = 75
+low_supply_percentile = 25
+
+data['supply_multiplier'] = np.where(data['Number_of_Drivers'] &gt; np.percentile(data['Number_of_Drivers'], low_supply_percentile),
+                                     np.percentile(data['Number_of_Drivers'], high_supply_percentile) / data['Number_of_Drivers'],
+                                     np.percentile(data['Number_of_Drivers'], low_supply_percentile) / data['Number_of_Drivers'])
+
+# Define price adjustment factors for high and low demand/supply
+demand_threshold_high = 1.2  # Higher demand threshold
+demand_threshold_low = 0.8  # Lower demand threshold
+supply_threshold_high = 0.8  # Higher supply threshold
+supply_threshold_low = 1.2  # Lower supply threshold
+
+# Calculate adjusted_ride_cost for dynamic pricing
+data['adjusted_ride_cost'] = data['Historical_Cost_of_Ride'] * (
+    np.maximum(data['demand_multiplier'], demand_threshold_low) *
+    np.maximum(data['supply_multiplier'], supply_threshold_high)
+)</code></pre>
+<p>In the above code, we first calculated the demand multiplier by comparing the number of riders to percentiles representing high and low demand levels. If the number of riders exceeds the percentile for high demand, the demand multiplier is set as the number of riders divided by the high-demand percentile. Otherwise, if the number of riders falls below the percentile for low demand, the demand multiplier is set as the number of riders divided by the low-demand percentile.</p>
+<p>Next, we calculated the supply multiplier by comparing the number of drivers to percentiles representing high and low supply levels. If the number of drivers exceeds the low-supply percentile, the supply multiplier is set as the high-supply percentile divided by the number of drivers. On the other hand, if the number of drivers is below the low-supply percentile, the supply multiplier is set as the low-supply percentile divided by the number of drivers.</p>
+<p>Finally, we calculated the adjusted ride cost for dynamic pricing. It multiplies the historical cost of the ride by the maximum of the demand multiplier and a lower threshold (demand_threshold_low), and also by the maximum of the supply multiplier and an upper threshold (supply_threshold_high). This multiplication ensures that the adjusted ride cost captures the combined effect of demand and supply multipliers, with the thresholds serving as caps or floors to control the price adjustments.</p>
+<p>Now let’s calculate the profit percentage we got after implementing this dynamic pricing strategy:</p>
+<pre><code class="language-python"># Calculate the profit percentage for each ride
+data['profit_percentage'] = ((data['adjusted_ride_cost'] - data['Historical_Cost_of_Ride']) / data['Historical_Cost_of_Ride']) * 100
+# Identify profitable rides where profit percentage is positive
+profitable_rides = data[data['profit_percentage'] &gt; 0]
+
+# Identify loss rides where profit percentage is negative
+loss_rides = data[data['profit_percentage'] &lt; 0]
+
+
+import plotly.graph_objects as go
+
+# Calculate the count of profitable and loss rides
+profitable_count = len(profitable_rides)
+loss_count = len(loss_rides)
+
+# Create a donut chart to show the distribution of profitable and loss rides
+labels = ['Profitable Rides', 'Loss Rides']
+values = [profitable_count, loss_count]
+
+fig = go.Figure(data=[go.Pie(labels=labels, values=values, hole=0.4)])
+fig.update_layout(title='Profitability of Rides (Dynamic Pricing vs. Historical Pricing)')
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Profitability of Rides" class="wp-image-20679" data-attachment-id="20679" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="dynamic-pricing-4" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/dynamic-pricing-4.png" width="857"/></figure>
+<p>Now let’s have a look at the relationship between the expected ride duration and the cost of the ride based on the dynamic pricing strategy:</p>
+<pre><code class="language-python">fig = px.scatter(data, 
+                 x='Expected_Ride_Duration', 
+                 y='adjusted_ride_cost',
+                 title='Expected Ride Duration vs. Cost of Ride', 
+                 trendline='ols')
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Dynamic Pricing Strategy: Expected Ride Duration vs. Cost of Ride" class="wp-image-20681" data-attachment-id="20681" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="dynamic-pricing-5" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/dynamic-pricing-5.png" width="857"/></figure>
+<h2 class="wp-block-heading">Training a Predictive Model</h2>
+<p>Now, as we have implemented a dynamic pricing strategy, let’s train a Machine Learning model. Before training the model, let’s preprocess the data:</p>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+
+def data_preprocessing_pipeline(data):
+    #Identify numeric and categorical features
+    numeric_features = data.select_dtypes(include=['float', 'int']).columns
+    categorical_features = data.select_dtypes(include=['object']).columns
+
+    #Handle missing values in numeric features
+    data[numeric_features] = data[numeric_features].fillna(data[numeric_features].mean())
+
+    #Detect and handle outliers in numeric features using IQR
+    for feature in numeric_features:
+        Q1 = data[feature].quantile(0.25)
+        Q3 = data[feature].quantile(0.75)
+        IQR = Q3 - Q1
+        lower_bound = Q1 - (1.5 * IQR)
+        upper_bound = Q3 + (1.5 * IQR)
+        data[feature] = np.where((data[feature] &lt; lower_bound) | (data[feature] &gt; upper_bound),
+                                 data[feature].mean(), data[feature])
+
+    #Handle missing values in categorical features
+    data[categorical_features] = data[categorical_features].fillna(data[categorical_features].mode().iloc[0])
+
+    return data</code></pre>
+<p>In the above code, we have implemented a data preprocessing pipeline to preprocess the data. You can learn more about it <a href="data-preprocessing-pipeline-using-python.html" rel="noreferrer noopener" target=""><strong>here</strong></a>. As vehicle type is a valuable factor, let’s convert it into a numerical feature before moving forward:</p>
+<pre><code class="language-python">data["Vehicle_Type"] = data["Vehicle_Type"].map({"Premium": 1, 
+                                           "Economy": 0})</code></pre>
+<p>Now let’s split the data and train a Machine Learning model to predict the cost of a ride:</p>
+<pre><code class="language-python">#splitting data
+from sklearn.model_selection import train_test_split
+x = np.array(data[["Number_of_Riders", "Number_of_Drivers", "Vehicle_Type", "Expected_Ride_Duration"]])
+y = np.array(data[["adjusted_ride_cost"]])
+
+x_train, x_test, y_train, y_test = train_test_split(x,
+                                                    y,
+                                                    test_size=0.2,
+                                                    random_state=42)
+
+# Reshape y to 1D array
+y_train = y_train.ravel()
+y_test = y_test.ravel()
+
+# Training a random forest regression model
+from sklearn.ensemble import RandomForestRegressor
+model = RandomForestRegressor()
+model.fit(x_train, y_train)</code></pre>
+<p>Now let’s test this Machine Learning model using some input values:</p>
+<pre><code class="language-python">def get_vehicle_type_numeric(vehicle_type):
+    vehicle_type_mapping = {
+        "Premium": 1,
+        "Economy": 0
+    }
+    vehicle_type_numeric = vehicle_type_mapping.get(vehicle_type)
+    return vehicle_type_numeric
+  
+# Predicting using user input values
+def predict_price(number_of_riders, number_of_drivers, vehicle_type, Expected_Ride_Duration):
+    vehicle_type_numeric = get_vehicle_type_numeric(vehicle_type)
+    if vehicle_type_numeric is None:
+        raise ValueError("Invalid vehicle type")
+    
+    input_data = np.array([[number_of_riders, number_of_drivers, vehicle_type_numeric, Expected_Ride_Duration]])
+    predicted_price = model.predict(input_data)
+    return predicted_price
+
+# Example prediction using user input values
+user_number_of_riders = 50
+user_number_of_drivers = 25
+user_vehicle_type = "Economy"
+Expected_Ride_Duration = 30
+predicted_price = predict_price(user_number_of_riders, user_number_of_drivers, user_vehicle_type, Expected_Ride_Duration)
+print("Predicted price:", predicted_price)</code></pre>
+<pre class="wp-block-preformatted"><strong>Predicted price: [244.44059707]</strong></pre>
+<p>Here’s a comparison of the actual and predicted results:</p>
+<pre><code class="language-python">import plotly.graph_objects as go
+
+# Predict on the test set
+y_pred = model.predict(x_test)
+
+# Create a scatter plot with actual vs predicted values
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(
+    x=y_test.flatten(),
+    y=y_pred,
+    mode='markers',
+    name='Actual vs Predicted'
+))
+
+# Add a line representing the ideal case
+fig.add_trace(go.Scatter(
+    x=[min(y_test.flatten()), max(y_test.flatten())],
+    y=[min(y_test.flatten()), max(y_test.flatten())],
+    mode='lines',
+    name='Ideal',
+    line=dict(color='red', dash='dash')
+))
+
+fig.update_layout(
+    title='Actual vs Predicted Values',
+    xaxis_title='Actual Values',
+    yaxis_title='Predicted Values',
+    showlegend=True,
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Actual Prices vs Predicted Prices" class="wp-image-20687" data-attachment-id="20687" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="dynamic-pricing-6" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/dynamic-pricing-6.png" width="857"/></figure>
+<p>So this is how you can use Machine Learning to implement a data-driven dynamic pricing strategy using Python.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>In a dynamic pricing strategy, the aim is to maximize revenue and profitability by pricing items at the right level that balances supply and demand dynamics. It allows businesses to adjust prices dynamically based on factors like time of day, day of the week, customer segments, inventory levels, seasonal fluctuations, competitor pricing, and market conditions. I hope you liked this article on Dynamic Pricing Strategy using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="demand-forecasting-and-inventory-optimization-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="rainfall-trends-in-india-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

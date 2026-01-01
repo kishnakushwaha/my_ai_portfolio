@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Building a Multimodal AI Model | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Building a Multimodal AI Model</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 30, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="ai-image-generation-using-diffusion-models.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="build-your-first-rag-system-from-scratch.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Multimodal AI is one of the most exciting fields in <strong><a href="best-ai-internship-programs-for-summer-2025.html" target="">artificial intelligence</a></strong> today. It’s powering some smartest systems, like Google Lens to ChatGPT-4o. Gartner predicts that by 2026, <strong>70% of customer interactions will involve multimodal AI</strong>, up from less than 15% in 2023. So, if you want to learn about building multimodal AI models, this article is for you. In this article, I’ll take you through a guide to building a multimodal AI model with Python.</p>
+<h2 class="wp-block-heading">What Is Multimodal AI?</h2>
+<p>Multimodal AI refers to models that process and understand <strong>multiple types of data,</strong> like text, images, audio, and video, <strong>simultaneously</strong>. These models can analyze an image, read a sentence, and understand how both relate.</p>
+<p>OpenAI’s <strong>CLIP (Contrastive Language-Image Pretraining)</strong> is one of the most powerful examples. Trained on 400 million (image, text) pairs, CLIP can “see” an image and “read” text in the same semantic space, which allows you to compare the two directly.</p>
+<p>Let’s understand multimodal AI in detail by building a model with Python.</p>
+<h2 class="wp-block-heading">Building a Multimodal AI Model with Python</h2>
+<p>Here, we’ll build a <strong>caption-matching AI system</strong> that:</p>
+<ul class="wp-block-list">
+<li>Takes an input image (say, a cup of tea)</li>
+<li>Compares it to a list of 70+ potential captions</li>
+<li>Returns the Top 5 captions that best describe the image, using cosine similarity</li>
+</ul>
+<p>We’ll build all of this using <strong>Python</strong>, <strong>PyTorch</strong>, and <strong>Hugging Face Transformers</strong>.</p>
+<p>Now let’s get started with building a multimodal AI model with Python step-by-step.</p>
+<h4 class="wp-block-heading">Step 1: Load and Preprocess the Image</h4>
+<p>We’ll use Pillow to load the image and CLIPProcessor to tokenize it for the CLIP model:</p>
+<pre><code class="language-python">import torch
+from PIL import Image
+from transformers import CLIPProcessor, CLIPModel, AutoProcessor, AutoModelForCausalLM
+
+# image loading and preprocessing
+def load_and_preprocess_image(image_path):
+    image = Image.open(image_path).convert("RGB")
+    processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+    inputs = processor(images=image, return_tensors="pt")
+    return inputs, processor</code></pre>
+<p>This will convert the image into a tensor that the CLIP model can process.</p>
+<h4 class="wp-block-heading">Step 2: Extract Image Embeddings with CLIP</h4>
+<p>Next, we’ll use CLIPModel to extract feature embeddings from the image:</p>
+<pre><code class="language-python"># image understanding with CLIP
+def generate_image_embeddings(inputs):
+    model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+    with torch.no_grad():
+        image_features = model.get_image_features(**inputs)
+
+    return image_features, model</code></pre>
+<p>This will give us a vector that captures the <strong>semantic meaning</strong> of the image.</p>
+<p>Now, before moving forward, we will create a list of captions to compare with the features of the images:</p>
+<pre><code class="language-python">candidate_captions = [
+    "Trees, Travel and Tea!",
+    "A refreshing beverage.",
+    "A moment of indulgence.",
+    "The perfect thirst quencher.",
+    "Your daily dose of delight.",
+    "Taste the tradition.",
+    "Savor the flavor.",
+    "Refresh and rejuvenate.",
+    "Unwind and enjoy.",
+    "The taste of home.",
+    "A treat for your senses.",
+    "A taste of adventure.",
+    "A moment of bliss.",
+    "Your travel companion.",
+    "Fuel for your journey.",
+    "The essence of nature.",
+    "The warmth of comfort.",
+    "A sip of happiness.",
+    "Pure indulgence.",
+    "Quench your thirst, ignite your spirit.",
+    "Awaken your senses, embrace the moment.",
+    "The taste of faraway lands.",
+    "A taste of home, wherever you are.",
+    "Your daily dose of delight.",
+    "Your moment of serenity.",
+    "The perfect pick-me-up.",
+    "The perfect way to unwind.",
+    "Taste the difference.",
+    "Experience the difference.",
+    "A refreshing escape.",
+    "A delightful escape.",
+    "The taste of tradition, the spirit of adventure.",
+    "The warmth of home, the joy of discovery.",
+    "Your passport to flavor.",
+    "Your ticket to tranquility.",
+    "Sip, savor, and explore.",
+    "Indulge, relax, and rejuvenate.",
+    "The taste of wanderlust.",
+    "The comfort of home.",
+    "A journey for your taste buds.",
+    "A haven for your senses.",
+    "Your refreshing companion.",
+    "Your delightful escape.",
+    "Taste the world, one sip at a time.",
+    "Embrace the moment, one cup at a time.",
+    "The essence of exploration.",
+    "The comfort of connection.",
+    "Quench your thirst for adventure.",
+    "Savor the moment of peace.",
+    "The taste of discovery.",
+    "The warmth of belonging.",
+    "Your travel companion, your daily delight.",
+    "Your moment of peace, your daily indulgence.",
+    "The spirit of exploration, the comfort of home.",
+    "The joy of discovery, the warmth of connection.",
+    "Sip, savor, and set off on an adventure.",
+    "Indulge, relax, and find your peace.",
+    "A delightful beverage.",
+    "A moment of relaxation.",
+    "The perfect way to start your day.",
+    "The perfect way to end your day.",
+    "A treat for yourself.",
+    "Something to savor.",
+    "A moment of calm.",
+    "A taste of something special.",
+    "A refreshing pick-me-up.",
+    "A comforting drink.",
+    "A taste of adventure.",
+    "A moment of peace.",
+    "A small indulgence.",
+    "A daily ritual.",
+    "A way to connect with others.",
+    "A way to connect with yourself.",
+    "A taste of home.",
+    "A taste of something new.",
+    "A moment to enjoy.",
+    "A moment to remember."
+]</code></pre>
+<h4 class="wp-block-heading">Step 3: Match the Image to the Captions</h4>
+<p>Now, we’ll compare the image features to the text features of all possible captions:</p>
+<pre><code class="language-python"># caption matching (using CLIP text embeddings)
+def match_captions(image_features, captions, clip_model, processor):
+    # 1. get text embeddings for the captions:
+    text_inputs = processor(text=captions, return_tensors="pt", padding=True)
+    with torch.no_grad():
+        text_features = clip_model.get_text_features(**text_inputs)
+
+    # 2. calculate cosine similarity between image and text features:
+    image_features = image_features.detach().cpu().numpy()
+    text_features = text_features.detach().cpu().numpy()
+
+    similarities = cosine_similarity(image_features, text_features)
+
+    # 3. find the best matching captions:
+    best_indices = similarities.argsort(axis=1)[0][::-1]
+    best_captions = [captions[i] for i in best_indices]
+
+    return best_captions, similarities[0][best_indices].tolist()</code></pre>
+<p>Here, we used <strong>cosine similarity</strong> to find how closely the image vector aligns with each caption vector.</p>
+<h4 class="wp-block-heading">Step 4: Wrap It All Together</h4>
+<p>Now, we will write the final function for our multimodal AI model and try it out on an image:</p>
+<pre><code class="language-python"># main function
+def image_captioning(image_path, candidate_captions):
+    inputs, processor = load_and_preprocess_image(image_path)
+    image_features, clip_model = generate_image_embeddings(inputs)
+
+    best_captions, similarities = match_captions(image_features, candidate_captions, clip_model, processor)
+    return best_captions, similarities
+  
+  from sklearn.metrics.pairwise import cosine_similarity
+
+best_captions, similarities = image_captioning("/content/aman.png", candidate_captions)
+
+top_n = min(5, len(best_captions))
+top_best_captions = best_captions[:top_n]
+top_similarities = similarities[:top_n]
+
+print("Top 5 Best Captions:")
+for i, (caption, similarity) in enumerate(zip(top_best_captions, top_similarities)):
+    print(f"{i+1}. {caption} (Similarity: {similarity:.4f})")</code></pre>
+<pre class="wp-block-preformatted"><strong>Top 5 Best Captions:<br/>1. Your moment of peace, your daily indulgence. (Similarity: 0.2538)<br/>2. Embrace the moment, one cup at a time. (Similarity: 0.2515)<br/>3. Taste the world, one sip at a time. (Similarity: 0.2495)<br/>4. Unwind and enjoy. (Similarity: 0.2487)<br/>5. Savor the moment of peace. (Similarity: 0.2486)</strong></pre>
+<p>Here’s the <strong><a href="https://photos.app.goo.gl/jEQ6yJTio3ET15T86">image I used as input</a></strong>. This exact approach can power:</p>
+<ol class="wp-block-list">
+<li><strong>Smart caption generators</strong> for social media platforms</li>
+<li><strong>Image search engines</strong></li>
+<li><strong>Visual product recommenders</strong> in e-commerce</li>
+<li><strong>Automated marketing content creation</strong></li>
+<li><strong>AI agents that “see” and “talk”</strong></li>
+</ol>
+<h3 class="wp-block-heading">Final Words</h3>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="ai-image-generation-using-diffusion-models.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="build-your-first-rag-system-from-scratch.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

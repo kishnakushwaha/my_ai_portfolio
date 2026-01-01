@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feature Engineering Tricks for Time Series Data | Kishna Kushwaha</title>
+    <meta name="description"
+        content="Learn advanced feature engineering techniques for time series forecasting to improve your machine learning models.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header>
+        <div class="container nav-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+
+            <button class="mobile-menu-btn" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../articles.html" class="active">Articles</a></li>
+                <li><a href="../projects/machine_learning.html">Projects</a></li>
+                <li><a href="../index.html#courses">Recommended Resources</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <!-- Top Ad Banner -->
+        <div class="container" style="margin-top:2rem;">
+            <div class="ad-unit ad-leaderboard">
+                <span>Advertisement (Leaderboard)</span>
+            </div>
+        </div>
+
+        <div class="single-article-container">
+            <!-- Left: Main Content -->
+            <div class="article-main">
+                <article class="article-body">
+                    <h1
+                        style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Feature Engineering Tricks for Time Series Data</h1>
+                    <div class="article-meta-small" style="margin-bottom: 2rem;">Dec 18, 2025 • 8 min read</div>
+
+                    <p class="lead" style="font-size: 1.25rem; color: #4B5563; margin-bottom: 2rem;">
+                        Time series forecasting is a critical component of many business applications, from inventory
+                        management to financial trading. While choosing the right model is important, feature
+                        engineering often yields the biggest improvements.
+                    </p>
+
+                    <p>In this article, I'll share some practical feature engineering tricks that I've used to boost
+                        model performance in real-world projects.</p>
+
+                    <!-- In-content Ad -->
+                    <div class="ad-unit ad-in-content">
+                        <span>Advertisement (In-Content)</span>
+                    </div>
+
+                    <h2>1. Time-Based Features</h2>
+                    <p>The simplest features to extract are those derived directly from the timestamp. These help models
+                        capture seasonality and cyclic patterns.</p>
+                    <ul>
+                        <li><strong>Hour of Day:</strong> Crucial for hourly data (e.g., electricity demand).</li>
+                        <li><strong>Day of Week:</strong> Captures weekly cycles (e.g., higher sales on weekends).</li>
+                        <li><strong>Month of Year:</strong> Captures annual seasonality.</li>
+                        <li><strong>Is Weekend / Is Holiday:</strong> Boolean flags that often have strong predictive
+                            power.</li>
+                    </ul>
+
+                    <pre
+                        style="background: #1f2937; color: white; padding: 1.5rem; border-radius: 8px; overflow-x: auto; font-family: 'Fira Code', monospace; font-size: 0.9em;"><code>df['hour'] = df.index.hour
+df['dayofweek'] = df.index.dayofweek
+df['month'] = df.index.month
+df['is_weekend'] = df.index.dayofweek >= 5</code></pre>
+
+                    <h2>2. Lag Features</h2>
+                    <p>Lag features allow the model to look specifically at past values. For instance, the sales value
+                        from exactly one week ago is often a strong predictor of sales today.</p>
+
+                    <blockquote
+                        style="border-left: 4px solid var(--primary-color); padding-left: 1.5rem; font-style: italic; color: #4B5563; background: #F9FAFB; padding: 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0;">
+                        <strong>Tip:</strong> Be careful with data leakage! Ensure you're not using future data to
+                        predict the past.
+                    </blockquote>
+
+                    <p>Experiment with different lag windows (e.g., lag_1, lag_7, lag_30) to see what works best for
+                        your specific temporal dynamics.</p>
+
+                    <h2>3. Rolling Window Statistics</h2>
+                    <p>Rolling means, standard deviations, and max/min values over a window (e.g., last 7 days) smooth
+                        out noise and capture trends.</p>
+
+                    <pre
+                        style="background: #1f2937; color: white; padding: 1.5rem; border-radius: 8px; overflow-x: auto; font-family: 'Fira Code', monospace; font-size: 0.9em;"><code>df['rolling_mean_7d'] = df['value'].rolling(window=7).mean()
+df['rolling_std_7d'] = df['value'].rolling(window=7).std()</code></pre>
+
+                    <!-- In-content Ad -->
+                    <div class="ad-unit ad-in-content">
+                        <span>Advertisement (In-Content)</span>
+                    </div>
+
+                    <h2>Conclusion</h2>
+                    <p>Feature engineering is an art as much as a science. By creatively extracting signals from time
+                        stamps and past values, you can significantly outperform complex models trained on raw data
+                        alone.</p>
+                </article>
+
+                <!-- Navigation Bottom -->
+                <div
+                    style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+                    <a href="#" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">&larr;
+                        Previous Article</a>
+                    <a href="../articles.html"
+                        style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+                    <a href="#" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article &rarr;</a>
+                </div>
+            </div>
+
+            <!-- Right: Sticky Sidebar -->
+            <aside class="sidebar-area">
+                <div class="sticky-sidebar-content">
+
+                    <!-- Sidebar Ad -->
+                    <div class="ad-unit ad-sidebar-vertical">
+                        <span>Advertisement (Vertical)</span>
+                    </div>
+
+                    <!-- Popular Posts -->
+                    <div class="sidebar-widget">
+                        <h3 class="widget-title">Popular Articles</h3>
+                        <ul class="popular-posts-list">
+                            <li><a href="#">Building AI Agents with LangChain</a></li>
+                            <li><a href="#">Optimizing PyTorch Loops</a></li>
+                            <li><a href="#">Data Structures for ML Engineers</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Kishna Kushwaha. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="go-top-btn" aria-label="Go to top"><i class="fas fa-arrow-up"></i></a>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+
+</html>

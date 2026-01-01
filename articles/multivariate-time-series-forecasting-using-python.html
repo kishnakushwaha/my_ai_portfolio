@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Multivariate Time Series Forecasting using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Multivariate Time Series Forecasting using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 21, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="instagram-reach-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="user-profiling-and-segmentation-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Multivariate Time Series Forecasting involves predicting future values of multiple time-dependent variables using historical data. Unlike <strong><a href="ads-ctr-forecasting-using-python.html" target="">univariate time series forecasting</a></strong>, which predicts a single variable (e.g., sales over time), multivariate forecasting considers several variables simultaneously. So, if you want to learn how to perform time series forecasting for multiple variables, this article is for you. In this article, I’ll take you through the task of Multivariate Time Series Forecasting using Python.</p>
+<h2 class="wp-block-heading">Multivariate Time Series Forecasting: Process We Can Follow</h2>
+<p>Multivariate Time Series Forecasting is preferable when the variables may have dependencies or interactions with one another. The goal is to capture these interdependencies to make accurate predictions for each variable over a future time period. Below is the process we can follow for the task of Multivariate Time Series Forecasting:</p>
+<ol class="wp-block-list">
+<li>Determine which variables are relevant to the forecast. Besides the target variable you want to predict, identify other variables that might influence it.</li>
+<li>Collect historical data for all variables identified. This data should cover a sufficient time period to capture seasonal patterns, trends, and any cyclical behaviour.</li>
+<li>Handle missing values, outliers, and anomalies in the data. It might involve imputation, data smoothing, or anomaly detection techniques.</li>
+<li>Use plots and charts to understand relationships between variables, identify trends, and detect seasonality or cyclic patterns.</li>
+<li>Select and use forecasting models suitable for multivariate time series data. Options include Vector Auto Regression (VAR), State Space Models (like Kalman Filters), and machine learning approaches such as LSTM (Long Short-Term Memory) networks.</li>
+</ol>
+<p>So, to get started with Multivariate Time Series Forecasting, we need an appropriate dataset. I found an ideal dataset for this task. You can download it from <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">here</a></strong>.</p>
+<h2 class="wp-block-heading">Multivariate Time Series Forecasting using Python</h2>
+<p>Now, let’s get started with the task of Multivariate Time Series Forecasting by importing the necessary Python libraries and the <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+
+stocks_data = pd.read_csv("stocks.csv")
+
+print(stocks_data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>  Ticker        Date        Open        High         Low       Close  \<br/>0   AAPL  2023-02-07  150.639999  155.229996  150.639999  154.649994   <br/>1   AAPL  2023-02-08  153.880005  154.580002  151.169998  151.919998   <br/>2   AAPL  2023-02-09  153.779999  154.330002  150.419998  150.869995   <br/>3   AAPL  2023-02-10  149.460007  151.339996  149.220001  151.009995   <br/>4   AAPL  2023-02-13  150.949997  154.259995  150.919998  153.850006   <br/><br/>    Adj Close    Volume  <br/>0  154.414230  83322600  <br/>1  151.688400  64120100  <br/>2  150.639999  56007100  <br/>3  151.009995  57450700  <br/>4  153.850006  62199000  </strong></pre>
+<p>The dataset consists of the following columns:</p>
+<ul class="wp-block-list">
+<li>Ticker: The stock symbol.</li>
+<li>Date: The date of the trading session.</li>
+<li>Open: The opening price of the stock for the trading session.</li>
+<li>High: The highest price of the stock during the trading session.</li>
+<li>Low: The lowest price of the stock during the trading session.</li>
+<li>Close: The closing price of the stock for the trading session.</li>
+<li>Adj Close: The adjusted closing price of the stock (adjusted for things like dividends and stock splits).</li>
+<li>Volume: The number of shares traded during the trading session.</li>
+</ul>
+<p>Next, I will perform the following tasks for Data Preparation:</p>
+<ul class="wp-block-list">
+<li>Check for missing values in the dataset.</li>
+<li>Convert the Date column to a datetime type for time series analysis.</li>
+<li>Check how many unique stocks (Tickers) are present and their respective data points.</li>
+<li>Resample the data to a consistent time frequency if necessary (e.g., daily, weekly), based on the data’s current granularity and the forecasting goals.</li>
+</ul>
+<p>Let’s proceed with these steps:</p>
+<pre><code class="language-python">stocks_data['Date'] = pd.to_datetime(stocks_data['Date'])
+
+missing_values = stocks_data.isnull().sum()
+
+unique_stocks = stocks_data['Ticker'].value_counts()
+
+print(missing_values)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Ticker       0<br/>Date         0<br/>Open         0<br/>High         0<br/>Low          0<br/>Close        0<br/>Adj Close    0<br/>Volume       0<br/>dtype: int64</strong></pre>
+<pre><code class="language-python">print(unique_stocks)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>AAPL    62<br/>MSFT    62<br/>NFLX    62<br/>GOOG    62<br/>Name: Ticker, dtype: int64</strong></pre>
+<p>There are no missing values in the dataset, which is great. The dataset contains data for four unique stocks: Apple (AAPL), Microsoft (MSFT), Netflix (NFLX), and Google (GOOG), each with 62 data points.</p>
+<p>Now, to explore the dataset, let’s:</p>
+<ol class="wp-block-list">
+<li>Check the time range of the dataset.</li>
+<li>Visualize the closing price trends for each stock.</li>
+</ol>
+<p>It will give us a better understanding of the dataset’s characteristics, such as trends and seasonality. Let’s start by checking the time range:</p>
+<pre><code class="language-python">time_range = stocks_data['Date'].min(), stocks_data['Date'].max()
+print(time_range)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>(Timestamp('2023-02-07 00:00:00'), Timestamp('2023-05-05 00:00:00'))</strong></pre>
+<p>The dataset covers the time range from February 7, 2023, to May 5, 2023, which is approximately 3 months. Given this relatively short time frame, we’ll focus on visualizing the closing price trends to understand the data better. Now, let’s plot the closing price trends for each of the four stocks:</p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+
+plt.style.use('seaborn-darkgrid')
+
+fig, ax = plt.subplots(figsize=(14, 8))
+
+for ticker in unique_stocks.index:
+    subset = stocks_data[stocks_data['Ticker'] == ticker]
+    ax.plot(subset['Date'], subset['Close'], label=ticker)
+
+ax.set_title('Closing Price Trends for AAPL, MSFT, NFLX, GOOG')
+ax.set_xlabel('Date')
+ax.set_ylabel('Closing Price (USD)')
+ax.legend()
+
+plt.xticks(rotation=45)
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="closing prices of all stock prices" class="wp-image-22874" data-attachment-id="22874" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="multivariate-time-series-1" data-orig-size="1152,741" data-recalc-dims="1" decoding="async" height="659" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/multivariate-time-series-1.png" style="width:685px;height:auto" width="1024"/></figure>
+<p>The above plot shows the closing price trends for Apple (AAPL), Microsoft (MSFT), Netflix (NFLX), and Google (GOOG) over the three months from February 2023 to May 2023. Each stock exhibits its pattern of fluctuations over this time.</p>
+<h4 class="wp-block-heading">Model Selection and Data Preparation</h4>
+<p>Moving on to model selection for forecasting, given the multivariate nature of our data, a Vector AutoRegression (VAR) model could be a suitable choice. VAR models can capture the linear interdependencies among multiple time series, which makes them a good fit for forecasting the prices of several stocks simultaneously.</p>
+<p>Before we proceed with VAR modelling, it’s important to ensure that the time series data for each stock is stationary, as VAR models require stationarity. Stationarity means the statistical properties of the series (mean, variance) do not change over time. Let’s perform the following steps:</p>
+<ol class="wp-block-list">
+<li>Use the Augmented Dickey-Fuller (ADF) test for each stock’s closing price.</li>
+<li>Depending on the ADF test results, we may need to transform the data (e.g., by differencing) to achieve stationarity.</li>
+<li>Train the VAR model and forecast the future values.</li>
+</ol>
+<p>We’ll start with the ADF test for stationarity. Let’s do this for each stock’s closing price:</p>
+<pre><code class="language-python">from statsmodels.tsa.stattools import adfuller
+
+# function to perform Augmented Dickey-Fuller test
+def adf_test(series, title=''):
+    print(f'ADF Test on "{title}"')
+    result = adfuller(series, autolag='AIC')  # ADF test
+    labels = ['ADF Test Statistic', 'p-value', '#Lags Used', 'Number of Observations Used']
+    out = pd.Series(result[0:4], index=labels)
+
+    for key, value in result[4].items():
+        out[f'Critical Value ({key})'] = value
+    print(out.to_string()) 
+    print('\n')
+
+# perform ADF test on the 'Close' price of each stock
+for ticker in unique_stocks.index:
+    series = stocks_data[stocks_data['Ticker'] == ticker]['Close']
+    adf_test(series, title=ticker)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>ADF Test on "AAPL"<br/>ADF Test Statistic             -0.291693<br/>p-value                         0.926673<br/>#Lags Used                      0.000000<br/>Number of Observations Used    61.000000<br/>Critical Value (1%)            -3.542413<br/>Critical Value (5%)            -2.910236<br/>Critical Value (10%)           -2.592745<br/><br/><br/>ADF Test on "MSFT"<br/>ADF Test Statistic             -0.149807<br/>p-value                         0.944246<br/>#Lags Used                      0.000000<br/>Number of Observations Used    61.000000<br/>Critical Value (1%)            -3.542413<br/>Critical Value (5%)            -2.910236<br/>Critical Value (10%)           -2.592745<br/><br/><br/>ADF Test on "NFLX"<br/>ADF Test Statistic             -2.150926<br/>p-value                         0.224536<br/>#Lags Used                      0.000000<br/>Number of Observations Used    61.000000<br/>Critical Value (1%)            -3.542413<br/>Critical Value (5%)            -2.910236<br/>Critical Value (10%)           -2.592745<br/><br/><br/>ADF Test on "GOOG"<br/>ADF Test Statistic             -1.431504<br/>p-value                         0.567083<br/>#Lags Used                      0.000000<br/>Number of Observations Used    61.000000<br/>Critical Value (1%)            -3.542413<br/>Critical Value (5%)            -2.910236<br/>Critical Value (10%)           -2.592745<br/><br/></strong></pre>
+<p>The Augmented Dickey-Fuller (ADF) test results for each stock’s closing price indicate:</p>
+<ul class="wp-block-list">
+<li><strong>AAPL</strong>: The p-value is 0.927, suggesting we failed to reject the null hypothesis, and the series is non-stationary.</li>
+<li><strong>MSFT</strong>: With a p-value of 0.944, this series is also non-stationary.</li>
+<li><strong>NFLX</strong>: The p-value is 0.225, indicating non-stationarity.</li>
+<li><strong>GOOG</strong>: The p-value is 0.567, again indicating non-stationarity.</li>
+</ul>
+<p>Since all series are non-stationary, we need to make them stationary before modelling. One common approach is to difference the series, which typically means to transform the data to represent the change from one period to the next rather than the absolute values.</p>
+<p>Let’s make the series stationary by differencing the closing prices of each stock and then re-testing for stationarity:</p>
+<pre><code class="language-python"># differencing the 'Close' price of each stock to make the series stationary
+stocks_data['Diff_Close'] = stocks_data.groupby('Ticker')['Close'].transform(lambda x: x.diff())
+
+for ticker in unique_stocks.index:
+    series = stocks_data[stocks_data['Ticker'] == ticker]['Diff_Close'].dropna()
+    adf_test(series, title=f"{ticker} - Differenced")</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>ADF Test on "AAPL - Differenced"<br/>ADF Test Statistic             -5.238104<br/>p-value                         0.000007<br/>#Lags Used                      4.000000<br/>Number of Observations Used    56.000000<br/>Critical Value (1%)            -3.552928<br/>Critical Value (5%)            -2.914731<br/>Critical Value (10%)           -2.595137<br/><br/><br/>ADF Test on "MSFT - Differenced"<br/>ADF Test Statistic            -5.895024e+00<br/>p-value                        2.864876e-07<br/>#Lags Used                     1.000000e+00<br/>Number of Observations Used    5.900000e+01<br/>Critical Value (1%)           -3.546395e+00<br/>Critical Value (5%)           -2.911939e+00<br/>Critical Value (10%)          -2.593652e+00<br/><br/><br/>ADF Test on "NFLX - Differenced"<br/>ADF Test Statistic            -8.022480e+00<br/>p-value                        2.058613e-12<br/>#Lags Used                     0.000000e+00<br/>Number of Observations Used    6.000000e+01<br/>Critical Value (1%)           -3.544369e+00<br/>Critical Value (5%)           -2.911073e+00<br/>Critical Value (10%)          -2.593190e+00<br/><br/><br/>ADF Test on "GOOG - Differenced"<br/>ADF Test Statistic            -7.122093e+00<br/>p-value                        3.699885e-10<br/>#Lags Used                     0.000000e+00<br/>Number of Observations Used    6.000000e+01<br/>Critical Value (1%)           -3.544369e+00<br/>Critical Value (5%)           -2.911073e+00<br/>Critical Value (10%)          -2.593190e+00<br/><br/></strong></pre>
+<p>After differencing the closing prices, the Augmented Dickey-Fuller (ADF) test results for each differenced series are:</p>
+<ul class="wp-block-list">
+<li><strong>AAPL – Differenced</strong>: The p-value is significantly less than 0.05, indicating that we can reject the null hypothesis. The series is stationary.</li>
+<li><strong>MSFT – Differenced</strong>: Similarly, the p-value is significantly low, confirming stationarity.</li>
+<li><strong>NFLX – Differenced</strong>: With a very low p-value, this series is also stationary.</li>
+<li><strong>GOOG – Differenced</strong>: This series is stationary as well, indicated by a very low p-value.</li>
+</ul>
+<p>All differenced series are now stationary, which makes them suitable for VAR modelling for Multivariate Time Series Forecasting.</p>
+<h4 class="wp-block-heading">Model Training</h4>
+<p>Since we’re working with a relatively small dataset and a short time frame, we’ll proceed with training a VAR model on the entire dataset:</p>
+<pre><code class="language-python">from statsmodels.tsa.vector_ar.var_model import VAR
+
+# prepare the dataset for VAR model
+var_data = stocks_data.pivot(index='Date', columns='Ticker', values='Diff_Close').dropna()
+
+model = VAR(var_data)
+model_fitted = model.fit(ic='aic')
+
+forecast_steps = 5
+
+forecasted_values = model_fitted.forecast(var_data.values[-model_fitted.k_ar:], steps=forecast_steps)
+
+forecasted_df = pd.DataFrame(forecasted_values, index=pd.date_range(start=var_data.index[-1] + pd.Timedelta(days=1), periods=forecast_steps, freq='D'), columns=var_data.columns)
+
+for column in forecasted_df.columns:
+    forecasted_df[column] = (stocks_data.groupby('Ticker')['Close'].last()[column] + forecasted_df[column].cumsum())
+
+print(forecasted_df)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Ticker            AAPL        GOOG        MSFT        NFLX<br/>2023-05-06  174.369001  113.624024  320.179608  327.604320<br/>2023-05-07  169.684437  104.915080  318.416783  342.704109<br/>2023-05-08  168.190894  107.828473  329.210732  367.542312<br/>2023-05-09  160.836027   99.287041  326.849012  348.088074<br/>2023-05-10  167.645928  101.392914  317.986680  387.059442</strong></pre>
+<p>The forecasted closing prices for each stock over the next 5 days have been successfully calculated. These forecasts reverse the differencing to present the expected closing prices in their original scale. To wrap up, we’ll visualize the historical closing prices along with the forecasted prices for each stock on a single graph. This visualization will help us understand the forecast in the context of recent trends:</p>
+<pre><code class="language-python">fig, ax = plt.subplots(figsize=(14, 8))
+
+# plot historical closing prices for each stock
+for ticker in unique_stocks.index:
+    historical_data = stocks_data[stocks_data['Ticker'] == ticker]
+    ax.plot(historical_data['Date'], historical_data['Close'], label=ticker)
+
+# plot the forecasted closing prices
+for column in forecasted_df.columns:
+    ax.plot(forecasted_df.index, forecasted_df[column], label=f'{column} Forecast', linestyle='--')
+
+ax.set_title('Historical and Forecasted Closing Prices')
+ax.set_xlabel('Date')
+ax.set_ylabel('Closing Price (USD)')
+ax.legend()
+
+plt.xticks(rotation=45)
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Multivariate Time Series Forecasting" class="wp-image-22879" data-attachment-id="22879" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="multivariate-time-series-2" data-orig-size="1152,741" data-recalc-dims="1" decoding="async" height="659" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/multivariate-time-series-2.png" style="width:691px;height:auto" width="1024"/></figure>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, this is how you can perform Multivariate Time Series Forecasting using Python. Multivariate Time Series Forecasting is preferable when the variables may have dependencies or interactions with one another. The goal is to capture these interdependencies to make accurate predictions for each variable over a future time period.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="instagram-reach-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="user-profiling-and-segmentation-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

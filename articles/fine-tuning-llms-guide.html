@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Fine-Tuning LLMs Guide | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Fine-Tuning LLMs Guide</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 18, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="video-chaptering-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="data-augmentation-using-llms.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Fine-tuning <strong><a href="https://play.google.com/store/books/details?id=LCAqEQAAQBAJ">large language models (LLMs)</a></strong> involves adapting a pre-trained model to perform well on a specific task or to reflect a specialized domain of language. Fine-tuning is essential when the model’s general knowledge needs refinement to meet the precision required in a specific field or task. If you want to learn about fine-tuning LLMs, this article is for you. In this article, I’ll take you through a practical guide to fine-tuning LLMs with Python.</p>
+<h2 class="wp-block-heading">Fine-Tuning LLMs Guide</h2>
+<p>Fine-tuning is the process of taking a pre-trained model and further training it on a specialized dataset to adapt it for a specific task. In traditional Machine Learning, training typically starts from scratch with a model initialized with random parameters. The model gradually learns by updating these parameters to minimize errors on the dataset. However, fine-tuning large language models (LLMs) begins with a model that has already learned general language patterns from extensive pre-training on vast, diverse datasets. This gives the model a foundational understanding of language that can be tailored by fine-tuning on a smaller, more focused dataset to capture domain-specific nuances.</p>
+<p>Fine-tuning is ideal when we need a model to perform well in a particular field or when you need the model to generate text that aligns closely with specialized terminology or style (e.g., legal or medical text). Conversely, using LLMs directly without fine-tuning is effective when a task is broad, has a general purpose, or benefits from the diversity of the original pre-training data, such as casual conversation, creative writing, or answering general knowledge questions.</p>
+<p>Fine-tuning requires additional time and resources, so it’s best reserved for tasks where the model’s performance noticeably improves by specializing in a specific domain.</p>
+<h2 class="wp-block-heading">Fine-Tuning LLMs with Python: A Practical Guide</h2>
+<p>Now, let’s understand how to fine-tune LLMs practically using Python. In this guide, I’ll be using a lightweight LLM and a smaller dataset to explain the process of fine-tuning. It will help you understand the fine-tuning process practically on your available computational resources.</p>
+<h4 class="wp-block-heading">Step 1: Installation and Initial Setup</h4>
+<p>Install the necessary libraries and set up the environment:</p>
+<pre class="wp-block-preformatted"><strong>!pip install transformers datasets</strong></pre>
+<p>The transformers library, provided by Hugging Face, contains pre-trained models and tools for building and fine-tuning various Natural Language Processing (NLP) models. The datasets library is used to load popular datasets conveniently, which makes it easy to prepare data for training and fine-tuning models. Run this installation command at the beginning to set up these libraries.</p>
+<h4 class="wp-block-heading">Step 2: Loading and Sampling the Dataset</h4>
+<p>Load a dataset suitable for fine-tuning:</p>
+<pre><code class="language-python">from datasets import load_dataset
+
+# load IMDb dataset and take a small sample
+dataset = load_dataset("imdb", split="train[:1%]")
+print(dataset[0])</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>{'text': 'I rented I AM CURIOUS-YELLOW from my video store because of all the controversy that surrounded it when it was first released in 1967. I also heard that at first it was seized by U.S. customs if it ever tried to enter this country, therefore being a fan of films considered "controversial" I really had to see this for myself.</strong><br/>...<br/><strong>(no pun intended) of Swedish cinema. But really, this film doesn\'t have much of a plot.', 'label': 0}</strong></pre>
+<p>Here, we load the IMDb movie reviews dataset, often used in NLP tasks for sentiment analysis. By specifying <strong>train[:1%]</strong>, we only load 1% of the training set, which is beneficial for quick experimentation and avoids using excessive computational resources. The <strong>print(dataset[0])</strong> command checks that the data is loaded correctly.</p>
+<h4 class="wp-block-heading">Step 3: Data Preprocessing</h4>
+<p>Prepare data by cleaning the text and ensuring consistent formatting:</p>
+<pre><code class="language-python">def preprocess(batch):
+    batch['text'] = [text.replace('\n', ' ') for text in batch['text']]
+    return batch
+
+# apply preprocessing to the dataset
+dataset = dataset.map(preprocess, batched=True)</code></pre>
+<p>In this function, we replaced newline characters in each review with spaces. This step is crucial because some models may not handle newline characters well, especially if trained for single-line inputs.<strong> dataset.map(preprocess, batched=True)</strong> applies this preprocessing function to the entire dataset, batch by batch, which improves efficiency.</p>
+<h4 class="wp-block-heading">Step 4: Initializing the Model and Tokenizer</h4>
+<p>Load a pre-trained model and tokenizer for fine-tuning:</p>
+<pre><code class="language-python">from transformers import AutoTokenizer, AutoModelForCausalLM
+
+model_name = "distilgpt2"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(model_name)
+
+tokenizer.pad_token = tokenizer.eos_token</code></pre>
+<p>Here, we loaded <strong>distilgpt2, a lightweight version of GPT-2</strong>, which is suitable for causal language modelling tasks. <strong>AutoTokenizer and AutoModelForCausalLM</strong> automatically download and set up the tokenizer and model architecture for the specified model. Setting the <strong>pad_token to eos_token</strong> ensures consistent padding in sequences, which is necessary for batch processing.</p>
+<h4 class="wp-block-heading">Step 5: Tokenizing the Data</h4>
+<p>Convert text into tokens the model can understand:</p>
+<pre><code class="language-python">def tokenize_function(examples):
+    tokenized = tokenizer(examples['text'], padding="max_length", truncation=True, max_length=128)
+    tokenized['labels'] = tokenized['input_ids'].copy()  # set labels to be the same as input_ids
+    return tokenized
+
+tokenized_data = dataset.map(tokenize_function, batched=True)</code></pre>
+<p>This function tokenizes each text input by converting it into integer IDs that the model can process. Using <strong>padding= “max_length”</strong> and <strong>truncation=True;</strong> ensures each tokenized sequence has a fixed length of 128, which avoids model memory overflow. Setting labels as a copy of<strong> input_ids</strong> prepares the dataset for language modelling by ensuring the model learns to predict the next word in a sequence.</p>
+<h4 class="wp-block-heading">Step 6: Configuring Training Parameters</h4>
+<p>The next step in the fine-tuning process is to set up hyperparameters for model training:</p>
+<pre><code class="language-python">from transformers import TrainingArguments
+
+training_args = TrainingArguments(
+    output_dir="./results",
+    evaluation_strategy="epoch",
+    per_device_train_batch_size=4,
+    per_device_eval_batch_size=4,
+    num_train_epochs=1,
+    logging_dir='./logs',
+    logging_steps=10,
+    save_total_limit=1
+)</code></pre>
+<p>The <strong>TrainingArguments</strong> class is used to define the hyperparameters and settings for training. Key parameters include:</p>
+<ul class="wp-block-list">
+<li><strong>output_dir:</strong> Directory to save model checkpoints.</li>
+<li><strong>evaluation_strategy= “epoch”:</strong> Evaluate the model at the end of each epoch.</li>
+<li><strong>per_device_train_batch_size and per_device_eval_batch_size:</strong> Number of samples processed per device in each batch during training and evaluation, respectively.</li>
+<li><strong>num_train_epochs=1:</strong> Train the model for a single epoch.</li>
+<li><strong>logging_steps:</strong> How often to log training information.</li>
+<li><strong>save_total_limit=1:</strong> Limits the saved checkpoints to avoid storage overload.</li>
+</ul>
+<h4 class="wp-block-heading">Step 7: Splitting the Dataset</h4>
+<p>Now, divide the dataset into training and evaluation sets:</p>
+<pre><code class="language-python">train_data = tokenized_data.shuffle().select(range(int(0.8 * len(tokenized_data))))
+eval_data = tokenized_data.shuffle().select(range(int(0.8 * len(tokenized_data)), len(tokenized_data)))</code></pre>
+<p>Here, we randomly shuffle the dataset and then split it into 80% training data and 20% evaluation data. This ensures that the model has enough data to learn from and also allows for a validation set to assess the model’s performance.</p>
+<h4 class="wp-block-heading">Step 8: Setting Up the Trainer &amp; Fine-Tuning the Model</h4>
+<p>Now, the next step in the process of fine-tuning LLMs is to initialize and configure the training process for fine-tuning:</p>
+<pre><code class="language-python">from transformers import Trainer
+trainer = Trainer(
+    model=model,
+    args=training_args,
+    train_dataset=train_data,
+    eval_dataset=eval_data
+)</code></pre>
+<p>The <strong>Trainer</strong> class in <strong>transformers</strong> simplifies the training process by automating tasks like gradient updates and model evaluation. It uses<strong> training_args</strong> for hyperparameters and takes the <strong>train_data and eval_data</strong> datasets to structure the training and validation process.</p>
+<p>Now, this is the fine-tuning step. Start training the model on the custom dataset:</p>
+<pre><code class="language-python">trainer.train()</code></pre>
+<p>This command initiates the fine-tuning process. The<strong> train()</strong> function performs multiple forward and backward passes through the data, which updates the model’s weights to minimize prediction errors based on the IMDb dataset. Fine-tuning will allow the pre-trained distilgpt2 model to adjust to the specific language and style of movie reviews.</p>
+<h4 class="wp-block-heading">Step 9: Save &amp; Test the Fine-tuned Model</h4>
+<p>Save the model and tokenizer for future use:</p>
+<pre><code class="language-python">model.save_pretrained("./fine_tuned_model")
+tokenizer.save_pretrained("./fine_tuned_model")</code></pre>
+<p>Once training is completed, saving the model ensures that the fine-tuned parameters can be reused without re-running the entire process. The save_pretrained function saves both the model weights and the tokenizer configuration to a directory.</p>
+<p>Now, let’s generate text based on a prompt to evaluate the model:</p>
+<pre><code class="language-python">prompt = "The script"
+inputs = tokenizer(prompt, return_tensors="pt")
+
+output = model.generate(inputs['input_ids'], max_length=15)
+print(tokenizer.decode(output[0], skip_special_tokens=True))</code></pre>
+<pre class="wp-block-preformatted">The script is a bit too long, but it's a good one.</pre>
+<p>In this final section, we provide a sample prompt (“The script”) to test the model’s generative capabilities. The <strong>generate()</strong> function creates a new text sequence by sampling from the model’s learned distribution. By decoding and printing the output, you can observe how well the fine-tuned model generates text that aligns with the IMDb dataset.</p>
+<p>So, this is how we can fine-tune LLMs. Now, use this knowledge to solve a real-world problem like Code Generation by fine-tuning an LLM on real-world code files from GitHub. <strong><a href="code-generation-model-using-llms.html" rel="noreferrer noopener" target="">Here’s an example</a></strong>.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="video-chaptering-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="data-augmentation-using-llms.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Food Delivery Time Prediction using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Food Delivery Time Prediction using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 25, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="classification-on-imbalanced-data-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="anomaly-detection-in-transactions-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Food Delivery services like <strong><a href="here-s-how-zomato-uses-data-science.html" target="">Zomato</a></strong> and Swiggy need to show the accurate time it will take to deliver your order to keep transparency with their customers. These companies use <strong><a href="machine-learning-roadmap.html" target="">Machine Learning</a></strong> algorithms to predict the food delivery time based on how much time the delivery partners took for the same distance in the past. So, if you want to learn how to use Machine Learning for food delivery time prediction, this article is for you. This article will take you through food delivery time prediction with Machine Learning using Python.</p>
+<h2 class="wp-block-heading">Food Delivery Time Prediction</h2>
+<p>To predict the food delivery time in real-time, we need to calculate the distance between the food preparation point and the point of food consumption. After finding the distance between the restaurant and the delivery locations, we need to find relationships between the time taken by delivery partners to deliver the food in the past for the same distance.</p>
+<p>So, for this task, we need a dataset containing data about the time taken by delivery partners to deliver food from the restaurant to the delivery location. I found an ideal dataset with all the features for this task. You can download the dataset from <strong><a href="https://statso.io/food-delivery-time-prediction-case-study/" rel="noreferrer noopener" target="_blank">here</a></strong>.</p>
+<p>In the section below, I will take you through the task of Food Delivery Time Prediction with Machine Learning using Python.</p>
+<h2 class="wp-block-heading">Food Delivery Time Prediction using Python</h2>
+<p>I will start the task of food delivery time prediction by importing the necessary Python libraries and the <strong><a href="https://statso.io/food-delivery-time-prediction-case-study/" rel="noreferrer noopener" target="_blank">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+import plotly.express as px
+
+data = pd.read_csv("deliverytime.txt")
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>     ID Delivery_person_ID  Delivery_person_Age  Delivery_person_Ratings  \
+0  4607     INDORES13DEL02                   37                      4.9   
+1  B379     BANGRES18DEL02                   34                      4.5   
+2  5D6D     BANGRES19DEL01                   23                      4.4   
+3  7A6A    COIMBRES13DEL02                   38                      4.7   
+4  70A2     CHENRES12DEL01                   32                      4.6   
+
+   Restaurant_latitude  Restaurant_longitude  Delivery_location_latitude  \
+0            22.745049             75.892471                   22.765049   
+1            12.913041             77.683237                   13.043041   
+2            12.914264             77.678400                   12.924264   
+3            11.003669             76.976494                   11.053669   
+4            12.972793             80.249982                   13.012793   
+
+   Delivery_location_longitude Type_of_order Type_of_vehicle  Time_taken(min)  
+0                    75.912471        Snack      motorcycle                24  
+1                    77.813237        Snack         scooter                33  
+2                    77.688400       Drinks      motorcycle                26  
+3                    77.026494       Buffet      motorcycle                21  
+4                    80.289982        Snack         scooter                30</strong></pre>
+<p>Let’s have a look at the column insights before moving forward:</p>
+<pre><code class="language-python">data.info()</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 45593 entries, 0 to 45592
+Data columns (total 11 columns):
+ #   Column                       Non-Null Count  Dtype  
+---  ------                       --------------  -----  
+ 0   ID                           45593 non-null  object 
+ 1   Delivery_person_ID           45593 non-null  object 
+ 2   Delivery_person_Age          45593 non-null  int64  
+ 3   Delivery_person_Ratings      45593 non-null  float64
+ 4   Restaurant_latitude          45593 non-null  float64
+ 5   Restaurant_longitude         45593 non-null  float64
+ 6   Delivery_location_latitude   45593 non-null  float64
+ 7   Delivery_location_longitude  45593 non-null  float64
+ 8   Type_of_order                45593 non-null  object 
+ 9   Type_of_vehicle              45593 non-null  object 
+ 10  Time_taken(min)              45593 non-null  int64  
+dtypes: float64(5), int64(2), object(4)
+memory usage: 3.8+ MB</strong></pre>
+<p>Now let’s have a look at whether this dataset contains any null values or not:</p>
+<pre><code class="language-python">data.isnull().sum()</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>ID                             0
+Delivery_person_ID             0
+Delivery_person_Age            0
+Delivery_person_Ratings        0
+Restaurant_latitude            0
+Restaurant_longitude           0
+Delivery_location_latitude     0
+Delivery_location_longitude    0
+Type_of_order                  0
+Type_of_vehicle                0
+Time_taken(min)                0
+dtype: int64</strong></pre>
+<p>The dataset does not have any null values. Let’s move further!</p>
+<h4 class="wp-block-heading">Calculating Distance Between Two Latitudes and Longitudes</h4>
+<p>The dataset doesn’t have any feature that shows the difference between the restaurant and the delivery location. All we have are the latitude and longitude points of the restaurant and the delivery location. We can use the <strong><a href="https://en.wikipedia.org/wiki/Haversine_formula" rel="noreferrer noopener" target="_blank">haversine formula</a></strong> to calculate the distance between two locations based on their latitudes and longitudes.</p>
+<p>Below is how we can find the distance between the restaurant and the delivery location based on their latitudes and longitudes by using the haversine formula:</p>
+<pre><code class="language-python"># Set the earth's radius (in kilometers)
+R = 6371
+
+# Convert degrees to radians
+def deg_to_rad(degrees):
+    return degrees * (np.pi/180)
+
+# Function to calculate the distance between two points using the haversine formula
+def distcalculate(lat1, lon1, lat2, lon2):
+    d_lat = deg_to_rad(lat2-lat1)
+    d_lon = deg_to_rad(lon2-lon1)
+    a = np.sin(d_lat/2)**2 + np.cos(deg_to_rad(lat1)) * np.cos(deg_to_rad(lat2)) * np.sin(d_lon/2)**2
+    c = 2 * np.arctan2(np.sqrt(a), np.sqrt(1-a))
+    return R * c
+  
+# Calculate the distance between each pair of points
+data['distance'] = np.nan
+
+for i in range(len(data)):
+    data.loc[i, 'distance'] = distcalculate(data.loc[i, 'Restaurant_latitude'], 
+                                        data.loc[i, 'Restaurant_longitude'], 
+                                        data.loc[i, 'Delivery_location_latitude'], 
+                                        data.loc[i, 'Delivery_location_longitude'])</code></pre>
+<p>We have now calculated the distance between the restaurant and the delivery location. We have also added a new feature in the dataset as distance. Let’s look at the dataset again:</p>
+<pre><code class="language-python">print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>     ID Delivery_person_ID  Delivery_person_Age  Delivery_person_Ratings  \
+0  4607     INDORES13DEL02                   37                      4.9   
+1  B379     BANGRES18DEL02                   34                      4.5   
+2  5D6D     BANGRES19DEL01                   23                      4.4   
+3  7A6A    COIMBRES13DEL02                   38                      4.7   
+4  70A2     CHENRES12DEL01                   32                      4.6   
+
+   Restaurant_latitude  Restaurant_longitude  Delivery_location_latitude  \
+0            22.745049             75.892471                   22.765049   
+1            12.913041             77.683237                   13.043041   
+2            12.914264             77.678400                   12.924264   
+3            11.003669             76.976494                   11.053669   
+4            12.972793             80.249982                   13.012793   
+
+   Delivery_location_longitude Type_of_order Type_of_vehicle  Time_taken(min)  \
+0                    75.912471        Snack      motorcycle                24   
+1                    77.813237        Snack         scooter                33   
+2                    77.688400       Drinks      motorcycle                26   
+3                    77.026494       Buffet      motorcycle                21   
+4                    80.289982        Snack         scooter                30   
+
+    distance  
+0   3.025149  
+1  20.183530  
+2   1.552758  
+3   7.790401  
+4   6.210138</strong></pre>
+<h4 class="wp-block-heading">Data Exploration</h4>
+<p>Now let’s explore the data to find relationships between the features. I’ll start by looking at the relationship between the distance and time taken to deliver the food:</p>
+<pre><code class="language-python">figure = px.scatter(data_frame = data, 
+                    x="distance",
+                    y="Time_taken(min)", 
+                    size="Time_taken(min)", 
+                    trendline="ols", 
+                    title = "Relationship Between Distance and Time Taken")
+figure.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Relationship Between Distance and Time Taken" class="wp-image-19303" data-attachment-id="19303" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="food-delivery1" data-orig-size="772,450" data-recalc-dims="1" decoding="async" height="450" sizes="(max-width: 772px) 100vw, 772px" src="../assets/datasets/food-delivery1.png" width="772"/></figure>
+<p>There is a consistent relationship between the time taken and the distance travelled to deliver the food. It means that most delivery partners deliver food within 25-30 minutes, regardless of distance.</p>
+<p>Now let’s have a look at the relationship between the time taken to deliver the food and the age of the delivery partner:</p>
+<pre><code class="language-python">figure = px.scatter(data_frame = data, 
+                    x="Delivery_person_Age",
+                    y="Time_taken(min)", 
+                    size="Time_taken(min)", 
+                    color = "distance",
+                    trendline="ols", 
+                    title = "Relationship Between Time Taken and Age")
+figure.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Food delivery time prediction: Relationship Between Time Taken and Age" class="wp-image-19305" data-attachment-id="19305" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="food-delivery2" data-orig-size="788,450" data-recalc-dims="1" decoding="async" height="450" sizes="(max-width: 788px) 100vw, 788px" src="../assets/datasets/food-delivery2.png" width="788"/></figure>
+<p>There is a linear relationship between the time taken to deliver the food and the age of the delivery partner. It means young delivery partners take less time to deliver the food compared to the elder partners.</p>
+<p>Now let’s have a look at the relationship between the time taken to deliver the food and the ratings of the delivery partner:</p>
+<pre><code class="language-python">figure = px.scatter(data_frame = data, 
+                    x="Delivery_person_Ratings",
+                    y="Time_taken(min)", 
+                    size="Time_taken(min)", 
+                    color = "distance",
+                    trendline="ols", 
+                    title = "Relationship Between Time Taken and Ratings")
+figure.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Relationship Between Time Taken and Ratings" class="wp-image-19307" data-attachment-id="19307" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="food-delivery3" data-orig-size="788,450" data-recalc-dims="1" decoding="async" height="450" loading="lazy" sizes="auto, (max-width: 788px) 100vw, 788px" src="../assets/datasets/food-delivery3.png" width="788"/></figure>
+<p>There is an inverse linear relationship between the time taken to deliver the food and the ratings of the delivery partner. It means delivery partners with higher ratings take less time to deliver the food compared to partners with low ratings.</p>
+<p>Now let’s have a look if the type of food ordered by the customer and the type of vehicle used by the delivery partner affects the delivery time or not:</p>
+<pre><code class="language-python">fig = px.box(data, 
+             x="Type_of_vehicle",
+             y="Time_taken(min)", 
+             color="Type_of_order")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="food delivery time prediction: type of food ordered by the customer and the type of vehicle used by the delivery partner" class="wp-image-19309" data-attachment-id="19309" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="food-delivery4" data-orig-size="788,450" data-recalc-dims="1" decoding="async" height="450" loading="lazy" sizes="auto, (max-width: 788px) 100vw, 788px" src="../assets/datasets/food-delivery4.png" width="788"/></figure>
+<p>So there is not much difference between the time taken by delivery partners depending on the vehicle they are driving and the type of food they are delivering.</p>
+<p>So the features that contribute most to the food delivery time based on our analysis are:</p>
+<ul class="wp-block-list">
+<li>age of the delivery partner</li>
+<li>ratings of the delivery partner</li>
+<li>distance between the restaurant and the delivery location</li>
+</ul>
+<p>In the section below, I will take you through how to train a Machine Learning model for food delivery time prediction.</p>
+<h3 class="wp-block-heading">Food Delivery Time Prediction Model</h3>
+<p>Now let’s train a Machine Learning model using an LSTM neural network model for the task of food delivery time prediction:</p>
+<pre><code class="language-python">#splitting data
+from sklearn.model_selection import train_test_split
+x = np.array(data[["Delivery_person_Age", 
+                   "Delivery_person_Ratings", 
+                   "distance"]])
+y = np.array(data[["Time_taken(min)"]])
+xtrain, xtest, ytrain, ytest = train_test_split(x, y, 
+                                                test_size=0.10, 
+                                                random_state=42)
+
+# creating the LSTM neural network model
+from keras.models import Sequential
+from keras.layers import Dense, LSTM
+model = Sequential()
+model.add(LSTM(128, return_sequences=True, input_shape= (xtrain.shape[1], 1)))
+model.add(LSTM(64, return_sequences=False))
+model.add(Dense(25))
+model.add(Dense(1))
+model.summary()</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Model: "sequential"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ lstm (LSTM)                 (None, 3, 128)            66560     
+                                                                 
+ lstm_1 (LSTM)               (None, 64)                49408     
+                                                                 
+ dense (Dense)               (None, 25)                1625      
+                                                                 
+ dense_1 (Dense)             (None, 1)                 26        
+                                                                 
+=================================================================
+Total params: 117,619
+Trainable params: 117,619
+Non-trainable params: 0
+_________________________________________________________________</strong></pre>
+<pre><code class="language-python"># training the model
+model.compile(optimizer='adam', loss='mean_squared_error')
+model.fit(xtrain, ytrain, batch_size=1, epochs=9)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Epoch 1/9
+41033/41033 [==============================] - 410s 10ms/step - loss: 69.7154
+Epoch 2/9
+41033/41033 [==============================] - 405s 10ms/step - loss: 63.6772
+Epoch 3/9
+41033/41033 [==============================] - 404s 10ms/step - loss: 61.4656
+Epoch 4/9
+41033/41033 [==============================] - 406s 10ms/step - loss: 60.5741
+Epoch 5/9
+41033/41033 [==============================] - 401s 10ms/step - loss: 59.7685
+Epoch 6/9
+41033/41033 [==============================] - 401s 10ms/step - loss: 59.3501
+Epoch 7/9
+41033/41033 [==============================] - 397s 10ms/step - loss: 59.3121
+Epoch 8/9
+41033/41033 [==============================] - 402s 10ms/step - loss: 58.6929
+Epoch 9/9
+41033/41033 [==============================] - 399s 10ms/step - loss: 58.6897</strong></pre>
+<p>Now let’s test the performance of our model by giving inputs to predict the food delivery time:</p>
+<pre><code class="language-python">print("Food Delivery Time Prediction")
+a = int(input("Age of Delivery Partner: "))
+b = float(input("Ratings of Previous Deliveries: "))
+c = int(input("Total Distance: "))
+
+features = np.array([[a, b, c]])
+print("Predicted Delivery Time in Minutes = ", model.predict(features))</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Food Delivery Time Prediction
+Age of Delivery Partner: 29
+Ratings of Previous Deliveries: 2.9
+Total Distance: 6
+1/1 [==============================] - 0s 23ms/step
+Predicted Delivery Time in Minutes =  [[41.34929]]
+</strong></pre>
+<p>So this is how you can use Machine Learning for the task of food delivery time prediction using the Python programming language.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>To predict the food delivery time in real time, you need to calculate the distance between the food preparation point and the point of food consumption. After finding the distance between the restaurant and the delivery locations, you need to find relationships between the time taken by delivery partners to deliver the food in the past for the same distance. I hope you liked this article on food delivery time prediction with Machine Learning using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="classification-on-imbalanced-data-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="anomaly-detection-in-transactions-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

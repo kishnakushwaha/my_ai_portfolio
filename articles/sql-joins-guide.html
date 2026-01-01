@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>SQL Joins Guide | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        SQL Joins Guide</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 19, 2025 • 5 min read</div>
+<p><strong><a href="https://my-ai-portfolio.com/2023/07/19/sql-interview-questions-for-data-science/">SQL</a></strong> joins are essential when combining data from multiple tables in a relational database. It is one of the popular SQL topics asked in Data Science Interviews. So, if you want to learn about SQL joins in detail, this article is for you. In this article, I’ll take you through a guide to SQL joins.</p>
+<h2 class="wp-block-heading">SQL Joins Guide</h2>
+<p>SQL Joins are used to combine rows from two or more tables based on a related column between them. The most common types of SQL joins are:</p>
+<ol class="wp-block-list">
+<li>INNER JOIN</li>
+<li>LEFT JOIN (LEFT OUTER JOIN)</li>
+<li>RIGHT JOIN (RIGHT OUTER JOIN)</li>
+<li>FULL JOIN (FULL OUTER JOIN)</li>
+<li>CROSS JOIN</li>
+</ol>
+<p>Let’s understand all these SQL joins step by step. To understand all these joins, we will be using the tables shown below.</p>
+<figure class="wp-block-table is-style-stripes has-small-font-size"><table><thead><tr><th>EmployeeID</th><th>EmployeeName</th><th>DepartmentID</th></tr></thead><tbody><tr><td>1</td><td>John</td><td>1</td></tr><tr><td>2</td><td>Sarah</td><td>2</td></tr><tr><td>3</td><td>Mike</td><td>1</td></tr><tr><td>4</td><td>Linda</td><td>NULL</td></tr></tbody></table><figcaption class="wp-element-caption"><strong>Table: Employees</strong></figcaption></figure>
+<figure class="wp-block-table is-style-stripes has-small-font-size"><table><thead><tr><th>DepartmentID</th><th>DepartmentName</th></tr></thead><tbody><tr><td>1</td><td>HR</td></tr><tr><td>2</td><td>IT</td></tr><tr><td>3</td><td>Marketing</td></tr></tbody></table><figcaption class="wp-element-caption"><strong>Table: Departments</strong></figcaption></figure>
+<p>Now, let’s go through all types of SQL joins.</p>
+<h4 class="wp-block-heading">INNER JOIN</h4>
+<p>An INNER JOIN returns records that have matching values in both tables.</p>
+<p>Here’s an implementation of INNER JOIN on our example tables:</p>
+<pre><code class="language-sql">SELECT Employees.EmployeeName, Departments.DepartmentName
+FROM Employees
+INNER JOIN Departments
+ON Employees.DepartmentID = Departments.DepartmentID;</code></pre>
+<figure class="wp-block-table is-style-stripes has-small-font-size"><table><thead><tr><th>EmployeeName</th><th>DepartmentName</th></tr></thead><tbody><tr><td>John</td><td>HR</td></tr><tr><td>Sarah</td><td>IT</td></tr><tr><td>Mike</td><td>HR</td></tr></tbody></table></figure>
+<p>Only the rows with matching DepartmentID in both tables are included in the result.</p>
+<h4 class="wp-block-heading">LEFT JOIN (LEFT OUTER JOIN)</h4>
+<p>A LEFT JOIN returns all records from the left table (Employees), and the matched records from the right table (Departments). If there is no match, the result is NULL from the right side.</p>
+<p>Here’s an implementation of LEFT JOIN on our example tables:</p>
+<pre><code class="language-sql">SELECT Employees.EmployeeName, Departments.DepartmentName
+FROM Employees
+LEFT JOIN Departments
+ON Employees.DepartmentID = Departments.DepartmentID;</code></pre>
+<figure class="wp-block-table is-style-stripes has-small-font-size"><table><thead><tr><th>EmployeeName</th><th>DepartmentName</th></tr></thead><tbody><tr><td>John</td><td>HR</td></tr><tr><td>Sarah</td><td>IT</td></tr><tr><td>Mike</td><td>HR</td></tr><tr><td>Linda</td><td>NULL</td></tr></tbody></table></figure>
+<p>All records from the Employees table are returned, and for Linda, there is no corresponding DepartmentID, so DepartmentName is NULL.</p>
+<h4 class="wp-block-heading">RIGHT JOIN (RIGHT OUTER JOIN)</h4>
+<p>A RIGHT JOIN returns all records from the right table (Departments), and the matched records from the left table (Employees). If there is no match, the result is NULL from the left side.</p>
+<p>Here’s an implementation of RIGHT JOIN on our example tables:</p>
+<pre><code class="language-sql">SELECT Employees.EmployeeName, Departments.DepartmentName
+FROM Employees
+RIGHT JOIN Departments
+ON Employees.DepartmentID = Departments.DepartmentID;</code></pre>
+<figure class="wp-block-table is-style-stripes has-small-font-size"><table><thead><tr><th>EmployeeName</th><th>DepartmentName</th></tr></thead><tbody><tr><td>John</td><td>HR</td></tr><tr><td>Sarah</td><td>IT</td></tr><tr><td>Mike</td><td>HR</td></tr><tr><td>NULL</td><td>Marketing</td></tr></tbody></table></figure>
+<p>All records from the Departments table are returned. For the Marketing department, there is no corresponding EmployeeID, so EmployeeName is NULL.</p>
+<h4 class="wp-block-heading">FULL JOIN (FULL OUTER JOIN)</h4>
+<p>A FULL JOIN returns all records when there is a match in either the left or right table. If there is no match, the result is NULL on the side that doesn’t have a match.</p>
+<p>Here’s an implementation of FULL JOIN on our example tables:</p>
+<pre><code class="language-sql">SELECT Employees.EmployeeName, Departments.DepartmentName
+FROM Employees
+FULL OUTER JOIN Departments
+ON Employees.DepartmentID = Departments.DepartmentID;</code></pre>
+<figure class="wp-block-table is-style-stripes has-small-font-size"><table><thead><tr><th>EmployeeName</th><th>DepartmentName</th></tr></thead><tbody><tr><td>John</td><td>HR</td></tr><tr><td>Sarah</td><td>IT</td></tr><tr><td>Mike</td><td>HR</td></tr><tr><td>Linda</td><td>NULL</td></tr><tr><td>NULL</td><td>Marketing</td></tr></tbody></table></figure>
+<p>All records from both tables are returned, with NULL in places where there is no match.</p>
+<h4 class="wp-block-heading">CROSS JOIN</h4>
+<p>A CROSS JOIN returns the Cartesian product of the two tables, i.e., it returns all possible combinations of rows from the two tables.</p>
+<p>Here’s an implementation of CROSS JOIN on our example tables:</p>
+<pre><code class="language-sql">SELECT Employees.EmployeeName, Departments.DepartmentName
+FROM Employees
+CROSS JOIN Departments;</code></pre>
+<figure class="wp-block-table is-style-stripes has-small-font-size"><table><thead><tr><th>EmployeeName</th><th>DepartmentName</th></tr></thead><tbody><tr><td>John</td><td>HR</td></tr><tr><td>John</td><td>IT</td></tr><tr><td>John</td><td>Marketing</td></tr><tr><td>Sarah</td><td>HR</td></tr><tr><td>Sarah</td><td>IT</td></tr><tr><td>Sarah</td><td>Marketing</td></tr><tr><td>Mike</td><td>HR</td></tr><tr><td>Mike</td><td>IT</td></tr><tr><td>Mike</td><td>Marketing</td></tr><tr><td>Linda</td><td>HR</td></tr><tr><td>Linda</td><td>IT</td></tr><tr><td>Linda</td><td>Marketing</td></tr></tbody></table></figure>
+<p>Every row from Employees is paired with every row from Departments, which results in all possible combinations.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, here’s how SQL joins work:</p>
+<ol class="wp-block-list">
+<li><strong>INNER JOIN</strong>: Only returns rows where there is a match in both tables.</li>
+<li><strong>LEFT JOIN</strong>: Returns all rows from the left table, with matching rows from the right table. If no match, returns NULL.</li>
+<li><strong>RIGHT JOIN</strong>: Returns all rows from the right table, with matching rows from the left table. If no match, returns NULL.</li>
+<li><strong>FULL JOIN</strong>: Returns all rows when there is a match in either table. If no match, returns NULL on the side that doesn’t have a match.</li>
+<li><strong>CROSS JOIN</strong>: Returns all possible combinations of rows between the two tables.</li>
+</ol>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="missing-value-imputation-methods-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="sql-aggregation-functions.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Batting Intent Analysis in IPL 2025 with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Batting Intent Analysis in IPL 2025 with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 03, 2025 • 5 min read</div>
+<p>In modern <strong><a href="t20-world-cup-2024-match-analysis.html" target="">T20 cricket</a></strong>, especially in high-stakes tournaments like the IPL, understanding a batter’s intent is as important as analyzing their strike rate or total runs. Batting intent reflects how aggressively a player approaches different phases of the game. In this article, I’ll perform a detailed Batting Intent Analysis with Python using ball-by-ball data from a recent IPL match between RCB and DC in 2025.</p>
+<h2 class="wp-block-heading">Batting Intent Analysis in IPL 2025: Overview</h2>
+<p>We’ll be using ball-by-ball data from a recent IPL match between RCB and DC, which includes details like over number, batter, bowler, runs scored, and wicket events. This rich, granular dataset allows us to analyze batting patterns across different phases of the game.</p>
+<p>The scope of our analysis is to understand batting intent: how players approach the game in various situations; by examining strike rates, boundary percentages, dot ball rates, and over-wise performance, ultimately uncovering insights that can influence real-time strategy and decision-making.</p>
+<p><strong>You can download the dataset from <a href="../assets/datasets/ipl-data-1.zip">here</a>.</strong></p>
+<h2 class="wp-block-heading">Batting Intent Analysis in IPL 2025 with Python: Getting Started</h2>
+<p>Now, let’s get started with the task of Batting Intent Analysis in IPL 2025 by importing the necessary Python libraries and the <strong><a href="../assets/datasets/ipl-data-1.zip">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+import seaborn as sns
+from math import pi
+
+df = pd.read_csv('/content/ipl_match_1473461_deliveries.csv')
+df_copy = df.copy()
+df</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="IPL 2025 match data" class="wp-image-26467" data-attachment-id="26467" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/image-2.png?fit=1024%2C316&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/image-2.png?fit=300%2C92&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/image-2.png?fit=2330%2C718&amp;ssl=1" data-orig-size="2330,718" data-permalink="https://my-ai-portfolio.com/2025/04/15/batting-intent-analysis-in-ipl-2025-with-python/image-216/" data-recalc-dims="1" decoding="async" height="316" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/image-2.png?resize=1024%2C316&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/image-2.png?resize=1024%2C316&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/image-2.png?resize=300%2C92&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/image-2.png?resize=768%2C237&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/image-2.png?resize=1536%2C473&amp;ssl=1 1536w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/image-2.png?resize=2048%2C631&amp;ssl=1 2048w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/image-2.png?resize=1200%2C370&amp;ssl=1 1200w" width="1024"/></figure>
+<p>Before moving forward, let’s categorize each delivery into match phases: Powerplay, Middle Overs, and Death Overs; based on the over number:</p>
+<pre><code class="language-python"># add game phase based on overs
+def get_phase(over):
+    if over &lt; 6:
+        return 'Powerplay'
+    elif 6 &lt;= over &lt; 15:
+        return 'Middle Overs'
+    else:
+        return 'Death Overs'
+
+df_copy['phase'] = df_copy['over'].apply(get_phase)</code></pre>
+<p>Here, we defined a function<strong> get_phase()</strong> that assigns a phase label based on the over number: overs 0 to 5 as Powerplay, 6 to 14 as Middle Overs, and 15 onwards as Death Overs. Then, we applied this function to the over column to create a new phase column in the dataset.</p>
+<p>Now, let’s calculate each batter’s strike rate across different phases of the game and visualize their batting intent:</p>
+<pre><code class="language-python">import plotly.express as px
+import pandas as pd
+
+batting_intent = (
+    df_copy.groupby(['batter', 'phase'])
+    .agg(balls_faced=('runs_batter', 'count'),
+         total_runs=('runs_batter', 'sum'))
+    .reset_index()
+)
+batting_intent['strike_rate'] = (batting_intent['total_runs'] / batting_intent['balls_faced']) * 100
+
+batting_intent = batting_intent[batting_intent['balls_faced'] &gt;= 5]
+
+batting_intent.sort_values(by=['batter', 'phase'], inplace=True)
+
+fig = px.bar(
+    batting_intent,
+    x='batter',
+    y='strike_rate',
+    color='phase',
+    barmode='group',
+    title='📊 Batting Intent: Strike Rate Across Phases of the Game',
+    labels={'strike_rate': 'Strike Rate', 'batter': 'Batter'},
+    hover_data={
+        'balls_faced': True,
+        'total_runs': True,
+        'strike_rate': ':.2f',
+        'phase': True
+    }
+)
+
+fig.update_layout(
+    xaxis_tickangle=-45,
+    title_font_size=20,
+    legend_title='Game Phase',
+    plot_bgcolor='rgba(0,0,0,0)',
+    paper_bgcolor='white',
+    bargap=0.2,
+    margin=dict(l=40, r=40, t=80, b=100)
+)
+
+fig.update_traces(marker_line_width=1, marker_line_color='black')
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Batting Intent: Strike Rate Across Phases of the Game" class="wp-image-26470" data-attachment-id="26470" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Batting Intent Strike Rate Across Phases of the Game" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Batting-Intent-Strike-Rate-Across-Phases-of-the-Game.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Batting-Intent-Strike-Rate-Across-Phases-of-the-Game.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Batting-Intent-Strike-Rate-Across-Phases-of-the-Game.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2025/04/15/batting-intent-analysis-in-ipl-2025-with-python/batting-intent-strike-rate-across-phases-of-the-game/" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Batting-Intent-Strike-Rate-Across-Phases-of-the-Game.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Batting-Intent-Strike-Rate-Across-Phases-of-the-Game.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Batting-Intent-Strike-Rate-Across-Phases-of-the-Game.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Batting-Intent-Strike-Rate-Across-Phases-of-the-Game.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>T Stubbs and KL Rahul showcased aggressive intent in the Death Overs, with strike rates exceeding 220 and 220, respectively, indicating high-impact finishing roles. PD Salt and AR Patel were strong starters with strike rates over 140 in the Powerplay.</p>
+<h4 class="wp-block-heading">Team-Wise Batting Intent Across Match Phases</h4>
+<p>Now, let’s compare the batting intent of both teams across different match phases using strike rate as a metric:</p>
+<pre><code class="language-python">df_copy['batting_team'] = df_copy['team']
+
+team_phase_intent = (
+    df_copy.groupby(['batting_team', 'phase'])
+    .agg(balls_faced=('runs_batter', 'count'),
+         total_runs=('runs_batter', 'sum'))
+    .reset_index()
+)
+
+team_phase_intent['strike_rate'] = (team_phase_intent['total_runs'] / team_phase_intent['balls_faced']) * 100
+
+fig = px.bar(
+    team_phase_intent,
+    x='phase',
+    y='strike_rate',
+    color='batting_team',
+    barmode='group',
+    title='🏏 Team-wise Batting Intent Across Match Phases',
+    labels={
+        'phase': 'Match Phase',
+        'strike_rate': 'Strike Rate',
+        'batting_team': 'Team'
+    },
+    hover_data={
+        'balls_faced': True,
+        'total_runs': True,
+        'strike_rate': ':.2f'
+    }
+)
+
+fig.update_layout(
+    xaxis_title='Match Phase',
+    yaxis_title='Strike Rate',
+    title_font_size=20,
+    legend_title_text='Batting Team',
+    bargap=0.25,
+    plot_bgcolor='rgba(0,0,0,0)',
+    paper_bgcolor='white',
+    margin=dict(l=40, r=40, t=80, b=60)
+)
+
+fig.update_traces(marker_line_width=1, marker_line_color='black')
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Batting Intent Analysis: Team-wise Batting Intent Across Match Phases" class="wp-image-26473" data-attachment-id="26473" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Team-wise Batting Intent Across Match Phases" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Team-wise-Batting-Intent-Across-Match-Phases.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Team-wise-Batting-Intent-Across-Match-Phases.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Team-wise-Batting-Intent-Across-Match-Phases.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2025/04/15/batting-intent-analysis-in-ipl-2025-with-python/team-wise-batting-intent-across-match-phases/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Team-wise-Batting-Intent-Across-Match-Phases.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Team-wise-Batting-Intent-Across-Match-Phases.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Team-wise-Batting-Intent-Across-Match-Phases.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Team-wise-Batting-Intent-Across-Match-Phases.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The graph reveals a stark contrast in batting intent between Delhi Capitals and Royal Challengers Bengaluru across different match phases. Delhi Capitals showed a clear surge in aggression during the Death Overs, registering a strike rate close to 240, significantly outpacing RCB.</p>
+<p>In contrast, RCB were more aggressive in the Powerplay with a strike rate of around 135, while Delhi started more cautiously. Across Middle Overs, Delhi again maintained a higher tempo than RCB, suggesting better momentum-building and acceleration strategies. Overall, DC dominated the later stages, while RCB leaned on early aggression.</p>
+<h4 class="wp-block-heading">Boundary % vs Dot Ball % per Batter</h4>
+<p>Now, let’s analyze each batter’s ability to rotate strike and score boundaries by calculating their Boundary % and Dot Ball %:</p>
+<pre><code class="language-python">import plotly.graph_objects as go
+
+df_copy['ball_outcome'] = df_copy['runs_batter'].apply(
+    lambda x: 'Dot' if x == 0 else ('Boundary' if x &gt;= 4 else 'Run')
+)
+
+batter_outcome_stats = (
+    df_copy.groupby('batter')
+    .ball_outcome.value_counts(normalize=True)
+    .unstack()
+    .fillna(0) * 100
+).reset_index()
+
+balls_faced = df_copy.groupby('batter').size().reset_index(name='balls_faced')
+batter_outcome_stats = batter_outcome_stats.merge(balls_faced, on='batter')
+batter_outcome_stats = batter_outcome_stats[batter_outcome_stats['balls_faced'] &gt;= 10]
+
+batter_outcome_stats = batter_outcome_stats.sort_values(by='Boundary', ascending=False)
+
+fig = go.Figure()
+
+fig.add_trace(go.Bar(
+    x=batter_outcome_stats['batter'],
+    y=batter_outcome_stats['Boundary'],
+    name='Boundary %',
+    marker_color='green',
+    hovertemplate='%{x}&lt;br&gt;Boundary %: %{y:.2f}&lt;extra&gt;&lt;/extra&gt;'
+))
+
+fig.add_trace(go.Bar(
+    x=batter_outcome_stats['batter'],
+    y=batter_outcome_stats['Dot'],
+    name='Dot Ball %',
+    marker_color='red',
+    hovertemplate='%{x}&lt;br&gt;Dot Ball %: %{y:.2f}&lt;extra&gt;&lt;/extra&gt;'
+))
+
+fig.update_layout(
+    title='🏏 Boundary % vs Dot Ball % per Batter',
+    xaxis_title='Batter',
+    yaxis_title='Percentage (%)',
+    barmode='group',
+    bargap=0.25,
+    plot_bgcolor='rgba(0,0,0,0)',
+    paper_bgcolor='white',
+    legend_title_text='Ball Outcome',
+    xaxis_tickangle=-45,
+    margin=dict(l=40, r=40, t=80, b=100)
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Batting Intent Analysis: Boundary % vs Dot Ball % per Batter" class="wp-image-26475" data-attachment-id="26475" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Boundary % vs Dot Ball % per Batter" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Boundary-vs-Dot-Ball-per-Batter.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Boundary-vs-Dot-Ball-per-Batter.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Boundary-vs-Dot-Ball-per-Batter.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2025/04/15/batting-intent-analysis-in-ipl-2025-with-python/boundary-vs-dot-ball-per-batter/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Boundary-vs-Dot-Ball-per-Batter.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Boundary-vs-Dot-Ball-per-Batter.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Boundary-vs-Dot-Ball-per-Batter.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Boundary-vs-Dot-Ball-per-Batter.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>PD Salt stands out with the most balanced approach: high boundary rate (~39%) and relatively low dot ball %; indicating consistent attacking intent. TH David, despite a strong boundary presence, also has a high dot ball percentage, reflecting a high-risk, high-reward style.</p>
+<p>On the contrary, JM Sharma’s intent appears defensive or ineffective, with a dot ball percentage of over 70% and negligible boundaries. Batters like KL Rahul and V Kohli show moderate boundary rates but also face a significant number of dot balls, suggesting a more conservative or accumulative style of play.</p>
+<h4 class="wp-block-heading">Over-Wise Run Progression of Top 4 Batters</h4>
+<p>Now, let’s track how the top 4 run-scorers progressed throughout the innings by analyzing their over-wise scoring patterns:</p>
+<pre><code class="language-python">top_batters = (
+    df_copy.groupby('batter')['runs_batter']
+    .sum()
+    .sort_values(ascending=False)
+    .head(4)
+    .index.tolist()
+)
+
+batters_progression = df_copy[df_copy['batter'].isin(top_batters)]
+batters_overwise = (
+    batters_progression.groupby(['batter', 'over'])
+    .agg(runs_in_over=('runs_batter', 'sum'))
+    .reset_index()
+)
+
+fig = px.line(
+    batters_overwise,
+    x='over',
+    y='runs_in_over',
+    color='batter',
+    markers=True,
+    title='📈 Over-wise Run Progression of Top 4 Batters',
+    labels={
+        'over': 'Over',
+        'runs_in_over': 'Runs in Over',
+        'batter': 'Batter'
+    },
+    hover_data={
+        'over': True,
+        'runs_in_over': True,
+        'batter': True
+    }
+)
+
+fig.update_layout(
+    xaxis=dict(tickmode='linear'),
+    yaxis_title='Runs Scored in Over',
+    legend_title='Top Batters',
+    title_font_size=20,
+    plot_bgcolor='rgba(0,0,0,0)',
+    paper_bgcolor='white',
+    margin=dict(l=40, r=40, t=80, b=60),
+    hovermode='x unified'
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Over-wise Run Progression of Top 4 Batters" class="wp-image-26478" data-attachment-id="26478" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Over-wise Run Progression of Top 4 Batters" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Over-wise-Run-Progression-of-Top-4-Batters.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Over-wise-Run-Progression-of-Top-4-Batters.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Over-wise-Run-Progression-of-Top-4-Batters.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2025/04/15/batting-intent-analysis-in-ipl-2025-with-python/over-wise-run-progression-of-top-4-batters/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Over-wise-Run-Progression-of-Top-4-Batters.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Over-wise-Run-Progression-of-Top-4-Batters.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Over-wise-Run-Progression-of-Top-4-Batters.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Over-wise-Run-Progression-of-Top-4-Batters.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>PD Salt demonstrated explosive intent upfront, scoring heavily in the first three overs, especially with a 24-run blitz in the 2nd over. KL Rahul adopted a steadier approach, gradually accelerating through the middle overs and peaking with a 22-run over around the 14th. T Stubbs showed late-inning aggression, particularly in overs 14 to 16, aligning with a finisher’s role. TH David made his impact during the death overs (17–19), consistently scoring above 15 runs per over, indicating high-impact finishing intent.</p>
+<p>Overall, each batter’s run pattern reflects their strategic roles in the innings.</p>
+<h4 class="wp-block-heading">Correlating Batting Tempo with Wicket Falls</h4>
+<p>Now, let’s compare how runs and wickets fluctuated over each over to understand momentum shifts during the innings:</p>
+<pre><code class="language-python">wickets_df = df_copy[df_copy['player_out'].notna()]
+wickets_by_over = wickets_df.groupby('over').size().reset_index(name='wickets')
+
+runs_by_over = df_copy.groupby('over')['runs_batter'].sum().reset_index(name='total_runs')
+
+overwise_analysis = pd.merge(runs_by_over, wickets_by_over, on='over', how='left').fillna(0)
+
+fig = go.Figure()
+
+fig.add_trace(go.Bar(
+    x=overwise_analysis['over'],
+    y=overwise_analysis['total_runs'],
+    name='Runs Scored',
+    marker_color='skyblue',
+    hovertemplate='Over %{x}&lt;br&gt;Runs: %{y}&lt;extra&gt;&lt;/extra&gt;'
+))
+
+fig.add_trace(go.Scatter(
+    x=overwise_analysis['over'],
+    y=overwise_analysis['wickets'],
+    name='Wickets',
+    mode='lines+markers',
+    marker=dict(color='red', size=8),
+    line=dict(width=2, color='red'),
+    yaxis='y2',
+    hovertemplate='Over %{x}&lt;br&gt;Wickets: %{y}&lt;extra&gt;&lt;/extra&gt;'
+))
+
+fig.update_layout(
+    title='📉 Over-wise Analysis: Runs vs Wickets',
+    xaxis=dict(title='Over', tickmode='linear'),
+    yaxis=dict(title='Runs Scored'),
+    yaxis2=dict(title='Wickets', overlaying='y', side='right'),
+    legend_title='Metrics',
+    plot_bgcolor='rgba(0,0,0,0)',
+    paper_bgcolor='white',
+    margin=dict(l=40, r=40, t=80, b=60),
+    hovermode='x unified'
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Over-wise Analysis: Runs vs Wickets" class="wp-image-26481" data-attachment-id="26481" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Over-wise Analysis Runs vs Wickets" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Over-wise-Analysis-Runs-vs-Wickets.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Over-wise-Analysis-Runs-vs-Wickets.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Over-wise-Analysis-Runs-vs-Wickets.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2025/04/15/batting-intent-analysis-in-ipl-2025-with-python/over-wise-analysis-runs-vs-wickets/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Over-wise-Analysis-Runs-vs-Wickets.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Over-wise-Analysis-Runs-vs-Wickets.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Over-wise-Analysis-Runs-vs-Wickets.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Over-wise-Analysis-Runs-vs-Wickets.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The early overs (2nd and 3rd) indicate explosive intent, with 35+ runs scored, suggesting aggressive Powerplay batting. However, this high-risk approach also led to early wickets, as seen in the 1st and 4th overs. The middle overs (7–10) show fluctuating intent with moderate scoring and occasional wicket losses, indicating a cautious rebuild phase.</p>
+<p>The batting side regained momentum in the death overs (13–19) with consistent scoring around 16–27 runs per over, despite losing wickets in the 14th and 17th, reflecting strong finishing intent while balancing aggression with risk.</p>
+<h4 class="wp-block-heading">Batter Profiles Based on Match Performance</h4>
+<p>Now, let’s build comprehensive performance profiles for each batter, including their strike rate, average, dot ball %, and boundary %:</p>
+<pre><code class="language-python">batter_stats = (
+    df_copy.groupby('batter')
+    .agg(
+        balls_faced=('runs_batter', 'count'),
+        total_runs=('runs_batter', 'sum'),
+        dismissals=('player_out', lambda x: x.notna().sum())
+    )
+    .reset_index()
+)
+
+outcome_counts = df_copy.groupby(['batter', 'ball_outcome']).size().unstack().fillna(0)
+outcome_counts['dot_percent'] = (outcome_counts['Dot'] / outcome_counts.sum(axis=1)) * 100
+outcome_counts['boundary_percent'] = (outcome_counts['Boundary'] / outcome_counts.sum(axis=1)) * 100
+outcome_counts = outcome_counts[['dot_percent', 'boundary_percent']].reset_index()
+
+batter_profiles = pd.merge(batter_stats, outcome_counts, on='batter')
+batter_profiles['strike_rate'] = (batter_profiles['total_runs'] / batter_profiles['balls_faced']) * 100
+batter_profiles['average'] = batter_profiles.apply(
+    lambda row: row['total_runs'] / row['dismissals'] if row['dismissals'] &gt; 0 else float('inf'), axis=1
+)
+batter_profiles = batter_profiles[batter_profiles['balls_faced'] &gt;= 10]</code></pre>
+<p>Here, we started by calculating basic batting stats: total runs, balls faced, and number of dismissals; for each batter. Then, we break down their outcomes into dot balls and boundaries, computing their percentages relative to total deliveries faced. We merged this with the main stats and calculated the batter’s strike rate and batting average.</p>
+<p>To maintain statistical significance, we only considered batters who faced at least 10 balls. The resulting batter_profiles dataset gives a well-rounded view of each player’s performance and intent, helping us distinguish between aggressive finishers, anchors, and low-impact players.</p>
+<p>So, let’s visualize the performance profiles of the top 4 batters using radar charts to compare strike rate, dot ball %, and boundary %:</p>
+<pre><code class="language-python">from plotly.subplots import make_subplots
+from math import pi, ceil
+
+metrics = ['strike_rate', 'dot_percent', 'boundary_percent']
+top_batters_radar = batter_profiles.sort_values(by='strike_rate', ascending=False).head(4).copy()
+normalized_profiles = top_batters_radar[['batter'] + metrics].copy()
+
+for metric in metrics:
+    max_val = batter_profiles[metric].max()
+    normalized_profiles[metric] = (normalized_profiles[metric] / max_val) * 100
+
+normalized_profiles.reset_index(drop=True, inplace=True)
+
+num_batters = len(normalized_profiles)
+rows = ceil(num_batters / 2)
+cols = 2 if num_batters &gt; 1 else 1
+
+fig = make_subplots(
+    rows=rows, cols=cols,
+    specs=[[{'type': 'polar'}] * cols for _ in range(rows)],
+    subplot_titles=normalized_profiles['batter'].tolist()
+)
+
+for i, row in normalized_profiles.iterrows():
+    r = row[metrics].tolist() + [row[metrics[0]]]
+    theta = metrics + [metrics[0]]
+
+    subplot_row = (i // cols) + 1
+    subplot_col = (i % cols) + 1
+
+    fig.add_trace(
+        go.Scatterpolar(
+            r=r,
+            theta=theta,
+            fill='toself',
+            name=row['batter'],
+            hovertemplate='&lt;b&gt;%{theta}&lt;/b&gt;: %{r:.1f}&lt;extra&gt;&lt;/extra&gt;'
+        ),
+        row=subplot_row, col=subplot_col
+    )
+
+fig.update_layout(
+    title='🔘 Batter Profiles: Radar Chart of Batting Metrics',
+    showlegend=False,
+    height=400 * rows,
+    polar=dict(
+        radialaxis=dict(visible=True, range=[0, 100], showticklabels=False)
+    ),
+    margin=dict(l=40, r=40, t=100, b=50)
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Batter Profiles: Radar Chart of Batting Metrics" class="wp-image-26483" data-attachment-id="26483" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Batter Profiles Radar Chart of Batting Metrics" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Batter-Profiles-Radar-Chart-of-Batting-Metrics.png?fit=855%2C800&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Batter-Profiles-Radar-Chart-of-Batting-Metrics.png?fit=300%2C281&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Batter-Profiles-Radar-Chart-of-Batting-Metrics.png?fit=855%2C800&amp;ssl=1" data-orig-size="855,800" data-permalink="https://my-ai-portfolio.com/2025/04/15/batting-intent-analysis-in-ipl-2025-with-python/batter-profiles-radar-chart-of-batting-metrics/" data-recalc-dims="1" decoding="async" height="800" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Batter-Profiles-Radar-Chart-of-Batting-Metrics.png?resize=855%2C800&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Batter-Profiles-Radar-Chart-of-Batting-Metrics.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Batter-Profiles-Radar-Chart-of-Batting-Metrics.png?resize=300%2C281&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/Batter-Profiles-Radar-Chart-of-Batting-Metrics.png?resize=768%2C719&amp;ssl=1 768w" width="855"/></figure>
+<p>The radar charts offer a quick comparative view of batting intent across PD Salt, KL Rahul, T Stubbs, and TH David. PD Salt showcases the most balanced attacking profile, combining a high strike rate, strong boundary %, and moderate dot ball %.</p>
+<p>KL Rahul, though maintaining a decent strike rate, relies more on boundaries with relatively higher dot ball involvement, indicating a mixed approach. T Stubbs reflects an explosive style with maximum boundary % and minimal dot balls, ideal for finishing roles. On the other hand, TH David shows a high strike rate but also a high dot ball %, indicating sporadic aggression with a risk of inconsistency.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, by examining strike rates, boundary and dot ball percentages, over-wise run patterns, and wicket impacts, we decoded how each player approached different match phases. From aggressive Powerplay openers like PD Salt to high-impact finishers like T Stubbs and TH David, and steady anchors like KL Rahul, the data revealed distinct batting styles.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="ipl-2024-rcb-vs-dc-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="food-delivery-cost-and-profitability-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

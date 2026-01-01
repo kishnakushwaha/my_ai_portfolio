@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Fine-tuning LLMs on Your Own Data | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Fine-tuning LLMs on Your Own Data</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 31, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="fine-tuning-llms-using-lora.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="text-classification-pipeline-with-hugging-face-transformers.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p><strong><a href="5-real-world-llm-project-ideas.html" target="">Large Language Models</a></strong> like BERT, RoBERTa, and GPT have been pretrained on massive text corpora. But when it comes to solving specific tasks, like classifying customer reviews, summarizing legal documents, or tagging support tickets, you’ll want the model to learn from your data. So, in this article, I’ll take you through a complete guide to fine-tuning LLMs on your own data using Hugging Face Transformers.</p>
+<h2 class="wp-block-heading">Step-by-Step Guide to Fine-Tuning LLMs on Your Own Data</h2>
+<p>Before getting started, make sure to install these Python libraries:</p>
+<pre class="wp-block-preformatted"><strong>pip install transformers datasets tensorflow torch</strong></pre>
+<p>Make sure you’re using the latest version of transformers to avoid compatibility errors.</p>
+<h4 class="wp-block-heading">Step 1: Load a Dataset Using TensorFlow Datasets</h4>
+<p>Before diving into model training, it’s essential to load and understand the dataset you’re working with. In this step, we’ll use <strong>TensorFlow Datasets (TFDS)</strong> to load the ag_news_subset dataset, a popular text classification benchmark containing news headlines categorized into four classes (World, Sports, Business, Sci/Tech):</p>
+<pre><code class="language-python">import tensorflow_datasets as tfds
+
+ds, info = tfds.load('ag_news_subset', with_info=True, as_supervised=True)
+
+train_ds, test_ds = ds['train'], ds['test']
+
+for text, label in train_ds.take(1):
+    print("Text:", text.numpy().decode())
+    print("Label:", label.numpy())</code></pre>
+<pre class="wp-block-preformatted"><strong>Text: AMD #39;s new dual-core Opteron chip is designed mainly for corporate computing applications, including databases, Web services, and financial transactions.<br/>Label: 3</strong></pre>
+<p>This dataset is clean, well-structured, and ideal for demonstrating how to fine-tune language models on custom data.</p>
+<h4 class="wp-block-heading">Step 2: Preprocess the Data</h4>
+<p>Now, the next step is to prepare the data for input into our language model. Pretrained models like BERT expect text in a specific tokenized format, where each word or subword is converted into a numerical ID using the <strong>same tokenizer</strong> that was used during the model’s original training.</p>
+<p>This step ensures consistency between how the model was trained and how it will now see your custom data:</p>
+<pre><code class="language-python">from transformers import AutoTokenizer
+
+model_checkpoint = "bert-base-uncased"
+tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
+
+def tokenize_batch(texts, labels):
+    tokens = tokenizer(list(texts), padding='max_length', truncation=True, max_length=128, return_tensors="pt")
+    tokens["labels"] = labels
+    return tokens</code></pre>
+<p>In the code above, we load the tokenizer associated with bert-base-uncased and define a helper function to tokenize a batch of text examples. This function also applies padding and truncation to keep sequence lengths uniform, something crucial for efficient training and batching.</p>
+<p>With the tokenizer ready, our next task is to convert the TensorFlow Datasets (TFDS) format into something that can be directly used by the Hugging Face model, which expects PyTorch-style inputs.</p>
+<p>Since TFDS provides the data as TensorFlow tf.data.Dataset objects, we need to extract the raw text and labels, convert them to NumPy arrays, and then tokenize them using our helper function:</p>
+<pre><code class="language-python">import torch
+
+def tfds_to_torch(dataset):
+    texts, labels = [], []
+    for text, label in tfds.as_numpy(dataset):
+        texts.append(text.decode())
+        labels.append(label)
+    return tokenize_batch(texts, torch.tensor(labels))
+
+train_encodings = tfds_to_torch(train_ds)
+test_encodings = tfds_to_torch(test_ds)</code></pre>
+<p>This step bridges the gap between data loading and model training by transforming our dataset into tokenized tensors, complete with input IDs, attention masks, and labels, all formatted for efficient use with PyTorch and Hugging Face’s Trainer API.</p>
+<h4 class="wp-block-heading">Step 3: Create a PyTorch Dataset</h4>
+<p>At this point, we’ve tokenized our text data and structured it into tensors, but to feed it into a PyTorch training loop or the Hugging Face Trainer, we need to wrap it inside a custom Dataset class. This class acts as a bridge between the raw tokenized data and the model, allowing us to define how batches are loaded during training:</p>
+<pre><code class="language-python">from torch.utils.data import Dataset
+
+class AGNewsDataset(Dataset):
+    def __init__(self, encodings):
+        self.encodings = encodings
+    def __len__(self):
+        return len(self.encodings['input_ids'])
+    def __getitem__(self, idx):
+        return {key: val[idx] for key, val in self.encodings.items()}
+
+train_dataset = AGNewsDataset(train_encodings)
+test_dataset = AGNewsDataset(test_encodings)</code></pre>
+<p>By implementing __len__ and __getitem__, we enable PyTorch to efficiently index, shuffle, and batch the data. The code above creates this custom dataset class and initializes it for both the training and test sets, preparing our data for seamless integration with the training pipeline.</p>
+<h4 class="wp-block-heading">Step 4: Load the Pretrained Model for Classification</h4>
+<p>Now that our dataset is tokenized and wrapped in a PyTorch-compatible format, it’s time to load the pretrained language model that we’ll fine-tune. In this case, we’re using bert-base-uncased, a widely used version of BERT that has been trained on a large corpus of English text.</p>
+<p>Since our task is text classification with four output classes (news categories), we’ll load the model with a classification head on top and specify num_labels=4:</p>
+<pre><code class="language-python">from transformers import AutoModelForSequenceClassification
+
+model = AutoModelForSequenceClassification.from_pretrained(model_checkpoint, num_labels=4)</code></pre>
+<p>This ensures that the model’s final layer is tailored to our specific task. The following code initializes the model architecture and prepares it for training on our custom dataset.</p>
+<h4 class="wp-block-heading">Step 5: Set Up the Training Loop</h4>
+<p>With the model, tokenizer, and datasets ready, the next step is to configure how the training process should run. Instead of manually writing a training loop, we’ll leverage Hugging Face’s Trainer API, which handles everything from optimization to evaluation and logging.</p>
+<p>To do this, we first define TrainingArguments, where we specify essential training parameters like batch size, number of epochs, evaluation strategy, and logging frequency. These settings give us control over the model’s learning behaviour and how often we monitor its progress:</p>
+<pre><code class="language-python">from transformers import TrainingArguments, Trainer
+
+training_args = TrainingArguments(
+    output_dir="./results",
+    do_train=True,
+    do_eval=True,
+    eval_steps=100,  
+    save_steps=100,
+    per_device_train_batch_size=16,
+    per_device_eval_batch_size=16,
+    num_train_epochs=3,
+    logging_dir="./logs",
+    logging_steps=10,
+)
+
+trainer = Trainer(
+    model=model,
+    args=training_args,
+    train_dataset=train_dataset,
+    eval_dataset=test_dataset,
+    tokenizer=tokenizer,
+)</code></pre>
+<p>This prepares everything for a smooth and scalable training process with minimal boilerplate code.</p>
+<h4 class="wp-block-heading">Step 6: Training the Model</h4>
+<p>With everything configured and the model ready, it’s time to kick off the training process. By calling the trainer.train(), we begin fine-tuning the pretrained BERT model on our custom dataset, allowing it to learn patterns specific to our text classification task:</p>
+<pre><code class="language-python">trainer.train()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="fine-tuning llms: output in process" class="wp-image-27275" data-attachment-id="27275" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="1396,732" data-recalc-dims="1" decoding="async" height="537" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/image.png" width="1024"/></figure>
+<p>With the training pipeline complete and the model fine-tuned on our custom dataset, the next important step is to <strong>persist the trained model and tokenizer:</strong></p>
+<pre><code class="language-python">model.save_pretrained("./fine-tuned-bert-agnews")
+tokenizer.save_pretrained("./fine-tuned-bert-agnews")</code></pre>
+<p>This allows us to reuse them without retraining, making it easy to deploy the model for inference, share it with others, or load it back into memory for additional training.</p>
+<h3 class="wp-block-heading">Final Words</h3>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="fine-tuning-llms-using-lora.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="text-classification-pipeline-with-hugging-face-transformers.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

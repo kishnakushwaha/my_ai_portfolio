@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Compare Multiple Machine Learning Models | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Compare Multiple Machine Learning Models</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 23, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="geospatial-clustering-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="consumer-complaint-classification-with-machine-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>The comparison of multiple <a href="machine-learning-projects-using-python.html" rel="noreferrer noopener" target=""><strong>Machine Learning</strong></a> models refers to training, evaluating, and analyzing the performance of different <a href="https://amzn.eu/d/3Bgb8IK" rel="noreferrer noopener" target="_blank"><strong>algorithms</strong></a> on the same dataset to identify which model performs best for a specific predictive task. So, if you want to learn how to train and compare multiple Machine Learning models, this article is for you. In this article, I’ll take you through how to train and compare multiple Machine Learning models for a regression problem using Python.</p>
+<h2 class="wp-block-heading">Compare Multiple Machine Learning Models: Process We Can Follow</h2>
+<p>By comparing multiple models, we aim to select the most effective algorithm that offers the optimal balance of accuracy, complexity, and performance for their specific problem. Below is the process we can follow for the task of comparing multiple Machine Learning models:</p>
+<ol class="wp-block-list">
+<li>Address missing values, remove duplicates, and correct errors in the dataset to ensure the quality of data fed into the models.</li>
+<li>Divide the dataset into training and testing sets, typically using a 70-30% or 80-20% split.</li>
+<li>Select a diverse set of models for comparison. It can include simple linear models, tree-based models, ensemble methods, and more advanced algorithms, depending on the problem’s complexity and data characteristics.</li>
+<li>Fit each selected model to the training data. It involves adjusting the model to learn from the features and the target variable in the training set.</li>
+<li>Use a set of metrics to evaluate each model’s performance on the test set.</li>
+<li>Compare the models based on the evaluation metrics, considering both their performance and computational efficiency.</li>
+</ol>
+<p>I found an ideal dataset for this problem. You can download the dataset from <a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;"><strong>here</strong></a>.</p>
+<h2 class="wp-block-heading">Train and Compare Multiple Machine Learning Models</h2>
+<p>Now, let’s get started with the task of training and comparing multiple Machine Learning models by importing the necessary Python libraries and the <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+data = pd.read_csv('Real_Estate.csv')
+
+# display the first few rows
+data_head = data.head()
+
+print(data_head)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>             Transaction date  House age  Distance to the nearest MRT station  \<br/>0  2012-09-02 16:42:30.519336       13.3                            4082.0150   <br/>1  2012-09-04 22:52:29.919544       35.5                             274.0144   <br/>2  2012-09-05 01:10:52.349449        1.1                            1978.6710   <br/>3  2012-09-05 13:26:01.189083       22.2                            1055.0670   <br/>4  2012-09-06 08:29:47.910523        8.5                             967.4000   <br/><br/>   Number of convenience stores   Latitude   Longitude  \<br/>0                             8  25.007059  121.561694   <br/>1                             2  25.012148  121.546990   <br/>2                            10  25.003850  121.528336   <br/>3                             5  24.962887  121.482178   <br/>4                             6  25.011037  121.479946   <br/><br/>   House price of unit area  <br/>0                  6.488673  <br/>1                 24.970725  <br/>2                 26.694267  <br/>3                 38.091638  <br/>4                 21.654710  </strong></pre>
+<pre><code class="language-python">print(data.info())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>&lt;class 'pandas.core.frame.DataFrame'&gt;<br/>RangeIndex: 414 entries, 0 to 413<br/>Data columns (total 7 columns):<br/> #   Column                               Non-Null Count  Dtype  <br/>---  ------                               --------------  -----  <br/> 0   Transaction date                     414 non-null    object <br/> 1   House age                            414 non-null    float64<br/> 2   Distance to the nearest MRT station  414 non-null    float64<br/> 3   Number of convenience stores         414 non-null    int64  <br/> 4   Latitude                             414 non-null    float64<br/> 5   Longitude                            414 non-null    float64<br/> 6   House price of unit area             414 non-null    float64<br/>dtypes: float64(5), int64(1), object(1)<br/>memory usage: 22.8+ KB<br/>None</strong></pre>
+<p>The dataset consists of 414 entries and 7 columns, with no missing values. Here’s a brief overview of the columns:</p>
+<ul class="wp-block-list">
+<li><strong>Transaction date</strong>: The date of the house sale (object type, which suggests it might need conversion or extraction of useful features like year, month, etc.).</li>
+<li><strong>House age</strong>: The age of the house in years (float).</li>
+<li><strong>Distance to the nearest MRT station</strong>: The distance to the nearest mass rapid transit station in meters (float).</li>
+<li><strong>Number of convenience stores</strong>: The number of convenience stores in the living circle on foot (integer).</li>
+<li><strong>Latitude</strong>: The geographic coordinate that specifies the north-south position (float).</li>
+<li><strong>Longitude</strong>: The geographic coordinate that specifies the east-west position (float).</li>
+<li><strong>House price of unit area</strong>: Price of the house per unit area (float), which is likely our target variable for prediction.</li>
+</ul>
+<p>So, we are solving a regression problem here. In the next steps, we will preprocess the data and select regression models to find the best-performing model for our problem.</p>
+<h4 class="wp-block-heading">Data Preprocessing</h4>
+<p>Let’s start with the preprocessing steps. Below are the steps we will follow to preprocess our data:</p>
+<ol class="wp-block-list">
+<li>Since the transaction date is in a string format, we will convert it into a datetime object. We can then extract features such as the transaction year and month, which might be useful for the model.</li>
+<li>We’ll scale the continuous features to ensure they’re on a similar scale. It is particularly important for models like Support Vector Machines or K-nearest neighbours, which are sensitive to the scale of input features.</li>
+<li>We’ll split the dataset into a training set and a testing set. A common practice is to use 80% of the data for training and 20% for testing.</li>
+</ol>
+<p>Let’s implement these preprocessing steps:</p>
+<pre><code class="language-python">from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+import datetime
+
+# convert "Transaction date" to datetime and extract year and month
+data['Transaction date'] = pd.to_datetime(data['Transaction date'])
+data['Transaction year'] = data['Transaction date'].dt.year
+data['Transaction month'] = data['Transaction date'].dt.month
+
+# drop the original "Transaction date" as we've extracted relevant features
+data = data.drop(columns=['Transaction date'])
+
+# define features and target variable
+X = data.drop('House price of unit area', axis=1)
+y = data['House price of unit area']
+
+# split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# scale the features
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+X_train_scaled.shape</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>(331, 7)</strong></pre>
+<pre><code class="language-python">X_test_scaled.shape</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>(83, 7)</strong></pre>
+<h4 class="wp-block-heading">Model Training and Comparison</h4>
+<p>Now, we’ll proceed with training multiple models and comparing their performance. We’ll start with a few commonly used models for regression tasks:</p>
+<ol class="wp-block-list">
+<li><strong>Linear Regression</strong>: A good baseline model for regression tasks.</li>
+<li><strong>Decision Tree Regressor</strong>: To see how a simple tree-based model performs.</li>
+<li><strong>Random Forest Regressor</strong>: An ensemble method to improve upon the decision tree’s performance.</li>
+<li><strong>Gradient Boosting Regressor</strong>: Another powerful ensemble method for regression.</li>
+</ol>
+<p>We’ll train each model using the training data and evaluate their performance on the test set using Mean Absolute Error (MAE) and R-squared (R²) as metrics. These metrics will help us understand both the average error of the predictions and how well the model explains the variance in the target variable.</p>
+<p>Let’s start with training these models and comparing their performance:</p>
+<pre><code class="language-python">from sklearn.linear_model import LinearRegression
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.metrics import mean_absolute_error, r2_score
+
+# initialize the models
+models = {
+    "Linear Regression": LinearRegression(),
+    "Decision Tree": DecisionTreeRegressor(random_state=42),
+    "Random Forest": RandomForestRegressor(random_state=42),
+    "Gradient Boosting": GradientBoostingRegressor(random_state=42)
+}
+
+# dictionary to hold the evaluation metrics for each model
+results = {}
+
+# train and evaluate each model
+for name, model in models.items():
+    # training the model
+    model.fit(X_train_scaled, y_train)
+
+    # making predictions on the test set
+    predictions = model.predict(X_test_scaled)
+
+    # calculating evaluation metrics
+    mae = mean_absolute_error(y_test, predictions)
+    r2 = r2_score(y_test, predictions)
+
+    # storing the metrics
+    results[name] = {"MAE": mae, "R²": r2}
+
+results_df = pd.DataFrame(results).T  # convert the results to a DataFrame for better readability
+print(results_df)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>                         MAE        R²<br/>Linear Regression   9.748246  0.529615<br/>Decision Tree      11.760342  0.204962<br/>Random Forest       9.887601  0.509547<br/>Gradient Boosting  10.000117  0.476071</strong></pre>
+<p>The performance of each model on the test set, measured by Mean Absolute Error (MAE) and R-squared (R²), is as follows:</p>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="Compare Multiple Machine Learning Models: results" class="wp-image-22671" data-attachment-id="22671" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image-17" data-orig-size="782,488" data-recalc-dims="1" decoding="async" height="488" sizes="(max-width: 782px) 100vw, 782px" src="../assets/datasets/image-17.png" style="width:522px;height:auto" width="782"/></figure>
+<p>Linear Regression has the lowest MAE (9.75) and the highest R² (0.53), making it the best-performing model among those evaluated. It suggests that, despite its simplicity, Linear Regression is quite effective for this dataset.</p>
+<p>Decision Tree Regressor shows the highest MAE (11.76) and the lowest R² (0.20), indicating it may be overfitting to the training data and performing poorly on the test data. On the other hand, Random Forest Regressor and Gradient Boosting Regressor have similar MAEs (9.89 and 10.00, respectively) and R² scores (0.51 and 0.48, respectively), performing slightly worse than the Linear Regression model but better than the Decision Tree.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, this is how you can train and compare multiple Machine Learning models using Python. By comparing multiple models, we aim to select the most effective algorithm that offers the optimal balance of accuracy, complexity, and performance for their specific problem.</p>
+<p>I hope you liked this article on how to compare multiple Machine Learning models. Feel free to ask valuable questions in the comments section below. You can follow me on <a href="https://www.instagram.com/amankharwal.official/" rel="noreferrer noopener" target="_blank"><strong>Instagram</strong></a> for many more resources.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="geospatial-clustering-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="consumer-complaint-classification-with-machine-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

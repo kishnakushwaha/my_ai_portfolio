@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Statistical Modelling using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Statistical Modelling using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 22, 2025 • 5 min read</div>
+<p>Statistical modelling is a form of mathematical modelling that involves statistics to estimate or predict real-world behaviours, trends, and future outcomes based on data. It involves the construction of a statistical model, which is a formal representation of relationships between variables, typically expressed in the form of mathematical equations. So, if you want to learn how to perform statistical modelling, this article is for you. In this article, I’ll take you through the task of statistical modelling using Python.</p>
+<h2 class="wp-block-heading">What is Statistical Modelling? And How It’s Different From Machine Learning Model Training?</h2>
+<p>Statistical modelling is a mathematical framework used to describe the relationships between variables in the form of equations, usually involving stochastic elements (randomness). It is primarily focused on inference, which means understanding the relationships between variables and quantifying how certain factors influence outcomes.</p>
+<p>Statistical models are built based on assumptions about the data distributions and the nature of the relationships between variables. Common examples include linear regression, logistic regression, and analysis of variance (ANOVA).</p>
+<p>The difference between statistical modelling and machine learning model training is that statistical modelling is primarily concerned with inference. It seeks to understand the underlying relationships between variables and to quantify how predictors influence the response variable. It often tests hypotheses about these relationships.</p>
+<p>Whereas Machine Learning model training focuses on prediction. The primary goal is to create models that can make accurate predictions on new, unseen data. Machine learning often cares less about the ‘why’ of the data relationships and more about the ‘how well’ it can predict the outcome.</p>
+<p>To explain the use of statistical modelling, I’ll take you through the task of statistical modelling of music features, where we will aim to identify what music features determine the popularity of music tracks. You can download the dataset to work on this problem from <strong><a href="../assets/datasets/musicdata-1.zip" rel="noreferrer noopener" target="_blank">here</a></strong>.</p>
+<h2 class="wp-block-heading">Statistical Modelling using Python</h2>
+<p>Now, let’s get started with the task of statistical modelling of music features by importing the <strong><a href="../assets/datasets/musicdata-1.zip" rel="noreferrer noopener" target="_blank">dataset</a></strong> and the necessary Python libraries:</p>
+<pre><code class="language-python">import pandas as pd
+
+# load the dataset
+music_data = pd.read_csv('musicdata.csv')
+print(music_data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>   Unnamed: 0                                   Track Name  \<br/>0           0                                Bijlee Bijlee   <br/>1           1                                  Expert Jatt   <br/>2           2  Kaun Nachdi (From "Sonu Ke Titu Ki Sweety")   <br/>3           3                                  Na Na Na Na   <br/>4           4                                  Patiala Peg   <br/><br/>                      Artists                         Album Name  \<br/>0               Harrdy Sandhu                      Bijlee Bijlee   <br/>1                       Nawab                        Expert Jatt   <br/>2  Guru Randhawa, Neeti Mohan   High Rated Gabru - Guru Randhawa   <br/>3                      J Star                        Na Na Na Na   <br/>4              Diljit Dosanjh  Do Gabru - Diljit Dosanjh &amp; Akhil   <br/><br/>                 Album ID                Track ID  Popularity Release Date  \<br/>0  3tG0IGB24sRhGFLs5F1Km8  1iZLpuGMr4tn1F5bZu32Kb          70   2021-10-30   <br/>1  2gibg5SCTep0wsIMefGzkd  7rr6n1NFIcQXCsi43P0YNl          65   2018-01-18   <br/>2  6EDbwGsQNQRLf73c7QwZ2f  3s7m0jmCXGcM8tmlvjCvAa          64   2019-03-02   <br/>3  4xBqgoiRSOMU1VlKuntVQW  5GjxbFTZAMhrVfVrNrrwrG          52         2015   <br/>4  1uxDllRe9CPhdr8rhz2QCZ  6TikcWOLRsPq66GBx2jk67          46   2018-07-10   <br/><br/>   Duration (ms)  Explicit  ... Energy  Key  Loudness  Mode  Speechiness  \<br/>0         168450     False  ...  0.670    1    -5.313     0       0.1430   <br/>1         199535     False  ...  0.948    6    -2.816     0       0.1990   <br/>2         183373     False  ...  0.830    4    -3.981     0       0.0455   <br/>3         209730     False  ...  0.863    3    -3.760     1       0.0413   <br/>4         188314     False  ...  0.811    5    -3.253     0       0.1840   <br/><br/>   Acousticness  Instrumentalness  Liveness  Valence    Tempo  <br/>0        0.2690          0.000000    0.0733    0.643  100.004  <br/>1        0.2980          0.000000    0.0784    0.647  172.038  <br/>2        0.0357          0.000000    0.0419    0.753  127.999  <br/>3        0.3760          0.000014    0.0916    0.807   95.000  <br/>4        0.0259          0.000000    0.3110    0.835  175.910  <br/><br/>[5 rows x 22 columns]</strong></pre>
+<p>Let’s have a look at the column info and summary statistics before moving forward:</p>
+<pre><code class="language-python">music_data.info()</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>&lt;class 'pandas.core.frame.DataFrame'&gt;<br/>RangeIndex: 100 entries, 0 to 99<br/>Data columns (total 22 columns):<br/> #   Column            Non-Null Count  Dtype  <br/>---  ------            --------------  -----  <br/> 0   Unnamed: 0        100 non-null    int64  <br/> 1   Track Name        94 non-null     object <br/> 2   Artists           94 non-null     object <br/> 3   Album Name        94 non-null     object <br/> 4   Album ID          100 non-null    object <br/> 5   Track ID          100 non-null    object <br/> 6   Popularity        100 non-null    int64  <br/> 7   Release Date      100 non-null    object <br/> 8   Duration (ms)     100 non-null    int64  <br/> 9   Explicit          100 non-null    bool   <br/> 10  External URLs     100 non-null    object <br/> 11  Danceability      100 non-null    float64<br/> 12  Energy            100 non-null    float64<br/> 13  Key               100 non-null    int64  <br/> 14  Loudness          100 non-null    float64<br/> 15  Mode              100 non-null    int64  <br/> 16  Speechiness       100 non-null    float64<br/> 17  Acousticness      100 non-null    float64<br/> 18  Instrumentalness  100 non-null    float64<br/> 19  Liveness          100 non-null    float64<br/> 20  Valence           100 non-null    float64<br/> 21  Tempo             100 non-null    float64<br/>dtypes: bool(1), float64(9), int64(5), object(7)<br/>memory usage: 16.6+ KB</strong></pre>
+<pre><code class="language-python">print(music_data.describe())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>       Unnamed: 0  Popularity  Duration (ms)  Danceability     Energy  \<br/>count  100.000000  100.000000     100.000000    100.000000  100.00000   <br/>mean    49.500000   50.950000  210543.180000      0.767210    0.79763   <br/>std     29.011492   16.496326   37961.050214      0.085302    0.11572   <br/>min      0.000000    0.000000  141862.000000      0.501000    0.47700   <br/>25%     24.750000   46.000000  186098.500000      0.714750    0.71125   <br/>50%     49.500000   56.500000  205076.000000      0.772000    0.81700   <br/>75%     74.250000   62.000000  226079.000000      0.826500    0.88125   <br/>max     99.000000   72.000000  367818.000000      0.959000    0.98800   <br/><br/>             Key    Loudness       Mode  Speechiness  Acousticness  \<br/>count  100.00000  100.000000  100.00000   100.000000    100.000000   <br/>mean     4.54000   -4.399930    0.43000     0.115615      0.165559   <br/>std      3.64434    1.612703    0.49757     0.075819      0.152536   <br/>min      0.00000   -8.272000    0.00000     0.029400      0.001090   <br/>25%      1.00000   -5.465250    0.00000     0.057700      0.037500   <br/>50%      4.00000   -4.252500    0.00000     0.086150      0.128000   <br/>75%      7.25000   -3.163250    1.00000     0.160000      0.236750   <br/>max     11.00000   -0.223000    1.00000     0.340000      0.620000   <br/><br/>       Instrumentalness    Liveness     Valence       Tempo  <br/>count        100.000000  100.000000  100.000000  100.000000  <br/>mean           0.005236    0.185791    0.659259  119.371470  <br/>std            0.028979    0.170086    0.183901   29.058698  <br/>min            0.000000    0.034600    0.073900   78.991000  <br/>25%            0.000000    0.076900    0.558250   97.042500  <br/>50%            0.000000    0.122000    0.672500  107.984000  <br/>75%            0.000041    0.225250    0.793750  132.259000  <br/>max            0.270000    0.823000    0.940000  189.857000  </strong></pre>
+<p>I noticed an unnamed column. Before removing it, let’s have a look at whether the data has null values or not:</p>
+<pre><code class="language-python">music_data.isnull().sum()</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Unnamed: 0          0<br/>Track Name          6<br/>Artists             6<br/>Album Name          6<br/>Album ID            0<br/>Track ID            0<br/>Popularity          0<br/>Release Date        0<br/>Duration (ms)       0<br/>Explicit            0<br/>External URLs       0<br/>Danceability        0<br/>Energy              0<br/>Key                 0<br/>Loudness            0<br/>Mode                0<br/>Speechiness         0<br/>Acousticness        0<br/>Instrumentalness    0<br/>Liveness            0<br/>Valence             0<br/>Tempo               0<br/>dtype: int64</strong></pre>
+<p>Now let’s perform data cleaning on this data:</p>
+<pre><code class="language-python"># dropping the 'Unnamed: 0' column
+music_data_cleaned = music_data.drop(columns=['Unnamed: 0'])
+
+# handling missing values by filling them with placeholder text
+columns_with_missing_values = ['Track Name', 'Artists', 'Album Name']
+music_data_cleaned[columns_with_missing_values] = music_data_cleaned[columns_with_missing_values].fillna('Unknown')</code></pre>
+<p>The data is now cleaned, and all missing values have been handled:</p>
+<ol class="wp-block-list">
+<li>The unnecessary Unnamed: 0 column has been removed.</li>
+<li>Missing values in the Track Name, Artists, and Album Name columns have been filled with “Unknown”.</li>
+</ol>
+<p>Now, let’s examine the distribution of the Popularity score and then look at correlations between Popularity and other musical features. We’ll generate some plots to visualize these aspects:</p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+import seaborn as sns
+sns.set(style="whitegrid")
+
+# plotting the distribution of popularity
+plt.figure(figsize=(10, 6))
+sns.histplot(music_data_cleaned['Popularity'], bins=20, kde=True)
+plt.title('Distribution of Popularity Scores')
+plt.xlabel('Popularity Score')
+plt.ylabel('Frequency')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="Statistical Modelling: Distribution of Popularity Scores" class="wp-image-23261" data-attachment-id="23261" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="music-popularity-1" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-1.png?fit=865%2C556&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-1.png?fit=300%2C193&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-1.png?fit=865%2C556&amp;ssl=1" data-orig-size="865,556" data-permalink="https://my-ai-portfolio.com/2024/04/25/statistical-modelling-using-python/music-popularity-1/" data-recalc-dims="1" decoding="async" height="556" sizes="(max-width: 865px) 100vw, 865px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-1.png?resize=865%2C556&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-1.png?w=865&amp;ssl=1 865w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-1.png?resize=300%2C193&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-1.png?resize=768%2C494&amp;ssl=1 768w" style="width:697px;height:auto" width="865"/></figure>
+<p>The distribution of popularity scores shows a range mainly between 40 to 70, with peaks around the 50s and 60s. This indicates that most tracks in this dataset have moderate to high popularity.</p>
+<p>Now, let’s have a look at the correlation matrix:</p>
+<pre><code class="language-python">plt.figure(figsize=(12, 10))
+correlation_matrix = music_data_cleaned.select_dtypes(include=['float64', 'int64']).corr()
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")
+plt.title('Correlation Matrix of Numerical Features')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Correlation Matrix of Numerical Features" class="wp-image-23263" data-attachment-id="23263" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="music-popularity-2" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-2.png?fit=1024%2C939&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-2.png?fit=300%2C275&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-2.png?fit=1045%2C958&amp;ssl=1" data-orig-size="1045,958" data-permalink="https://my-ai-portfolio.com/2024/04/25/statistical-modelling-using-python/music-popularity-2/" data-recalc-dims="1" decoding="async" height="939" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-2.png?resize=1024%2C939&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-2.png?resize=1024%2C939&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-2.png?resize=300%2C275&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-2.png?resize=768%2C704&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-2.png?w=1045&amp;ssl=1 1045w" style="width:676px;height:auto" width="1024"/></figure>
+<p>The heatmap provides insights into how various features are related to each other and the popularity of the tracks. Notably, Popularity seems to have some level of positive correlation with Loudness and Energy, while it has slight negative correlations with Acousticness. This suggests that louder and more energetic tracks tend to be more popular, while more acoustic tracks tend to be less popular.</p>
+<p>Danceability and Valence (the musical positiveness conveyed by a track) also show some positive correlation with popularity, indicating that tracks that are more danceable and have a happier tone might be preferred by listeners.</p>
+<p>Now, let’s delve into the individual feature impacts on the popularity of music tracks. We’ll focus on several key features based on our initial observations from the correlation matrix. Specifically, we’ll analyze:</p>
+<ol class="wp-block-list">
+<li>Danceability vs. Popularity</li>
+<li>Energy vs. Popularity</li>
+<li>Loudness vs. Popularity</li>
+<li>Acousticness vs. Popularity</li>
+<li>Valence vs. Popularity</li>
+</ol>
+<p>For each of these features, we’ll create scatter plots to visualize their relationship with popularity. This will help us understand how each feature might influence the popularity of a track:</p>
+<pre><code class="language-python"># creating scatter plots for various features vs. popularity
+features = ['Danceability', 'Energy', 'Loudness', 'Acousticness', 'Valence']
+plt.figure(figsize=(15, 10))
+
+for i, feature in enumerate(features, 1):
+    plt.subplot(2, 3, i)
+    sns.scatterplot(x=music_data_cleaned[feature], y=music_data_cleaned['Popularity'])
+    plt.title(f'{feature} vs. Popularity')
+    plt.xlabel(feature)
+    plt.ylabel('Popularity')
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="statistical modelling: music features vs popularity" class="wp-image-23266" data-attachment-id="23266" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="music-popularity-3" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-3.png?fit=1024%2C678&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-3.png?fit=300%2C199&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-3.png?fit=1484%2C983&amp;ssl=1" data-orig-size="1484,983" data-permalink="https://my-ai-portfolio.com/2024/04/25/statistical-modelling-using-python/music-popularity-3/" data-recalc-dims="1" decoding="async" height="678" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-3.png?resize=1024%2C678&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-3.png?resize=1024%2C678&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-3.png?resize=300%2C199&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-3.png?resize=768%2C509&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-3.png?resize=1200%2C795&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-3.png?w=1484&amp;ssl=1 1484w" style="width:681px;height:auto" width="1024"/></figure>
+<p>Here are the scatter plots visualizing the relationships between various musical features and the popularity of tracks:</p>
+<ol class="wp-block-list">
+<li><strong>Danceability vs. Popularity</strong>: Higher danceability scores tend to correlate with moderate to high popularity. This suggests that more danceable tracks are generally more popular.</li>
+<li><strong>Energy vs. Popularity</strong>: Similar to danceability, higher energy levels in tracks often correlate with higher popularity. This aligns with the trend that energetic tracks are preferred by listeners.</li>
+<li><strong>Loudness vs. Popularity</strong>: There’s a trend showing that louder tracks tend to have higher popularity scores. This might reflect listener preference for more vibrant and powerful sound profiles.</li>
+<li><strong>Acousticness vs. Popularity</strong>: Acousticness shows a somewhat inverse relationship with popularity, where tracks with lower acousticness tend to be more popular. This could suggest that highly acoustic tracks are less favoured in the dataset’s music genre context.</li>
+<li><strong>Valence vs. Popularity</strong>: Tracks with higher valence, which indicates a happier or more positive tone, show a slight tendency towards higher popularity. This might imply that listeners prefer tracks that have a positive emotional tone.</li>
+</ol>
+<p>Now, let’s have a look at how danceability, energy, and other features impact popularity differently when the track is explicit versus when it’s not. This can reveal whether explicit content has a modifying effect on the relationship between audio features and popularity:</p>
+<pre><code class="language-python"># creating plots for danceability vs. popularity and energy vs. popularity, segmented by explicit content
+plt.figure(figsize=(14, 7))
+
+# danceability vs. popularity
+plt.subplot(1, 2, 1)
+sns.scatterplot(x='Danceability', y='Popularity', hue='Explicit', data=music_data_cleaned, palette='Set1')
+plt.title('Danceability vs. Popularity (by Explicit Content)')
+plt.xlabel('Danceability')
+plt.ylabel('Popularity')
+
+# energy vs. popularity
+plt.subplot(1, 2, 2)
+sns.scatterplot(x='Energy', y='Popularity', hue='Explicit', data=music_data_cleaned, palette='Set1')
+plt.title('Energy vs. Popularity (by Explicit Content)')
+plt.xlabel('Energy')
+plt.ylabel('Popularity')
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Explicit and non explicit music vs popularity" class="wp-image-23268" data-attachment-id="23268" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="music-popularity-4" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-4.png?fit=1024%2C506&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-4.png?fit=300%2C148&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-4.png?fit=1383%2C684&amp;ssl=1" data-orig-size="1383,684" data-permalink="https://my-ai-portfolio.com/2024/04/25/statistical-modelling-using-python/music-popularity-4/" data-recalc-dims="1" decoding="async" height="506" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-4.png?resize=1024%2C506&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-4.png?resize=1024%2C506&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-4.png?resize=300%2C148&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-4.png?resize=768%2C380&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-4.png?resize=1200%2C593&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-4.png?w=1383&amp;ssl=1 1383w" style="width:685px;height:auto" width="1024"/></figure>
+<p>The segmented scatter plots for <strong>Danceability vs. Popularity</strong> and <strong>Energy vs. Popularity</strong>, divided by whether tracks are explicit or not, show some interesting trends:</p>
+<ol class="wp-block-list">
+<li><strong>Danceability vs. Popularity</strong>: Both explicit and non-explicit tracks show a positive trend between danceability and popularity. However, explicit tracks tend to cluster slightly higher on the popularity scale at similar levels of danceability compared to non-explicit tracks.</li>
+<li><strong>Energy vs. Popularity</strong>: Similar to danceability, there’s a generally positive relationship between energy and popularity for both explicit and non-explicit tracks. Explicit tracks appear to achieve higher popularity at lower energy levels compared to non-explicit tracks, suggesting that the explicit content may appeal to certain listener groups more, irrespective of energy level.</li>
+</ol>
+<h2 class="wp-block-heading">Statistical Modelling of Music Features</h2>
+<p>Now, let’s quantitatively assess the impact of various features on the popularity of music tracks using statistical modelling. We can use a regression model. This will allow us to understand which features are significant predictors of popularity, and quantify their impact.</p>
+<p>For statistical modelling, we’ll use features that show promising relationships and convert categorical data (like Explicit) into a format suitable for regression analysis. We’ll also include the Key and Mode as they might carry additional information about the musical properties of the tracks.</p>
+<p>Let’s start by preparing the features and setting up our dataset for statistical modelling using Linear Regression:</p>
+<pre><code class="language-python">from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.preprocessing import StandardScaler
+
+# preparing the dataset for regression
+# convert 'Explicit' from boolean to integer (0 or 1)
+music_data_cleaned['Explicit'] = music_data_cleaned['Explicit'].astype(int)
+
+# selecting features and target for the model
+features = ['Danceability', 'Energy', 'Loudness', 'Acousticness', 'Valence', 'Explicit', 'Key', 'Mode', 'Speechiness', 'Instrumentalness', 'Tempo']
+X = music_data_cleaned[features]
+y = music_data_cleaned['Popularity']
+
+# standardizing the features
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# splitting the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
+
+# initializing and training the linear regression model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# predicting on the test set
+y_pred = model.predict(X_test)
+
+# evaluating the model
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+# outputting the coefficients and performance metrics
+coefficients = pd.Series(model.coef_, index=features)
+coefficients</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Danceability        1.249640e+00<br/>Energy             -3.204815e+00<br/>Loudness            1.141456e+00<br/>Acousticness        2.469403e+00<br/>Valence             2.125671e+00<br/>Explicit            1.620926e-14<br/>Key                -3.189486e+00<br/>Mode               -5.859715e+00<br/>Speechiness         3.398224e-02<br/>Instrumentalness    3.390750e-01<br/>Tempo              -1.865736e+00<br/>dtype: float64</strong></pre>
+<p>The output above represents the coefficients from the regression model quantifying the impact of various musical features on track popularity. A positive coefficient indicates that an increase in the feature is associated with an increase in popularity, and vice versa for a negative coefficient.</p>
+<p>For instance, Danceability (1.249640), Loudness (1.141456), Acousticness (2.469403), and Valence (2.125671) all have positive coefficients, suggesting that tracks with higher values in these features tend to be more popular.</p>
+<p>On the contrary, Energy (-3.204815), Key (-3.189486), Mode (-5.859715), and Tempo (-1.865736) are negatively associated with popularity, indicating that higher values in these features could lead to lower popularity.</p>
+<p>The coefficients for Explicit (1.620926e-14) and Speechiness (0.03398224) suggest a negligible impact on the popularity, with Explicit essentially having no effect. Instrumentalness (0.3390750) shows a minor positive influence.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, Statistical modelling is a mathematical framework used to describe the relationships between variables in the form of equations, usually involving stochastic elements (randomness). It is primarily focused on inference, which means understanding the relationships between variables and quantifying how certain factors influence outcomes.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="essential-sql-topics-for-data-science.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="health-monitoring-and-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

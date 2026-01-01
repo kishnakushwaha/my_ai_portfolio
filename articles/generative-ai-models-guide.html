@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Generative AI Models Guide | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Generative AI Models Guide</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 20, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="types-of-ai-agents-you-should-know.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="best-ai-internship-programs-for-summer-2025.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>The road to learning Generative AI starts with Machine Learning algorithms. However, some specialized models are used in Generative AI problems, that you must know if you are aiming for a career in Generative AI. So, in this article, I’ll take you through all the essential Generative AI models you should know.</p>
+<h2 class="wp-block-heading">Generative AI Models Guide</h2>
+<p>Below are all the essential Generative AI models you should know:</p>
+<ol class="wp-block-list">
+<li>Generative Adversarial Networks (GANs)</li>
+<li>Transformer Models</li>
+<li>Diffusion Models</li>
+<li>RNNs &amp; LSTMs</li>
+</ol>
+<p>Let’s go through these Generative AI models in detail and the resources you can follow to learn about them practically.</p>
+<h4 class="wp-block-heading">Generative Adversarial Networks (GANs)</h4>
+<p>Generative Adversarial Networks (GANs), introduced by Ian Goodfellow in 2014, are a class of Machine Learning models designed to generate new data instances that resemble your training data. They have become popular due to their applications in image generation, such as deepfakes, artwork generation, and other creative tasks.</p>
+<p>GANs consist of two neural networks, a <strong>Generator</strong> and a <strong>Discriminator,</strong> that compete against each other. This competition is key to the GAN’s ability to generate realistic outputs. The generator attempts to create fake data while the discriminator evaluates whether the data is real or fake. Over time, the generator gets better at producing realistic data, and the discriminator improves at distinguishing between real and fake data. This process continues until the generator becomes skilled at creating highly realistic outputs.</p>
+<p>The generator tries to minimize the following loss function while the discriminator tries to maximize it:</p>
+<figure class="wp-block-image aligncenter size-large"><img alt="The generator tries to minimize the following loss function while the discriminator tries to maximize it" class="wp-image-24934" data-attachment-id="24934" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="1190,106" data-recalc-dims="1" decoding="async" height="91" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/image-4.png" width="1024"/></figure>
+<p>Where:</p>
+<ul class="wp-block-list">
+<li>G(<em>z</em>) is the data generated by the generator.</li>
+<li>D(<em>x</em>) is the probability that <em>x</em> is real data.</li>
+</ul>
+<p>Here are the applications of GANs you should know:</p>
+<ol class="wp-block-list">
+<li><strong>Image Generation</strong>: GANs can generate realistic images that are indistinguishable from real images.</li>
+<li><strong>Deepfakes</strong>: GANs have been used to generate fake videos of people speaking or performing actions that they didn’t actually do.</li>
+<li><strong>Data Augmentation</strong>: GANs can create synthetic data to augment datasets in fields like medical imaging.</li>
+</ol>
+<p>Here are the resources you can follow to learn about GANs practically:</p>
+<ol class="wp-block-list">
+<li><strong><a href="synthetic-data-generation-with-generative-ai.html" rel="noreferrer noopener" target="">Synthetic Data Generation using GANs</a></strong></li>
+<li><strong><a href="generative-ai-model-from-scratch-with-python.html" rel="noreferrer noopener" target="">Image Generation from Scratch using GANs</a></strong></li>
+</ol>
+<h4 class="wp-block-heading">Transformer Models</h4>
+<p>Transformers are behind the success of large language models (LLMs) like GPT, BERT, and T5. They excel at understanding the context of data sequences, such as text, better than previous models like RNNs and LSTMs.</p>
+<p>The key innovation in transformers is the <strong>self-attention mechanism</strong>, which allows the model to focus on different parts of the input data sequence (e.g., a sentence) simultaneously. Unlike RNNs, which process data sequentially, transformers process the entire input at once, which makes them more efficient for long sequences.</p>
+<p>The self-attention mechanism for a given input sequence X=(x1,x2,…,xn) is calculated as:</p>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="Generative AI Models: The self-attention mechanism for a given input sequence X=(x1,x2,…,xn)" class="wp-image-24936" data-attachment-id="24936" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="788,152" data-recalc-dims="1" decoding="async" height="152" sizes="(max-width: 788px) 100vw, 788px" src="../assets/datasets/image-5.png" style="width:586px;height:auto" width="788"/></figure>
+<p>Where:</p>
+<ul class="wp-block-list">
+<li>Q, K, and V are the Query, Key, and Value matrices derived from the input.</li>
+<li>dk​ is the dimension of the key vectors.</li>
+</ul>
+<p>Here are the applications of transformer models you should know:</p>
+<ol class="wp-block-list">
+<li><strong>Natural Language Processing (NLP)</strong>: Transformers are the foundation of state-of-the-art NLP tasks like translation, summarization, and text generation.</li>
+<li><strong>Large Language Models</strong>: GPT, BERT, and T5 are transformer-based models that have significantly advanced the capabilities of AI in text generation and understanding.</li>
+<li><strong>Vision Transformers (ViT)</strong>: Transformers are also being used in image processing tasks by treating images as sequences of patches.</li>
+</ol>
+<p>Here are some resources you can follow to learn about transformer models practically:</p>
+<ol class="wp-block-list">
+<li><strong><a href="document-analysis-using-llms-with-python.html" rel="noreferrer noopener" target="">Document Analysis using LLMs</a></strong></li>
+<li><strong><a href="text-summarization-model-using-llms.html" rel="noreferrer noopener" target="">Text Summarization Model with LLMs</a></strong></li>
+<li><strong><a href="code-generation-model-using-llms.html" rel="noreferrer noopener" target="">Code Generation Model with LLMs</a></strong></li>
+<li><strong><a href="https://huggingface.co/docs/transformers/en/llm_tutorial" rel="noreferrer noopener" target="_blank">Text Generation with LLMs</a></strong></li>
+</ol>
+<h4 class="wp-block-heading">Diffusion Models</h4>
+<p>Diffusion models are a class of generative models used for generating images and other complex data types. They work by progressively denoising random noise until a high-quality sample is produced. These models have gained attention in recent years for generating high-resolution images and are competitive with GANs in many tasks.</p>
+<p>Diffusion models learn to reverse the process of adding noise to data. They start with random noise and gradually refine this noise step by step to create a clean, high-quality sample.</p>
+<ul class="wp-block-list">
+<li><strong>Forward Process</strong>: Adds noise to the data over several steps, making the data more random.</li>
+<li><strong>Reverse Process</strong>: The model learns to reverse the noise addition by generating data step by step from noise.</li>
+</ul>
+<p>During training, the reverse process learns to denoise the data step by step.</p>
+<p>Here are the applications of diffusion models you should know:</p>
+<ol class="wp-block-list">
+<li><strong>Image Generation</strong>: Diffusion models are used to generate high-resolution and detailed images.</li>
+<li><strong>Text-to-Image Generation</strong>: Diffusion models are being explored for tasks where the model generates images based on textual descriptions (e.g., DALL-E).</li>
+</ol>
+<p>You can learn about diffusion models practically here: <strong><a href="https://platform.openai.com/docs/guides/images/introduction?context=python" rel="noreferrer noopener" target="_blank">Image Generation using DALL-E</a>.</strong></p>
+<h4 class="wp-block-heading">RNNs &amp; LSTMs</h4>
+<p>Recurrent Neural Networks (RNNs) and their improved version, Long Short-Term Memory (LSTM) networks, have been widely used for sequence modeling tasks like time series forecasting and natural language processing. Though transformers have taken over many tasks, RNNs and LSTMs are still valuable for certain applications.</p>
+<p>RNNs handle sequential data by updating a hidden state as new data comes in. However, RNNs struggle with long-term dependencies because of the vanishing gradient problem. LSTMs, introduced by Hochreiter and Schmidhuber, address this issue by using special memory cells to store long-term information.</p>
+<p>RNNs maintain a hidden state that captures information about the sequence but struggles with long-range dependencies. LSTMs use gates (input, forget, output) to decide which information to keep, forget, and output, which enables them to handle long sequences more effectively.</p>
+<p>Here are the applications of RNNs &amp; LSTMs you should know:</p>
+<ol class="wp-block-list">
+<li><strong>Time Series Forecasting</strong>: RNNs and LSTMs are used in predicting stock prices, weather forecasting, and other temporal data.</li>
+<li><strong>Speech Recognition</strong>: LSTMs can capture the sequential nature of speech signals, which makes them useful for voice-to-text applications.</li>
+<li><strong>Language Modeling</strong>: Before transformers, LSTMs were the go-to models for tasks like language translation and text generation.</li>
+</ol>
+<p>Here are some resources you can follow to learn about RNNs &amp; LSTMs practically:</p>
+<ol class="wp-block-list">
+<li><strong><a href="text-generation-model-using-python.html" rel="noreferrer noopener" target="">Text Generation Model</a></strong></li>
+<li><strong><a href="next-word-prediction-model-using-python.html" rel="noreferrer noopener" target="">Next Word Prediction Model</a></strong></li>
+</ol>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, below are all the essential Generative AI models you should know:</p>
+<ol class="wp-block-list">
+<li>Generative Adversarial Networks (GANs)</li>
+<li>Transformer Models</li>
+<li>Diffusion Models</li>
+<li>RNNs &amp; LSTMs</li>
+</ol>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="types-of-ai-agents-you-should-know.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="best-ai-internship-programs-for-summer-2025.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

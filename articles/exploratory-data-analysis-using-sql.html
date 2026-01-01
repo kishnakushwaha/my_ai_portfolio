@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Exploratory Data Analysis using SQL | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Exploratory Data Analysis using SQL</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 10, 2025 • 5 min read</div>
+<p>Data Scientists use <strong><a href="sql-concepts-for-data-science-interviews.html" target="">SQL</a></strong> for Exploratory Data Analysis (EDA) to query, filter, aggregate, and extract specific subsets of data efficiently when working directly with large databases, especially in relational databases like MySQL or PostgreSQL. If you want to learn how to perform Exploratory Data Analysis using SQL, this article will guide you. In this article, I’ll solve a problem using SQL to demonstrate how to perform Exploratory Data Analysis.</p>
+<h2 class="wp-block-heading">Getting Started: Storing Data in Your SQL Server</h2>
+<p>To start with Exploratory Data Analysis using SQL, you must first store your data in an SQL server. <strong>Download the data we are using from <a href="../assets/datasets/Instagram-data.csv" rel="noreferrer noopener" target="_blank">here</a></strong> and follow these steps:</p>
+<ol class="wp-block-list">
+<li><strong>Step 1:</strong> Log into your SQL server and<strong> create a database to store your data</strong> using a command: <strong>CREATE DATABASE your_database_name</strong>;</li>
+<li><strong>Step 2:</strong> Define the table schema based on your data structure using a <strong>CREATE TABLE</strong> statement, specifying column names, data types, and constraints.</li>
+<li><strong>Step 3:</strong> Use SQL tools like <strong>LOAD DATA INFILE</strong> (MySQL) or database interfaces like <strong>pgAdmin</strong> (PostgreSQL) to import your data. Below is an example for the data we are using:</li>
+</ol>
+<pre><code class="language-sql">CREATE TABLE instagram_data (
+    Post_ID VARCHAR(255),
+    Account_ID VARCHAR(255),
+    Account_username VARCHAR(255),
+    Account_name VARCHAR(255),
+    Description TEXT,
+    Duration_secs INT,
+    Publish_time DATETIME,
+    Permalink VARCHAR(255),
+    Post_type VARCHAR(255),
+    Data_comment VARCHAR(255),
+    Date VARCHAR(50),
+    Impressions INT,
+    Reach INT,
+    Likes INT,
+    Shares INT,
+    Follows INT,
+    Comments INT,
+    Saves INT,
+    Plays INT
+);
+
+LOAD DATA INFILE '/path_to_your_csv_file.csv'
+INTO TABLE instagram_data
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(Post_ID, Account_ID, Account_username, Account_name, Description, Duration_secs, Publish_time, Permalink, Post_type, Data_comment, Date, Impressions, Reach, Likes, Shares, Follows, Comments, Saves, Plays);</code></pre>
+<p>After completing these steps, you can begin Exploratory Data Analysis using SQL.</p>
+<h2 class="wp-block-heading">Exploratory Data Analysis using SQL</h2>
+<p>Now, let’s get started with Exploratory Data Analysis using SQL. First, we will fetch the <strong>first five rows</strong> of the dataset:</p>
+<pre><code class="language-sql">SELECT * 
+FROM instagram_data 
+LIMIT 5;</code></pre>
+<p>The output will show you the first five rows of the data just like df.head() in pandas.</p>
+<p>Next, let’s have a look at the <strong>summary statistics</strong> of the data:</p>
+<pre><code class="language-sql">SELECT 
+    COUNT(*) AS Total_Posts,
+    AVG(Impressions) AS Avg_Impressions,
+    MAX(Likes) AS Max_Likes,
+    MIN(Likes) AS Min_Likes
+FROM instagram_data;</code></pre>
+<pre class="wp-block-preformatted">Total_Posts   Avg_Impressions    Max_Likes    Min_Likes<br/>------------  -----------------  -----------  -----------<br/>100           18000.45           1200         50</pre>
+<p>In the above SQL query, COUNT(*) counts total rows, AVG(Impressions) calculates the average impressions, MAX(Likes) and MIN(Likes) retrieve the maximum and minimum likes.</p>
+<h4 class="wp-block-heading">Identifying Missing Data</h4>
+<p>Now, let’s see if the data has any <strong>missing values:</strong></p>
+<pre><code class="language-sql">SELECT 
+    COUNT(*) AS Total_Rows,
+    SUM(CASE WHEN Plays IS NULL THEN 1 ELSE 0 END) AS Missing_Plays,
+    SUM(CASE WHEN Data_comment IS NULL THEN 1 ELSE 0 END) AS Missing_Data_Comment
+FROM instagram_data;</code></pre>
+<pre class="wp-block-preformatted">Total_Rows   Missing_Plays   Missing_Data_Comment<br/>-----------  --------------  --------------------<br/>100          30              50</pre>
+<p>In the above query, SUM(CASE … WHEN NULL) counts the number of missing values in each column.</p>
+<h4 class="wp-block-heading">Analyzing Distribution</h4>
+<p>Next, let’s have a look at the <strong>post type distribution:</strong></p>
+<pre><code class="language-sql">SELECT 
+    Post_type, 
+    COUNT(*) AS Frequency
+FROM instagram_data
+GROUP BY Post_type;</code></pre>
+<pre class="wp-block-preformatted">Post_type      Frequency<br/>-------------- ----------<br/>IG carousel    60<br/>IG image       40<br/>IG reel        20</pre>
+<p>In the above SQL query, GROUP BY Post_type groups rows by post type and COUNT(*) calculates the frequency for each type.</p>
+<h4 class="wp-block-heading">Analyzing Engagement Metrics</h4>
+<p>Now, let’s have a look at the <strong>engagement metrics:</strong></p>
+<pre><code class="language-sql">SELECT 
+    Post_ID,
+    Likes / NULLIF(Impressions, 0) AS Likes_Per_Impression,
+    Saves / NULLIF(Impressions, 0) AS Saves_Per_Impression
+FROM instagram_data
+LIMIT 5;</code></pre>
+<pre class="wp-block-preformatted">Post_ID         Likes_Per_Impression   Saves_Per_Impression<br/>--------------- --------------------- ---------------------<br/>1.799668e+16    0.0367                0.0441<br/>1.800604e+16    0.0343                0.0313<br/>1.829417e+16    0.0035                0.0045<br/>1.809139e+16    0.0319                0.0321<br/>1.796449e+16    0.0410                0.0586</pre>
+<p>This query calculates two engagement metrics for each post: the ratio of likes to impressions (Likes_Per_Impression) and the ratio of saves to impressions (Saves_Per_Impression). The NULLIF(Impressions, 0) function ensures that division by zero is avoided by returning NULL if Impressions is zero. The query retrieves the Post_ID along with these calculated metrics for the first five rows of the instagram_data table, providing insights into how effectively each post converts impressions into likes and saves.</p>
+<h4 class="wp-block-heading">Analyzing Trends over Time</h4>
+<p>Next, let’s have a look at the <strong>trends over time:</strong></p>
+<pre><code class="language-sql">SELECT 
+    DATE(Publish_time) AS Date,
+    SUM(Impressions) AS Total_Impressions,
+    SUM(Likes) AS Total_Likes
+FROM instagram_data
+GROUP BY DATE(Publish_time)
+ORDER BY Date ASC;</code></pre>
+<pre class="wp-block-preformatted">Date         Total_Impressions   Total_Likes<br/>-----------  ------------------  -----------<br/>2024-01-01   30000               1500<br/>2024-01-02   25000               1200<br/>2024-03-28   18000               800<br/>2024-03-29   50000               2300</pre>
+<p>This query calculates the total impressions and likes for each day by grouping the posts based on their Publish_time date. The DATE(Publish_time) function extracts just the date part (excluding the time) from the Publish_time column. Using SUM(Impressions) and SUM(Likes), it aggregates the total impressions and likes for each date. The results are then sorted in ascending order of the date using ORDER BY Date ASC, providing a daily summary of engagement metrics.</p>
+<h4 class="wp-block-heading">Identifying Outliers</h4>
+<p>The last step in this EDA is to <strong>detect outliers:</strong></p>
+<pre><code class="language-sql">SELECT * 
+FROM instagram_data
+WHERE Impressions &gt; (
+    SELECT AVG(Impressions) + 2 * STDDEV(Impressions) FROM instagram_data
+) 
+OR Impressions &lt; (
+    SELECT AVG(Impressions) - 2 * STDDEV(Impressions) FROM instagram_data
+);</code></pre>
+<pre class="wp-block-preformatted">Post_ID         Impressions   Likes<br/>--------------- ------------  ------<br/>1.829417e+16    500000        900<br/>1.794940e+16    419927        1011</pre>
+<p>This query identifies outlier posts based on their impressions. It calculates the mean (AVG(Impressions)) and standard deviation (STDDEV(Impressions)) of the Impressions column, then selects posts with impressions greater than two standard deviations above or below the mean. By comparing each post’s impressions to these thresholds, the query isolates posts that significantly overperform or underperform relative to the dataset’s average.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>This is how to perform Exploratory Data Analysis using SQL. Data Scientists rely on SQL for EDA to query, filter, aggregate, and extract specific subsets of data efficiently when working directly with large databases, especially in relational databases like MySQL or PostgreSQL. I hope you found this article on performing Exploratory Data Analysis using SQL helpful.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="building-an-etl-pipeline-using-pyspark.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="netflix-content-strategy-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

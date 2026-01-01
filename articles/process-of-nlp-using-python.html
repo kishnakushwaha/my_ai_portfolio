@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Process of NLP using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Process of NLP using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 20, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="data-science-project-ideas-on-clustering-analysis.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="how-neural-network-works.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Natural Language Processing (NLP) is a subset of Artificial Intelligence where we aim to train computers to understand human languages. Some real-world applications of NLP are chatbots, Siri, and Google Translator. While working on any problem based on NLP, we should follow a process to prepare a vocabulary of words from a textual dataset. So, if you want to understand the process of solving any problem based on NLP, this article is for you. In this article, I will take you through the complete process of NLP using Python.</p>
+<h2 class="wp-block-heading">Process of NLP</h2>
+<p>To explain the process of NLP, I will take you through the sentiment classification task using Python. The steps to solve this NLP problem are:</p>
+<ol class="wp-block-list"><li>Finding a dataset for sentiment classification</li><li>Preparing the dataset by tokenization, stopwords removal, and stemming</li><li>Text vectorization</li><li>Training a classification model for sentiment classification</li></ol>
+<h2 class="wp-block-heading">Process of NLP using Python</h2>
+<h4 class="wp-block-heading">Step 1: Finding a Dataset</h4>
+<p>The first step while working on any NLP problem is to find a textual dataset. In this problem, we need to find a dataset containing text about the sentiments of people towards a product or service. If the dataset you found is labelled, it’s perfect! If you found an unlabelled textual dataset, you can learn how to add labels to a dataset for sentiment classification from <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">here</a></strong>.</p>
+<p>I found an ideal dataset based on movie reviews for the sentiment classification task on Kaggle. You can download the dataset from <strong><a href="https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews">here</a></strong>.</p>
+<p>As we have found a dataset for sentiment classification, let’s move further by importing the necessary Python libraries and the <strong><a href="https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import BernoulliNB
+import nltk
+nltk.download('stopwords')
+
+data = pd.read_csv("IMDB Dataset.csv")
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted"><strong>                                              review sentiment
+0  One of the other reviewers has mentioned that ...  positive
+1  A wonderful little production. &lt;br /&gt;&lt;br /&gt;The...  positive
+2  I thought this was a wonderful way to spend ti...  positive
+3  Basically there's a family where a little boy ...  negative
+4  Petter Mattei's "Love in the Time of Money" is...  positive</strong></pre>
+<h4 class="wp-block-heading">Step 2: Data Preparation, Tokenization, Stopwords Removal and Stemming</h4>
+<p>Our textual dataset needs preparation before being used for any problem based on NLP. Here we will:</p>
+<ol class="wp-block-list"><li>remove links and all the special characters from the review column</li><li>tokenize and remove the stopwords from the review column</li><li>stem the words in the review column</li></ol>
+<pre><code class="language-python">import nltk
+import re
+nltk.download('stopwords')
+stemmer = nltk.SnowballStemmer("english")
+from nltk.corpus import stopwords
+import string
+stopword=set(stopwords.words('english'))
+
+def clean(text):
+    text = str(text).lower()
+    text = re.sub('\[.*?\]', '', text)
+    text = re.sub('https?://\S+|www\.\S+', '', text)
+    text = re.sub('&lt;.*?&gt;+', '', text)
+    text = re.sub('[%s]' % re.escape(string.punctuation), '', text)
+    text = re.sub('\n', '', text)
+    text = re.sub('\w*\d\w*', '', text)
+    text = [word for word in text.split(' ') if word not in stopword]
+    text=" ".join(text)
+    text = [stemmer.stem(word) for word in text.split(' ')]
+    text=" ".join(text)
+    return text
+data["review"] = data["review"].apply(clean)</code></pre>
+<p>Before moving forward, let’s have a quick look at the wordcloud of the review column:</p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
+text = " ".join(i for i in data.review)
+stopwords = set(STOPWORDS)
+wordcloud = WordCloud(stopwords=stopwords, background_color="white").generate(text)
+plt.figure( figsize=(15,10))
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis("off")
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="Image for Post: Process of NLP using Python" class="wp-image-18181" data-attachment-id="18181" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="process-of-nlp-wordcloud" data-orig-size="851,432" data-recalc-dims="1" decoding="async" height="314" sizes="(max-width: 620px) 100vw, 620px" src="../assets/datasets/process-of-nlp-wordcloud.png" width="620"/></figure>
+<h4 class="wp-block-heading">Step 3: Text Vectorization</h4>
+<p>The next step is text vectorization. It means to transform all the text tokens into numerical vectors. Here I will first perform text vectorization on the feature column (review column) and then split the data into training and test sets:</p>
+<pre><code class="language-python">x = np.array(data["review"])
+y = np.array(data["sentiment"])
+
+cv = CountVectorizer()
+X = cv.fit_transform(x)
+X_train, X_test, y_train, y_test = train_test_split(X, y, 
+                                                    test_size=0.20, 
+                                                    random_state=42)</code></pre>
+<h4 class="wp-block-heading">Step 4: Text Classification</h4>
+<p>The final step in the process of NLP is to classify or cluster texts. As we are working on the problem of sentiment classification, we will now train a text classification model. Here’s how to prepare a text classification model for sentiment classification:</p>
+<pre><code class="language-python">from sklearn.linear_model import PassiveAggressiveClassifier
+model = PassiveAggressiveClassifier()
+model.fit(X_train,y_train)</code></pre>
+<p>The dataset we used to train a sentiment classification model contains movie reviews. So let’s test the model by giving a movie review as an input:</p>
+<pre><code class="language-python">user = input("Enter a Text: ")
+data = cv.transform([user]).toarray()
+output = model.predict(data)
+print(output)</code></pre>
+<pre class="wp-block-preformatted"><strong>Enter a Text: one of the worst movies I have ever seen!
+['negative']</strong></pre>
+<p>So this is how you can solve any problem of NLP using the Python programming language.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>While working on any problem of NLP, we first need to:</p>
+<ol class="wp-block-list"><li>find a textual dataset</li><li>then prepare the dataset by tokenization, stopwords removal, and stemming</li><li>then perform text vectorization</li><li>and then the last step is text classification or clustering</li></ol>
+<p>I hope you liked this article on the complete process of NLP using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="data-science-project-ideas-on-clustering-analysis.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="how-neural-network-works.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

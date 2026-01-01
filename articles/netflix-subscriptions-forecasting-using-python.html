@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Netflix Subscriptions Forecasting using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Netflix Subscriptions Forecasting using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 29, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="currency-exchange-rate-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="ads-ctr-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Forecasting the number of subscriptions Netflix will achieve in a time period is a vital business practice that enables them to plan, strategize, and make data-driven decisions. It enhances operational efficiency, financial planning, and content strategy, ultimately contributing to their success and growth in the highly competitive streaming industry. If you want to learn how to forecast the number of subscriptions for a streaming service like Netflix, this article is for you. In this article, I’ll take you through the task of Netflix Subscriptions Forecasting using <strong><a href="roadmap-to-learn-python.html" target="">Python</a></strong>.</p>
+<h2 class="wp-block-heading">Netflix Subscriptions Forecasting: Process We Can Follow</h2>
+<p>Using techniques like <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">time series forecasting</a></strong>, Netflix can estimate the expected number of new subscribers in a given time period and better understand the growth potential of their business. Below is the process we can follow to forecast subscription counts for Netflix:</p>
+<ol class="wp-block-list">
+<li>Gather historical Netflix subscriptions growth data</li>
+<li>Preprocess and clean the data</li>
+<li>Explore and analyze time series patterns</li>
+<li>Choose a time series forecasting model (e.g., ARIMA, LSTM)</li>
+<li>Train the model using the training data</li>
+<li>Forecast future Netflix subscription counts</li>
+</ol>
+<p>So the process for forecasting subscriptions for Netflix starts with collecting a dataset based on the historical growth of Netflix Subscribers. I found an ideal dataset for this task. You can download the dataset from <a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;"><strong>here</strong></a>.</p>
+<p>In the section below, I’ll take you through the task of Netflix Subscriptions Forecasting using Time Series Forecasting and the Python programming language.</p>
+<h2 class="wp-block-heading">Netflix Subscriptions Forecasting using Python</h2>
+<p>Let’s start this task by importing the necessary Python libraries and the <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">dataset</a></strong>:</p>
+<pre><code class="language-python"># Importing Necessay Python libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import plotly.graph_objs as go
+import plotly.express as px
+import plotly.io as pio
+pio.templates.default = "plotly_white"
+from statsmodels.tsa.arima.model import ARIMA
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+
+# reading the data
+data = pd.read_csv('Netflix Subscriptions.csv')
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>  Time Period  Subscribers
+0  01/04/2013     34240000
+1  01/07/2013     35640000
+2  01/10/2013     38010000
+3  01/01/2014     41430000
+4  01/04/2014     46130000</strong></pre>
+<p>The dataset contains subscription counts of Netflix at the start of each quarter from 2013 to 2023. Before moving forward, let’s convert the Time Period column into a datetime format:</p>
+<pre><code class="language-python">data['Time Period'] = pd.to_datetime(data['Time Period'], 
+                                     format='%d/%m/%Y')
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>  Time Period  Subscribers
+0  2013-04-01     34240000
+1  2013-07-01     35640000
+2  2013-10-01     38010000
+3  2014-01-01     41430000
+4  2014-04-01     46130000</strong></pre>
+<p>Now let’s have a look at the quarterly subscription growth of Netflix:</p>
+<pre><code class="language-python">fig = go.Figure()
+fig.add_trace(go.Scatter(x=data['Time Period'],
+                         y=data['Subscribers'],
+                         mode='lines', name='Subscribers'))
+fig.update_layout(title='Netflix Quarterly Subscriptions Growth',
+                  xaxis_title='Date',
+                  yaxis_title='Netflix Subscriptions')
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Netflix Quarterly Subscriptions Growth" class="wp-image-21090" data-attachment-id="21090" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="netflix-1" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="../assets/datasets/netflix-1.png" width="857"/></figure>
+<p>In the above graph, we can see that the growth of Netflix subscribers is not seasonal. So we can use a forecasting technique like ARIMA in this dataset.</p>
+<p>Now let’s have a look at the quarterly growth rate of subscribers at Netflix:</p>
+<pre><code class="language-python"># Calculate the quarterly growth rate
+data['Quarterly Growth Rate'] = data['Subscribers'].pct_change() * 100
+
+# Create a new column for bar color (green for positive growth, red for negative growth)
+data['Bar Color'] = data['Quarterly Growth Rate'].apply(lambda x: 'green' if x &gt; 0 else 'red')
+
+# Plot the quarterly growth rate using bar graphs
+fig = go.Figure()
+fig.add_trace(go.Bar(
+    x=data['Time Period'],
+    y=data['Quarterly Growth Rate'],
+    marker_color=data['Bar Color'],
+    name='Quarterly Growth Rate'
+))
+fig.update_layout(title='Netflix Quarterly Subscriptions Growth Rate',
+                  xaxis_title='Time Period',
+                  yaxis_title='Quarterly Growth Rate (%)')
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Quarterly Subscriptions Growth Rate" class="wp-image-21092" data-attachment-id="21092" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="netflix-2" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="../assets/datasets/netflix-2.png" width="857"/></figure>
+<p>Now let’s have a look at the yearly growth rate:</p>
+<pre><code class="language-python"># Calculate the yearly growth rate
+data['Year'] = data['Time Period'].dt.year
+yearly_growth = data.groupby('Year')['Subscribers'].pct_change().fillna(0) * 100
+
+# Create a new column for bar color (green for positive growth, red for negative growth)
+data['Bar Color'] = yearly_growth.apply(lambda x: 'green' if x &gt; 0 else 'red')
+
+# Plot the yearly subscriber growth rate using bar graphs
+fig = go.Figure()
+fig.add_trace(go.Bar(
+    x=data['Year'],
+    y=yearly_growth,
+    marker_color=data['Bar Color'],
+    name='Yearly Growth Rate'
+))
+fig.update_layout(title='Netflix Yearly Subscriber Growth Rate',
+                  xaxis_title='Year',
+                  yaxis_title='Yearly Growth Rate (%)')
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Yearly Subscriber Growth Rate" class="wp-image-21094" data-attachment-id="21094" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="netflix-3" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/netflix-3.png" width="857"/></figure>
+<h2 class="wp-block-heading">Using ARIMA for Forecasting Netflix Quarterly Subscriptions</h2>
+<p>Now let’s get started with Time Series Forecasting using ARIMA to forecast the number of subscriptions of Netflix using Python. I will start by converting the data into a time series format:</p>
+<pre><code class="language-python">time_series = data.set_index('Time Period')['Subscribers']</code></pre>
+<p>Here we are converting the original DataFrame into a time series format, where the Time Period column becomes the index, and the Subscribers column becomes the data.</p>
+<p>Now let’s find the value of p and q by plotting the ACF and PACF of differenced time series:</p>
+<pre><code class="language-python">differenced_series = time_series.diff().dropna()
+
+# Plot ACF and PACF of differenced time series
+fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+plot_acf(differenced_series, ax=axes[0])
+plot_pacf(differenced_series, ax=axes[1])
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Autocorrelation and Partical Autocorrelation Plots" class="wp-image-21096" data-attachment-id="21096" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="netflix-4" data-orig-size="1002,374" data-recalc-dims="1" decoding="async" height="374" loading="lazy" sizes="auto, (max-width: 1002px) 100vw, 1002px" src="../assets/datasets/netflix-4.png" width="1002"/></figure>
+<p>Here we first calculated the differenced time series from the original time_series, removed any NaN values resulting from the differencing, and then plotted the ACF and PACF to provide insights into the potential order of the AR and MA components in the time series. These plots are useful for determining the appropriate parameters when using the ARIMA model for time series forecasting.</p>
+<p>Based on the plots, we find that p=1 and q=1. The ACF plot cuts off at lag 1, indicating q=1, and the PACF plot also cuts off at lag 1, indicating p=1. As there is a linear trend in the subscription growth rate, we can set the value of d as 1 to remove the linear trend, making the time series stationary.</p>
+<p>Now here’s how to use the ARIMA model on our data:</p>
+<pre><code class="language-python">p, d, q = 1, 1, 1
+model = ARIMA(time_series, order=(p, d, q))
+results = model.fit()
+print(results.summary())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>                               SARIMAX Results                                
+==============================================================================
+Dep. Variable:            Subscribers   No. Observations:                   42
+Model:                 ARIMA(1, 1, 1)   Log Likelihood                -672.993
+Date:                Sat, 05 Aug 2023   AIC                           1351.986
+Time:                        07:03:48   BIC                           1357.127
+Sample:                    04-01-2013   HQIC                          1353.858
+                         - 07-01-2023                                         
+Covariance Type:                  opg                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+ar.L1          0.9997      0.012     80.765      0.000       0.975       1.024
+ma.L1         -0.9908      0.221     -4.476      0.000      -1.425      -0.557
+sigma2      1.187e+13   1.57e-14   7.57e+26      0.000    1.19e+13    1.19e+13
+===================================================================================
+Ljung-Box (L1) (Q):                   3.96   Jarque-Bera (JB):                 4.62
+Prob(Q):                              0.05   Prob(JB):                         0.10
+Heteroskedasticity (H):               7.27   Skew:                             0.54
+Prob(H) (two-sided):                  0.00   Kurtosis:                         4.23
+===================================================================================
+</strong></pre>
+<p>Now here’s how to make predictions using the trained model to forecast the number of subscribers for the next five quarters:</p>
+<pre><code class="language-python">future_steps = 5
+predictions = results.predict(len(time_series), len(time_series) + future_steps - 1)
+predictions = predictions.astype(int)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>2023-10-01    243321458
+2024-01-01    248251648
+2024-04-01    253180570
+2024-07-01    258108224
+2024-10-01    263034611
+Freq: QS-OCT, Name: predicted_mean, dtype: int64</strong></pre>
+<p>Now let’s visualize the results of Netflix Subscriptions Forecasting for the next five quarters:</p>
+<pre><code class="language-python"># Create a DataFrame with the original data and predictions
+forecast = pd.DataFrame({'Original': time_series, 'Predictions': predictions})
+
+# Plot the original data and predictions
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(x=forecast.index, y=forecast['Predictions'],
+                         mode='lines', name='Predictions'))
+
+fig.add_trace(go.Scatter(x=forecast.index, y=forecast['Original'],
+                         mode='lines', name='Original Data'))
+
+fig.update_layout(title='Netflix Quarterly Subscription Predictions',
+                  xaxis_title='Time Period',
+                  yaxis_title='Subscribers',
+                  legend=dict(x=0.1, y=0.9),
+                  showlegend=True)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Netflix Quarterly Subscriptions Forecasting" class="wp-image-21100" data-attachment-id="21100" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="netflix-5" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/netflix-5.png" width="857"/></figure>
+<p>So this is how you can forecast subscription counts for a given time period using Time Series Forecasting and Python.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>Using techniques like time series forecasting, Netflix can estimate the expected number of new subscribers in a given time period and better understand the growth potential of their business. It enhances operational efficiency, financial planning, and content strategy, ultimately contributing to their success and growth in the highly competitive streaming industry. I hope you liked this article on Netflix Subscriptions Forecasting using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="currency-exchange-rate-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="ads-ctr-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

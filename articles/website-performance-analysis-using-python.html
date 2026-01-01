@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Website Performance Analysis using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Website Performance Analysis using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 30, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="ads-ctr-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="music-recommendation-system-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Website Performance Analysis involves evaluating various metrics related to a website’s functionality, user engagement, and overall success in achieving business goals. This form of analysis is critical because it directly impacts user experience, conversion rates, and the profitability and reputation of a business. So, if you want to learn how to analyze the performance of a website, this article is for you. In this article, I’ll take you through the task of Website Performance Analysis using Python.</p>
+<h2 class="wp-block-heading">Website Performance Analysis: Getting Started</h2>
+<p>The problem I am working on in this article is my take on a problem I found at statso. The dataset we are working on contains the following columns:</p>
+<ul class="wp-block-list">
+<li><strong>Session primary channel group</strong>: The marketing channel (e.g., Direct, Organic Social)</li>
+<li><strong>Date + hour (YYYYMMDDHH)</strong>: The specific date and hour of the session</li>
+<li><strong>Users</strong>: Number of users in a given period</li>
+<li><strong>Sessions</strong>: Number of sessions in that period</li>
+<li><strong>Engaged sessions</strong>: Number of sessions with significant user engagement</li>
+<li><strong>Average engagement time per session</strong>: The average time a user is engaged per session</li>
+<li><strong>Engaged sessions per user</strong>: Ratio of engaged sessions to total sessions per user</li>
+<li><strong>Events per session</strong>: Average number of events (actions taken) per session</li>
+<li><strong>Engagement rate</strong>: The proportion of sessions that were engaged</li>
+<li><strong>Event count</strong>: Total number of events during the period</li>
+</ul>
+<p><strong>You can download the dataset and read the complete problem statement <a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">here</a>.</strong></p>
+<h2 class="wp-block-heading">Website Performance Analysis using Python</h2>
+<p>Now, let’s get started with the task of Website Performance Analysis by importing the necessary Python libraries and the <strong><a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+
+data = pd.read_csv("data-export.csv")
+
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>          # ----------------------------------------  \<br/>0  Session primary channel group (Default channel...   <br/>1                                             Direct   <br/>2                                     Organic Social   <br/>3                                             Direct   <br/>4                                     Organic Social   <br/><br/>                 Unnamed: 1 Unnamed: 2 Unnamed: 3        Unnamed: 4  \<br/>0  Date + hour (YYYYMMDDHH)      Users   Sessions  Engaged sessions   <br/>1                2024041623        237        300               144   <br/>2                2024041719        208        267               132   <br/>3                2024041723        188        233               115   <br/>4                2024041718        187        256               125   <br/><br/>                            Unnamed: 5                 Unnamed: 6  \<br/>0  Average engagement time per session  Engaged sessions per user   <br/>1                   47.526666666666700         0.6075949367088610   <br/>2                    32.09737827715360         0.6346153846153850   <br/>3                    39.93991416309010         0.6117021276595740   <br/>4                          32.16015625         0.6684491978609630   <br/><br/>           Unnamed: 7           Unnamed: 8   Unnamed: 9  <br/>0  Events per session      Engagement rate  Event count  <br/>1   4.673333333333330                 0.48         1402  <br/>2   4.295880149812730   0.4943820224719100         1147  <br/>3   4.587982832618030  0.49356223175965700         1069  <br/>4            4.078125           0.48828125         1044  </strong></pre>
+<p>There are some errors in the first row of the dataset, which usually occurs while collecting the data from websites. The data starts from the second row, let’s prepare it accordingly:</p>
+<pre><code class="language-python">new_header = data.iloc[0]  # grab the first row for the header
+data = data[1:]  # take the data less the header row
+data.columns = new_header  # set the header row as the df header
+data.reset_index(drop=True, inplace=True)
+
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>0 Session primary channel group (Default channel group)  \<br/>0                                             Direct      <br/>1                                     Organic Social      <br/>2                                             Direct      <br/>3                                     Organic Social      <br/>4                                     Organic Social      <br/><br/>0 Date + hour (YYYYMMDDHH) Users Sessions Engaged sessions  \<br/>0               2024041623   237      300              144   <br/>1               2024041719   208      267              132   <br/>2               2024041723   188      233              115   <br/>3               2024041718   187      256              125   <br/>4               2024041720   175      221              112   <br/><br/>0 Average engagement time per session Engaged sessions per user  \<br/>0                  47.526666666666700        0.6075949367088610   <br/>1                   32.09737827715360        0.6346153846153850   <br/>2                   39.93991416309010        0.6117021276595740   <br/>3                         32.16015625        0.6684491978609630   <br/>4                  46.918552036199100                      0.64   <br/><br/>0 Events per session      Engagement rate Event count  <br/>0  4.673333333333330                 0.48        1402  <br/>1  4.295880149812730   0.4943820224719100        1147  <br/>2  4.587982832618030  0.49356223175965700        1069  <br/>3           4.078125           0.48828125        1044  <br/>4  4.529411764705880   0.5067873303167420        1001  </strong></pre>
+<p>Now, let’s have a look at the column info and the summary statistics of the data:</p>
+<pre><code class="language-python">data.info()</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>&lt;class 'pandas.core.frame.DataFrame'&gt;<br/>RangeIndex: 3182 entries, 0 to 3181<br/>Data columns (total 10 columns):<br/> #   Column                                                 Non-Null Count  Dtype <br/>---  ------                                                 --------------  ----- <br/> 0   Session primary channel group (Default channel group)  3182 non-null   object<br/> 1   Date + hour (YYYYMMDDHH)                               3182 non-null   object<br/> 2   Users                                                  3182 non-null   object<br/> 3   Sessions                                               3182 non-null   object<br/> 4   Engaged sessions                                       3182 non-null   object<br/> 5   Average engagement time per session                    3182 non-null   object<br/> 6   Engaged sessions per user                              3182 non-null   object<br/> 7   Events per session                                     3182 non-null   object<br/> 8   Engagement rate                                        3182 non-null   object<br/> 9   Event count                                            3182 non-null   object<br/>dtypes: object(10)<br/>memory usage: 248.7+ KB</strong></pre>
+<pre><code class="language-python">print(data.describe())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>0      Session primary channel group (Default channel group)  \<br/>count                                                3182      <br/>unique                                                  7      <br/>top                                                Direct      <br/>freq                                                  672      <br/><br/>0      Date + hour (YYYYMMDDHH) Users Sessions Engaged sessions  \<br/>count                      3182  3182     3182             3182   <br/>unique                      672   147      180              103   <br/>top                  2024042417     1        1                0   <br/>freq                          6   335      340              393   <br/><br/>0      Average engagement time per session Engaged sessions per user  \<br/>count                                 3182                      3182   <br/>unique                                2823                       808   <br/>top                                      0                         0   <br/>freq                                   170                       393   <br/><br/>0      Events per session Engagement rate Event count  <br/>count                3182            3182        3182  <br/>unique               2025             986         678  <br/>top                     1               0           1  <br/>freq                  133             393         115  </strong></pre>
+<p>Now, let’s convert the date column into an appropriate datetime format and group it for further analysis:</p>
+<pre><code class="language-python">data['Date + hour (YYYYMMDDHH)'] = pd.to_datetime(data['Date + hour (YYYYMMDDHH)'], format='%Y%m%d%H')
+data['Users'] = pd.to_numeric(data['Users'])
+data['Sessions'] = pd.to_numeric(data['Sessions'])
+
+# group data by date and sum up the users and sessions
+grouped_data = data.groupby(data['Date + hour (YYYYMMDDHH)']).agg({'Users': 'sum', 'Sessions': 'sum'})</code></pre>
+<p>The overall purpose of the above operation is to prepare and summarize the dataset for time series analysis, focusing on how user engagement (through sessions) varies by time. By converting data into appropriate types and grouping it by time, you can more easily perform operations like plotting time series graphs, calculating moving averages, or applying time series forecasting models.</p>
+<p>Now, let’s analyze the total users and sessions over time:</p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+
+# plotting the aggregated users and sessions over time
+plt.figure(figsize=(14, 7))
+plt.plot(grouped_data.index, grouped_data['Users'], label='Users', color='blue')
+plt.plot(grouped_data.index, grouped_data['Sessions'], label='Sessions', color='green')
+plt.title('Total Users and Sessions Over Time')
+plt.xlabel('Date and Hour')
+plt.ylabel('Count')
+plt.legend()
+plt.grid(True)
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Website Performance Analysis: Total Users and Sessions Over Time" class="wp-image-23356" data-attachment-id="23356" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="website-performance-1" data-orig-size="1187,624" data-recalc-dims="1" decoding="async" height="538" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/website-performance-1.png" style="width:707px;height:auto" width="1024"/></figure>
+<p>From the graph, we can observe there are some fluctuations in the number of users and sessions, possibly indicating daily cycles or specific high-traffic periods. Both users and sessions appear to follow a similar trend, which is expected as more users generally mean more sessions. Some peaks might correspond to specific marketing activities, promotions, or events.</p>
+<p>Now that we’ve analyzed the session trends, let’s move on to User Engagement Analysis. We will look into metrics like average engagement time per session, engagement rate, and events per session to evaluate how engaged users are when they visit the site:</p>
+<pre><code class="language-python"># convert relevant columns to numeric for engagement analysis
+data['Engaged sessions'] = pd.to_numeric(data['Engaged sessions'])
+data['Average engagement time per session'] = pd.to_numeric(data['Average engagement time per session'])
+data['Engaged sessions per user'] = pd.to_numeric(data['Engaged sessions per user'])
+data['Events per session'] = pd.to_numeric(data['Events per session'])
+data['Engagement rate'] = pd.to_numeric(data['Engagement rate'])
+
+# group data by date and calculate mean for engagement metrics
+engagement_metrics = data.groupby(data['Date + hour (YYYYMMDDHH)']).agg({
+    'Average engagement time per session': 'mean',
+    'Engaged sessions per user': 'mean',
+    'Events per session': 'mean',
+    'Engagement rate': 'mean'
+})
+
+# plotting engagement metrics
+fig, ax = plt.subplots(4, 1, figsize=(14, 20), sharex=True)
+
+ax[0].plot(engagement_metrics.index, engagement_metrics['Average engagement time per session'], label='Avg Engagement Time', color='purple')
+ax[0].set_title('Average Engagement Time per Session')
+ax[0].set_ylabel('Seconds')
+
+ax[1].plot(engagement_metrics.index, engagement_metrics['Engaged sessions per user'], label='Engaged Sessions/User', color='orange')
+ax[1].set_title('Engaged Sessions per User')
+ax[1].set_ylabel('Ratio')
+
+ax[2].plot(engagement_metrics.index, engagement_metrics['Events per session'], label='Events per Session', color='red')
+ax[2].set_title('Events per Session')
+ax[2].set_ylabel('Count')
+
+ax[3].plot(engagement_metrics.index, engagement_metrics['Engagement rate'], label='Engagement Rate', color='green')
+ax[3].set_title('Engagement Rate')
+ax[3].set_ylabel('Rate')
+ax[3].set_xlabel('Date and Hour')
+
+for a in ax:
+    a.legend()
+    a.grid(True)
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="metrics for analysing the website performance" class="wp-image-23358" data-attachment-id="23358" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="website-performance-2" data-orig-size="1387,1990" data-recalc-dims="1" decoding="async" height="1024" sizes="(max-width: 714px) 100vw, 714px" src="../assets/datasets/website-performance-2.png" width="714"/></figure>
+<p>The user engagement analysis provides insights into how visitors interact with the website:</p>
+<ol class="wp-block-list">
+<li><strong>Average Engagement Time per Session</strong>: The time spent per session shows fluctuations over the observed period. There are noticeable peaks, suggesting times when users were particularly engaged, potentially due to specific content releases or events.</li>
+<li><strong>Engaged Sessions per User</strong>: This ratio fluctuates slightly but generally indicates that a good portion of sessions per user are engaged. Peaks in this metric could correspond to times when users find the content more relevant or engaging.</li>
+<li><strong>Events per Session</strong>: The count of events per session remains relatively consistent but does show some variation. Peaks here could indicate more interactive content or features being used by visitors.</li>
+<li><strong>Engagement Rate</strong>: The engagement rate over time shows how many sessions are considered engaged out of the total. There are some ups and downs which may relate to how different content resonates with users or how effective certain user acquisition channels are.</li>
+</ol>
+<p>Now, let’s analyze the correlations between them:</p>
+<pre><code class="language-python">fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+
+# plot 1: average engagement time vs events per session
+axes[0, 0].scatter(data['Average engagement time per session'], data['Events per session'], color='blue')
+axes[0, 0].set_title('Avg Engagement Time vs Events/Session')
+axes[0, 0].set_xlabel('Average Engagement Time per Session')
+axes[0, 0].set_ylabel('Events per Session')
+axes[0, 0].grid(True)  # enable grid
+
+# plot 2: average engagement time vs engagement rate
+axes[0, 1].scatter(data['Average engagement time per session'], data['Engagement rate'], color='red')
+axes[0, 1].set_title('Avg Engagement Time vs Engagement Rate')
+axes[0, 1].set_xlabel('Average Engagement Time per Session')
+axes[0, 1].set_ylabel('Engagement Rate')
+axes[0, 1].grid(True)
+
+# plot 3: engaged sessions per user vs events per session
+axes[1, 0].scatter(data['Engaged sessions per user'], data['Events per session'], color='green')
+axes[1, 0].set_title('Engaged Sessions/User vs Events/Session')
+axes[1, 0].set_xlabel('Engaged Sessions per User')
+axes[1, 0].set_ylabel('Events per Session')
+axes[1, 0].grid(True)
+
+# plot 4: engaged sessions per user vs engagement rate
+axes[1, 1].scatter(data['Engaged sessions per user'], data['Engagement rate'], color='purple')
+axes[1, 1].set_title('Engaged Sessions/User vs Engagement Rate')
+axes[1, 1].set_xlabel('Engaged Sessions per User')
+axes[1, 1].set_ylabel('Engagement Rate')
+axes[1, 1].grid(True)
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Correlations between metrics" class="wp-image-23361" data-attachment-id="23361" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="website-performance-3" data-orig-size="1189,990" data-recalc-dims="1" decoding="async" height="853" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="../assets/datasets/website-performance-3.png" style="width:726px;height:auto" width="1024"/></figure>
+<p>Here’s what we can analyze from the above scatter plots:</p>
+<ol class="wp-block-list">
+<li><strong>Average Engagement Time vs Events per Session:</strong> There appears to be a concentration of data points at lower average engagement times with a wide range of events per session. As the average engagement time increases, the number of events per session tends to cluster more narrowly around lower values.</li>
+<li><strong>Average Engagement Time vs Engagement Rate:</strong> There is a clear trend where sessions with very low engagement times have a broad range of engagement rates, but as engagement time increases, the engagement rate converges towards higher values.</li>
+<li><strong>Engaged Sessions per User vs Events per Session:</strong> Most data points cluster at lower values for both metrics, with few users having a high number of engaged sessions or events per session.</li>
+<li><strong>Engaged Sessions per User vs Engagement Rate:</strong> There is a strong positive correlation between engaged sessions per user and engagement rate, especially noticeable at higher values of engaged sessions per user.</li>
+</ol>
+<p>We will now proceed with the Channel Performance Analysis to assess how different marketing channels contribute to traffic and engagement. It will involve analyzing the session, user, and engagement data segmented by the marketing channel:</p>
+<pre><code class="language-python"># group data by channel and aggregate necessary metrics
+channel_performance = data.groupby('Session primary channel group (Default channel group)').agg({
+    'Users': 'sum',
+    'Sessions': 'sum',
+    'Engaged sessions': 'sum',
+    'Engagement rate': 'mean',
+    'Events per session': 'mean'
+})
+
+# normalize engagement rate and events per session for comparison
+channel_performance['Normalized Engagement Rate'] = channel_performance['Engagement rate'] / channel_performance['Engagement rate'].max()
+channel_performance['Normalized Events per Session'] = channel_performance['Events per session'] / channel_performance['Events per session'].max()
+
+# plotting channel performance metrics
+fig, ax = plt.subplots(3, 1, figsize=(12, 18))
+
+# users and sessions by channel
+ax[0].bar(channel_performance.index, channel_performance['Users'], label='Users', alpha=0.8)
+ax[0].bar(channel_performance.index, channel_performance['Sessions'], label='Sessions', alpha=0.6)
+ax[0].set_title('Users and Sessions by Channel')
+ax[0].set_ylabel('Count')
+ax[0].legend()
+
+# normalized engagement rate by channel
+ax[1].bar(channel_performance.index, channel_performance['Normalized Engagement Rate'], color='orange')
+ax[1].set_title('Normalized Engagement Rate by Channel')
+ax[1].set_ylabel('Normalized Rate')
+
+# normalized events per session by channel
+ax[2].bar(channel_performance.index, channel_performance['Normalized Events per Session'], color='green')
+ax[2].set_title('Normalized Events per Session by Channel')
+ax[2].set_ylabel('Normalized Count')
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="traffic by channels" class="wp-image-23363" data-attachment-id="23363" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="website-performance-4" data-orig-size="1189,1790" data-recalc-dims="1" decoding="async" height="1024" loading="lazy" sizes="auto, (max-width: 680px) 100vw, 680px" src="../assets/datasets/website-performance-4.png" style="width:657px;height:auto" width="680"/></figure>
+<p>The data illustrates significant variations in performance across different channels, highlighting the strengths and weaknesses of each in driving traffic, engaging users, and encouraging interactions. The high performance of ‘Organic Search’ in driving traffic contrasts with its lower relative engagement and events metrics, suggesting quantity over quality of visits. In contrast, ‘Referral’ and ‘Organic Video’ channels, while not leading in volume, excel in engaging users deeply, pointing to potential areas for leveraging these strengths in marketing strategies.</p>
+<h4 class="wp-block-heading">Forecasting Website Traffic</h4>
+<p>Now, let’s see how we can forecast the website traffic for the next 24 hours. It will involve creating a <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">time series model</a></strong> to forecast future values based on the observed session data. Let’s start this by plotting the autocorrelation and partial autocorrelation plots of our time series data, which is typically done to help identify the order of an autoregressive integrated moving average for time series models for forecasting:</p>
+<pre><code class="language-python">from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+time_series_data = grouped_data['Sessions'].asfreq('H').fillna(method='ffill')
+seasonal_period = 24
+
+differenced_series = time_series_data.diff().dropna()
+
+# plot ACF and PACF of time series
+fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+plot_acf(differenced_series, ax=axes[0])
+plot_pacf(differenced_series, ax=axes[1])
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="website performance analysis: autocorrelation and partial autocorrelation plots" class="wp-image-23366" data-attachment-id="23366" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="website-performance-5" data-orig-size="1002,374" data-recalc-dims="1" decoding="async" height="374" loading="lazy" sizes="auto, (max-width: 1002px) 100vw, 1002px" src="../assets/datasets/website-performance-5.png" width="1002"/></figure>
+<p>Here’s how to interpret the above graph:</p>
+<ul class="wp-block-list">
+<li><strong>PACF (Partial Autocorrelation Function)</strong>: This plot helps determine the <em>p</em> parameter for the AR part of the model. You look for the lag after which most partial autocorrelations are not significantly different from zero. In our plot, the PACF shows a significant spike at lag 1 and then cuts off, suggesting an AR part of order 1. Therefore, <em>p</em>=1.</li>
+<li><strong>ACF (Autocorrelation Function)</strong>: This plot helps identify the <em>q</em> parameter for the MA part of the model. You look for the lag after which most autocorrelations are not significantly different from zero. The ACF plot in our case tails off gradually, but considering the first significant spike is essential. Since the spike at lag 1 is significant and there’s a gradual tailing off rather than a sharp cut-off, it suggests a potential MA component. However, the tailing-off nature complicates the exact determination of <em>q</em>, but a starting point of <em>q</em>=1 could be considered.</li>
+</ul>
+<p>The other parameter is d, representing seasonality. In our case, as seasonality exists, we can choose the value of d as 1. Now, here’s how we can forecast the website’s traffic for the next 24 hours using the SARIMA model:</p>
+<pre><code class="language-python">from statsmodels.tsa.statespace.sarimax import SARIMAX
+
+time_series_data = grouped_data['Sessions'].asfreq('H').fillna(method='ffill')
+seasonal_period = 24
+
+
+sarima_model = SARIMAX(time_series_data,
+                      order=(1, 1, 1),
+                      seasonal_order=(1, 1, 1, seasonal_period))
+sarima_model_fit = sarima_model.fit()
+
+# forecast the next 24 hours using the SARIMA model
+sarima_forecast = sarima_model_fit.forecast(steps=24)
+
+# plotting the actual data and the SARIMA forecast
+plt.figure(figsize=(14, 7))
+plt.plot(time_series_data.index[-168:], time_series_data[-168:], label='Actual Sessions', color='blue')  # last week data
+plt.plot(pd.date_range(time_series_data.index[-1], periods=25, freq='H')[1:], sarima_forecast, label='Forecasted Sessions', color='red')
+plt.title('Website Traffic Forecasting with SARIMA (Sessions)')
+plt.xlabel('Date and Hour')
+plt.ylabel('Sessions')
+plt.legend()
+plt.grid(True)
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Website Traffic Forecasting" class="wp-image-23369" data-attachment-id="23369" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="website-performance-6" data-orig-size="1160,624" data-recalc-dims="1" decoding="async" height="551" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="../assets/datasets/website-performance-6.png" style="width:729px;height:auto" width="1024"/></figure>
+<p>So this is how we can analyze the performance of a website and forecast its traffic using Python.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, in this article, we conducted a comprehensive analysis of the website’s performance, based on:</p>
+<ul class="wp-block-list">
+<li><strong>Session Analysis</strong>: Understanding traffic trends.</li>
+<li><strong>User Engagement Analysis</strong>: Gauging the depth of user interaction.</li>
+<li><strong>Channel Performance</strong>: Evaluating which channels are most effective.</li>
+<li><strong>Website Traffic Forecasting</strong>: Predicting future traffic patterns.</li>
+</ul>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="ads-ctr-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="music-recommendation-system-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

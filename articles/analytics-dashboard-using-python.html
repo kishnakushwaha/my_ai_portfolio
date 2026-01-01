@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Analytics Dashboard using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Analytics Dashboard using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 06, 2025 • 5 min read</div>
+<p>An analytics dashboard is a data visualization tool that aggregates, displays, and analyzes key performance indicators (KPIs), metrics, and other key data points related to a business, department, or specific process. If you want to learn how to build an Analytics Dashboard using Python, this article is for you. In this article, I’ll take you through how to build an analytics dashboard using Python and dash.</p>
+<h2 class="wp-block-heading">How to Build an Analytics Dashboard Using Python?</h2>
+<p>To build an analytics dashboard using Python, we can use the plotly dash framework. Dash is a productive Python framework for building web analytical applications. It’s built on top of Plotly.js and React.js.</p>
+<p>It offers a simple interface for creating interactive, web-based dashboards. It is highly customizable and can produce very sophisticated and interactive dashboards. Dash applications are web servers running Flask and communicating JSON packets over HTTP requests.</p>
+<p>To show you how to build an analytics dashboard, I’ll build an RFM Analytics dashboard.</p>
+<h2 class="wp-block-heading">Building an RFM Analytics Dashboard using Python</h2>
+<p>Now, let’s build an RFM Analytics dashboard using Python. First, we need a dataset based on RFM Analytics. You can find a dataset from <a href="https://statso.io/rfm-analysis-case-study/" rel="noreferrer noopener" target="_blank"><strong>here</strong></a>. </p>
+<p>I have already written a brief article on performing RFM Analysis using Python. I will take the complete code from that article and move forward to building a dashboard. You can find that article <a href="https://my-ai-portfolio.com/2023/06/12/rfm-analysis-using-python/" rel="noreferrer noopener" target="_blank"><strong>here</strong></a>.</p>
+<p>Below is the complete code mentioned in the article I wrote previously on RFM Analysis:</p>
+<pre><code class="language-python">import pandas as pd
+import plotly.express as px
+import plotly.io as pio
+import plotly.graph_objects as go
+pio.templates.default = "plotly_white"
+
+data = pd.read_csv("rfm_data.csv")
+print(data.head())
+
+from datetime import datetime
+
+# Convert 'PurchaseDate' to datetime
+data['PurchaseDate'] = pd.to_datetime(data['PurchaseDate'])
+
+# Calculate Recency
+data['Recency'] = (datetime.now().date() - data['PurchaseDate'].dt.date).dt.days
+
+# Calculate Frequency
+frequency_data = data.groupby('CustomerID')['OrderID'].count().reset_index()
+frequency_data.rename(columns={'OrderID': 'Frequency'}, inplace=True)
+data = data.merge(frequency_data, on='CustomerID', how='left')
+
+# Calculate Monetary Value
+monetary_data = data.groupby('CustomerID')['TransactionAmount'].sum().reset_index()
+monetary_data.rename(columns={'TransactionAmount': 'MonetaryValue'}, inplace=True)
+data = data.merge(monetary_data, on='CustomerID', how='left')
+
+# Define scoring criteria for each RFM value
+recency_scores = [5, 4, 3, 2, 1]  # Higher score for lower recency (more recent)
+frequency_scores = [1, 2, 3, 4, 5]  # Higher score for higher frequency
+monetary_scores = [1, 2, 3, 4, 5]  # Higher score for higher monetary value
+
+# Calculate RFM scores
+data['RecencyScore'] = pd.cut(data['Recency'], bins=5, labels=recency_scores)
+data['FrequencyScore'] = pd.cut(data['Frequency'], bins=5, labels=frequency_scores)
+data['MonetaryScore'] = pd.cut(data['MonetaryValue'], bins=5, labels=monetary_scores)
+
+# Convert RFM scores to numeric type
+data['RecencyScore'] = data['RecencyScore'].astype(int)
+data['FrequencyScore'] = data['FrequencyScore'].astype(int)
+data['MonetaryScore'] = data['MonetaryScore'].astype(int)
+
+# Calculate RFM score by combining the individual scores
+data['RFM_Score'] = data['RecencyScore'] + data['FrequencyScore'] + data['MonetaryScore']
+
+# Create RFM segments based on the RFM score
+segment_labels = ['Low-Value', 'Mid-Value', 'High-Value']
+data['Value Segment'] = pd.qcut(data['RFM_Score'], q=3, labels=segment_labels)
+
+# RFM Segment Distribution
+segment_counts = data['Value Segment'].value_counts().reset_index()
+segment_counts.columns = ['Value Segment', 'Count']
+
+# Define the pastel color palette
+pastel_colors = px.colors.qualitative.Pastel
+
+# Create the bar chart with pastel colors
+fig_segment_dist = px.bar(segment_counts, x='Value Segment', y='Count',
+                          color='Value Segment', color_discrete_sequence=pastel_colors,
+                          title='RFM Value Segment Distribution')
+
+# Update the layout
+fig_segment_dist.update_layout(xaxis_title='RFM Value Segment',
+                              yaxis_title='Count',
+                              showlegend=False)
+
+# Show the figure
+fig_segment_dist.show()
+
+# Create a new column for RFM Customer Segments
+data['RFM Customer Segments'] = ''
+
+# Assign RFM segments based on the RFM score
+data.loc[data['RFM_Score'] &gt;= 9, 'RFM Customer Segments'] = 'Champions'
+data.loc[(data['RFM_Score'] &gt;= 6) &amp; (data['RFM_Score'] &lt; 9), 'RFM Customer Segments'] = 'Potential Loyalists'
+data.loc[(data['RFM_Score'] &gt;= 5) &amp; (data['RFM_Score'] &lt; 6), 'RFM Customer Segments'] = 'At Risk Customers'
+data.loc[(data['RFM_Score'] &gt;= 4) &amp; (data['RFM_Score'] &lt; 5), 'RFM Customer Segments'] = "Can't Lose"
+data.loc[(data['RFM_Score'] &gt;= 3) &amp; (data['RFM_Score'] &lt; 4), 'RFM Customer Segments'] = "Lost"
+
+segment_product_counts = data.groupby(['Value Segment', 'RFM Customer Segments']).size().reset_index(name='Count')
+
+segment_product_counts = segment_product_counts.sort_values('Count', ascending=False)
+
+fig_treemap_segment_product = px.treemap(segment_product_counts,
+                                         path=['Value Segment', 'RFM Customer Segments'],
+                                         values='Count',
+                                         color='Value Segment', color_discrete_sequence=px.colors.qualitative.Pastel,
+                                         title='RFM Customer Segments by Value')
+fig_treemap_segment_product.show()
+
+# Filter the data to include only the customers in the Champions segment
+champions_segment = data[data['RFM Customer Segments'] == 'Champions']
+
+champions_segment_fig = go.Figure()
+champions_segment_fig.add_trace(go.Box(y=champions_segment['RecencyScore'], name='Recency'))
+champions_segment_fig.add_trace(go.Box(y=champions_segment['FrequencyScore'], name='Frequency'))
+champions_segment_fig.add_trace(go.Box(y=champions_segment['MonetaryScore'], name='Monetary'))
+
+champions_segment_fig.update_layout(title='Distribution of RFM Values within Champions Segment',
+                  yaxis_title='RFM Value',
+                  showlegend=True)
+
+champions_segment_fig.show()
+
+correlation_matrix = champions_segment[['RecencyScore', 'FrequencyScore', 'MonetaryScore']].corr()
+
+# Visualize the correlation matrix using a heatmap
+fig_corr_heatmap = go.Figure(data=go.Heatmap(
+                   z=correlation_matrix.values,
+                   x=correlation_matrix.columns,
+                   y=correlation_matrix.columns,
+                   colorscale='RdBu',
+                   colorbar=dict(title='Correlation')))
+
+fig_corr_heatmap.update_layout(title='Correlation Matrix of RFM Values within Champions Segment')
+
+fig_corr_heatmap.show()
+
+import plotly.colors
+
+pastel_colors = plotly.colors.qualitative.Pastel
+
+segment_counts = data['RFM Customer Segments'].value_counts()
+
+# Create a bar chart to compare segment counts
+comparison_fig = go.Figure(data=[go.Bar(x=segment_counts.index, y=segment_counts.values,
+                            marker=dict(color=pastel_colors))])
+
+# Set the color of the Champions segment as a different color
+champions_color = 'rgb(158, 202, 225)'
+comparison_fig.update_traces(marker_color=[champions_color if segment == 'Champions' else pastel_colors[i]
+                                for i, segment in enumerate(segment_counts.index)],
+                  marker_line_color='rgb(8, 48, 107)',
+                  marker_line_width=1.5, opacity=0.6)
+
+# Update the layout
+comparison_fig.update_layout(title='Comparison of RFM Segments',
+                  xaxis_title='RFM Segments',
+                  yaxis_title='Number of Customers',
+                  showlegend=False)
+
+# Show the figure
+comparison_fig.show()
+
+# Calculate the average Recency, Frequency, and Monetary scores for each segment
+segment_scores = data.groupby('RFM Customer Segments')['RecencyScore', 'FrequencyScore', 'MonetaryScore'].mean().reset_index()
+
+# Create a grouped bar chart to compare segment scores
+fig = go.Figure()
+
+# Add bars for Recency score
+fig.add_trace(go.Bar(
+    x=segment_scores['RFM Customer Segments'],
+    y=segment_scores['RecencyScore'],
+    name='Recency Score',
+    marker_color='rgb(158,202,225)'
+))
+
+# Add bars for Frequency score
+fig.add_trace(go.Bar(
+    x=segment_scores['RFM Customer Segments'],
+    y=segment_scores['FrequencyScore'],
+    name='Frequency Score',
+    marker_color='rgb(94,158,217)'
+))
+
+# Add bars for Monetary score
+fig.add_trace(go.Bar(
+    x=segment_scores['RFM Customer Segments'],
+    y=segment_scores['MonetaryScore'],
+    name='Monetary Score',
+    marker_color='rgb(32,102,148)'
+))
+
+# Update the layout
+fig.update_layout(
+    title='Comparison of RFM Segments based on Recency, Frequency, and Monetary Scores',
+    xaxis_title='RFM Segments',
+    yaxis_title='Score',
+    barmode='group',
+    showlegend=True
+)
+
+fig.show()</code></pre>
+<p>As mentioned above, you can learn each part of this code from <a href="https://my-ai-portfolio.com/2023/06/12/rfm-analysis-using-python/" rel="noreferrer noopener" target="_blank"><strong>here</strong></a>. Now, let’s see how to turn our RFM Analysis into a dashboard:</p>
+<pre><code class="language-python">import dash
+from dash import dcc, html
+from dash.dependencies import Input, Output
+import plotly.io as pio
+import plotly.colors as pc
+
+# Initialize the Dash app
+app = dash.Dash(__name__)
+
+# Define the app layout using Bootstrap components
+app.layout = html.Div([
+    html.H1("RFM Analysis Dashboard", className="text-center mb-4"),
+    html.Div("Analyze customer segments based on RFM scores.", className="text-center mb-4"),
+    
+    # Dropdown for selecting the chart
+    dcc.Dropdown(
+        id='chart-type-dropdown',
+        options=[
+            {'label': 'RFM Value Segment Distribution', 'value': 'segment_distribution'},
+            {'label': 'Distribution of RFM Values within Customer Segment', 'value': 'RFM_distribution'},
+            {'label': 'Correlation Matrix of RFM Values within Champions Segment', 'value': 'correlation_matrix'},
+            {'label': 'Comparison of RFM Segments', 'value': 'segment_comparison'},
+            {'label': 'Comparison of RFM Segments based on Scores', 'value': 'segment_scores'},
+        ],
+        value='segment_distribution',  # Default selection
+        className="mb-4",
+    ),
+    
+    # Graph container
+    dcc.Graph(id='rfm-chart', className="mb-4"),
+])
+
+# Define callback to update the selected chart
+@app.callback(
+    Output('rfm-chart', 'figure'),
+    [Input('chart-type-dropdown', 'value')]
+)
+def update_chart(selected_chart_type):
+    if selected_chart_type == 'segment_distribution':
+        return fig_segment_dist
+    elif selected_chart_type == 'RFM_distribution':
+        return fig_treemap_segment_product
+    elif selected_chart_type == 'correlation_matrix':
+        return fig_corr_heatmap
+    elif selected_chart_type == 'segment_comparison':
+        return comparison_fig
+    elif selected_chart_type == 'segment_scores':
+        return fig
+    
+    # Return a default chart if no valid selection
+    return fig_segment_dist
+
+if __name__ == '__main__':
+    app.run_server(port=8052)</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Analytics Dashboard using Python" class="wp-image-22189" data-attachment-id="22189" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/image.png?fit=1024%2C697&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/image.png?fit=300%2C204&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/image.png?fit=1874%2C1276&amp;ssl=1" data-orig-size="1874,1276" data-permalink="https://my-ai-portfolio.com/2024/01/01/analytics-dashboard-using-python/image-146/" data-recalc-dims="1" decoding="async" height="697" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/image.png?resize=1024%2C697&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/image.png?resize=1024%2C697&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/image.png?resize=300%2C204&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/image.png?resize=768%2C523&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/image.png?resize=1536%2C1046&amp;ssl=1 1536w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/image.png?resize=1200%2C817&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/image.png?w=1874&amp;ssl=1 1874w" style="width:638px;height:auto" width="1024"/></figure>
+<p>Now, let’s understand each part of the above code.</p>
+<pre class="wp-block-preformatted"><strong>app = dash.Dash(__name__)</strong></pre>
+<p>This line initializes a new Dash application. __name__ helps determine the root path for the application.</p>
+<pre class="wp-block-preformatted"><strong>app.layout = html.Div([...])</strong></pre>
+<p>It is a container that holds all other Dash and HTML components. It represents a division or a section in an HTML document. It is where you define the structure of your dashboard.</p>
+<p>Inside the html.Div, the following components are included:</p>
+<ul class="wp-block-list">
+<li><strong>html.H1(“RFM Analysis Dashboard”, className=”text-center mb-4″)</strong>: This creates a header (H1 tag in HTML) for the title of the dashboard. className is used to apply CSS classes.</li>
+<li><strong>html.Div(“Analyze customer segments based on RFM scores.”, className=”text-center mb-4″)</strong>: This is a text description providing some context about the dashboard.</li>
+<li><strong>dcc.Dropdown(…)</strong>: This creates a dropdown menu that allows the user to select the type of chart they want to display. The options parameter is a list of dictionaries, each representing a different chart the user can select. value sets the default value displayed in the dropdown.</li>
+<li><strong>dcc.Graph(id=’rfm-chart’, className=”mb-4″)</strong>: This is a container for the graph that will display the selected chart. The id is used to identify this component in callbacks.</li>
+</ul>
+<pre class="wp-block-preformatted"><strong>@app.callback(<br/>    Output('rfm-chart', 'figure'),<br/>    [Input('chart-type-dropdown', 'value')]<br/>)<br/>def update_chart(selected_chart_type):<br/>    # Conditional statements to return the appropriate figure</strong></pre>
+<p><strong>@app.callback</strong> is a decorator that turns a Python function into a Dash callback. Whenever an input component’s property changes, the function it decorates gets called automatically. </p>
+<p><strong>Output(‘rfm-chart’, ‘figure’) </strong>indicates that the output of the callback will be to modify the ‘figure’ property of the component with the id ‘rfm chart’.<strong> Input(‘chart-type-dropdown’, ‘value’)</strong> specifies the input for the callback. It uses the ‘value’ property of the component with the id ‘chart-type-dropdown’. When this value changes (i.e., the user selects a different option from the dropdown), the callback function is triggered.</p>
+<p><strong>def update_chart(selected_chart_type)</strong> is the callback function that gets called when the input changes. It receives the new value of the dropdown as an argument and returns the figure corresponding to the selected chart type.</p>
+<pre class="wp-block-preformatted"><strong>if __name__ == '__main__':<br/>    app.run_server(port=8052)</strong></pre>
+<p>It simply runs our analytics dashboard. You can see the video output of our analytics dashboard below.</p>
+<blockquote class="twitter-tweet"><p dir="ltr" lang="en">Learn how to build an analytics dashboard using Python.<br/><br/>Link: <a href="https://t.co/eM8PNMNO8D">https://t.co/eM8PNMNO8D</a><a href="https://twitter.com/hashtag/DataScience?src=hash&amp;ref_src=twsrc%5Etfw">#DataScience</a> <a href="https://twitter.com/hashtag/DataAnalytics?src=hash&amp;ref_src=twsrc%5Etfw">#DataAnalytics</a> <a href="https://twitter.com/hashtag/Python?src=hash&amp;ref_src=twsrc%5Etfw">#Python</a> <a href="https://t.co/IOWxTj2oeB">pic.twitter.com/IOWxTj2oeB</a></p>— Kishna Kushwaha (@amankk_9) <a href="https://twitter.com/amankk_9/status/1741728303868719449?ref_src=twsrc%5Etfw">January 1, 2024</a></blockquote>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, this is how to build an analytics dashboard using Python. An analytics dashboard is a data visualization tool that aggregates, displays, and analyzes key performance indicators (KPIs), metrics, and other key data points related to a business, department, or specific process. I hope you liked this article on building an Analytics Dashboard using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="analyzing-screen-time-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="elections-ad-spending-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

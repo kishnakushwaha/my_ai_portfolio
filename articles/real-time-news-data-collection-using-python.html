@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Real-Time News Data Collection using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Real-Time News Data Collection using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 16, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="data-cleaning-pipeline-using-pandas.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="b2b-courier-charges-accuracy-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>As a Data Scientist, having the ability to collect, process, and analyze live news data is a seriously valuable skill. It covers everything from querying live news APIs to extracting and storing the data. So, if you want to learn about collecting real-time news data, this article is for you. In this article, I’ll take you through the task of real-time news data collection using <strong><a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">Python</a></strong>.</p>
+<h2 class="wp-block-heading">Real-Time News Data Collection using Python</h2>
+<p>Before you begin, make sure you have:</p>
+<ol class="wp-block-list">
+<li>Your NewsAPI key (get it for free at <strong><a href="https://newsapi.org" rel="noreferrer noopener" target="_blank">newsapi.org</a></strong>)</li>
+<li>The following Python libraries:</li>
+</ol>
+<pre class="wp-block-preformatted"><strong>pip install dotenv wordcloud</strong></pre>
+<h4 class="wp-block-heading">Step 1: Fetch Live News Using NewsAPI</h4>
+<p>Let’s set up our script. Most of the data professionals use <strong>NewsAPI</strong> because it gives them programmatic access to news from thousands of sources. Think of it as a news search engine.</p>
+<p>Here’s the function we can use to fetch news headlines:</p>
+<pre><code class="language-python">import requests
+import pandas as pd
+from datetime import datetime, timedelta
+from dotenv import load_dotenv
+import os
+
+# load API key from .env file
+load_dotenv()
+API_KEY = os.getenv("your api key")
+
+# dates for the last 2 days
+to_date = datetime.utcnow().date()
+from_date = to_date - timedelta(days=2)
+
+QUERY = 'India Pakistan war OR conflict OR border OR attack OR tension'
+LANG = 'en'
+PAGE_SIZE = 100  # max per page
+
+def fetch_news(query, from_date, to_date, api_key, page_size=100):
+    url = 'https://newsapi.org/v2/everything'
+    all_articles = []
+    for page in range(1, 6):  # try up to 5 pages
+        params = {
+            'q': query,
+            'from': from_date,
+            'to': to_date,
+            'language': LANG,
+            'pageSize': page_size,
+            'page': page,
+            'sortBy': 'publishedAt',
+            'apiKey': api_key
+        }
+        response = requests.get(url, params=params)
+        data = response.json()
+
+        if data.get("status") != "ok":
+            print("Error:", data.get("message"))
+            break
+
+        articles = data.get("articles", [])
+        if not articles:
+            break
+        all_articles.extend(articles)
+    return all_articles</code></pre>
+<p>Here, we are querying up to 500 articles from the past two days. As a student, you can only use the free API, which gives you access to up to 100 news articles.</p>
+<h4 class="wp-block-heading">Step 2: Store the News Articles in a CSV</h4>
+<p>Now, we will convert the API output into a structured format (a DataFrame) and save it in a way that can be used for analysis:</p>
+<pre><code class="language-python"># fetch articles
+articles = fetch_news(QUERY, from_date.isoformat(), to_date.isoformat(), API_KEY)
+
+# convert to dataframe
+df = pd.DataFrame([{
+    'title': article['title'],
+    'description': article['description'],
+    'source': article['source']['name'],
+    'published_at': article['publishedAt'],
+    'url': article['url'],
+    'content': article['content']
+} for article in articles])
+
+# save to CSV
+df.to_csv("india_pakistan_conflict_news.csv", index=False)
+print(f"{len(df)} articles saved to 'india_pakistan_conflict_news.csv'")</code></pre>
+<p>At this point, we’ve successfully built a pipeline that pulls in structured news data on demand. If you want to automate this, you can schedule it with <strong><a href="https://pypi.org/project/schedule/" rel="noreferrer noopener" target="_blank">Python’s schedule module</a></strong>.</p>
+<h4 class="wp-block-heading">Step 3: Visualizing the Headlines with a Word Cloud</h4>
+<p>One of my favourite ways to quickly gauge what a collection of articles is about is with a <strong>word cloud</strong>. Here’s how you can generate one using titles and descriptions:</p>
+<pre><code class="language-python">from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+
+# combine title and description text for word cloud
+text_data = df['title'].fillna('') + ' ' + df['description'].fillna('')
+combined_text = ' '.join(text_data.tolist())
+
+# generate word cloud
+wordcloud = WordCloud(width=1000, height=500, background_color='white', collocations=False).generate(combined_text)
+
+plt.figure(figsize=(12, 6))
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis('off')
+plt.title("Word Cloud of News Headlines and Descriptions", fontsize=16)
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Word Cloud of News Headlines" class="wp-image-26670" data-attachment-id="26670" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Word Cloud of News Headlines" data-orig-size="944,506" data-recalc-dims="1" decoding="async" height="506" sizes="(max-width: 944px) 100vw, 944px" src="../assets/datasets/Word-Cloud-of-News-Headlines.png" width="944"/></figure>
+<p>Building tools like this not only sharpens your data collection skills but also prepares you for advanced projects in NLP, dashboards, or even ML-powered event prediction systems.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="data-cleaning-pipeline-using-pandas.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="b2b-courier-charges-accuracy-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Ads Click Through Rate Prediction using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Ads Click Through Rate Prediction using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 01, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="credit-scoring-and-segmentation-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="text-emotions-classification-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Ads Click Through Rate is the ratio of how many users clicked on your ad to how many users viewed your ad. For example, 5 out of 100 users click on the ad while watching a youtube video. So, in this case, the CTR of the youtube ad will be 5%. Analyzing the click-through rate help companies in finding the best ad for their target audience. So, if you want to learn how to analyze and predict the Ads click-through rate with Machine Learning, this article is for you. This article will take you through Ads Click Through Rate prediction with <strong><a href="machine-learning-roadmap.html" rel="noreferrer noopener" target="">Machine Learning</a></strong> using <a href="roadmap-to-learn-python.html" rel="noreferrer noopener" target=""><strong>Python</strong></a>.</p>
+<h2 class="wp-block-heading">Ads Click-Through Rate Prediction</h2>
+<p>Ads Click-through rate prediction means predicting whether the user will click on the ad. In the task of ads click-through rate prediction, we need to train a Machine Learning model to find relationships between the characteristics of all the users who click on ads.</p>
+<p>I found an ideal dataset for this task containing data about the user and whether the user clicked on the ad. You can download the dataset from <a href="https://statso.io/click-through-rate-analysis-case-study/" rel="noreferrer noopener" target="_blank"><strong>here</strong></a>.</p>
+<p>In the section below, I will take you through the task of Ads Click Through Rate Prediction with Machine Learning using Python.</p>
+<h2 class="wp-block-heading">Ads Click-Through Rate Prediction using Python</h2>
+<p>Let’s start the task of ads click-through rate prediction by importing the necessary Python libraries and the <a href="https://statso.io/click-through-rate-analysis-case-study/" rel="noreferrer noopener" target="_blank"><strong>dataset</strong></a>:</p>
+<pre><code class="language-python">import pandas as pd
+import plotly.graph_objects as go
+import plotly.express as px
+import plotly.io as pio
+import numpy as np
+pio.templates.default = "plotly_white"
+
+data = pd.read_csv("ad_10000records.csv")
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>   Daily Time Spent on Site   Age  Area Income  Daily Internet Usage  \
+0                     62.26  32.0     69481.85                172.83   
+1                     41.73  31.0     61840.26                207.17   
+2                     44.40  30.0     57877.15                172.83   
+3                     59.88  28.0     56180.93                207.17   
+4                     49.21  30.0     54324.73                201.58   
+
+                         Ad Topic Line             City  Gender  \
+0      Decentralized real-time circuit         Lisafort    Male   
+1       Optional full-range projection  West Angelabury    Male   
+2  Total 5thgeneration standardization        Reyesfurt  Female   
+3          Balanced empowering success      New Michael  Female   
+4  Total 5thgeneration standardization     West Richard  Female   
+
+                        Country            Timestamp  Clicked on Ad  
+0  Svalbard &amp; Jan Mayen Islands  2016-06-09 21:43:05              0  
+1                     Singapore  2016-01-16 17:56:05              0  
+2                    Guadeloupe  2016-06-29 10:50:45              0  
+3                        Zambia  2016-06-21 14:32:32              0  
+4                         Qatar  2016-07-21 10:54:35              1  </strong></pre>
+<p>The “Clicked on Ad” column contains 0 and 1 values, where 0 means not clicked, and 1 means clicked. I’ll transform these values into “yes” and “no”:</p>
+<pre><code class="language-python">data["Clicked on Ad"] = data["Clicked on Ad"].map({0: "No", 
+                               1: "Yes"})</code></pre>
+<h2 class="wp-block-heading">Click Through Rate Analysis</h2>
+<p>Now let’s analyze the click-through rate based on the time spent by the users on the website:</p>
+<pre><code class="language-python">fig = px.box(data, 
+             x="Daily Time Spent on Site",  
+             color="Clicked on Ad", 
+             title="Click Through Rate based Time Spent on Site", 
+             color_discrete_map={'Yes':'blue',
+                                 'No':'red'})
+fig.update_traces(quartilemethod="exclusive")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Click Through Rate based on Time Spent on Site" class="wp-image-19453" data-attachment-id="19453" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ctr1" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="../assets/datasets/ctr1.png" width="857"/></figure>
+<p>From the above graph, we can see that the users who spend more time on the website click more on ads. Now let’s analyze the click-through rate based on the daily internet usage of the user:</p>
+<pre><code class="language-python">fig = px.box(data, 
+             x="Daily Internet Usage",  
+             color="Clicked on Ad", 
+             title="Click Through Rate based on Daily Internet Usage", 
+             color_discrete_map={'Yes':'blue',
+                                 'No':'red'})
+fig.update_traces(quartilemethod="exclusive")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Click Through Rate based on Daily Internet Usage" class="wp-image-19455" data-attachment-id="19455" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ctr2" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="../assets/datasets/ctr2.png" width="857"/></figure>
+<p>From the above graph, we can see that the users with high internet usage click less on ads compared to the users with low internet usage. Now let’s analyze the click-through rate based on the age of the users:</p>
+<pre><code class="language-python">fig = px.box(data, 
+             x="Age",  
+             color="Clicked on Ad", 
+             title="Click Through Rate based on Age", 
+             color_discrete_map={'Yes':'blue',
+                                 'No':'red'})
+fig.update_traces(quartilemethod="exclusive")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="CTR based on age" class="wp-image-19457" data-attachment-id="19457" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ctr3" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/ctr3.png" width="857"/></figure>
+<p>From the above graph, we can see that users around 40 years click more on ads compared to users around 27-36 years old. Now let’s analyze the click-through rate based on the income of the users:</p>
+<pre><code class="language-python">fig = px.box(data, 
+             x="Area Income",  
+             color="Clicked on Ad", 
+             title="Click Through Rate based on Income", 
+             color_discrete_map={'Yes':'blue',
+                                 'No':'red'})
+fig.update_traces(quartilemethod="exclusive")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="CTR based on Income" class="wp-image-19459" data-attachment-id="19459" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ctr4" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/ctr4.png" width="857"/></figure>
+<p>There’s not much difference, but people from high-income areas click less on ads.</p>
+<h2 class="wp-block-heading">Calculating CTR of Ads</h2>
+<p>Now let’s calculate the overall Ads click-through rate. Here we need to calculate the ratio of users who clicked on the ad to users who left an impression on the ad. So let’s see the distribution of users:</p>
+<pre><code class="language-python">data["Clicked on Ad"].value_counts()</code></pre>
+<pre class="wp-block-preformatted"><strong>No     5083
+Yes    4917
+Name: Clicked on Ad, dtype: int64</strong></pre>
+<p>So 4917 out of 10000 users clicked on the ads. Let’s calculate the CTR:</p>
+<pre><code class="language-python">click_through_rate = 4917 / 10000 * 100
+print(click_through_rate)</code></pre>
+<pre class="wp-block-preformatted"><strong>49.17</strong></pre>
+<p>So the CTR is 49.17.</p>
+<h2 class="wp-block-heading">Click Through Rate Prediction Model</h2>
+<p>Now let’s move on to training a Machine Learning model to predict click-through rate. I’ll start by dividing the data into training and testing sets:</p>
+<pre><code class="language-python">data["Gender"] = data["Gender"].map({"Male": 1, 
+                               "Female": 0})
+
+x=data.iloc[:,0:7]
+x=x.drop(['Ad Topic Line','City'],axis=1)
+y=data.iloc[:,9]
+
+from sklearn.model_selection import train_test_split
+xtrain,xtest,ytrain,ytest=train_test_split(x,y,
+                                           test_size=0.2,
+                                           random_state=4)</code></pre>
+<p>Now let’s train the model using the random forecast classification algorithm:</p>
+<pre><code class="language-python">from sklearn.ensemble import RandomForestClassifier
+model = RandomForestClassifier()
+model.fit(x, y)</code></pre>
+<p>Now let’s have a look at the accuracy of the model:</p>
+<pre><code class="language-python">from sklearn.metrics import accuracy_score
+print(accuracy_score(ytest,y_pred))</code></pre>
+<pre class="wp-block-preformatted"><strong>0.9615</strong></pre>
+<p>Now let’s test the model by making predictions:</p>
+<pre><code class="language-python">print("Ads Click Through Rate Prediction : ")
+a = float(input("Daily Time Spent on Site: "))
+b = float(input("Age: "))
+c = float(input("Area Income: "))
+d = float(input("Daily Internet Usage: "))
+e = input("Gender (Male = 1, Female = 0) : ")
+
+features = np.array([[a, b, c, d, e]])
+print("Will the user click on ad = ", model.predict(features))</code></pre>
+<pre class="wp-block-preformatted"><strong>Ads Click Through Rate Prediction : 
+Daily Time Spent on Site: 62.26
+Age: 28
+Area Income: 61840.26
+Daily Internet Usage: 207.17
+Gender (Male = 1, Female = 0) : 0
+Will the user click on ad =  ['No']</strong></pre>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So this is how you can use Machine Learning for the task of Ads CTR prediction using Python. Ads CTR means predicting whether the user will click on the ad. In this task, we need to train a Machine Learning model to find relationships between the characteristics of all the users who click on ads. I hope you liked this article on Ads Click Through Rate prediction with Machine Learning using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="credit-scoring-and-segmentation-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="text-emotions-classification-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Weather Forecasting using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Weather Forecasting using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 19, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="data-augmentation-using-llms.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="demand-forecasting-and-inventory-optimization-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>In <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">Data Science</a></strong>, weather forecasting is an application of Time Series Forecasting where we use time-series data and algorithms to make forecasts for a given time. If you want to learn how to forecast the weather using your Data Science skills, this article is for you. In this article, I will take you through the task of weather forecasting using Python.</p>
+<h2 class="wp-block-heading">Weather Forecasting</h2>
+<p>Weather forecasting is the task of forecasting weather conditions for a given location and time. With the use of weather data and algorithms, it is possible to predict weather conditions for the next n number of days.</p>
+<p>For forecasting weather using Python, we need a dataset containing historical weather data based on a particular location. I found a dataset on Kaggle based on the Daily weather data of New Delhi. We can use this dataset for the task of weather forecasting. <strong>You can download the dataset from <a href="https://www.kaggle.com/datasets/sumanthvrao/daily-climate-time-series-data" rel="noreferrer noopener" target="_blank">here</a></strong>.</p>
+<p>In the section below, you will learn how we can analyze and forecast the weather using Python.</p>
+<h2 class="wp-block-heading">Analyzing Weather Data using Python</h2>
+<p>Now let’s start this task by importing the necessary Python libraries and the dataset we need:</p>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.express as px
+
+data = pd.read_csv("DailyDelhiClimateTrain.csv")
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted"><strong>         date   meantemp   humidity  wind_speed  meanpressure
+0  2013-01-01  10.000000  84.500000    0.000000   1015.666667
+1  2013-01-02   7.400000  92.000000    2.980000   1017.800000
+2  2013-01-03   7.166667  87.000000    4.633333   1018.666667
+3  2013-01-04   8.666667  71.333333    1.233333   1017.166667
+4  2013-01-05   6.000000  86.833333    3.700000   1016.500000</strong></pre>
+<p>Let’s have a look at the descriptive statistics of this data before moving forward:</p>
+<pre><code class="language-python">print(data.describe())</code></pre>
+<pre class="wp-block-preformatted"><strong>          meantemp     humidity   wind_speed  meanpressure
+count  1462.000000  1462.000000  1462.000000   1462.000000
+mean     25.495521    60.771702     6.802209   1011.104548
+std       7.348103    16.769652     4.561602    180.231668
+min       6.000000    13.428571     0.000000     -3.041667
+25%      18.857143    50.375000     3.475000   1001.580357
+50%      27.714286    62.625000     6.221667   1008.563492
+75%      31.305804    72.218750     9.238235   1014.944901
+max      38.714286   100.000000    42.220000   7679.333333</strong></pre>
+<p>Now let’s have a look at the information about all the columns in the dataset:</p>
+<pre><code class="language-python">print(data.info())</code></pre>
+<pre class="wp-block-preformatted"><strong>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 1462 entries, 0 to 1461
+Data columns (total 5 columns):
+ #   Column        Non-Null Count  Dtype  
+---  ------        --------------  -----  
+ 0   date          1462 non-null   object 
+ 1   meantemp      1462 non-null   float64
+ 2   humidity      1462 non-null   float64
+ 3   wind_speed    1462 non-null   float64
+ 4   meanpressure  1462 non-null   float64
+dtypes: float64(4), object(1)
+memory usage: 57.2+ KB</strong></pre>
+<p>The date column in this dataset is not having a datetime data type. We will change it when required. Let’s have a look at the mean temperature in Delhi over the years:</p>
+<pre><code class="language-python">figure = px.line(data, x="date", 
+                 y="meantemp", 
+                 title='Mean Temperature in Delhi Over the Years')
+figure.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Weather Forecasting: Mean Temperature in Delhi Over the Years" class="wp-image-18546" data-attachment-id="18546" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="weather-forecasting-1" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="../assets/datasets/weather-forecasting-1.png" width="857"/></figure>
+<p>Now let’s have a look at the humidity in Delhi over the years:</p>
+<pre><code class="language-python">figure = px.line(data, x="date", 
+                 y="humidity", 
+                 title='Humidity in Delhi Over the Years')
+figure.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Humidity in Delhi Over the Years" class="wp-image-18548" data-attachment-id="18548" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="weather-forecasting-2" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="../assets/datasets/weather-forecasting-2.png" width="857"/></figure>
+<p>Now let’s have a look at the wind speed in Delhi over the years:</p>
+<pre><code class="language-python">figure = px.line(data, x="date", 
+                 y="wind_speed", 
+                 title='Wind Speed in Delhi Over the Years')
+figure.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Weather Forecasting: Wind Speed in Delhi Over the Years" class="wp-image-18550" data-attachment-id="18550" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="weather-forecasting-3" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/weather-forecasting-3.png" width="857"/></figure>
+<p>Till 2015, the wind speed was higher during monsoons (August &amp; September) and retreating monsoons (December &amp; January). After 2015, there were no anomalies in wind speed during monsoons. Now let’s have a look at the relationship between temperature and humidity:</p>
+<pre><code class="language-python">figure = px.scatter(data_frame = data, x="humidity",
+                    y="meantemp", size="meantemp", 
+                    trendline="ols", 
+                    title = "Relationship Between Temperature and Humidity")
+figure.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Relationship Between Temperature and Humidity" class="wp-image-18552" data-attachment-id="18552" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="weather-forecasting-4" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/weather-forecasting-4.png" width="857"/></figure>
+<p>There’s a negative correlation between temperature and humidity in Delhi. It means higher temperature results in low humidity and lower temperature results in high humidity.</p>
+<h2 class="wp-block-heading">Analyzing Temperature Change</h2>
+<p>Now let’s analyze the temperature change in Delhi over the years. For this task, I will first convert the data type of the date column into datetime. Then I will add two new columns in the dataset for year and month values.</p>
+<p>Here’s how we can change the data type and extract year and month data from the date column:</p>
+<pre><code class="language-python">data["date"] = pd.to_datetime(data["date"], format = '%Y-%m-%d')
+data['year'] = data['date'].dt.year
+data["month"] = data["date"].dt.month
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted"><strong>        date   meantemp   humidity  wind_speed  meanpressure  year  month
+0 2013-01-01  10.000000  84.500000    0.000000   1015.666667  2013      1
+1 2013-01-02   7.400000  92.000000    2.980000   1017.800000  2013      1
+2 2013-01-03   7.166667  87.000000    4.633333   1018.666667  2013      1
+3 2013-01-04   8.666667  71.333333    1.233333   1017.166667  2013      1
+4 2013-01-05   6.000000  86.833333    3.700000   1016.500000  2013      1</strong></pre>
+<p>Now let’s have a look at the temperature change in Delhi over the years:</p>
+<pre><code class="language-python">plt.style.use('fivethirtyeight')
+plt.figure(figsize=(15, 10))
+plt.title("Temperature Change in Delhi Over the Years")
+sns.lineplot(data = data, x='month', y='meantemp', hue='year')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Weather Forecasting: temperature change in Delhi over the years" class="wp-image-18554" data-attachment-id="18554" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="weather-forecasting-5" data-orig-size="997,658" data-recalc-dims="1" decoding="async" height="658" loading="lazy" sizes="auto, (max-width: 997px) 100vw, 997px" src="../assets/datasets/weather-forecasting-5.png" width="997"/></figure>
+<p>Although 2017 was not the hottest year in the summer, we can see a rise in the average temperature of Delhi every year.</p>
+<h2 class="wp-block-heading">Forecasting Weather using Python</h2>
+<p>Now let’s move to the task of weather forecasting. I will be using the Facebook prophet model for this task. The Facebook prophet model is one of the best techniques for time series forecasting. If you have never used this model before, you can install it on your system by using the command mentioned below in your command prompt or terminal:</p>
+<ul class="is-style-checkbox wp-block-list">
+<li>pip install prophet</li>
+</ul>
+<p>The prophet model accepts time data named as “ds”, and labels as “y”. So let’s convert the data into this format:</p>
+<pre><code class="language-python">forecast_data = data.rename(columns = {"date": "ds", 
+                                       "meantemp": "y"})
+print(forecast_data)</code></pre>
+<pre class="wp-block-preformatted"><strong>             ds          y    humidity  wind_speed  meanpressure  year  month
+0    2013-01-01  10.000000   84.500000    0.000000   1015.666667  2013      1
+1    2013-01-02   7.400000   92.000000    2.980000   1017.800000  2013      1
+2    2013-01-03   7.166667   87.000000    4.633333   1018.666667  2013      1
+3    2013-01-04   8.666667   71.333333    1.233333   1017.166667  2013      1
+4    2013-01-05   6.000000   86.833333    3.700000   1016.500000  2013      1
+...         ...        ...         ...         ...           ...   ...    ...
+1457 2016-12-28  17.217391   68.043478    3.547826   1015.565217  2016     12
+1458 2016-12-29  15.238095   87.857143    6.000000   1016.904762  2016     12
+1459 2016-12-30  14.095238   89.666667    6.266667   1017.904762  2016     12
+1460 2016-12-31  15.052632   87.000000    7.325000   1016.100000  2016     12
+1461 2017-01-01  10.000000  100.000000    0.000000   1016.000000  2017      1
+
+[1462 rows x 7 columns]</strong></pre>
+<p>Now below is how we can use the Facebook prophet model for weather forecasting using Python:</p>
+<pre><code class="language-python">from prophet import Prophet
+from prophet.plot import plot_plotly, plot_components_plotly
+model = Prophet()
+model.fit(forecast_data)
+forecasts = model.make_future_dataframe(periods=365)
+predictions = model.predict(forecasts)
+plot_plotly(model, predictions)</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="weather forecasting using Python" class="wp-image-18557" data-attachment-id="18557" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="weather-forecasting-6" data-orig-size="900,600" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 900px) 100vw, 900px" src="../assets/datasets/weather-forecasting-6.png" width="900"/></figure>
+<p>So this is how you can analyze and forecast the weather using Python.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>Weather forecasting is the task of forecasting weather conditions for a given location and time. With the use of weather data and algorithms, it is possible to predict weather conditions for the next n number of days. I hope you liked this article on Weather Analysis and Forecasting using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="data-augmentation-using-llms.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="demand-forecasting-and-inventory-optimization-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

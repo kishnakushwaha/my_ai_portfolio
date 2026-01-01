@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Data Preprocessing Pipeline using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Data Preprocessing Pipeline using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 15, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="automate-data-cleaning-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="data-cleaning-pipeline-using-pandas.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Data preprocessing is a critical step in <a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;"><strong>data science</strong></a> tasks, ensuring that raw data is transformed into a clean, organized, and structured format suitable for analysis. A data preprocessing pipeline streamlines this complex process by automating a series of steps, enabling data professionals to efficiently and consistently preprocess diverse datasets. So, if you want to learn how to create a Data Preprocessing pipeline, this article is for you. In this article, I will take you through building a Data Preprocessing pipeline using Python.</p>
+<h2 class="wp-block-heading">What is a Data Preprocessing Pipeline?</h2>
+<p>Data Preprocessing involves transforming and manipulating raw data to improve its quality, consistency, and relevance for analysis. It encompasses several tasks, including handling missing values, standardizing variables, and removing outliers. By performing these preprocessing steps, data professionals ensure that subsequent analysis is based on reliable and accurate data, leading to better insights and predictions.</p>
+<p>A data preprocessing pipeline is a systematic and automated approach that combines multiple preprocessing steps into a cohesive workflow. It serves as a roadmap for data professionals, guiding them through the transformations and calculations needed to cleanse and prepare data for analysis. The pipeline consists of interconnected steps, each of which is responsible for a specific preprocessing task, such as:</p>
+<ol class="wp-block-list">
+<li>imputing missing values</li>
+<li>scaling numeric features</li>
+<li>finding and removing outliers</li>
+<li>or encoding categorical variables</li>
+</ol>
+<p>By following the predefined sequence of operations, the pipeline ensures consistency, reproducibility, and efficiency in overall preprocessing steps.</p>
+<h2 class="wp-block-heading">How a Data Preprocessing Pipeline Helps Data Professionals?</h2>
+<p>A Data Preprocessing pipeline is crucial to help various data science professionals, including data engineers, data analysts, data scientists, and machine learning engineers, in their respective roles.</p>
+<p>For Data Engineers, the pipeline simplifies work by automating data transformation tasks, allowing them to focus on designing scalable data architectures and optimizing data pipelines.</p>
+<p>Data Analysts benefit from the pipeline’s ability to normalize and clean data, ensuring accuracy and reducing time spent on data cleaning tasks. It allows analysts to spend more time on <strong><a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">exploratory data analysis</a></strong> and gaining meaningful insights.</p>
+<p>On the other hand, Data Scientists and Machine Learning Engineers rely on clean and well-preprocessed data for accurate predictive modelling and advanced analytics. The preprocessing pipeline automates repetitive preprocessing tasks, allowing them efficiently experiment and quickly iterate on their datasets.</p>
+<h2 class="wp-block-heading">Data Preprocessing Pipeline using Python</h2>
+<p>I hope you have understood what a Data Preprocessing pipeline is and how it helps data professionals. In this section, I’ll take you through how to build a Data Preprocessing pipeline using Python.</p>
+<p>A Data Preprocessing pipeline should be able to handle missing values, standardize numerical features, remove outliers, and ensure easy replication of preprocessing steps on new datasets. Now, here’s how to create a Data Preprocessing pipeline using Python based on the fundamental functions that every pipeline should perform while preprocessing any dataset:</p>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+
+def data_preprocessing_pipeline(data):
+    #Identify numeric and categorical features
+    numeric_features = data.select_dtypes(include=['float', 'int']).columns
+    categorical_features = data.select_dtypes(include=['object']).columns
+
+    #Handle missing values in numeric features
+    data[numeric_features] = data[numeric_features].fillna(data[numeric_features].mean())
+
+    #Detect and handle outliers in numeric features using IQR
+    for feature in numeric_features:
+        Q1 = data[feature].quantile(0.25)
+        Q3 = data[feature].quantile(0.75)
+        IQR = Q3 - Q1
+        lower_bound = Q1 - (1.5 * IQR)
+        upper_bound = Q3 + (1.5 * IQR)
+        data[feature] = np.where((data[feature] &lt; lower_bound) | (data[feature] &gt; upper_bound),
+                                 data[feature].mean(), data[feature])
+
+    #Normalize numeric features
+    scaler = StandardScaler()
+    scaled_data = scaler.fit_transform(data[numeric_features])
+    data[numeric_features] = scaler.transform(data[numeric_features])
+
+    #Handle missing values in categorical features
+    data[categorical_features] = data[categorical_features].fillna(data[categorical_features].mode().iloc[0])
+
+    return data</code></pre>
+<p>This pipeline is designed to handle various preprocessing tasks on any given dataset. Let’s explore how each step in the pipeline contributes to the overall preprocessing process:</p>
+<ol class="wp-block-list">
+<li>The pipeline begins by identifying the numeric and categorical features in the dataset.</li>
+<li>Next, the pipeline addresses any missing values present in the numeric features. It fills these missing values with the mean value of each respective numeric feature (you can modify this step according to your desired way of filling in missing values of a numerical feature). It ensures that missing data does not hinder subsequent analysis and computations.</li>
+<li>The pipeline then identifies and handles outliers within the numeric features using the Interquartile Range (IQR) method. Calculating the quartiles and the IQR determines upper and lower boundaries for outliers. Any values outside these boundaries are replaced with the mean value of the respective numeric feature. This step helps prevent the influence of extreme values on subsequent analyses and model building.</li>
+<li>After handling missing values and outliers, the pipeline normalizes the numeric features. This process ensures that all numeric features contribute equally to subsequent analysis, avoiding biases caused by varying magnitudes.</li>
+<li>The pipeline proceeds to handle missing values in the categorical features. It fills these missing values with the mode value, representing the most frequently occurring category.</li>
+</ol>
+<p>By following this pipeline, data professionals can automate and streamline the process of preparing data for analysis, ensuring data quality, reliability, and consistency.</p>
+<p>Now let’s test this pipeline on <a href="https://statso.io/data-preprocessing-case-study/" rel="noreferrer noopener" target="_blank"><strong>sample data</strong></a>. You can download the sample data I am using for this task from <a href="https://statso.io/data-preprocessing-case-study/" rel="noreferrer noopener" target="_blank"><strong>here</strong></a>. Let’s have a look at the sample data first:</p>
+<pre><code class="language-python">data = pd.read_csv("data.csv")
+
+print("Original Data:")
+print(data)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Original Data:
+   NumericFeature1  NumericFeature2 CategoricalFeature
+0              1.0                7                  A
+1              2.0                8                  B
+2              NaN                9                NaN
+3              4.0               10                  A
+4              5.0               11                  B
+5              6.0               50                  C</strong></pre>
+<p>And here’s how you can use this pipeline to perform all the preprocessing steps using Python:</p>
+<pre><code class="language-python">#Perform data preprocessing
+cleaned_data = data_preprocessing_pipeline(data)
+
+print("Preprocessed Data:")
+print(cleaned_data)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Preprocessed Data:
+   NumericFeature1  NumericFeature2 CategoricalFeature
+0        -1.535624        -1.099370                  A
+1        -0.944999        -0.749128                  B
+2         0.000000        -0.398886                  A
+3         0.236250        -0.048645                  A
+4         0.826874         0.301597                  B
+5         1.417499         1.994431                  C</strong></pre>
+<h3 class="wp-block-heading">Summary</h3>
+<p>Data Preprocessing involves transforming and manipulating raw data to improve its quality, consistency, and relevance for analysis. A data preprocessing pipeline is a systematic and automated approach that combines multiple preprocessing steps into a cohesive workflow. It serves as a roadmap for data professionals, guiding them through the transformations and calculations needed to cleanse and prepare data for analysis. I hope you liked this article on how to create a Data Preprocessing pipeline using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="automate-data-cleaning-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="data-cleaning-pipeline-using-pandas.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

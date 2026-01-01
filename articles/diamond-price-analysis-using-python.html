@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Diamond Price Analysis using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Diamond Price Analysis using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 02, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="text-emotions-classification-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="salary-prediction-with-machine-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>A diamond is one of the most expensive stones. The price of diamonds varies irrespective of the size because of the factors affecting the price of a diamond. So, if you want to learn how to use your <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">Data Science</a></strong> skills to analyze and predict the price of a diamond, this article is for you. In this article, I will take you through the task of Diamond Price Analysis and prediction using the <strong><a href="roadmap-to-learn-python.html" target="">Python</a></strong> programming language.</p>
+<h2 class="wp-block-heading">Diamond Price Analysis</h2>
+<p>To analyze the price of diamonds according to their attributes, we first need to have a dataset containing diamond prices based on their features. I found ideal data on Kaggle containing information about diamonds like:</p>
+<ol class="wp-block-list">
+<li>Carat</li>
+<li>Cut</li>
+<li>Colour</li>
+<li>Clarity</li>
+<li>Depth</li>
+<li>Table</li>
+<li>Price</li>
+<li>Size</li>
+</ol>
+<p><strong>You can download this dataset from </strong><a href="https://www.kaggle.com/datasets/shivam2503/diamonds" rel="noreferrer noopener" target="_blank"><strong>here</strong></a>. In the section below, I will take you through the task of Diamond Price Analysis using Python.</p>
+<h2 class="wp-block-heading">Diamond Price Analysis using Python</h2>
+<p>Let’s start the task of diamond price analysis by importing the necessary Python libraries and the <a href="https://www.kaggle.com/datasets/shivam2503/diamonds" rel="noreferrer noopener" target="_blank"><strong>dataset</strong></a>:</p>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+import plotly.express as px
+import plotly.graph_objects as go
+
+data = pd.read_csv("diamonds.csv")
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted"><strong>   Unnamed: 0  carat      cut color clarity  depth  table  price     x     y  \
+0           1   0.23    Ideal     E     SI2   61.5   55.0    326  3.95  3.98   
+1           2   0.21  Premium     E     SI1   59.8   61.0    326  3.89  3.84   
+2           3   0.23     Good     E     VS1   56.9   65.0    327  4.05  4.07   
+3           4   0.29  Premium     I     VS2   62.4   58.0    334  4.20  4.23   
+4           5   0.31     Good     J     SI2   63.3   58.0    335  4.34  4.35   
+
+      z  
+0  2.43  
+1  2.31  
+2  2.31  
+3  2.63  
+4  2.75  </strong></pre>
+<p>This dataset contains an Unnamed column. I will delete this column before moving further:</p>
+<pre><code class="language-python">data = data.drop("Unnamed: 0",axis=1)</code></pre>
+<p>Now let’s start analyzing diamond prices. I will first analyze the relationship between the carat and the price of the diamond to see how the number of carats affects the price of a diamond:</p>
+<pre><code class="language-python">figure = px.scatter(data_frame = data, x="carat",
+                    y="price", size="depth", 
+                    color= "cut", trendline="ols")
+figure.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="relationship between the carat and the price of the diamond" class="wp-image-18401" data-attachment-id="18401" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="diamond-1" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="../assets/datasets/diamond-1.png" width="857"/></figure>
+<p>We can see a linear relationship between the number of carats and the price of a diamond. It means higher carats result in higher prices.</p>
+<p>Now I will add a new column to this dataset by calculating the size (length x width x depth) of the diamond:</p>
+<pre><code class="language-python">data["size"] = data["x"] * data["y"] * data["z"]
+print(data)</code></pre>
+<pre class="wp-block-preformatted"><strong>       carat        cut color clarity  depth  table  price     x     y     z  \
+0       0.23      Ideal     E     SI2   61.5   55.0    326  3.95  3.98  2.43   
+1       0.21    Premium     E     SI1   59.8   61.0    326  3.89  3.84  2.31   
+2       0.23       Good     E     VS1   56.9   65.0    327  4.05  4.07  2.31   
+3       0.29    Premium     I     VS2   62.4   58.0    334  4.20  4.23  2.63   
+4       0.31       Good     J     SI2   63.3   58.0    335  4.34  4.35  2.75   
+...      ...        ...   ...     ...    ...    ...    ...   ...   ...   ...   
+53935   0.72      Ideal     D     SI1   60.8   57.0   2757  5.75  5.76  3.50   
+53936   0.72       Good     D     SI1   63.1   55.0   2757  5.69  5.75  3.61   
+53937   0.70  Very Good     D     SI1   62.8   60.0   2757  5.66  5.68  3.56   
+53938   0.86    Premium     H     SI2   61.0   58.0   2757  6.15  6.12  3.74   
+53939   0.75      Ideal     D     SI2   62.2   55.0   2757  5.83  5.87  3.64   
+
+             size  
+0       38.202030  
+1       34.505856  
+2       38.076885  
+3       46.724580  
+4       51.917250  
+...           ...  
+53935  115.920000  
+53936  118.110175  
+53937  114.449728  
+53938  140.766120  
+53939  124.568444  
+
+[53940 rows x 11 columns]</strong></pre>
+<p>Now let’s have a look at the relationship between the size of a diamond and its price:</p>
+<pre><code class="language-python">figure = px.scatter(data_frame = data, x="size",
+                    y="price", size="size", 
+                    color= "cut", trendline="ols")
+figure.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="diamond price analysis: relationship between the size of a diamond and its price" class="wp-image-18404" data-attachment-id="18404" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="diamond-2" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="../assets/datasets/diamond-2.png" width="857"/></figure>
+<p>The above figure concludes two features of diamonds:</p>
+<ol class="wp-block-list">
+<li>Premium cut diamonds are relatively large than other diamonds</li>
+<li>There’s a linear relationship between the size of all types of diamonds and their prices</li>
+</ol>
+<p>Now let’s have a look at the prices of all the types of diamonds based on their colour:</p>
+<pre><code class="language-python">fig = px.box(data, x="cut", 
+             y="price", 
+             color="color")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="prices of all the types of diamonds based on their colour" class="wp-image-18406" data-attachment-id="18406" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="diamond-3" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/diamond-3.png" width="857"/></figure>
+<p>Now let’s have a look at the prices of all the types of diamonds based on their clarity:</p>
+<pre><code class="language-python">fig = px.box(data, 
+             x="cut", 
+             y="price", 
+             color="clarity")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="diamond price analysis: prices of all the types of diamonds based on their clarity" class="wp-image-18409" data-attachment-id="18409" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="diamond-4" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/diamond-4.png" width="857"/></figure>
+<p>Now let’s have a look at the correlation between diamond prices and other features in the dataset:</p>
+<pre><code class="language-python">correlation = data.corr()
+print(correlation["price"].sort_values(ascending=False))</code></pre>
+<pre class="wp-block-preformatted"><strong>price    1.000000
+carat    0.921591
+size     0.902385
+x        0.884435
+y        0.865421
+z        0.861249
+table    0.127134
+depth   -0.010647
+Name: price, dtype: float64</strong></pre>
+<h2 class="wp-block-heading">Diamond Price Prediction</h2>
+<p>Now, I will move to the task of predicting diamond prices by using all the necessary information from the diamond price analysis done above.</p>
+<p>Before moving forward, I will convert the values of the cut column as the cut type of diamonds is a valuable feature to predict the price of a diamond. To use this column, we need to convert its categorical values into numerical values. Below is how we can convert it into a numerical feature:</p>
+<pre><code class="language-python">data["cut"] = data["cut"].map({"Ideal": 1, 
+                               "Premium": 2, 
+                               "Good": 3,
+                               "Very Good": 4,
+                               "Fair": 5})</code></pre>
+<p>Now, let’s split the data into training and test sets:</p>
+<pre><code class="language-python">#splitting data
+from sklearn.model_selection import train_test_split
+x = np.array(data[["carat", "cut", "size"]])
+y = np.array(data[["price"]])
+
+xtrain, xtest, ytrain, ytest = train_test_split(x, y, 
+                                                test_size=0.10, 
+                                                random_state=42)</code></pre>
+<p>Now I will train a machine learning model for the task of diamond price prediction:</p>
+<pre><code class="language-python">from sklearn.ensemble import RandomForestRegressor
+model = RandomForestRegressor()
+model.fit(xtrain, ytrain)</code></pre>
+<p>Now below is how we can use our machine learning model to predict the price of a diamond:</p>
+<pre><code class="language-python">print("Diamond Price Prediction")
+a = float(input("Carat Size: "))
+b = int(input("Cut Type (Ideal: 1, Premium: 2, Good: 3, Very Good: 4, Fair: 5): "))
+c = float(input("Size: "))
+features = np.array([[a, b, c]])
+print("Predicted Diamond's Price = ", model.predict(features))</code></pre>
+<pre class="wp-block-preformatted"><strong>Diamond Price Prediction
+Carat Size: 0.60
+Cut Type (Ideal: 1, Premium: 2, Good: 3, Very Good: 4, Fair: 5): 2
+Size: 40
+Predicted Diamond's Price =  [937.13946429]</strong></pre>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So this is how you can use your Data Science skills for the task of diamond price analysis and prediction using the Python programming language. According to the diamond price analysis, we can say that the price and size of premium diamonds are higher than other types of diamonds. I hope you liked this article on Diamond Price analysis and prediction using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="text-emotions-classification-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="salary-prediction-with-machine-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

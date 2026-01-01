@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Build a Live Machine Learning App in 5 Minutes | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Build a Live Machine Learning App in 5 Minutes</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 24, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="deploy-your-first-ml-model-as-a-rest-api.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="build-a-real-time-ai-assistant-using-rag-langchain.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Have you ever thought about building live and shareable <strong><a href="https://play.google.com/store/books/details?id=LCAqEQAAQBAJ" rel="noreferrer noopener" target="_blank">Machine Learning</a></strong> apps? As your mentor, I’m here to tell you that the gap between a trained model and a live, shareable app isn’t a chasm you need to spend weeks crossing. It’s a small step you can take in the next 5 minutes. In this article, I’ll explain how to build a shareable live Machine Learning app in 5 minutes.</p>
+<h2 class="wp-block-heading">How to Build a Live Machine Learning App?</h2>
+<p>Meet <strong><a href="https://www.gradio.app/docs" rel="noreferrer noopener" target="_blank">Gradio</a></strong>. It’s a pure Python library that lets you build and share a web UI for any ML model with just a few lines of code. It’s designed by and for the ML community, which means it understands exactly what we need: speed and simplicity.</p>
+<p>Think of Gradio as a UI wrapper for your Python function. You give it a function (your model’s prediction logic), tell it what the inputs and outputs look like (e.g., an image input, text output), and it does all the heavy lifting of creating an interactive web app.</p>
+<p>Let’s get our hands dirty and build one right now.</p>
+<h2 class="wp-block-heading">Build a Live Machine Learning App in 5 Minutes</h2>
+<p>We’ll build a live app for a powerful sentiment analysis model. This model can take any sentence you give it and tell you if it’s POSITIVE or NEGATIVE. We’ll utilize the impressive Transformers library from Hugging Face to obtain a state-of-the-art model without requiring any training.</p>
+<h4 class="wp-block-heading">Step 1: The Setup</h4>
+<p>First, let’s install the two necessary libraries. Open your terminal or command prompt and run these two commands:</p>
+<pre class="wp-block-preformatted"><strong>pip install gradio<br/>pip install transformers</strong></pre>
+<p>Now, you’re ready to build the app. You can also use a Google Colab notebook for this task.</p>
+<h4 class="wp-block-heading">Step 2: The Code</h4>
+<p>Please create a new Python file named app.py and write the following code into it. And, if you are using a colab notebook, write the code and run the cell:</p>
+<pre><code class="language-python">import gradio as gr
+from transformers import pipeline
+
+# load the pre-trained sentiment analysis model
+sentiment_analyzer = pipeline("sentiment-analysis")
+
+# define the function that will wrap our model
+def analyze_sentiment(text):
+    result = sentiment_analyzer(text)[0]
+    # gradio works best with dictionary outputs
+    return {result['label']: result['score']}
+
+# create the Gradio Interface
+iface = gr.Interface(
+    fn=analyze_sentiment,
+    inputs=gr.Textbox(lines=2, placeholder="Enter a sentence here..."),
+    outputs="label",
+    title="Sentiment Analysis Bot",
+    description="Type in a sentence and see if the model thinks it's POSITIVE or NEGATIVE. Built with Gradio and Hugging Face Transformers."
+)
+
+# launch the app!
+iface.launch()</code></pre>
+<p><strong>Here’s what’s happening in the above code:</strong></p>
+<ol class="wp-block-list">
+<li>We used a pipeline(“sentiment-analysis”) to load a powerful, pre-trained model from Hugging Face in one line. No training required!</li>
+<li>We create analyze_sentiment(text). This function is the <strong>heart of our app</strong>. It takes text as input, passes it to our model, and formats the output into a simple dictionary.</li>
+</ol>
+<p>The <strong>gr.Interface(…)</strong> call is where everything happens. We tell it:</p>
+<ol class="wp-block-list">
+<li><strong>fn = analyze_sentiment:</strong> Use our function to do the work.</li>
+<li><strong>inputs = gr.Textbox(…):</strong> The user should get a text box to type in.</li>
+<li><strong>outputs = “label”:</strong> The output should be displayed as a clean label.</li>
+<li><strong>title &amp; description:</strong> Some nice text to make our app look professional.</li>
+<li><strong>iface.launch():</strong> starts the web server.</li>
+</ol>
+<h4 class="wp-block-heading">Step 3: Run it and Share it Globally</h4>
+<p>If you are on a colab notebook, run this cell, and you will see such an output (after clicking the public URL in the output):</p>
+<figure class="wp-block-image aligncenter size-large"><img alt="Build a Live Machine Learning App" class="wp-image-27763" data-attachment-id="27763" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="1668,716" data-recalc-dims="1" decoding="async" height="440" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/image-1.png" width="1024"/></figure>
+<p><strong>You can send this link to anyone, anywhere in the world.</strong> They can use your machine learning model live from their own browser for the next 72 hours.</p>
+<p>If you want to run it locally, go to your terminal, make sure you’re in the same directory as your app.py file, and run this command:</p>
+<pre class="wp-block-preformatted"><strong>python app.py</strong></pre>
+<p>Your terminal will come to life, and you’ll see something like this:</p>
+<pre class="wp-block-preformatted"><strong>Running on local URL:  http://127.0.0.1:7860<br/>Running on public URL: https://a1b2c3d4.gradio.app</strong></pre>
+<p>You just deployed a machine learning model without using servers, containers and web development frameworks.</p>
+<h3 class="wp-block-heading">Final Words</h3>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="deploy-your-first-ml-model-as-a-rest-api.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="build-a-real-time-ai-assistant-using-rag-langchain.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

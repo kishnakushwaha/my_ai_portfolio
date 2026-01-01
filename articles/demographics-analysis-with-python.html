@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Demographics Analysis with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Demographics Analysis with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 23, 2025 • 5 min read</div>
+<p>Demographics analysis involves examining the characteristics of a population based on factors such as age, gender, location, income, education, and more. It helps businesses and organizations understand their audience, tailor marketing strategies, personalize customer experiences, and make informed decisions. So, if you want to learn how to perform demographics analysis, this article is for you. In this article, I’ll take you through the task of Demographics Analysis with Python.</p>
+<h2 class="wp-block-heading">Demographics Analysis: Overview</h2>
+<p>Demographics Analysis means understanding the composition of a website’s audience based on various demographic factors such as age, gender, location, and interests. Expected results from demographics analysis include detailed insights into who the visitors are, how different demographic groups interact with the site, and which segments are most valuable or underrepresented.</p>
+<p>It helps businesses tailor their content, marketing strategies, and user experience to better meet the needs and preferences of their target audience, ultimately driving engagement and conversion rates.</p>
+<p>To get started with demographics analysis, we need a dataset containing user demographics. I found an ideal dataset that we can use for this task. Some key columns in the dataset are:</p>
+<ul class="wp-block-list">
+<li><strong>Town/City</strong>: Name of the town or city.</li>
+<li><strong>Country</strong>: The country (all entries are from India).</li>
+<li><strong>Users</strong>: Total number of users.</li>
+<li><strong>New users</strong>: Number of new users.</li>
+<li><strong>Engaged sessions</strong>: Total number of engaged sessions.</li>
+<li><strong>Engagement rate</strong>: The engagement rate.</li>
+<li><strong>Engaged sessions per user</strong>: Average number of engaged sessions per user.</li>
+<li><strong>Average engagement time</strong>: Average time users are engaged.</li>
+<li><strong>Event count</strong>: Total count of events.</li>
+</ul>
+<p>You can download the dataset from <strong><a href="../assets/datasets/user-demographics.csv" rel="noreferrer noopener" target="_blank">here</a></strong>.</p>
+<h2 class="wp-block-heading">User Demographics Analysis with Python</h2>
+<p>Now, let’s get started with user demographics analysis by importing the necessary Python libraries and the <strong><a href="../assets/datasets/user-demographics.csv">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+
+data = pd.read_csv("user-demographics.csv")
+
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>   Town/City Country  Users  New users  Engaged sessions  Engagement rate  \<br/>0  Hyderabad   India  75090      71123             81835         0.560468   <br/>1  Bengaluru   India  74325      72162             84798         0.536459   <br/>2    Chennai   India  54031      51207             55398         0.576372   <br/>3     Mumbai   India  48323      45147             43751         0.483714   <br/>4       Pune   India  44515      41678             45887         0.531401   <br/><br/>   Engaged sessions per user  Average engagement time  Event count  <br/>0                   1.089826               132.499694       758313  <br/>1                   1.140908               138.728988       776356  <br/>2                   1.025300               120.585664       511249  <br/>3                   0.905387               103.302547       422074  <br/>4                   1.030821               119.913759       420101  </strong></pre>
+<p>Before moving forward, let’s have a look at the summary statistics of the data:</p>
+<pre><code class="language-python">print(data.describe())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>              Users     New users  Engaged sessions  Engagement rate  \<br/>count   5000.000000   5000.000000       5000.000000      5000.000000   <br/>mean     258.603400    239.222400        244.537000         0.523479   <br/>std     2188.601568   2066.505792       2296.886373         0.121147   <br/>min       12.000000      5.000000          0.000000         0.000000   <br/>25%       19.000000     17.000000         15.000000         0.450525   <br/>50%       33.000000     29.000000         28.000000         0.525000   <br/>75%       84.000000     77.000000         73.000000         0.600000   <br/>max    75090.000000  72162.000000      84798.000000         1.000000   <br/><br/>       Engaged sessions per user  Average engagement time    Event count  <br/>count                5000.000000              5000.000000    5000.000000  <br/>mean                    0.853167               101.298684    2276.547400  <br/>std                     0.406458               173.481918   21224.330334  <br/>min                     0.000000                 0.000000      36.000000  <br/>25%                     0.670073                47.175600     128.000000  <br/>50%                     0.823529                77.371173     250.000000  <br/>75%                     0.983146               119.423881     689.250000  <br/>max                    13.294118              6895.550000  776356.000000  </strong></pre>
+<p>Observations from the summary statistics:</p>
+<ul class="wp-block-list">
+<li>The number of users ranges from 12 to 75,090, with a mean of 258.60. It indicates a wide variance in user counts across different cities.</li>
+<li>The new users range from 5 to 72,162, with an average of 239.22. Similar to the total users, this shows a significant variation.</li>
+<li>Engaged sessions range from 0 to 84,798, with an average of 244.54. The zero minimum indicates some entries with no engaged sessions.</li>
+<li>The engagement rate ranges from 0 to 1, with an average of 0.52. This suggests moderate engagement overall.</li>
+<li>Engaged Sessions per User ranges from 0 to 13.29, with a mean of 0.85, showing how frequently users engage in sessions.</li>
+<li>The average engagement time ranges from 0 to 6,895.55 seconds, with a mean of 101.30 seconds. The high maximum indicates some very engaged users.</li>
+<li>Event counts range from 36 to 776,356, with an average of 2,276.55. This suggests a few cities contribute significantly to the total event count.</li>
+</ul>
+<p>Now, let’s have a look at the geographic distribution of users across different towns/cities to understand which areas have the highest user counts:</p>
+<pre><code class="language-python">import seaborn as sns
+import matplotlib.pyplot as plt
+
+top_cities = data.sort_values(by='Users', ascending=False).head(20)
+
+plt.figure(figsize=(12, 8))
+sns.barplot(y=top_cities['Town/City'], x=top_cities['Users'], palette='viridis')
+plt.xlabel('Number of Users')
+plt.ylabel('Town/City')
+plt.title('Top 20 Cities by Number of Users')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Demographics Analysis: Top 20 Cities by Number of Users" class="wp-image-24116" data-attachment-id="24116" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="demographics-1" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-1.png?fit=1024%2C660&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-1.png?fit=300%2C193&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-1.png?fit=1087%2C701&amp;ssl=1" data-orig-size="1087,701" data-permalink="https://my-ai-portfolio.com/2024/07/15/demographics-analysis-with-python/demographics-1/" data-recalc-dims="1" decoding="async" height="660" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-1.png?resize=1024%2C660&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-1.png?resize=1024%2C660&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-1.png?resize=300%2C193&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-1.png?resize=768%2C495&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-1.png?w=1087&amp;ssl=1 1087w" width="1024"/></figure>
+<p>Hyderabad, Bengaluru, and Chennai are the top three cities with the highest number of users, significantly outpacing other cities. There is a steep drop-off in user count after the top few cities, which indicates a concentration of users in major urban centres.</p>
+<p>Now, let’s have a look at the engagement rate across the top cities:</p>
+<pre><code class="language-python">plt.figure(figsize=(12, 8))
+sns.barplot(y=top_cities['Town/City'], x=top_cities['Engagement rate'], palette='spring')
+plt.xlabel('Engagement Rate')
+plt.ylabel('Town/City')
+plt.title('Engagement Rate in Top 20 Cities by Number of Users')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Engagement Rate in Top 20 Cities by Number of Users" class="wp-image-24119" data-attachment-id="24119" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="demographics-2" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-2.png?fit=1024%2C660&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-2.png?fit=300%2C193&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-2.png?fit=1087%2C701&amp;ssl=1" data-orig-size="1087,701" data-permalink="https://my-ai-portfolio.com/2024/07/15/demographics-analysis-with-python/demographics-2/" data-recalc-dims="1" decoding="async" height="660" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-2.png?resize=1024%2C660&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-2.png?resize=1024%2C660&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-2.png?resize=300%2C193&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-2.png?resize=768%2C495&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-2.png?w=1087&amp;ssl=1 1087w" width="1024"/></figure>
+<p>Key findings indicate that Chennai, Hyderabad, and Bengaluru exhibit the highest engagement rates, suggesting that users in these cities are more actively interacting with the website’s content.</p>
+<p>Now, let’s have a look at the average number of engaged sessions per user for the top 20 cities:</p>
+<pre><code class="language-python">plt.figure(figsize=(12, 8))
+sns.barplot(y=top_cities['Town/City'], x=top_cities['Engaged sessions per user'], palette='flare')
+plt.xlabel('Engaged Sessions per User')
+plt.ylabel('Town/City')
+plt.title('Engaged Sessions per User in Top 20 Cities by Number of Users')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Demographics Analysis: Engaged Sessions per User in Top 20 Cities by Number of Users" class="wp-image-24120" data-attachment-id="24120" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="demographics-3" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-3.png?fit=1024%2C660&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-3.png?fit=300%2C193&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-3.png?fit=1087%2C701&amp;ssl=1" data-orig-size="1087,701" data-permalink="https://my-ai-portfolio.com/2024/07/15/demographics-analysis-with-python/demographics-3/" data-recalc-dims="1" decoding="async" height="660" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-3.png?resize=1024%2C660&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-3.png?resize=1024%2C660&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-3.png?resize=300%2C193&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-3.png?resize=768%2C495&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-3.png?w=1087&amp;ssl=1 1087w" width="1024"/></figure>
+<p>Key findings indicate that Bengaluru and Hyderabad have the highest engaged sessions per user, suggesting that users in these cities interact frequently with the website.</p>
+<p>Now, let’s have a look at the average engagement time for the top 20 cities:</p>
+<pre><code class="language-python">plt.figure(figsize=(12, 8))
+sns.barplot(y=top_cities['Town/City'], x=top_cities['Average engagement time'], palette='crest')
+plt.xlabel('Average Engagement Time (seconds)')
+plt.ylabel('Town/City')
+plt.title('Average Engagement Time in Top 20 Cities by Number of Users')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Average Engagement Time in Top 20 Cities by Number of Users" class="wp-image-24122" data-attachment-id="24122" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="demographics-4" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-4.png?fit=1024%2C660&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-4.png?fit=300%2C193&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-4.png?fit=1087%2C701&amp;ssl=1" data-orig-size="1087,701" data-permalink="https://my-ai-portfolio.com/2024/07/15/demographics-analysis-with-python/demographics-4/" data-recalc-dims="1" decoding="async" height="660" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-4.png?resize=1024%2C660&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-4.png?resize=1024%2C660&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-4.png?resize=300%2C193&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-4.png?resize=768%2C495&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-4.png?w=1087&amp;ssl=1 1087w" width="1024"/></figure>
+<p>Key findings include Istanbul, Jaipur, and Bhubaneswar showing the highest average engagement times, indicating that users in these cities spend more time engaged on the website.</p>
+<p>Now, let’s compare the new vs returning users in the top 20 cities:</p>
+<pre><code class="language-python">top_cities['Returning users'] = top_cities['Users'] - top_cities['New users']
+
+top_cities_melted = top_cities.melt(id_vars='Town/City', value_vars=['New users', 'Returning users'],
+                                    var_name='User Type', value_name='Count')
+
+plt.figure(figsize=(14, 10))
+sns.barplot(y='Town/City', x='Count', hue='User Type', data=top_cities_melted, palette='viridis')
+plt.xlabel('Number of Users')
+plt.ylabel('Town/City')
+plt.title('New Users vs Returning Users in Top 20 Cities by Number of Users')
+plt.legend()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Demographics Analysis: New Users vs Returning Users in Top 20 Cities by Number of Users" class="wp-image-24125" data-attachment-id="24125" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="demographics-5-1" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-5-1.png?fit=1024%2C705&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-5-1.png?fit=300%2C207&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-5-1.png?fit=1242%2C855&amp;ssl=1" data-orig-size="1242,855" data-permalink="https://my-ai-portfolio.com/2024/07/15/demographics-analysis-with-python/demographics-5-1/" data-recalc-dims="1" decoding="async" height="705" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-5-1.png?resize=1024%2C705&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-5-1.png?resize=1024%2C705&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-5-1.png?resize=300%2C207&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-5-1.png?resize=768%2C529&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-5-1.png?resize=1200%2C826&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-5-1.png?w=1242&amp;ssl=1 1242w" width="1024"/></figure>
+<p>The data reveals that the majority of users in most cities are new users, with Hyderabad, Bengaluru, and Chennai having the highest counts. This suggests that these cities are experiencing significant growth in attracting first-time visitors. Conversely, the proportion of returning users is much smaller across all cities, indicating a potential area for improving user retention strategies.</p>
+<p>Now, let’s have a look at the event counts from the top 20 cities:</p>
+<pre><code class="language-python">plt.figure(figsize=(12, 8))
+sns.barplot(y=top_cities['Town/City'], x=top_cities['Event count'], palette='magma')
+plt.xlabel('Event Count')
+plt.ylabel('Town/City')
+plt.title('Event Count in Top 20 Cities by Number of Users')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Event Count in Top 20 Cities by Number of Users" class="wp-image-24127" data-attachment-id="24127" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="demographics-6" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-6.png?fit=1024%2C655&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-6.png?fit=300%2C192&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-6.png?fit=1096%2C701&amp;ssl=1" data-orig-size="1096,701" data-permalink="https://my-ai-portfolio.com/2024/07/15/demographics-analysis-with-python/demographics-6/" data-recalc-dims="1" decoding="async" height="655" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-6.png?resize=1024%2C655&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-6.png?resize=1024%2C655&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-6.png?resize=300%2C192&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-6.png?resize=768%2C491&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-6.png?w=1096&amp;ssl=1 1096w" width="1024"/></figure>
+<p>Hyderabad and Bengaluru lead significantly with the highest event counts, indicating a high level of user interactions in these cities. Chennai and Mumbai also exhibit substantial event counts, demonstrating active user engagement. The cities towards the lower end of the chart, such as Bhubaneswar, Jaipur, and Istanbul, have relatively lower event counts, suggesting less user interaction.</p>
+<h4 class="wp-block-heading">User Segmentation by Cities for Budget Allocation</h4>
+<p>The primary aim of demographics analysis is to find <strong><a href="user-profiling-and-segmentation-using-python.html" target="">user segments</a></strong> for various marketing campaigns where we can allocate the budget according to the type of engagement in each segment. In our dataset, the demographic information is limited to location, so let’s create a budget allocation strategy.</p>
+<p>To segment users effectively for targeting ads and maximizing the ad budget, we need to identify user segments that offer the highest potential for engagement and conversions. Given the dataset, we can segment users based on the following criteria:</p>
+<ol class="wp-block-list">
+<li><strong>User Activity</strong>: High vs. low activity based on engaged sessions and average engagement time.</li>
+<li><strong>User Type</strong>: New vs. returning users.</li>
+<li><strong>Geographic Location</strong>: Cities with high, medium, and low user counts.</li>
+</ol>
+<p>Let’s create user segments based on this strategy:</p>
+<pre><code class="language-python"># high-Engagement Users
+high_engagement_users = data[(data['Engaged sessions per user'] &gt; data['Engaged sessions per user'].mean()) &amp;
+                             (data['Average engagement time'] &gt; data['Average engagement time'].mean())]
+
+# new Users
+new_users = data[data['New users'] &gt; (0.5 * data['Users'])]
+
+# returning Users
+returning_users = data[data['Users'] - data['New users'] &gt; (0.5 * data['Users'])]
+
+# categorize cities into high, medium, and low user count segments based on quantiles
+user_quantiles = data['Users'].quantile([0.33, 0.67])
+low_user_cities = data[data['Users'] &lt;= user_quantiles[0.33]]
+medium_user_cities = data[(data['Users'] &gt; user_quantiles[0.33]) &amp; (data['Users'] &lt;= user_quantiles[0.67])]
+high_user_cities = data[data['Users'] &gt; user_quantiles[0.67]]
+
+# summary of segments
+segments_summary = {
+    "High Engagement Users": len(high_engagement_users),
+    "New Users": len(new_users),
+    "Returning Users": len(returning_users),
+    "Low User Cities": len(low_user_cities),
+    "Medium User Cities": len(medium_user_cities),
+    "High User Cities": len(high_user_cities)
+}
+
+segments_summary</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>{'High Engagement Users': 1383,<br/> 'New Users': 4975,<br/> 'Returning Users': 17,<br/> 'Low User Cities': 1687,<br/> 'Medium User Cities': 1676,<br/> 'High User Cities': 1637}</strong></pre>
+<p>To effectively allocate the budget using these user segments, we should focus on strategies that maximize returns by targeting specific groups. Here’s how we can approach budget allocation based on each segment:</p>
+<ol class="wp-block-list">
+<li><strong>High Engagement Users:</strong> These users are already highly engaged, meaning they have a high likelihood of converting or purchasing. We can use a substantial portion of the budget for this segment to maintain and enhance their engagement. We can offer personalized ads, loyalty programs, and exclusive offers to this segment.</li>
+<li><strong>New Users:</strong> These users represent potential growth. Effective onboarding can turn them into regular, engaged users. We can invest in welcoming campaigns, introductory offers, and onboarding programs for this segment. The focus should be on making their first experiences positive to drive retention.</li>
+<li><strong>Returning Users:</strong> While the number of returning users is small, they represent loyalty and consistency. We can offer retention strategies, such as personalized recommendations and rewards for continued use to this segment of users.</li>
+<li><strong>Low User Cities:</strong> These cities have untapped potential. Awareness campaigns can increase the user base. We can allocate a smaller portion of the budget to brand awareness campaigns and introductory offers to attract new users from these cities.</li>
+<li><strong>Medium User Cities:</strong> These cities show moderate potential and can be nurtured to become high-user cities. We can allocate more budget to this segment in the form of targeted ads to convert them into cities with high users.</li>
+<li><strong>High User Cities:</strong> These cities already have a large user base with high engagement potential. Similar to the high-engagement users, we can use a substantial portion of the budget for this segment as well to maintain and enhance their engagement.</li>
+</ol>
+<p>So, this is how we can make data-driven decisions using techniques like demographics analysis for budget allocation.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, demographics analysis involves examining the characteristics of a population based on factors such as age, gender, location, income, education, and more. It helps businesses and organizations understand their audience, tailor marketing strategies, personalize customer experiences, and make informed decisions.</p>
+<p>I hope you liked this article on demographics analysis with Python. Feel free to ask valuable questions in the comments section below. Follow me on Instagram for many more resources.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="how-to-actually-learn-ai-to-get-a-job.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="essential-sql-topics-for-data-science.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

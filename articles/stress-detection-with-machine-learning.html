@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Stress Detection with Machine Learning | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Stress Detection with Machine Learning</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 21, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="how-neural-network-works.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="data-resampling-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Stress, anxiety, and depression are threatening the mental health of people. Every person has a reason for having a stressful life. People often share their feelings on social media platforms like on Instagram in the form of posts and stories, and on Reddit in the form of asking for suggestions about their life on subreddits. In the past few years, many content creators have come forward to create content to help people with their mental health. Many organizations can use stress detection to find which social media users are stressed to help them quickly. So if you want to learn how to use machine learning to detect stress on social media posts, this article is for you. In this article, I will take you through the task of stress detection with machine learning using Python.</p>
+<h2 class="wp-block-heading" id="stress-detection-with-machine-learning">Stress Detection with Machine Learning</h2>
+<p>Stress detection is a challenging task, as there are so many words that can be used by people on their posts that can show whether a person is having psychological stress or not. While looking for datasets that I can use to train a machine learning model for stress detection, I found a dataset on Kaggle with 116 columns. We only need to use the text and label column for this task.</p>
+<p>The dataset I am using for this task contains data posted on subreddits related to mental health. This dataset contains various mental health problems shared by people about their life. Fortunately, this dataset is labelled as 0 and 1, where 0 indicates no stress and 1 indicates stress. So in the section below, I will take you through the task of stress detection in social media posts using Python.</p>
+<h2 class="wp-block-heading" id="stress-detection-using-python">Stress Detection using Python</h2>
+<p>Now let’s start the task of stress detection with machine learning. I will start this task by importing the necessary Python libraries and the <strong><a href="../assets/datasets/stress.csv">dataset</a></strong> that we need for this task:</p>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+data = pd.read_csv("stress.csv")
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted"><strong>          subreddit post_id  ... syntax_fk_grade sentiment
+0              ptsd  8601tu  ...        3.253573 -0.002742
+1        assistance  8lbrx9  ...        8.828316  0.292857
+2              ptsd  9ch1zh  ...        7.841667  0.011894
+3     relationships  7rorpp  ...        4.104027  0.141671
+4  survivorsofabuse  9p2gbc  ...        7.910952 -0.204167
+
+[5 rows x 116 columns]</strong></pre>
+<p>Let’s have a look at whether this dataset contains any null values or not:</p>
+<pre><code class="language-python">print(data.isnull().sum())</code></pre>
+<pre class="wp-block-preformatted"><strong>subreddit                   0
+post_id                     0
+sentence_range              0
+text                        0
+id                          0
+                           ..
+lex_dal_avg_pleasantness    0
+social_upvote_ratio         0
+social_num_comments         0
+syntax_fk_grade             0
+sentiment                   0
+Length: 116, dtype: int64</strong></pre>
+<p>So this dataset does not have any null values. Now let’s prepare the text column of this dataset to clean the text column with stopwords, links, special symbols and language errors:</p>
+<pre><code class="language-python">import nltk
+import re
+nltk.download('stopwords')
+stemmer = nltk.SnowballStemmer("english")
+from nltk.corpus import stopwords
+import string
+stopword=set(stopwords.words('english'))
+
+def clean(text):
+    text = str(text).lower()
+    text = re.sub('\[.*?\]', '', text)
+    text = re.sub('https?://\S+|www\.\S+', '', text)
+    text = re.sub('&lt;.*?&gt;+', '', text)
+    text = re.sub('[%s]' % re.escape(string.punctuation), '', text)
+    text = re.sub('\n', '', text)
+    text = re.sub('\w*\d\w*', '', text)
+    text = [word for word in text.split(' ') if word not in stopword]
+    text=" ".join(text)
+    text = [stemmer.stem(word) for word in text.split(' ')]
+    text=" ".join(text)
+    return text
+data["text"] = data["text"].apply(clean)</code></pre>
+<p>Now let’s have a look at the most used words by the people sharing about their life problems on social media by visualizing a <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">word cloud</a></strong> of the text column:</p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
+text = " ".join(i for i in data.text)
+stopwords = set(STOPWORDS)
+wordcloud = WordCloud(stopwords=stopwords, 
+                      background_color="white").generate(text)
+plt.figure( figsize=(15,10))
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis("off")
+plt.show()</code></pre>
+<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img alt="Stress Detection" class="wp-image-16416" data-attachment-id="16416" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="word-cloud-for-stress-detection" data-orig-size="851,432" data-recalc-dims="1" decoding="async" height="341" sizes="(max-width: 673px) 100vw, 673px" src="../assets/datasets/word-cloud-for-stress-detection.png" width="673"/></figure></div>
+<h2 class="wp-block-heading" id="stress-detection-model">Stress Detection Model</h2>
+<p>The label column in this dataset contains labels as 0 and 1. 0 means no stress, and 1 means stress. I will use Stress and No stress labels instead of 1 and 0. So let’s prepare this column accordingly and select the text and label columns for the process of training a machine learning model:</p>
+<pre><code class="language-python">data["label"] = data["label"].map({0: "No Stress", 1: "Stress"})
+data = data[["text", "label"]]
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted"><strong>                                                text      label
+0  said felt way sugget go rest trigger ahead you...     Stress
+1  hey rassist sure right place post goe  im curr...  No Stress
+2  mom hit newspap shock would know dont like pla...     Stress
+3  met new boyfriend amaz kind sweet good student...     Stress
+4  octob domest violenc awar month domest violenc...     Stress</strong></pre>
+<p>Now I will split this dataset into training and test sets:</p>
+<pre><code class="language-python">from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.model_selection import train_test_split
+
+x = np.array(data["text"])
+y = np.array(data["label"])
+
+cv = CountVectorizer()
+X = cv.fit_transform(x)
+xtrain, xtest, ytrain, ytest = train_test_split(X, y, 
+                                                test_size=0.33, 
+                                                random_state=42)</code></pre>
+<p>As this task is based on the problem of binary classification, I will be using the Bernoulli Naive Bayes algorithm, which is one of the best algorithms for binary classification problems. So let’s train the stress detection model:</p>
+<pre><code class="language-python">from sklearn.naive_bayes import BernoulliNB
+model = BernoulliNB()
+model.fit(xtrain, ytrain)</code></pre>
+<p>Now let’s test the performance of our model on some random sentences based on mental health:</p>
+<pre><code class="language-python">user = input("Enter a Text: ")
+data = cv.transform([user]).toarray()
+output = model.predict(data)
+print(output)</code></pre>
+<pre class="wp-block-preformatted"><strong>Enter a Text: People need to take care of their mental health
+['No Stress']</strong></pre>
+<pre><code class="language-python">user = input("Enter a Text: ")
+data = cv.transform([user]).toarray()
+output = model.predict(data)
+print(output)</code></pre>
+<pre class="wp-block-preformatted"><strong>Enter a Text: Sometime I feel like I need some help
+['Stress']</strong></pre>
+<p>So as you can see, we can see good results from our machine learning model. This is how you can train a stress detection model to detect stress from social media posts. This machine learning model can be improved by feeding it with more data.</p>
+<h3 class="wp-block-heading" id="summary">Summary</h3>
+<p>So this is how you can train a machine learning model to detect stress from social media posts. People often share their feelings on social media platforms. Many organizations can use stress detection to find which social media users are stressed to help them quickly. I hope you liked this article on stress detection with machine learning using Python. Feel free to ask your valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="how-neural-network-works.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="data-resampling-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

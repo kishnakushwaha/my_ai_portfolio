@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Data Collection with an API using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Data Collection with an API using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 11, 2025 • 5 min read</div>
+<p>APIs, or Application Programming Interfaces, are sets of protocols and tools that allow different software applications to communicate with each other. Data collection using APIs involves accessing these interfaces provided by online services, platforms, or data providers to retrieve structured data. Using an API for data collection is a powerful way to obtain real-time or historical data for <strong><a href="https://my-ai-portfolio.com/2023/07/22/data-analysis-projects-using-python/">data analysis</a></strong>, <a href="https://amzn.eu/d/3Bgb8IK" rel="noreferrer noopener" target="_blank"><strong>machine learning</strong></a> models, or any data-driven application. So, if you want to learn how to create a dataset by collecting data with an API, this article is for you. In this article, I’ll take you through the task of Data Collection with an API using Python.</p>
+<h2 class="wp-block-heading">Data Collection with an API</h2>
+<p>Most of the time, a data engineer is responsible for working with APIs to collect data and create datasets according to the needs of the business. Below is the process you can follow for the task of data collection with an API:</p>
+<ol class="wp-block-list">
+<li>Clearly outline what data is needed, the purpose of the data collection, and how it will be used in your analysis or modelling.</li>
+<li>Read API documentation to know what data you can get, in what format you can get the data, and how you can get it.</li>
+<li>Register or sign up to use the API, if necessary, to obtain API keys.</li>
+<li>Use programming languages that support HTTP requests, like Python with libraries such as requests or urllib for making API calls.</li>
+<li>Develop a script that makes requests to the API endpoints you identified. Handle pagination and iterate over pages of data if the API splits the data across multiple responses.</li>
+<li>Code the script to parse the received data (usually in JSON or XML format) and convert it into a usable format like a DataFrame in Python using Pandas.</li>
+</ol>
+<p>So, in this article, I will be using the Spotify API to collect real-time music data from Spotify and create a dataset of music with their features and popularity.</p>
+<h2 class="wp-block-heading">Data Collection with Spotify API using Python</h2>
+<p>So, to collect data from the Spotify API, you first need to know what data you can get and in what format the data comes in. You can learn everything about it from <a href="https://developer.spotify.com/documentation/web-api" rel="noreferrer noopener" target="_blank"><strong>here</strong></a>.</p>
+<p>Now, follow the process mentioned below to sign up for using the API for data collection:</p>
+<ol class="wp-block-list">
+<li><strong>Create a Spotify Developer account at </strong><a href="https://developer.spotify.com/" rel="noreferrer noopener" target="_blank"><strong>Spotify for Developers</strong></a><strong>.</strong></li>
+<li><strong>Go to Create an App and get your Client ID and Client Secret.</strong></li>
+<li>If it asks for a website, feel free to use <a href="https://statso.io/community/" rel="noreferrer noopener" target="_blank"><strong>statso.io</strong></a> if you don’t have a website.</li>
+</ol>
+<p>Feel free to reach me on <a href="https://www.instagram.com/amankharwal.official/" rel="noreferrer noopener" target="_blank"><strong>Instagram</strong></a> or <a href="https://www.linkedin.com/in/aman-kharwal/" rel="noreferrer noopener" target="_blank"><strong>LinkedIn</strong></a> if you face any errors in the signup process.</p>
+<p>Now, let’s start with the data collection task with the Spotify API. I’ll first write code to authenticate with the Spotify API and obtain an access token using the Client Credentials Flow:</p>
+<pre><code class="language-python">import requests
+import base64
+
+# replace with your own client id and client secret
+CLIENT_ID = 'Your Client ID'
+CLIENT_SECRET = 'Your Client Secret'
+
+# Base64 encode the client id and client secret
+client_credentials = f"{CLIENT_ID}:{CLIENT_SECRET}"
+client_credentials_base64 = base64.b64encode(client_credentials.encode())
+
+# request the access token
+token_url = 'https://accounts.spotify.com/api/token'
+headers = {
+    'Authorization': f'Basic {client_credentials_base64.decode()}'
+}
+data = {
+    'grant_type': 'client_credentials'
+}
+response = requests.post(token_url, data=data, headers=headers)
+
+if response.status_code == 200:
+    access_token = response.json()['access_token']
+    print("Access token obtained successfully.")
+else:
+    print("Error obtaining access token.")
+    exit()</code></pre>
+<p>The access token obtained is crucial as it is used in subsequent requests to the Spotify API to authenticate and authorize those requests. Without this token, your application will not be able to interact with Spotify’s data and services under the Client Credentials flow. This flow is specifically used for server-to-server interactions where no user authorization is required, which is suitable for accessing publicly available information such as music data, playlists, etc.</p>
+<p>Now, install Spotify’s official Python API known as Spotipy. You can install it on your Python environment by executing the command below on your terminal or command prompt:</p>
+<ul class="wp-block-list">
+<li><strong>pip install spotipy</strong></li>
+</ul>
+<p>Now, I’ll write a Python function to extract detailed information about each track in any Spotify playlist:</p>
+<pre><code class="language-python">import pandas as pd
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
+
+def get_trending_playlist_data(playlist_id, access_token):
+    # set up spotipy with the access token
+    sp = spotipy.Spotify(auth=access_token)
+
+    # get the tracks from the playlist
+    playlist_tracks = sp.playlist_tracks(playlist_id, fields='items(track(id, name, artists, album(id, name)))')
+
+    # extract relevant information and store in a list of dictionaries
+    music_data = []
+    for track_info in playlist_tracks['items']:
+        track = track_info['track']
+        track_name = track['name']
+        artists = ', '.join([artist['name'] for artist in track['artists']])
+        album_name = track['album']['name']
+        album_id = track['album']['id']
+        track_id = track['id']
+
+        # get audio features for the track
+        audio_features = sp.audio_features(track_id)[0] if track_id != 'Not available' else None
+
+        # get release date of the album
+        try:
+            album_info = sp.album(album_id) if album_id != 'Not available' else None
+            release_date = album_info['release_date'] if album_info else None
+        except:
+            release_date = None
+
+        # get popularity of the track
+        try:
+            track_info = sp.track(track_id) if track_id != 'Not available' else None
+            popularity = track_info['popularity'] if track_info else None
+        except:
+            popularity = None
+
+        # add additional track information to the track data
+        track_data = {
+            'Track Name': track_name,
+            'Artists': artists,
+            'Album Name': album_name,
+            'Album ID': album_id,
+            'Track ID': track_id,
+            'Popularity': popularity,
+            'Release Date': release_date,
+            'Duration (ms)': audio_features['duration_ms'] if audio_features else None,
+            'Explicit': track_info.get('explicit', None),
+            'External URLs': track_info.get('external_urls', {}).get('spotify', None),
+            'Danceability': audio_features['danceability'] if audio_features else None,
+            'Energy': audio_features['energy'] if audio_features else None,
+            'Key': audio_features['key'] if audio_features else None,
+            'Loudness': audio_features['loudness'] if audio_features else None,
+            'Mode': audio_features['mode'] if audio_features else None,
+            'Speechiness': audio_features['speechiness'] if audio_features else None,
+            'Acousticness': audio_features['acousticness'] if audio_features else None,
+            'Instrumentalness': audio_features['instrumentalness'] if audio_features else None,
+            'Liveness': audio_features['liveness'] if audio_features else None,
+            'Valence': audio_features['valence'] if audio_features else None,
+            'Tempo': audio_features['tempo'] if audio_features else None,
+            # add more attributes as needed (go through the documentation to know what more you can add)
+        }
+
+        music_data.append(track_data)
+
+    # create a pandas dataframe from the list of dictionaries
+    df = pd.DataFrame(music_data)
+
+    return df</code></pre>
+<p>Now, let’s use our function <strong>get_trending_playlist_data</strong> using a specific Spotify playlist ID and an already obtained access token:</p>
+<pre><code class="language-python"># you can add the playlist id of any playlist on Spotify here
+playlist_id = '1gfWsOG1WAoxNeUMMktZbq'
+
+# call the function to get the music data from the playlist and store it in a DataFrame
+music_df = get_trending_playlist_data(playlist_id, access_token)
+
+print(music_df)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>                                     Track Name  \<br/>0                                 Bijlee Bijlee   <br/>1                                   Expert Jatt   <br/>2   Kaun Nachdi (From "Sonu Ke Titu Ki Sweety")   <br/>3                                   Na Na Na Na   <br/>4                                   Patiala Peg   <br/>..                                          ...   <br/>95                                                <br/>96                               Move Your Lakk   <br/>97                    Patola (From "Blackmail")   <br/>98            Ban Ja Rani (From "Tumhari Sulu")   <br/>99          Hauli Hauli (From "De De Pyaar De")   <br/><br/>                                    Artists  \<br/>0                             Harrdy Sandhu   <br/>1                                     Nawab   <br/>2                Guru Randhawa, Neeti Mohan   <br/>3                                    J Star   <br/>4                            Diljit Dosanjh   <br/>..                                      ...   <br/>95                                            <br/>96  Diljit Dosanjh, Badshah, Sonakshi Sinha   <br/>97              Guru Randhawa, Preet Hundal   <br/>98                            Guru Randhawa   <br/>99      Garry Sandhu, Neha Kakkar, Mellow D   <br/><br/>                           Album Name                Album ID  \<br/>0                       Bijlee Bijlee  3tG0IGB24sRhGFLs5F1Km8   <br/>1                         Expert Jatt  2gibg5SCTep0wsIMefGzkd   <br/>2    High Rated Gabru - Guru Randhawa  6EDbwGsQNQRLf73c7QwZ2f   <br/>3                         Na Na Na Na  4xBqgoiRSOMU1VlKuntVQW   <br/>4   Do Gabru - Diljit Dosanjh &amp; Akhil  1uxDllRe9CPhdr8rhz2QCZ   <br/>..                                ...                     ...   <br/>95                                     2jw92hf4mnISbYywvU3Anj   <br/>96                     Move Your Lakk  0V06TMGQQQkvKxNmFlKyEj   <br/>97          Patola (From "Blackmail")  2XAAIDEpPb57NsKgAHLGVQ   <br/>98   High Rated Gabru - Guru Randhawa  6EDbwGsQNQRLf73c7QwZ2f   <br/>99                     Dance Syndrome  6e1XB070vlPaxGDAsi8AF6   <br/><br/>                  Track ID  Popularity Release Date  Duration (ms)  Explicit  \<br/>0   1iZLpuGMr4tn1F5bZu32Kb          70   2021-10-30         168450     False   <br/>1   7rr6n1NFIcQXCsi43P0YNl          65   2018-01-18         199535     False   <br/>2   3s7m0jmCXGcM8tmlvjCvAa          64   2019-03-02         183373     False   <br/>3   5GjxbFTZAMhrVfVrNrrwrG          52         2015         209730     False   <br/>4   6TikcWOLRsPq66GBx2jk67          46   2018-07-10         188314     False   <br/>..                     ...         ...          ...            ...       ...   <br/>95  3OZr3vo7SmYpn5XqeQEAOM           0         0000         203207     False   <br/>96  3aYMKdSitJeHUCZO8Wt6fw          51   2017-03-29         194568     False   <br/>97  17LZzRCY0iFWlDDuAG7BlM          57   2018-03-05         184410     False   <br/>98  7cQtGVoPCK9DlspeYjdHOA          60   2019-03-02         225938     False   <br/>99  4XyKoSEWrkQjI4AekJYWNx          39   2019-09-03         209393     False   <br/><br/>                                        External URLs  ...  Energy  Key  \<br/>0   https://open.spotify.com/track/1iZLpuGMr4tn1F5...  ...   0.670    1   <br/>1   https://open.spotify.com/track/7rr6n1NFIcQXCsi...  ...   0.948    6   <br/>2   https://open.spotify.com/track/3s7m0jmCXGcM8tm...  ...   0.830    4   <br/>3   https://open.spotify.com/track/5GjxbFTZAMhrVfV...  ...   0.863    3   <br/>4   https://open.spotify.com/track/6TikcWOLRsPq66G...  ...   0.811    5   <br/>..                                                ...  ...     ...  ...   <br/>95  https://open.spotify.com/track/3OZr3vo7SmYpn5X...  ...   0.842    6   <br/>96  https://open.spotify.com/track/3aYMKdSitJeHUCZ...  ...   0.816    2   <br/>97  https://open.spotify.com/track/17LZzRCY0iFWlDD...  ...   0.901    3   <br/>98  https://open.spotify.com/track/7cQtGVoPCK9Dlsp...  ...   0.692    9   <br/>99  https://open.spotify.com/track/4XyKoSEWrkQjI4A...  ...   0.982    1   <br/><br/>    Loudness  Mode  Speechiness  Acousticness  Instrumentalness  Liveness  \<br/>0     -5.313     0       0.1430       0.26900          0.000000    0.0733   <br/>1     -2.816     0       0.1990       0.29800          0.000000    0.0784   <br/>2     -3.981     0       0.0455       0.03570          0.000000    0.0419   <br/>3     -3.760     1       0.0413       0.37600          0.000014    0.0916   <br/>4     -3.253     0       0.1840       0.02590          0.000000    0.3110   <br/>..       ...   ...          ...           ...               ...       ...   <br/>95    -4.109     1       0.0745       0.00814          0.000013    0.2120   <br/>96    -5.595     1       0.1480       0.03790          0.000153    0.1230   <br/>97    -2.719     0       0.0508       0.12600          0.000000    0.0692   <br/>98    -4.718     0       0.0577       0.20600          0.000000    0.1240   <br/>99    -3.376     1       0.0788       0.02120          0.000032    0.3370   <br/><br/>    Valence    Tempo  <br/>0     0.643  100.004  <br/>1     0.647  172.038  <br/>2     0.753  127.999  <br/>3     0.807   95.000  <br/>4     0.835  175.910  <br/>..      ...      ...  <br/>95    0.915  156.051  <br/>96    0.744   99.992  <br/>97    0.914   87.998  <br/>98    0.487  102.015  <br/>99    0.571   94.990  <br/><br/>[100 rows x 21 columns]</strong></pre>
+<p>To get the playlist ID of any other playlist on Spotify, just copy the link of the playlist and below is how to identify the playlist ID from the URL of the playlist:</p>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="spotify playlist for data collection api" class="wp-image-23190" data-attachment-id="23190" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/Image.png?fit=1024%2C742&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/Image.png?fit=300%2C217&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/Image.png?fit=1060%2C768&amp;ssl=1" data-orig-size="1060,768" data-permalink="https://my-ai-portfolio.com/2024/04/15/data-collection-with-an-api-using-python/image-150/" data-recalc-dims="1" decoding="async" height="742" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/Image.png?resize=1024%2C742&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/Image.png?resize=1024%2C742&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/Image.png?resize=300%2C217&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/Image.png?resize=768%2C556&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/Image.png?resize=140%2C100&amp;ssl=1 140w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/Image.png?w=1060&amp;ssl=1 1060w" style="width:598px;height:auto" width="1024"/><figcaption class="wp-element-caption"><strong>The highlighted part of the URL is the playlist ID</strong></figcaption></figure>
+<p>Now, here’s how you can add this data to a CSV file:</p>
+<pre><code class="language-python">music_df.to_csv("musicdata.csv")</code></pre>
+<p>Similarly, interacting with other APIs requires you to follow the same process. Reading the documentation thoroughly is half of the steps and writing the script for data collection is the other half.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, this is how you can collect data from an API using Python. Using an API for data collection is a powerful way to obtain real-time or historical data for data analysis, machine learning models, or any data-driven application.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="stock-market-portfolio-optimization-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="building-an-etl-pipeline-using-pyspark.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

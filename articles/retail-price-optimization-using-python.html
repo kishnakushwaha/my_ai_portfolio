@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Retail Price Optimization using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Retail Price Optimization using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 03, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="salary-prediction-with-machine-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="50-projects-to-master-ai-ml-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Retail price optimization involves determining the optimal selling price for products or services to maximize revenue and profit. So, if you want to learn how to use <strong><a href="machine-learning-roadmap.html" target="">machine learning</a></strong> for the retail price optimization task, this article is for you. In this article, I will walk you through the task of Retail Price Optimization with Machine Learning using Python.</p>
+<h2 class="wp-block-heading">What is Retail Price Optimization?</h2>
+<p>Optimizing retail prices means finding the perfect balance between the price you charge for your products and the number of products you can sell at that price.</p>
+<p>The ultimate aim is to charge a price that helps you make the most money and attracts enough customers to buy your products. It involves using data and pricing strategies to find the right price that maximizes your sales and profits while keeping customers happy.</p>
+<p>So for the task of Retail Price Optimization, you need data about the prices of products or services and everything that affects the price of a product. I found an ideal dataset for this task. You can download the data from <strong><a href="https://statso.io/retail-price-optimization-case-study/">here</a></strong>.</p>
+<p>In the section below, I will take you through the task of Retail Price Optimization with Machine Learning using Python.</p>
+<h2 class="wp-block-heading">Retail Price Optimization using Python</h2>
+<p>Let’s start the task of Retail Price Optimization by importing the necessary Python libraries and the <strong><a href="https://statso.io/retail-price-optimization-case-study/">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+import plotly.io as pio
+pio.templates.default = "plotly_white"
+
+data = pd.read_csv('retail_price.csv')
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>  product_id product_category_name  month_year  qty  total_price  \
+0       bed1        bed_bath_table  01-05-2017    1        45.95   
+1       bed1        bed_bath_table  01-06-2017    3       137.85   
+2       bed1        bed_bath_table  01-07-2017    6       275.70   
+3       bed1        bed_bath_table  01-08-2017    4       183.80   
+4       bed1        bed_bath_table  01-09-2017    2        91.90   
+
+   freight_price  unit_price  product_name_lenght  product_description_lenght  \
+0      15.100000       45.95                   39                         161   
+1      12.933333       45.95                   39                         161   
+2      14.840000       45.95                   39                         161   
+3      14.287500       45.95                   39                         161   
+4      15.100000       45.95                   39                         161   
+
+   product_photos_qty  ...  comp_1  ps1        fp1      comp_2  ps2  \
+0                   2  ...    89.9  3.9  15.011897  215.000000  4.4   
+1                   2  ...    89.9  3.9  14.769216  209.000000  4.4   
+2                   2  ...    89.9  3.9  13.993833  205.000000  4.4   
+3                   2  ...    89.9  3.9  14.656757  199.509804  4.4   
+4                   2  ...    89.9  3.9  18.776522  163.398710  4.4   
+
+         fp2  comp_3  ps3        fp3  lag_price  
+0   8.760000   45.95  4.0  15.100000      45.90  
+1  21.322000   45.95  4.0  12.933333      45.95  
+2  22.195932   45.95  4.0  14.840000      45.95  
+3  19.412885   45.95  4.0  14.287500      45.95  
+4  24.324687   45.95  4.0  15.100000      45.95  
+
+[5 rows x 30 columns]</strong></pre>
+<p>Before moving forward, let’s have a look if the data has null values or not:</p>
+<pre><code class="language-python">print(data.isnull().sum())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>product_id                    0
+product_category_name         0
+month_year                    0
+qty                           0
+total_price                   0
+freight_price                 0
+unit_price                    0
+product_name_lenght           0
+product_description_lenght    0
+product_photos_qty            0
+product_weight_g              0
+product_score                 0
+customers                     0
+weekday                       0
+weekend                       0
+holiday                       0
+month                         0
+year                          0
+s                             0
+volume                        0
+comp_1                        0
+ps1                           0
+fp1                           0
+comp_2                        0
+ps2                           0
+fp2                           0
+comp_3                        0
+ps3                           0
+fp3                           0
+lag_price                     0
+dtype: int64</strong></pre>
+<p>Now let’s have a look at the descriptive statistics of the data:</p>
+<pre><code class="language-python">print(data.describe())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>              qty   total_price  freight_price  unit_price  \
+count  676.000000    676.000000     676.000000  676.000000   
+mean    14.495562   1422.708728      20.682270  106.496800   
+std     15.443421   1700.123100      10.081817   76.182972   
+min      1.000000     19.900000       0.000000   19.900000   
+25%      4.000000    333.700000      14.761912   53.900000   
+50%     10.000000    807.890000      17.518472   89.900000   
+75%     18.000000   1887.322500      22.713558  129.990000   
+max    122.000000  12095.000000      79.760000  364.000000   
+
+       product_name_lenght  product_description_lenght  product_photos_qty  \
+count           676.000000                  676.000000          676.000000   
+mean             48.720414                  767.399408            1.994083   
+std               9.420715                  655.205015            1.420473   
+min              29.000000                  100.000000            1.000000   
+25%              40.000000                  339.000000            1.000000   
+50%              51.000000                  501.000000            1.500000   
+75%              57.000000                  903.000000            2.000000   
+max              60.000000                 3006.000000            8.000000   
+
+       product_weight_g  product_score   customers  ...      comp_1  \
+count        676.000000     676.000000  676.000000  ...  676.000000   
+mean        1847.498521       4.085503   81.028107  ...   79.452054   
+std         2274.808483       0.232021   62.055560  ...   47.933358   
+min          100.000000       3.300000    1.000000  ...   19.900000   
+25%          348.000000       3.900000   34.000000  ...   49.910000   
+50%          950.000000       4.100000   62.000000  ...   69.900000   
+75%         1850.000000       4.200000  116.000000  ...  104.256549   
+max         9750.000000       4.500000  339.000000  ...  349.900000   
+
+              ps1         fp1      comp_2         ps2         fp2      comp_3  \
+count  676.000000  676.000000  676.000000  676.000000  676.000000  676.000000   
+mean     4.159467   18.597610   92.930079    4.123521   18.620644   84.182642   
+std      0.121652    9.406537   49.481269    0.207189    6.424174   47.745789   
+min      3.700000    0.095439   19.900000    3.300000    4.410000   19.900000   
+25%      4.100000   13.826429   53.900000    4.100000   14.485000   53.785714   
+50%      4.200000   16.618984   89.990000    4.200000   16.811765   59.900000   
+75%      4.200000   19.732500  117.888889    4.200000   21.665238   99.990000   
+max      4.500000   57.230000  349.900000    4.400000   57.230000  255.610000   
+
+              ps3         fp3   lag_price  
+count  676.000000  676.000000  676.000000  
+mean     4.002071   17.965007  107.399684  
+std      0.233292    5.533256   76.974657  
+min      3.500000    7.670000   19.850000  
+25%      3.900000   15.042727   55.668750  
+50%      4.000000   16.517110   89.900000  
+75%      4.100000   19.447778  129.990000  
+max      4.400000   57.230000  364.000000  
+
+[8 rows x 27 columns]</strong></pre>
+<p>Now let’s have a look at the distribution of the prices of the products:</p>
+<pre><code class="language-python">fig = px.histogram(data, 
+                   x='total_price', 
+                   nbins=20, 
+                   title='Distribution of Total Price')
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="retail price optimization: Distribution of Total Price" class="wp-image-20093" data-attachment-id="20093" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="retail-price-1" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="459" sizes="(max-width: 750px) 100vw, 750px" src="../assets/datasets/retail-price-1.png" width="750"/></figure>
+<p>Now let’s have a look at the distribution of the unit prices using a box plot:</p>
+<pre><code class="language-python">fig = px.box(data, 
+             y='unit_price', 
+             title='Box Plot of Unit Price')
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="Box Plot of Unit Prices" class="wp-image-20095" data-attachment-id="20095" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="retail-price-2" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="459" sizes="(max-width: 750px) 100vw, 750px" src="../assets/datasets/retail-price-2.png" width="750"/></figure>
+<p>Now let’s have a look at the relationship between quantity and total prices:</p>
+<pre><code class="language-python">fig = px.scatter(data, 
+                 x='qty', 
+                 y='total_price', 
+                 title='Quantity vs Total Price', trendline="ols")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="retail price optimization: Quantity vs Total Price" class="wp-image-20096" data-attachment-id="20096" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="retail-price-3" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/retail-price-3.png" width="857"/></figure>
+<p>Thus, the relationship between quantity and total prices is linear. It indicates that the price structure is based on a fixed unit price, where the total price is calculated by multiplying the quantity by the unit price.</p>
+<p>Now let’s have a look at the average total prices by product categories:</p>
+<pre><code class="language-python">fig = px.bar(data, x='product_category_name', 
+             y='total_price', 
+             title='Average Total Price by Product Category')
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Average Total Prices by Product Category" class="wp-image-20098" data-attachment-id="20098" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="retail-price-4" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/retail-price-4.png" width="857"/></figure>
+<p>Now let’s have a look at the distribution of total prices by weekday using a box plot:</p>
+<pre><code class="language-python">fig = px.box(data, x='weekday', 
+             y='total_price', 
+             title='Box Plot of Total Price by Weekday')
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="retail price optimization: Box Plot of Total Price by Weekday" class="wp-image-20100" data-attachment-id="20100" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="retail-price-5" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/retail-price-5.png" width="857"/></figure>
+<p>Now let’s have a look at the distribution of total prices by holiday using a box plot:</p>
+<pre><code class="language-python">fig = px.box(data, x='holiday', 
+             y='total_price', 
+             title='Box Plot of Total Price by Holiday')
+fig.show()</code></pre>
+<figure class="wp-block-image size-full"><img alt="Box Plot of Total Prices by Holiday" class="wp-image-20102" data-attachment-id="20102" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="retail-price-6" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/retail-price-6.png" width="857"/></figure>
+<p>Now let’s have a look at the correlation between the numerical features with each other:</p>
+<pre><code class="language-python">correlation_matrix = data.corr()
+fig = go.Figure(go.Heatmap(x=correlation_matrix.columns, 
+                           y=correlation_matrix.columns, 
+                           z=correlation_matrix.values))
+fig.update_layout(title='Correlation Heatmap of Numerical Features')
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="retail price optimization: Correlation Heatmap of Numerical Features" class="wp-image-20104" data-attachment-id="20104" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="retail-price-7" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/retail-price-7.png" width="857"/></figure>
+<p>Analyzing competitors’ pricing strategies is essential in optimizing retail prices. Monitoring and benchmarking against competitors’ prices can help identify opportunities to price competitively, either by pricing below or above the competition, depending on the retailer’s positioning and strategy. Now let’s calculate the average competitor price difference by product category:</p>
+<pre><code class="language-python">data['comp_price_diff'] = data['unit_price'] - data['comp_1'] 
+
+avg_price_diff_by_category = data.groupby('product_category_name')['comp_price_diff'].mean().reset_index()
+
+fig = px.bar(avg_price_diff_by_category, 
+             x='product_category_name', 
+             y='comp_price_diff', 
+             title='Average Competitor Price Difference by Product Category')
+fig.update_layout(
+    xaxis_title='Product Category',
+    yaxis_title='Average Competitor Price Difference'
+)
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Average Competitor Prices Difference by Product Category" class="wp-image-20106" data-attachment-id="20106" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="retail-price-8" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/retail-price-8.png" width="857"/></figure>
+<h2 class="wp-block-heading">Retail Price Optimization Model with Machine Learning</h2>
+<p>Now let’s train a Machine Learning model for the task of Retail Price Optimization. Below is how we can train a Machine Learning model for this problem:</p>
+<pre><code class="language-python">from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.metrics import mean_squared_error
+
+X = data[['qty', 'unit_price', 'comp_1', 
+          'product_score', 'comp_price_diff']]
+y = data['total_price']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, 
+                                                    test_size=0.2,
+                                                    random_state=42)
+
+# Train a linear regression model
+model = DecisionTreeRegressor()
+model.fit(X_train, y_train)</code></pre>
+<p>Now let’s make predictions and have a look at the predicted retail prices and the actual retail prices:</p>
+<pre><code class="language-python">y_pred = model.predict(X_test)
+
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=y_test, y=y_pred, mode='markers', 
+                         marker=dict(color='blue'), 
+                         name='Predicted vs. Actual Retail Price'))
+fig.add_trace(go.Scatter(x=[min(y_test), max(y_test)], y=[min(y_test), max(y_test)], 
+                         mode='lines', 
+                         marker=dict(color='red'), 
+                         name='Ideal Prediction'))
+fig.update_layout(
+    title='Predicted vs. Actual Retail Price',
+    xaxis_title='Actual Retail Price',
+    yaxis_title='Predicted Retail Price'
+)
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Predicted vs. Actual Retail Price" class="wp-image-20111" data-attachment-id="20111" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="retail-price-optimization" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/retail-price-optimization.png" width="857"/></figure>
+<p>So this is how you can optimize retail prices with Machine Learning using Python.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>The ultimate aim of optimizing retail prices is to charge a price that helps you make the most money and attracts enough customers to buy your products. It involves using data and pricing strategies to find the right price that maximizes your sales and profits while keeping customers happy. I hope you liked this article on optimizing retail prices with Machine Learning using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="salary-prediction-with-machine-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="50-projects-to-master-ai-ml-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

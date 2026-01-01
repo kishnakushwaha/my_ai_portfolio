@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>A Guide to RFM Analysis using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        A Guide to RFM Analysis using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 07, 2025 • 5 min read</div>
+<p>A common mistake many businesses make is treating all customers the same. They run generic promotions, send the same emails, and wonder why their revenue isn’t growing. The truth is, not all customers are created equal. But how do you tell the difference? That’s where RFM Analysis comes in. It’s a powerful, straightforward technique that helps you identify your most valuable customers and understand their behaviour. So, if you want to learn RFM Analysis, this article is for you. In this article, I’ll take you through a practical guide to RFM Analysis using Python.</p>
+<h2 class="wp-block-heading">What is RFM Analysis?</h2>
+<p>RFM stands for <strong>Recency</strong>, <strong>Frequency</strong>, and <strong>Monetary</strong>. It’s a marketing analysis tool used to rank quantitatively and segment customers based on their purchasing habits. Here’s how it helps:</p>
+<ol class="wp-block-list">
+<li><strong>Recency (R):</strong> How recently did a customer make a purchase? The more recent their purchase, the more likely they are to respond to promotions.</li>
+<li><strong>Frequency (F):</strong> How often do they buy? Customers who buy more frequently are generally more engaged and loyal.</li>
+<li><strong>Monetary (M):</strong> How much do they spend? Customers who spend more money are often your most profitable.</li>
+</ol>
+<p>By combining these three metrics, you can group customers into different segments and develop targeted strategies for each group.</p>
+<h2 class="wp-block-heading">RFM Analysis using Python: Getting Started</h2>
+<p><strong>Please download the dataset from <a href="../assets/datasets/rfm_data.csv">here</a> to get started with RFM Analysis.</strong></p>
+<p>Let’s import the dataset:</p>
+<pre><code class="language-python">import pandas as pd
+df = pd.read_csv('rfm_data.csv')
+print("First 5 rows of the dataset:")
+print(df.head().to_markdown(index=False, numalign="left", stralign="left"))</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="RFM Analysis: Dataset" class="wp-image-27629" data-attachment-id="27629" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/image.png?fit=1024%2C174&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/image.png?fit=300%2C51&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/image.png?fit=1758%2C298&amp;ssl=1" data-orig-size="1758,298" data-permalink="https://my-ai-portfolio.com/2025/08/26/a-guide-to-rfm-analysis-using-python/image-233/" data-recalc-dims="1" decoding="async" height="174" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/image.png?resize=1024%2C174&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/image.png?resize=1024%2C174&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/image.png?resize=300%2C51&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/image.png?resize=768%2C130&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/image.png?resize=1536%2C260&amp;ssl=1 1536w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/image.png?resize=1200%2C203&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/image.png?w=1758&amp;ssl=1 1758w" width="1024"/></figure>
+<p>Before you can calculate anything, you need to get your data in the correct format. We typically start with a raw transaction dataset. In our example, the data includes:</p>
+<pre class="wp-block-preformatted"><strong>CustomerID, PurchaseDate, TransactionAmount, ProductInformation, OrderID, and Location</strong></pre>
+<p>The first crucial step is to ensure your PurchaseDate column is in the correct datetime format. This is essential for calculating recency. Here’s how:</p>
+<pre><code class="language-python">df['PurchaseDate'] = pd.to_datetime(df['PurchaseDate'])</code></pre>
+<h4 class="wp-block-heading">Calculate R, F, and M Values</h4>
+<p>This is the core of the analysis. We’ll calculate the Recency, Frequency, and Monetary values for each customer.</p>
+<p>To calculate <strong>recency</strong>, we first need a snapshot date, which is the latest date in the dataset plus one day. We then subtract the customer’s most recent purchase date from this snapshot date. This gives us the number of days since their last purchase. For <strong>Frequency</strong>, we count the number of orders (OrderID) for each unique customer. And, for <strong>Monetary</strong>, we sum up the Transaction Amount for each customer.</p>
+<p>Here’s how to code these calculations:</p>
+<pre><code class="language-python"># get the latest date in the dataset and add one day to serve as the snapshot date
+snapshot_date = df['PurchaseDate'].max() + pd.Timedelta(days=1)
+
+# calculate RFM values for each customer
+rfm_df = df.groupby('CustomerID').agg(
+    Recency=('PurchaseDate', lambda date: (snapshot_date - date.max()).days),
+    Frequency=('OrderID', 'count'),
+    Monetary=('TransactionAmount', 'sum')
+).reset_index()
+
+print("Calculated RFM values:")
+print(rfm_df.head().to_markdown(index=False, numalign="left", stralign="left"))</code></pre>
+<pre class="wp-block-preformatted"><strong>Calculated RFM values:<br/>| CustomerID   | Recency   | Frequency   | Monetary   |<br/>|:-------------|:----------|:------------|:-----------|<br/>| 1011         | 34        | 2           | 1129.02    |<br/>| 1025         | 22        | 1           | 359.29     |<br/>| 1029         | 1         | 1           | 704.99     |<br/>| 1046         | 44        | 1           | 859.82     |<br/>| 1049         | 14        | 1           | 225.72     |</strong></pre>
+<p>Now, let’s have a look at how recently customers have made transactions:</p>
+<pre><code class="language-python">import plotly.graph_objects as go
+import plotly.express as px
+
+fig = go.Figure()
+
+fig.add_trace(go.Histogram(
+    x=rfm_df['Recency'],
+    nbinsx=20,
+    name="Customer Count",
+    marker_color='skyblue',
+    opacity=0.7
+))
+
+fig.add_trace(go.Histogram(
+    x=rfm_df['Recency'],
+    nbinsx=100,
+    histnorm='probability density',
+    marker_color='orange',
+    opacity=0.3,
+    name="Recency Density"
+))
+
+fig.update_layout(
+    title=dict(
+        text="How Recently Have Customers Purchased?",
+        x=0.5,
+        xanchor='center',
+        font=dict(size=20)
+    ),
+    xaxis_title="Recency (Days since last purchase)",
+    yaxis_title="Number of Customers",
+    bargap=0.1,
+    template="plotly_white",
+    legend=dict(title="Legend", orientation="h", x=0.3, y=1.1),
+    annotations=[
+        dict(
+            x=rfm_df['Recency'].median(),
+            y=0,
+            xref="x",
+            yref="y",
+            text="Median Recency",
+            showarrow=True,
+            arrowhead=2,
+            ax=-40,
+            ay=-40
+        )
+    ]
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="How Recently Have Customers Purchased?" class="wp-image-27632" data-attachment-id="27632" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="How Recently Have Customers Purchased?" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/How-Recently-Have-Customers-Purchased.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/How-Recently-Have-Customers-Purchased.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/How-Recently-Have-Customers-Purchased.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2025/08/26/a-guide-to-rfm-analysis-using-python/how-recently-have-customers-purchased/" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/How-Recently-Have-Customers-Purchased.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/How-Recently-Have-Customers-Purchased.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/How-Recently-Have-Customers-Purchased.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/How-Recently-Have-Customers-Purchased.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The distribution appears spread out, with a slight peak around the 35 to 45-day mark. The median recency is highlighted at approximately 30 days, indicating that half of all customers have purchased within the last month. The shape of the histogram suggests that customer purchases are spread across a range of recency values, rather than being heavily concentrated on very recent purchases.</p>
+<p>Now, let’s have a look at how often customers buy:</p>
+<pre><code class="language-python">import numpy as np
+
+freq = rfm_df['Frequency']
+q80, med = np.percentile(freq, 80), np.median(freq)
+
+fig = px.histogram(
+    rfm_df, x='Frequency', nbins=30, marginal='box',
+    title='How Often Do Customers Buy? (Spot the Loyalists)',
+    labels={'Frequency': 'Purchases per Customer'}, template='plotly_white', opacity=0.9
+)
+fig.update_traces(hovertemplate='Purchases: %{x}&lt;br&gt;Customers: %{y}')
+
+fig.add_vline(x=med, line_dash='dash', line_width=2,
+              annotation_text=f"Median = {med:.0f}", annotation_position='top left')
+fig.add_vrect(x0=q80, x1=freq.max(), opacity=0.1, line_width=0,
+              annotation_text='Top 20% loyalists', annotation_position='top right')
+
+fig.add_annotation(x=freq.min(), y=0, yshift=40, showarrow=False,
+                   text='Left tail: one-time/rare buyers → retention opportunities')
+
+fig.update_layout(yaxis_title='Number of Customers')
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="RFM Analysis: How Often Do Customers Buy?" class="wp-image-27635" data-attachment-id="27635" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="How Often Do Customers Buy?" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/How-Often-Do-Customers-Buy.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/How-Often-Do-Customers-Buy.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/How-Often-Do-Customers-Buy.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2025/08/26/a-guide-to-rfm-analysis-using-python/how-often-do-customers-buy/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/How-Often-Do-Customers-Buy.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/How-Often-Do-Customers-Buy.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/How-Often-Do-Customers-Buy.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/How-Often-Do-Customers-Buy.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>It reveals that the vast majority of customers are one-time or rare buyers, as indicated by the tall bar at “1 purchase per customer” and the median Frequency of 1. There is a small group of customers who have made two or more purchases. A distinct “Top 20% loyalists” band highlights the customers with the highest purchase frequency, representing a small but valuable group. The long tail on the right side of the distribution, while containing few customers, means those with a higher number of purchases, highlighting a key opportunity for retention and loyalty programs.</p>
+<h4 class="wp-block-heading">Segment Customers with RFM Scores</h4>
+<p>Now, we’ll transform the raw RFM values into scores (1-4) to create customer segments. The scoring is based on quartiles:</p>
+<ol class="wp-block-list">
+<li><strong>Recency:</strong> A lower Recency value (meaning a more recent purchase) gets a higher score. So, customers in the first quartile (least recent) get a score of 1, while those in the last quartile (most recent) get a score of 4.</li>
+<li><strong>Frequency and Monetary:</strong> The logic is reversed. A higher Frequency or Monetary value gets a higher score. Customers in the first quartile get a score of 1, while those in the last quartile get a score of 4.</li>
+</ol>
+<p>Here’s how we can segment our customers:</p>
+<pre><code class="language-python"># define scoring functions
+def r_score(value, r_quartiles):
+    if value &lt;= r_quartiles[0.25]:
+        return 4
+    elif value &lt;= r_quartiles[0.5]:
+        return 3
+    elif value &lt;= r_quartiles[0.75]:
+        return 2
+    else:
+        return 1
+
+def fm_score(value, fm_quartiles):
+    if value &lt;= fm_quartiles[0.25]:
+        return 1
+    elif value &lt;= fm_quartiles[0.5]:
+        return 2
+    elif value &lt;= fm_quartiles[0.75]:
+        return 3
+    else:
+        return 4
+      
+# get quartiles
+r_quartiles = rfm_df['Recency'].quantile([0.25, 0.5, 0.75])
+f_quartiles = rfm_df['Frequency'].quantile([0.25, 0.5, 0.75])
+m_quartiles = rfm_df['Monetary'].quantile([0.25, 0.5, 0.75])
+
+# apply scoring functions to create RFM scores
+rfm_df['R_Score'] = rfm_df['Recency'].apply(lambda x: r_score(x, r_quartiles))
+rfm_df['F_Score'] = rfm_df['Frequency'].apply(lambda x: fm_score(x, f_quartiles))
+rfm_df['M_Score'] = rfm_df['Monetary'].apply(lambda x: fm_score(x, m_quartiles)) 
+
+rfm_df['RFM_Score'] = rfm_df['R_Score'].astype(str) + rfm_df['F_Score'].astype(str) + rfm_df['M_Score'].astype(str)</code></pre>
+<p>After scoring, we combine them into a single RFM_Score string, like ‘444’ or ‘111’:</p>
+<pre><code class="language-python"># define a function to assign segments based on the RFM scores
+def rfm_segment(score):
+    if score in ['444', '443', '434', '344', '433', '343', '334']:
+        return 'Champions'
+    elif score in ['442', '424', '244', '333', '324', '342', '432']:
+        return 'Loyal Customers'
+    elif score in ['411', '412', '421', '422', '311', '312', '321', '322', '211', '212', '221', '222']:
+        return 'New Customers'
+    elif score in ['144', '143', '134', '243', '234', '133', '124', '123']:
+        return 'At Risk'
+    elif score in ['111', '112', '121', '211']:
+        return 'Lost Customers'
+    else:
+        return 'Other'
+      
+rfm_df['Segment'] = rfm_df['RFM_Score'].apply(rfm_segment)      </code></pre>
+<p>Now, we assign each customer to a segment based on their combined score using a defined function. Here’s a breakdown of some key segments and their typical scores:</p>
+<ul class="wp-block-list">
+<li><strong>Champions:</strong> Your best customers. They often buy and spend the most.</li>
+<li><strong>Loyal Customers:</strong> High Frequency and monetary value, but their recency might be slightly lower than that of champions.</li>
+<li><strong>New Customers:</strong> Bought recently but haven’t purchased frequently or spent much.</li>
+<li><strong>Lost Customers:</strong> Haven’t bought in a long time, don’t buy often, and don’t spend much.</li>
+</ul>
+<p>After applying this segmentation logic, we can visualize the distribution of our customer base across these segments:</p>
+<pre><code class="language-python">seg = (rfm_df['Segment'].value_counts()
+       .rename_axis('Segment').reset_index(name='Customers'))
+seg['Share'] = (seg['Customers']/seg['Customers'].sum()*100).round(1)
+top = seg.iloc[0]['Segment']
+seg['Highlight'] = np.where(seg['Segment'].eq(top), 'Top segment', 'Others')
+
+fig = px.bar(
+    seg, x='Segment', y='Customers', color='Highlight',
+    text=seg.apply(lambda r: f"{int(r.Customers)} ({r.Share}%)", axis=1),
+    title='Customer Segments: Where Is The Value?',
+    labels={'Customers':'Number of Customers'}, template='plotly_white', opacity=0.95
+)
+
+fig.update_traces(textposition='outside', hovertemplate='&lt;b&gt;%{x}&lt;/b&gt;&lt;br&gt;Customers: %{y}&lt;br&gt;Share: %{text}')
+fig.update_layout(
+    xaxis_title='RFM Segment',
+    xaxis={'categoryorder':'array','categoryarray':seg['Segment']},
+    showlegend=False,
+    margin=dict(t=70, b=20)
+)
+
+# Story cue: call out the biggest slice
+top_y = int(seg.loc[seg['Segment'].eq(top), 'Customers'].iloc[0])
+fig.add_annotation(x=top, y=top_y, yshift=35, showarrow=True,
+                   text='Largest segment → prioritize retention/upsell')
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Customer Segments: Where Is The Value?" class="wp-image-27639" data-attachment-id="27639" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Customer Segments Where Is The Value?" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/Customer-Segments-Where-Is-The-Value.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/Customer-Segments-Where-Is-The-Value.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/Customer-Segments-Where-Is-The-Value.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2025/08/26/a-guide-to-rfm-analysis-using-python/customer-segments-where-is-the-value/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/Customer-Segments-Where-Is-The-Value.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/Customer-Segments-Where-Is-The-Value.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/Customer-Segments-Where-Is-The-Value.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/Customer-Segments-Where-Is-The-Value.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The “Other” segment is the largest, with 435 customers, making up 46.0% of the total. This is followed by “New Customers” at 344, or 36.4%, and “Lost Customers” with 121, or 12.8%. The most valuable segments, “Champions” and “Loyal Customers,” are the smallest, with 29 and 15 customers, representing 3.1% and 1.6% of the customer base, respectively. Finally, the “At Risk” segment is the smallest, with only two customers, or 0.2%.</p>
+<p>Our analysis showed that the “Champions” segment has the highest average spend, but a large portion of customers fall into the “Other” or “New Customers” segments. This highlights a massive opportunity for upsell and activation campaigns aimed at moving these customers up the value chain.</p>
+<h3 class="wp-block-heading">Final Words</h3>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="carbon-emissions-impact-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="analyzing-screen-time-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

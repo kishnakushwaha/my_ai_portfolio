@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Data Augmentation using LLMs | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Data Augmentation using LLMs</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 18, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="fine-tuning-llms-guide.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="weather-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Data Augmentation is a fundamental technique in <strong><a href="https://play.google.com/store/books/details?id=LCAqEQAAQBAJ" rel="noreferrer noopener" target="_blank">machine learning</a></strong> used to expand and diversify datasets by generating synthetic data. With the rise of <strong><a href="best-resources-to-learn-llms.html" rel="noreferrer noopener" target="">Large Language Models</a></strong> (LLMs), data augmentation has become one of their most impactful industry applications, enabling the creation of high-quality, diverse datasets for various use cases. So, in this article, I’ll take you through the concept of data augmentation using LLMs with Python.</p>
+<h2 class="wp-block-heading">What is Data Augmentation?</h2>
+<p>Data Augmentation involves creating new, synthetic data points from an existing dataset to improve model robustness, generalization, and performance. In the context of text, this could mean paraphrasing sentences, generating new examples, or creating entirely new structured data based on patterns. LLMs excel at this task because they can understand context, mimic writing styles, and generate plausible outputs based on prompts.</p>
+<p>For structured data like tables (e.g., CSV files), LLMs can be guided to produce rows that follow a specific format, such as employee records with fields like Employee ID, Name, Age, Department, Salary, and Experience.</p>
+<p>Let’s understand data augmentation using LLMs with a practical example!</p>
+<h2 class="wp-block-heading">Data Augmentation using LLMs</h2>
+<p>Let’s consider a scenario where we have an <strong>Employee Salary Dataset (with columns like: Employee ID, Name, Age, Department, Salary, and Experience)</strong>, but it contains only a few samples. Our goal is to <strong>generate additional realistic records</strong> to improve training data quality for a salary prediction model.</p>
+<h4 class="wp-block-heading">Step 1: Load a Pretrained LLM</h4>
+<p>I am using <strong>GPT-2</strong> for demonstration. You can try larger models like <strong>GPT-3.5, LLaMA, or Mistral</strong> for better results:</p>
+<pre><code class="language-python">from transformers import pipeline
+
+# load GPT-2 model for text generation
+generator = pipeline("text-generation", model="gpt2")</code></pre>
+<p>When this code runs, the GPT-2 model and its tokenizer are downloaded (if not already cached) and loaded into memory. The generator object is now ready to produce text based on input prompts.</p>
+<h4 class="wp-block-heading">Step 2: Define a Structured Prompt for Data Generation</h4>
+<p>LLMs like GPT-2 rely on patterns in the input prompt. By providing a detailed example, we guide the model to mimic the structure (comma-separated values) and content (realistic employee data). You can also extract data from CSV files while writing prompts.</p>
+<p>For now, we will just give some sample data in the prompt:</p>
+<pre><code class="language-python">prompt = """
+Generate a structured table in CSV format with columns:
+Employee ID, Name, Age, Department, Salary ($), Experience (Years).
+
+Example:
+1, John Doe, 28, Engineering, 75000, 3
+2, Jane Smith, 32, Marketing, 85000, 5
+3, Alice Brown, 45, HR, 95000, 10
+4, Robert White, 38, Engineering, 90000, 7
+5, Emily Davis, 29, Finance, 72000, 4
+6, Michael Johnson, 50, Sales, 110000, 20
+7, Sarah Wilson, 31, HR, 78000, 6
+8, David Lee, 42, Marketing, 88000, 12
+9, Jennifer Moore, 27, Engineering, 71000, 2
+10, Kevin Clark, 35, Finance, 93000, 8
+11, Jessica Taylor, 30, Sales, 79000, 5
+12, William Martin, 37, HR, 87000, 9
+13, Olivia Adams, 40, Engineering, 99000, 14
+14, Daniel Harris, 26, Finance, 70000, 2
+15, Sophia Anderson, 33, Marketing, 85000, 7
+16, Matthew Thomas, 29, Sales, 73000, 3
+17, Laura Jackson, 36, HR, 89000, 10
+18, Anthony Rodriguez, 41, Engineering, 105000, 15
+19, Lisa Scott, 39, Marketing, 92000, 11
+20, Andrew Hall, 34, Finance, 94000, 9
+"""
+
+# generate synthetic data using GPT-2
+generated_data = generator(prompt, max_length=5000, num_return_sequences=1)
+
+# print generated output
+print(generated_data[0]['generated_text'])</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Data Augmentation" class="wp-image-26284" data-attachment-id="26284" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="1216,418" data-recalc-dims="1" decoding="async" height="352" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/image-3.png" width="1024"/><figcaption class="wp-element-caption"><strong>Output of the generated samples</strong></figcaption></figure>
+<p>This prompt primes GPT-2 to generate additional rows that follow the same format and style. Once, we will run this code, GPT-2 will use its learned patterns to predict what comes next after the prompt, ideally producing new CSV rows with realistic employee data.</p>
+<h4 class="wp-block-heading">Step 3: Parse the Generated Text into a DataFrame</h4>
+<p>The resulting data DataFrame should contain the synthetic rows generated by GPT-2, structured as a table. So, we need to extract structured data:</p>
+<pre><code class="language-python">import pandas as pd
+from io import StringIO
+
+# extract generated text
+generated_text = generated_data[0]['generated_text']
+
+# remove the prompt portion from the output
+generated_text = generated_text.replace(prompt, "").strip()
+
+# convert to dataframe
+data = pd.read_csv(StringIO(generated_text), names=["Employee ID", "Name", "Age", "Department", "Salary", "Experience"])
+print(data)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>    Employee ID                  Name  Age     Department       Salary  \<br/>0            21            Jodi Hynes   34    Engineering        91000   <br/>1            22          Nicole Burch   35      Marketing        70000   <br/>2            23        Scott Thompson   28        Finance        40000   <br/>3            24        Julia Williams   29     Accounting       240000   <br/>4            25     Julia Jones-Smith   35      Education        80000   <br/>5            26           Lisa Wilson   36   Hired Talent        90000   <br/>6            27              Amy Fung   33   Construction        80000   <br/>7            28        Kathy Foulburn   32      Education       140000   <br/>8            29          Lisa Mathers   18         Hiring        70000   <br/>9            30      Sarah R. Johnson   30         Hiring        75000   <br/>10           31   Laura Johnson-Garré   30    Social Club       180000   <br/>11           32        Jannice Taylor   21         Hiring        80000   <br/>12           33       Mary T. Johnson   27    Engineering        70000   <br/>13           34         David Johnson   25         Hiring        75000   <br/>14           35          Paul Johnson   25         Hiring        85000   <br/>15           36        Ann J. Johnson   21         Hiring        90000   <br/>16           37       Jill K. Johnson   24     Management        70000   <br/>17           38           Ann Johnson   21         Hiring       100000   <br/>18           39         Laura Johnson   19    Engineering        70000   <br/>19           40      Jennifer Johnson   20     Technology        70000   <br/>20           41       John R. Johnson   36         Hiring   75000 0=No   <br/><br/>    Experience  <br/>0         12.0  <br/>1         10.0  <br/>2          9.0  <br/>3         11.0  <br/>4         11.0  <br/>5         14.0  <br/>6         16.0  <br/>7         22.0  <br/>8          4.0  <br/>9          8.0  <br/>10         NaN  <br/>11         NaN  <br/>12         NaN  <br/>13        10.0  <br/>14         9.0  <br/>15        11.0  <br/>16         4.0  <br/>17         NaN  <br/>18         NaN  <br/>19         NaN  <br/>20         NaN  </strong></pre>
+<p>This step transforms the raw text into a usable format for analysis or machine learning.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="fine-tuning-llms-guide.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="weather-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

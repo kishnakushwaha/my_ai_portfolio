@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Document Analysis using LLMs with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Document Analysis using LLMs with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 09, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="building-a-rag-pipeline-for-llms.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="building-an-ai-agent-using-openai-api.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Document analysis refers to extracting, interpreting, and understanding the information contained within a document. Traditionally, this involved manual review or simple keyword-based techniques, but with the rise of <strong><a href="roadmap-to-learn-nlp-and-llms.html" target="">Large Language Models (LLMs)</a></strong> like GPT and BERT, LLMs are now preferred for document analysis because they can comprehend context, generate summaries, answer questions, and identify key insights efficiently. So, if you want to learn how to analyze documents using LLMs, this article is for you. In this article, I’ll take you through the task of document analysis using LLMs with Python.</p>
+<h2 class="wp-block-heading">Document Analysis using LLMs with Python</h2>
+<p>For the task of document analysis using LLMs, I’ll be using a document that contains the terms of the services offered by Google. <strong>You can download this document from <a href="https://www.gstatic.com/policies/terms/pdf/20240522/ks8shls0/google_terms_of_service_en_in.pdf" rel="noreferrer noopener" target="_blank">here</a>.</strong></p>
+<h4 class="wp-block-heading">Step 1: Extract Text from the PDF</h4>
+<p>The first step in document analysis is extracting the content from a PDF file. We can use libraries like pdfplumber to open and read the text from each page of the PDF and save it into a .txt file for further analysis. You can install pdfplumber on your Python environment using the command: <strong>pip install pdfplumber</strong>. Here’s how to extract text from the PDF:</p>
+<pre><code class="language-python">import pdfplumber
+
+pdf_path = "/content/google_terms_of_service_en_in.pdf"
+
+output_text_file = "extracted_text.txt"
+
+with pdfplumber.open(pdf_path) as pdf:
+    extracted_text = ""
+    for page in pdf.pages:
+        extracted_text += page.extract_text()
+
+with open(output_text_file, "w") as text_file:
+    text_file.write(extracted_text)
+
+print(f"Text extracted and saved to {output_text_file}")</code></pre>
+<pre class="wp-block-preformatted"><strong>Text extracted and saved to extracted_text.txt</strong></pre>
+<p>The extracted text is stored in the variable extracted_text, which is then saved to a file for later use.</p>
+<h4 class="wp-block-heading">Step 2: Preview the Extracted Text</h4>
+<p>After extracting the text, it’s essential to preview the content to ensure everything is correctly captured. This allows you to check for any formatting issues or missing content:</p>
+<pre><code class="language-python"># reading pdf content
+with open("/content/extracted_text.txt", "r") as file:
+    document_text = file.read()
+
+# preview the document content
+print(document_text[:500])  # preview the first 500 characters</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>GOOGLE TERMS OF SERVICE<br/>Effective May 22, 2024 | Archived versions<br/>What’s covered in these terms<br/>We know it’s tempting to skip these Terms of<br/>Service, but it’s important to establish what you<br/>can expect from us as you use Google services,<br/>and what we expect from you.<br/>These Terms of Service reect the way Google’s business works, the laws that apply to<br/>our company, and certain things we’ve always believed to be true. As a result, these Terms<br/>of Service help dene Google’s relationship with you as</strong></pre>
+<h4 class="wp-block-heading">Step 3: Summarize the Document</h4>
+<p>To get a high-level overview of the document, you can use a pre-trained summarization model like <strong><a href="https://huggingface.co/google-t5/t5-small#model-details" rel="noreferrer noopener" target="_blank">t5-small</a></strong>. This allows you to condense large pieces of text into shorter summaries, which helps you to grasp the most important information. Here’s how to summarize the document:</p>
+<pre><code class="language-python">from transformers import pipeline
+
+# load the summarization pipeline
+summarizer = pipeline("summarization", model="t5-small")
+
+# summarize the document text (you can summarize parts if the document is too large)
+summary = summarizer(document_text[:1000], max_length=150, min_length=30, do_sample=False)
+print("Summary:", summary[0]['summary_text'])</code></pre>
+<pre class="wp-block-preformatted"><strong>Summary: these Terms of Service reect the way Google’s business works, the laws that apply to our company, and certain things we’ve always believed to be true . these terms include: what you can expect from us, which describes how we provide and develop our services What we expect from you, which establishes certain rules for using our services Content in Google services .</strong></pre>
+<p>The <strong>pipeline(“summarization”, model= “t5-small”)</strong> sets up the summarization model using <strong>T5-small</strong>, a pre-trained transformer model designed for text summarization. The<strong> document_text[:1000]</strong> specifies the portion of the text to summarize (the first 1000 characters), while <strong>max_length = 150 and min_length = 30</strong> control the maximum and minimum length of the summary in tokens. The <strong>do_sample = False</strong> parameter ensures deterministic output, meaning the model will not randomly sample from possible summaries but will give the same result every time.</p>
+<h4 class="wp-block-heading">Step 4: Split the Document into Sentences and Passages</h4>
+<p>For more detailed analysis, like question generation, it’s important to split the document into smaller chunks. This step tokenizes the document into sentences and combines them into manageable passages for subsequent steps. Here’s how to split the document into sentences and passages:</p>
+<pre><code class="language-python">import nltk
+nltk.download('punkt')
+from nltk.tokenize import sent_tokenize
+
+# split text into sentences
+sentences = sent_tokenize(document_text)
+
+# combine sentences into passages
+passages = []
+current_passage = ""
+for sentence in sentences:
+    if len(current_passage.split()) + len(sentence.split()) &lt; 200:  # adjust the word limit as needed
+        current_passage += " " + sentence
+    else:
+        passages.append(current_passage.strip())
+        current_passage = sentence
+if current_passage:
+    passages.append(current_passage.strip())</code></pre>
+<p>In this part of the code, we are using the <strong>NLTK library</strong> to split the extracted document text into individual sentences using the <strong>sent_tokenize()</strong> function. Then, we combine these sentences into manageable <strong>passages</strong> by setting a word limit of 200 words for each passage. This helps ensure that each passage is of a suitable length for further processing by language models, which often have token limits. If the current passage exceeds the word limit, it is appended to the passages list, and the process continues until all sentences are grouped into passages.</p>
+<h4 class="wp-block-heading">Step 5: Generate Questions from the Passages Using LLMs</h4>
+<p>The next step is to generate questions based on the document’s content. This helps in understanding key information points and can be used to check the comprehension of the document. Here’s how to generate questions from passages using LLMs:</p>
+<pre><code class="language-python"># load the question generation pipeline
+qg_pipeline = pipeline("text2text-generation", model="valhalla/t5-base-qg-hl")
+
+# function to generate questions using the pipeline
+def generate_questions_pipeline(passage, min_questions=3):
+    input_text = f"generate questions: {passage}"
+    results = qg_pipeline(input_text)
+    questions = results[0]['generated_text'].split('&lt;sep&gt;')
+    
+    # ensure we have at least 3 questions
+    questions = [q.strip() for q in questions if q.strip()]
+    
+    # if fewer than 3 questions, try to regenerate from smaller parts of the passage
+    if len(questions) &lt; min_questions:
+        passage_sentences = passage.split('. ')
+        for i in range(len(passage_sentences)):
+            if len(questions) &gt;= min_questions:
+                break
+            additional_input = ' '.join(passage_sentences[i:i+2])
+            additional_results = qg_pipeline(f"generate questions: {additional_input}")
+            additional_questions = additional_results[0]['generated_text'].split('&lt;sep&gt;')
+            questions.extend([q.strip() for q in additional_questions if q.strip()])
+    
+    return questions[:min_questions]  # return only the top 3 questions
+
+# generate questions from passages
+for idx, passage in enumerate(passages):
+    questions = generate_questions_pipeline(passage)
+    print(f"Passage {idx+1}:\n{passage}\n")
+    print("Generated Questions:")
+    for q in questions:
+        print(f"- {q}")
+    print(f"\n{'-'*50}\n")</code></pre>
+<p>In this part of the code, we are using a <strong>question generation model (<a href="https://huggingface.co/valhalla/t5-base-qg-hl" rel="noreferrer noopener" target="_blank">T5-based model valhalla/t5-base-qg-hl</a>)</strong> from the Hugging Face transformers library to automatically generate questions from text passages. The function <strong>generate_questions_pipeline()</strong> takes a text passage as input and produces a list of questions. We generate at least three questions for each passage, and if not, we split the passage into smaller parts and generate additional questions. This approach guarantees comprehensive question generation for each passage, and we print the questions along with the corresponding passage for review. Below is the output for the passage 1:</p>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Passage 1:<br/>GOOGLE TERMS OF SERVICE<br/>Effective May 22, 2024 | Archived versions<br/>What’s covered in these terms<br/>We know it’s tempting to skip these Terms of<br/>Service, but it’s important to establish what you<br/>can expect from us as you use Google services,<br/>and what we expect from you. These Terms of Service reect the way Google’s business works, the laws that apply to<br/>our company, and certain things we’ve always believed to be true. As a result, these Terms<br/>of Service help dene Google’s relationship with you as you interact with our services. For<br/>example, these terms include the following topic headings:<br/>What you can expect from us, which describes how we provide and develop our<br/>services<br/>What we expect from you, which establishes certain rules for using our services<br/>Content in Google services, which describes the intellectual property rights to the<br/>content you nd in our services — whether that content belongs to you, Google, or<br/>others<br/>In case of problems or disagreements, which describes other legal rights you have,<br/>and what to expect in case someone violates these terms<br/>Understanding these terms is important because, by accessing or using our services,<br/>you’re agreeing to these terms.<br/><br/>Generated Questions:<br/>- What is the meaning of the Terms of Service?<br/>- What are the terms of service that govern how Google operates?<br/>- What do these Terms of Service help define?<br/><br/>--------------------------------------------------</strong></pre>
+<h4 class="wp-block-heading">Step 6: Answer the Generated Questions Using a QA Model</h4>
+<p>After generating the questions, we can use a pre-trained question-answering (QA) model to find the answers within the text. The <strong>deepset/roberta-base-squad2</strong> model extracts answers based on the context of the passage. Here’s how to answer the generated questions:</p>
+<pre><code class="language-python"># load the QA pipeline
+qa_pipeline = pipeline("question-answering", model="deepset/roberta-base-squad2")
+
+# function to track and answer only unique questions
+def answer_unique_questions(passages, qa_pipeline):
+    answered_questions = set()  # to store unique questions
+
+    for idx, passage in enumerate(passages):
+        questions = generate_questions_pipeline(passage)
+
+        for question in questions:
+            if question not in answered_questions:  # check if the question has already been answered
+                answer = qa_pipeline({'question': question, 'context': passage})
+                print(f"Q: {question}")
+                print(f"A: {answer['answer']}\n")
+                answered_questions.add(question)  # add the question to the set to avoid repetition
+        print(f"{'='*50}\n")
+              
+answer_unique_questions(passages, qa_pipeline)</code></pre>
+<p>In this part of the code, we used a <strong>question-answering (QA) pipeline</strong> with the deepset/roberta-base-squad2 model to answer questions generated from the document passages. The function <strong>answer_unique_questions()</strong> tracks unique questions in a set to ensure it answers each question only once. As the code processes each passage, it checks whether it has already answered a question; if not, it generates an answer based on the passage’s context. This avoids answering duplicate questions and ensures efficient processing of all relevant queries. Below is the output for the passage 1:</p>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Q: What is the meaning of the Terms of Service?<br/>A: certain things we’ve always believed to be true<br/><br/>Q: What are the terms of service that govern how Google operates?<br/>A: reect the way Google’s business works, the laws<br/><br/>Q: What do these Terms of Service help define?<br/>A: Google’s relationship with you as you interact with our services<br/><br/>==================================================</strong></pre>
+<h3 class="wp-block-heading">Summary</h3>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="building-a-rag-pipeline-for-llms.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="building-an-ai-agent-using-openai-api.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

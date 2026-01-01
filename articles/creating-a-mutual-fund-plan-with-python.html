@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Creating a Mutual Fund Plan with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Creating a Mutual Fund Plan with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 01, 2025 • 5 min read</div>
+<p>Mutual funds are investment plans that pool money from multiple investors to purchase a diversified portfolio of stocks, bonds, and other securities, managed by professional fund managers. A mutual fund plan is created by selecting the stocks where an investor can benefit in the long term. So, if you want to learn how a mutual fund plan is created by analyzing the market performance over time, this article is for you. In this article, I’ll take you through the task of creating a mutual fund plan with <strong><a href="python-problems-for-coding-interviews.html" target="">Python</a></strong>.</p>
+<h2 class="wp-block-heading">Creating a Mutual Fund Plan with Python</h2>
+<p>A mutual fund plan is created by selecting the stocks where an investor can benefit in the long term. Here’s the process we can follow to create a mutual fund plan:</p>
+<ol class="wp-block-list">
+<li>Step 1: Gather historical stock data, such as <strong>closing prices</strong> and <strong>growth trends</strong> over time.</li>
+<li>Step 2: Calculate key metrics like <strong>Return on Investment (ROI)</strong> and <strong>volatility</strong> (risk) to understand how each stock has performed historically.</li>
+<li>Step 3: Choose stocks that have a <strong>high ROI</strong> and <strong>low volatility</strong> to ensure a balance between <strong>risk and reward</strong>.</li>
+<li>Step 4: Calculate the <strong>future value</strong> of monthly investments based on the expected ROI of the selected stocks.</li>
+</ol>
+<p>I found an ideal dataset for the task of creating a mutual fund plan by analyzing past performance in the market. Download the dataset from <strong><a href="../assets/datasets/nifty50_closing_prices.csv">here</a></strong>.</p>
+<p>Let’s get started with the task of creating a mutual fund plan by importing the necessary Python libraries and the <strong><a href="../assets/datasets/nifty50_closing_prices.csv">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+
+data = pd.read_csv("/content/nifty50_closing_prices.csv")
+
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>                        Date  RELIANCE.NS  HDFCBANK.NS  ICICIBANK.NS  \<br/>0  2024-08-20 00:00:00+05:30  2991.899902  1637.699951   1179.449951   <br/>1  2024-08-21 00:00:00+05:30  2997.350098  1625.800049   1174.849976   <br/>2  2024-08-22 00:00:00+05:30  2996.250000  1631.300049   1191.099976   <br/>3  2024-08-23 00:00:00+05:30  2999.949951  1625.050049   1203.500000   <br/>4  2024-08-26 00:00:00+05:30  3025.199951  1639.949951   1213.300049   <br/><br/>       INFY.NS       TCS.NS  KOTAKBANK.NS  HINDUNILVR.NS      ITC.NS  \<br/>0  1872.199951  4523.299805   1805.650024    2751.050049  498.799988   <br/>1  1872.699951  4551.500000   1812.949951    2791.199951  505.399994   <br/>2  1880.250000  4502.000000   1821.500000    2792.800049  504.549988   <br/>3  1862.099976  4463.899902   1818.000000    2815.600098  505.799988   <br/>4  1876.150024  4502.450195   1812.500000    2821.149902  505.700012   <br/><br/>         LT.NS  ...  HEROMOTOCO.NS   DRREDDY.NS   SHREECEM.NS  BRITANNIA.NS  \<br/>0  3572.699951  ...    5244.399902  6965.350098  24730.550781   5765.799805   <br/>1  3596.050049  ...    5284.700195  7062.450195  24808.050781   5837.350098   <br/>2  3606.500000  ...    5329.950195  6969.049805  25012.400391   5836.799805   <br/>3  3598.550049  ...    5384.899902  6954.500000  24706.050781   5792.649902   <br/>4  3641.899902  ...    5343.750000  6943.299805  24906.449219   5796.950195   <br/><br/>       UPL.NS  EICHERMOT.NS   SBILIFE.NS  ADANIPORTS.NS  BAJAJ-AUTO.NS  \<br/>0  566.150024   4883.250000  1761.300049    1492.550049    9779.700195   <br/>1  568.299988   4913.549805  1800.599976    1503.500000    9852.000000   <br/>2  579.150024   4933.549805  1795.250000    1492.300049    9914.200195   <br/>3  573.700012   4898.100098  1789.300049    1491.300049   10406.450195   <br/>4  577.450012   4875.200195  1796.250000    1482.550049   10432.549805   <br/><br/>   HINDALCO.NS  <br/>0   672.900024  <br/>1   685.599976  <br/>2   685.549988  <br/>3   685.099976  <br/>4   711.849976  <br/><br/>[5 rows x 51 columns]</strong></pre>
+<p>Before moving forward, I’ll convert the date column into a datetime data type:</p>
+<pre><code class="language-python">data['Date'] = pd.to_datetime(data['Date'])</code></pre>
+<p>Now, let’s have a look at whether this data has any null values or not:</p>
+<pre><code class="language-python">print(data.isnull().sum())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Date              0<br/>RELIANCE.NS       0<br/>HDFCBANK.NS       0<br/>ICICIBANK.NS      0<br/>INFY.NS           0<br/>TCS.NS            0<br/>KOTAKBANK.NS      0<br/>HINDUNILVR.NS     0<br/>ITC.NS            0<br/>LT.NS             0<br/>SBIN.NS           0<br/>BAJFINANCE.NS     0<br/>BHARTIARTL.NS     0<br/>HCLTECH.NS        0<br/>ASIANPAINT.NS     0<br/>AXISBANK.NS       0<br/>DMART.NS          0<br/>MARUTI.NS         0<br/>ULTRACEMCO.NS     0<br/>HDFC.NS          24<br/>TITAN.NS          0<br/>SUNPHARMA.NS      0<br/>M&amp;M.NS            0<br/>NESTLEIND.NS      0<br/>WIPRO.NS          0<br/>ADANIGREEN.NS     0<br/>TATASTEEL.NS      0<br/>JSWSTEEL.NS       0<br/>POWERGRID.NS      0<br/>ONGC.NS           0<br/>NTPC.NS           0<br/>COALINDIA.NS      0<br/>BPCL.NS           0<br/>IOC.NS            0<br/>TECHM.NS          0<br/>INDUSINDBK.NS     0<br/>DIVISLAB.NS       0<br/>GRASIM.NS         0<br/>CIPLA.NS          0<br/>BAJAJFINSV.NS     0<br/>TATAMOTORS.NS     0<br/>HEROMOTOCO.NS     0<br/>DRREDDY.NS        0<br/>SHREECEM.NS       0<br/>BRITANNIA.NS      0<br/>UPL.NS            0<br/>EICHERMOT.NS      0<br/>SBILIFE.NS        0<br/>ADANIPORTS.NS     0<br/>BAJAJ-AUTO.NS     0<br/>HINDALCO.NS       0<br/>dtype: int64</strong></pre>
+<p>There are 24 null values in the closing prices of HDFC. Let’s fill in these null values using the forward fill method:</p>
+<pre><code class="language-python">data.fillna(method='ffill', inplace=True)</code></pre>
+<p>Now, let’s have a look at the stock price trends of all the companies in the data:</p>
+<pre><code class="language-python">import plotly.graph_objs as go
+import plotly.express as px
+
+fig = go.Figure()
+
+for company in data.columns[1:]:
+    fig.add_trace(go.Scatter(x=data['Date'], y=data[company],
+                             mode='lines',
+                             name=company,
+                             opacity=0.5))
+
+fig.update_layout(
+    title='Stock Price Trends of All Indian Companies',
+    xaxis_title='Date',
+    yaxis_title='Closing Price (INR)',
+    xaxis=dict(tickangle=45), 
+    legend=dict(
+        x=1.05,
+        y=1,
+        traceorder="normal",
+        font=dict(size=10),
+        orientation="v"
+    ),
+    margin=dict(l=0, r=0, t=30, b=0),  
+    hovermode='x',
+    template='plotly_white'
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Stock Price Trends of All Indian Companies" class="wp-image-24684" data-attachment-id="24684" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Stock Price Trends of All Indian Companies" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Stock-Price-Trends-of-All-Indian-Companies.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Stock-Price-Trends-of-All-Indian-Companies.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Stock-Price-Trends-of-All-Indian-Companies.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/09/23/creating-a-mutual-fund-plan-with-python/stock-price-trends-of-all-indian-companies/" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Stock-Price-Trends-of-All-Indian-Companies.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Stock-Price-Trends-of-All-Indian-Companies.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Stock-Price-Trends-of-All-Indian-Companies.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Stock-Price-Trends-of-All-Indian-Companies.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>Let’s look at the companies with the highest risks for investing:</p>
+<pre><code class="language-python">all_companies = data.columns[1:]
+
+volatility_all_companies = data[all_companies].std()
+
+volatility_all_companies.sort_values(ascending=False).head(10)</code></pre>
+<figure class="wp-block-image size-full is-resized"><img alt="Creating a Mutual Fund Plan: companies with high risk" class="wp-image-24686" data-attachment-id="24686" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-5.png?fit=492%2C670&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-5.png?fit=220%2C300&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-5.png?fit=492%2C670&amp;ssl=1" data-orig-size="492,670" data-permalink="https://my-ai-portfolio.com/2024/09/23/creating-a-mutual-fund-plan-with-python/image-173/" data-recalc-dims="1" decoding="async" height="670" sizes="(max-width: 492px) 100vw, 492px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-5.png?resize=492%2C670&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-5.png?w=492&amp;ssl=1 492w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-5.png?resize=220%2C300&amp;ssl=1 220w" style="width:314px;height:auto" width="492"/></figure>
+<p>Now, let’s look at the companies with the highest growth rate for investing:</p>
+<pre><code class="language-python">growth_all_companies = data[all_companies].pct_change() * 100
+
+average_growth_all_companies = growth_all_companies.mean()
+
+average_growth_all_companies.sort_values(ascending=False).head(10)</code></pre>
+<figure class="wp-block-image size-full is-resized"><img alt="companies with highest growth rate" class="wp-image-24688" data-attachment-id="24688" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-6.png?fit=470%2C648&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-6.png?fit=218%2C300&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-6.png?fit=470%2C648&amp;ssl=1" data-orig-size="470,648" data-permalink="https://my-ai-portfolio.com/2024/09/23/creating-a-mutual-fund-plan-with-python/image-174/" data-recalc-dims="1" decoding="async" height="648" loading="lazy" sizes="auto, (max-width: 470px) 100vw, 470px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-6.png?resize=470%2C648&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-6.png?w=470&amp;ssl=1 470w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-6.png?resize=218%2C300&amp;ssl=1 218w" style="width:273px;height:auto" width="470"/></figure>
+<p>Now, let’s have a look at the companies with the highest return on investments:</p>
+<pre><code class="language-python">initial_prices_all = data[all_companies].iloc[0]
+final_prices_all = data[all_companies].iloc[-1]
+
+roi_all_companies = ((final_prices_all - initial_prices_all) / initial_prices_all) * 100
+
+roi_all_companies.sort_values(ascending=False).head(10)</code></pre>
+<figure class="wp-block-image size-full is-resized"><img alt="companies with high roi" class="wp-image-24690" data-attachment-id="24690" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-7.png?fit=478%2C654&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-7.png?fit=219%2C300&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-7.png?fit=478%2C654&amp;ssl=1" data-orig-size="478,654" data-permalink="https://my-ai-portfolio.com/2024/09/23/creating-a-mutual-fund-plan-with-python/image-175/" data-recalc-dims="1" decoding="async" height="654" loading="lazy" sizes="auto, (max-width: 478px) 100vw, 478px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-7.png?resize=478%2C654&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-7.png?w=478&amp;ssl=1 478w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-7.png?resize=219%2C300&amp;ssl=1 219w" style="width:287px;height:auto" width="478"/></figure>
+<h2 class="wp-block-heading">Creating a Mutual Fund Plan Based on High ROI and Low Risk</h2>
+<p>To create a strategy for selecting companies with <strong>high ROI and low risk</strong>, we can use a combination of <strong>ROI</strong> and <strong>volatility</strong> (standard deviation) metrics. The goal is to find companies that offer a <strong>high return on investment (ROI)</strong> but with <strong>low volatility</strong> to minimize risk.</p>
+<p>Here are the steps we can follow for creating a mutual fund plan:</p>
+<ol class="wp-block-list">
+<li><strong>Define ROI and Volatility Thresholds</strong>: We will set thresholds for ROI and volatility to select companies that provide good returns with lower risks.</li>
+<li><strong>Rank Companies by ROI and Volatility</strong>: Rank all companies based on their ROI and volatility scores.</li>
+<li><strong>Assign Investment Ratios</strong>: Allocate more investment to companies with higher ROI and lower volatility.</li>
+</ol>
+<p>Let’s start by defining thresholds and selecting companies that meet the criteria of high ROI and low volatility:</p>
+<pre><code class="language-python">roi_threshold = roi_all_companies.median()
+volatility_threshold = volatility_all_companies.median()
+
+selected_companies = roi_all_companies[(roi_all_companies &gt; roi_threshold) &amp; (volatility_all_companies &lt; volatility_threshold)]
+
+selected_companies.sort_values(ascending=False)</code></pre>
+<p>The following companies meet the criteria of <strong>high ROI</strong> and <strong>low volatility</strong>:</p>
+<ol class="wp-block-list">
+<li><strong>ICICI Bank</strong> (ROI: 13.48%)</li>
+<li><strong>IndusInd Bank</strong> (ROI: 7.16%)</li>
+<li><strong>JSW Steel</strong> (ROI: 7.02%)</li>
+<li><strong>Axis Bank</strong> (ROI: 6.59%)</li>
+<li><strong>HDFC Bank</strong> (ROI: 6.32%)</li>
+<li><strong>Sun Pharma</strong> (ROI: 5.63%)</li>
+<li><strong>Kotak Bank</strong> (ROI: 5.47%)</li>
+<li><strong>Cipla</strong> (ROI: 4.85%)</li>
+<li><strong>NTPC</strong> (ROI: 4.36%)</li>
+</ol>
+<p>To balance the investment between these companies, we can use an <strong>inverse volatility ratio</strong> for allocation. Companies with lower volatility will get a higher weight. Let’s calculate the weight for each company:</p>
+<pre><code class="language-python">selected_volatility = volatility_all_companies[selected_companies.index]
+inverse_volatility = 1 / selected_volatility
+
+investment_ratios = inverse_volatility / inverse_volatility.sum()
+
+investment_ratios.sort_values(ascending=False)</code></pre>
+<p>The investment ratios based on <strong>inverse volatility</strong> are as follows:</p>
+<ol class="wp-block-list">
+<li><strong>NTPC</strong>: 28.08%</li>
+<li><strong>JSW Steel</strong>: 15.99%</li>
+<li><strong>Axis Bank</strong>: 9.22%</li>
+<li><strong>HDFC Bank</strong>: 8.93%</li>
+<li><strong>Cipla</strong>: 8.48%</li>
+<li><strong>Kotak Bank</strong>: 7.66%</li>
+<li><strong>IndusInd Bank</strong>: 7.44%</li>
+<li><strong>Sun Pharma</strong>: 7.26%</li>
+<li><strong>ICICI Bank</strong>: 6.93%</li>
+</ol>
+<h2 class="wp-block-heading">Analyzing Our Mutual Fund Plan</h2>
+<p>We have created a mutual fund plan for long-term investments. Now, let’s analyze and compare our mutual fund plan by comparing it with the high-performing companies in the stock market. Let’s start by comparing the risks in our mutual fund with the risk in the high growth companies:</p>
+<pre><code class="language-python">top_growth_companies = average_growth_all_companies.sort_values(ascending=False).head(10)
+risk_growth_rate_companies = volatility_all_companies[top_growth_companies.index]
+risk_mutual_fund_companies = volatility_all_companies[selected_companies.index]
+
+fig = go.Figure()
+
+fig.add_trace(go.Bar(
+    y=risk_mutual_fund_companies.index,
+    x=risk_mutual_fund_companies,
+    orientation='h',  # Horizontal bar
+    name='Mutual Fund Companies',
+    marker=dict(color='blue')
+))
+
+fig.add_trace(go.Bar(
+    y=risk_growth_rate_companies.index,
+    x=risk_growth_rate_companies,
+    orientation='h',  
+    name='Growth Rate Companies',
+    marker=dict(color='green'),
+    opacity=0.7
+))
+
+fig.update_layout(
+    title='Risk Comparison: Mutual Fund vs Growth Rate Companies',
+    xaxis_title='Volatility (Standard Deviation)',
+    yaxis_title='Companies',
+    barmode='overlay',  
+    legend=dict(title='Company Type'),
+    template='plotly_white'
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Risk Comparison: Mutual Fund vs Growth Rate Companies" class="wp-image-24695" data-attachment-id="24695" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Risk Comparison Mutual Fund vs Growth Rate Companies" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Risk-Comparison-Mutual-Fund-vs-Growth-Rate-Companies.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Risk-Comparison-Mutual-Fund-vs-Growth-Rate-Companies.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Risk-Comparison-Mutual-Fund-vs-Growth-Rate-Companies.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/09/23/creating-a-mutual-fund-plan-with-python/risk-comparison-mutual-fund-vs-growth-rate-companies/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Risk-Comparison-Mutual-Fund-vs-Growth-Rate-Companies.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Risk-Comparison-Mutual-Fund-vs-Growth-Rate-Companies.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Risk-Comparison-Mutual-Fund-vs-Growth-Rate-Companies.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Risk-Comparison-Mutual-Fund-vs-Growth-Rate-Companies.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>Now, let’s compare the ROI of both the groups as well:</p>
+<pre><code class="language-python">expected_roi_mutual_fund = roi_all_companies[selected_companies.index]
+
+expected_roi_growth_companies = roi_all_companies[top_growth_companies.index]
+
+fig = go.Figure()
+
+fig.add_trace(go.Bar(
+    y=expected_roi_mutual_fund.index,
+    x=expected_roi_mutual_fund,
+    orientation='h',  
+    name='Mutual Fund Companies',
+    marker=dict(color='blue')
+))
+
+fig.add_trace(go.Bar(
+    y=expected_roi_growth_companies.index,
+    x=expected_roi_growth_companies,
+    orientation='h',  
+    name='Growth Rate Companies',
+    marker=dict(color='green'),
+    opacity=0.7
+))
+
+fig.update_layout(
+    title='Expected ROI Comparison: Mutual Fund vs Growth Rate Companies',
+    xaxis_title='Expected ROI (%)',
+    yaxis_title='Companies',
+    barmode='overlay',  
+    legend=dict(title='Company Type'),
+    template='plotly_white'
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Expected ROI Comparison: Mutual Fund vs Growth Rate Companies" class="wp-image-24697" data-attachment-id="24697" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Expected ROI Comparison Mutual Fund vs Growth Rate Companies" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Expected-ROI-Comparison-Mutual-Fund-vs-Growth-Rate-Companies.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Expected-ROI-Comparison-Mutual-Fund-vs-Growth-Rate-Companies.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Expected-ROI-Comparison-Mutual-Fund-vs-Growth-Rate-Companies.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/09/23/creating-a-mutual-fund-plan-with-python/expected-roi-comparison-mutual-fund-vs-growth-rate-companies/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Expected-ROI-Comparison-Mutual-Fund-vs-Growth-Rate-Companies.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Expected-ROI-Comparison-Mutual-Fund-vs-Growth-Rate-Companies.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Expected-ROI-Comparison-Mutual-Fund-vs-Growth-Rate-Companies.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Expected-ROI-Comparison-Mutual-Fund-vs-Growth-Rate-Companies.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The comparison between the <strong>risk (volatility)</strong> and <strong>expected ROI</strong> for mutual fund companies (in blue) and growth rate companies (in green) shows a clear trade-off. <strong>Mutual fund companies</strong> offer lower volatility, meaning they are less risky, but also provide lower expected returns. In contrast, <strong>growth rate companies</strong> demonstrate higher volatility, indicating more risk, but they offer much higher potential returns, especially companies like <strong>Bajaj Auto</strong> and <strong>Bajaj Finserv</strong>. This highlights a common investment dilemma: lower risk comes with a lower reward, while higher risk could yield higher returns.</p>
+<p>For<strong> long-term investments</strong>, the goal is typically to find companies that offer a<strong> balance of stable returns and manageable risk</strong>. The companies in our mutual fund exhibit <strong>low volatility</strong>, meaning they are less risky, and their <strong>moderate returns</strong> make them solid choices for <strong>long-term, stable growth</strong>. They are well-suited for conservative investors who want steady returns without significant fluctuations in value.</p>
+<h2 class="wp-block-heading">Calculating Expected Returns</h2>
+<p>Now, let’s calculate the expected returns a person will get from our mutual fund if he/she invests ₹5000 every month.</p>
+<p>To calculate the expected value a person will accumulate over<strong> 1 year</strong>, <strong>3 years</strong>, <strong>5 years</strong>, and<strong> 10 years</strong> through the mutual fund plan, we can follow these steps:</p>
+<ol class="wp-block-list">
+<li>Assume the person is investing <strong>5000 rupees every month</strong>.</li>
+<li>Use the <strong>expected ROI</strong> from the mutual fund companies to simulate the growth over time.</li>
+<li>Compute the compounded value of the investments for each period (1y, 3y, 5y, and 10y).</li>
+<li>Visualize the accumulated value over these periods.</li>
+</ol>
+<pre><code class="language-python">import numpy as np
+
+monthly_investment = 5000  # Monthly investment in INR
+years = [1, 3, 5, 10]  # Investment periods (in years)
+n = 12  # Number of times interest is compounded per year (monthly)
+
+avg_roi = expected_roi_mutual_fund.mean() / 100  # Convert to decimal
+
+def future_value(P, r, n, t):
+    return P * (((1 + r/n)**(n*t) - 1) / (r/n)) * (1 + r/n)
+
+future_values = [future_value(monthly_investment, avg_roi, n, t) for t in years]
+
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(
+    x=[str(year) + " year" for year in years],
+    y=future_values,
+    mode='lines+markers',
+    line=dict(color='blue'),
+    marker=dict(size=8),
+    name='Future Value'
+))
+
+fig.update_layout(
+    title="Expected Value of Investments of ₹ 5000 Per Month (Mutual Funds)",
+    xaxis_title="Investment Period",
+    yaxis_title="Future Value (INR)",
+    xaxis=dict(showgrid=True, gridcolor='lightgrey'),
+    yaxis=dict(showgrid=True, gridcolor='lightgrey'),
+    template="plotly_white",
+    hovermode='x'
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Expected Value of Investments of ₹ 5000 Per Month (Mutual Funds)" class="wp-image-24699" data-attachment-id="24699" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Expected Value of Investments of ₹ 5000 Per Month (Mutual Funds)" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Expected-Value-of-Investments-of-%E2%82%B9-5000-Per-Month-Mutual-Funds.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Expected-Value-of-Investments-of-%E2%82%B9-5000-Per-Month-Mutual-Funds.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Expected-Value-of-Investments-of-%E2%82%B9-5000-Per-Month-Mutual-Funds.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/09/23/creating-a-mutual-fund-plan-with-python/expected-value-of-investments-of-%e2%82%b9-5000-per-month-mutual-funds/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Expected-Value-of-Investments-of-%E2%82%B9-5000-Per-Month-Mutual-Funds.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Expected-Value-of-Investments-of-%E2%82%B9-5000-Per-Month-Mutual-Funds.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Expected-Value-of-Investments-of-%E2%82%B9-5000-Per-Month-Mutual-Funds.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Expected-Value-of-Investments-of-%E2%82%B9-5000-Per-Month-Mutual-Funds.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>After <strong>1 year</strong>, the accumulated value is around ₹62,000, and by <strong>5 years</strong>, it grows to over ₹300,000. The long-term benefit is evident, with the investment growing to nearly ₹860,000 over<strong> 10 years</strong>, which emphasises the value of consistent investing and compounding over time for long-term investors.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, this is how a mutual fund plan is designed by investment companies for long-term investors. Mutual funds are investment plans that pool money from multiple investors to purchase a diversified portfolio of stocks, bonds, and other securities, managed by professional fund managers.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="price-optimization-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="stock-market-anomaly-detection-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

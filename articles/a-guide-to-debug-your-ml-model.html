@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>A Guide to Debug your ML Model | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a class="active" href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        A Guide to Debug your ML Model</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 07, 2025 • 5 min read</div>
+<p>Your model trains flawlessly. No SyntaxError. You run model.predict() on new data, hold your breath, and the results are garbage. In <strong><a href="machine-learning-projects-to-learn-deployment.html">machine learning</a></strong>, a bug is silent. It’s a model that runs perfectly but learns nothing. So, if you want to learn about debugging ML models, this article is for you. In this article, I’ll take you through a complete guide on how to debug your ML model.</p>
+<h2 class="wp-block-heading">A Guide to Debug Your ML Model</h2>
+<p>Debugging ML is part art, part science, and 100% detective work. Over the years, I’ve seen thousands of broken models, and they almost always break in the same few ways.</p>
+<p>Here’s my practical guide to finding the bugs and debugging your ML model.</p>
+<h4 class="wp-block-heading">It’s (Almost) Always the Data</h4>
+<p>Before you touch a single hyperparameter, look at your data. I’m going to say this again because it will save you hundreds of hours in your career: <strong>It is almost always the data.</strong></p>
+<p>We love to tweak model architecture because it feels smart, but nine times out of ten, the problem lies in the X_train.</p>
+<h5 class="wp-block-heading">The Silent Killer: Data Leakage</h5>
+<p>This is the sneakiest bug in all of machine learning. <strong>Data leakage</strong> occurs when information from the future (or the answer itself) is accidentally included in your training features. Your model looks like a genius during training because it’s cheating; it’s like it found the answer key stuck to the test paper.</p>
+<figure class="wp-block-image aligncenter size-full"><img alt="The Silent Killer: Data Leakage" class="wp-image-28375" data-attachment-id="28375" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-12.png?fit=860%2C932&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-12.png?fit=277%2C300&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-12.png?fit=860%2C932&amp;ssl=1" data-orig-size="860,932" data-permalink="https://my-ai-portfolio.com/2025/10/25/a-guide-to-debug-your-ml-model/image-250/" data-recalc-dims="1" decoding="async" height="932" sizes="(max-width: 860px) 100vw, 860px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-12.png?resize=860%2C932&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-12.png?w=860&amp;ssl=1 860w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-12.png?resize=277%2C300&amp;ssl=1 277w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-12.png?resize=768%2C832&amp;ssl=1 768w" width="860"/></figure>
+<p>To fix data leakage, be ruthless. Look at every single feature and ask:</p>
+<p><strong>“Would I have this exact piece of information at the moment of prediction?”</strong></p>
+<p>So, always split your data into train, validation, and test sets first, before you do any preprocessing (like scaling or imputation).</p>
+<h5 class="wp-block-heading">Garbage In, Garbage Out (GIGO)</h5>
+<p>Your model is a sophisticated learning machine, but it can’t make sense of nonsense. So, always:</p>
+<ol class="wp-block-list">
+<li><strong>Check for NaNs (Missing Values):</strong> Sounds basic, but it’s the #1 culprit for models that output NaN.</li>
+<li><strong>Check for Outliers:</strong> A single data point with a user_age of 999 or a purchase_amount of $10,000,000 can throw off your entire model’s understanding of normal.</li>
+<li><strong>Check for Imbalance:</strong> Is your model predicting customer churn, and only 0.5% of customers actually churn? If so, your model can achieve <strong>99.5% accuracy by just predicting “no churn” every single time.</strong> It looks great, but it’s completely useless.</li>
+</ol>
+<h4 class="wp-block-heading">When Your Model Isn’t Learning</h4>
+<p>You hit “train,” and you watch the loss. And it doesn’t move. It’s stuck at 0.693 or some other high number. It means your model isn’t learning.</p>
+<p>Here’s what you need to do!</p>
+<h5 class="wp-block-heading">The Overfit a Single Batch Trick</h5>
+<p>This is the single most powerful debugging technique I know. If your model can’t even learn to solve a tiny piece of the problem, it will never solve the whole thing.</p>
+<p>Take <strong>one small batch</strong> of data (e.g., 32 samples) and train your model on only that batch, over and over, for 100 epochs.</p>
+<p>Here’s how to do that:</p>
+<pre><code class="language-python"># (Assume 'model' is your compiled Keras model)
+
+# Grab one batch of data
+(X_batch, y_batch) = next(iter(train_generator)) 
+
+# Train on ONLY this batch, repeatedly
+history = model.fit(
+    X_batch,
+    y_batch,
+    epochs=100,
+    verbose=1
+)
+
+# Now check the history...
+# Is the loss dropping to near-zero? Is accuracy hitting 100%?</code></pre>
+<p><strong>If it works</strong>,<strong> </strong>your model architecture and learning rate are capable of learning. The problem is with your broader dataset (it’s too noisy, too hard, or you need more data).</p>
+<p><strong>If it fails</strong>, you have a fundamental problem. Your model cannot even memorize 32 samples. The learning rate is the most likely culprit in such scenarios. If it’s too high, the loss will explode (NaN). If it’s too low, it won’t move at all. Try values like 1e-5, 1e-4, 1e-3.</p>
+<h4 class="wp-block-heading">When Your Model is Overfitting</h4>
+<p>When your training accuracy is 99%, you feel like a genius. Then you run it on the test set, and your accuracy plummets to 60%.</p>
+<p>It means your model didn’t learn; it memorized. It’s like a student who memorized the textbook’s practice questions but can’t answer a new question because they never learned the concepts.</p>
+<figure class="wp-block-image aligncenter size-full"><img alt="When Your Model is Overfitting" class="wp-image-28373" data-attachment-id="28373" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-10.png?fit=962%2C806&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-10.png?fit=300%2C251&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-10.png?fit=962%2C806&amp;ssl=1" data-orig-size="962,806" data-permalink="https://my-ai-portfolio.com/2025/10/25/a-guide-to-debug-your-ml-model/image-248/" data-recalc-dims="1" decoding="async" height="806" sizes="(max-width: 962px) 100vw, 962px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-10.png?resize=962%2C806&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-10.png?w=962&amp;ssl=1 962w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-10.png?resize=300%2C251&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-10.png?resize=768%2C643&amp;ssl=1 768w" width="962"/></figure>
+<p>To fix this, you need to make it harder for the model to memorize. We do this with <strong>regularization</strong>. You can learn about regularization <strong><a href="https://developers.google.com/machine-learning/crash-course/overfitting/regularization">here</a></strong>.</p>
+<h4 class="wp-block-heading">When Your Model is Underfitting</h4>
+<p>This is the opposite of overfitting, and it’s honestly easier to fix. Your training accuracy and your test accuracy are both low.</p>
+<p>It means the model just isn’t smart enough. It’s trying to fit a complex, curvy line with a simple straight line.</p>
+<figure class="wp-block-image aligncenter size-full"><img alt="When Your Model is Underfitting" class="wp-image-28374" data-attachment-id="28374" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-11.png?fit=892%2C882&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-11.png?fit=300%2C297&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-11.png?fit=892%2C882&amp;ssl=1" data-orig-size="892,882" data-permalink="https://my-ai-portfolio.com/2025/10/25/a-guide-to-debug-your-ml-model/image-249/" data-recalc-dims="1" decoding="async" height="882" loading="lazy" sizes="auto, (max-width: 892px) 100vw, 892px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-11.png?resize=892%2C882&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-11.png?w=892&amp;ssl=1 892w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-11.png?resize=300%2C297&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-11.png?resize=768%2C759&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-11.png?resize=50%2C50&amp;ssl=1 50w" width="892"/></figure>
+<p>Here’s how to fix underfitting:</p>
+<ol class="wp-block-list">
+<li><strong>Choose a Stronger Model:</strong> Make the model “deeper” (more layers) or “wider” (more neurons per layer).</li>
+<li><strong>Train longer:</strong> Maybe it just didn’t have enough time.</li>
+<li><strong>Feature Engineering:</strong> This is the most powerful one. Is your model getting a timestamp? It can’t use that. But if you give it day_of_week or hour_of_day, it can suddenly find patterns. You are giving it better tools.</li>
+</ol>
+<h3 class="wp-block-heading">Final Words</h3>
+<p>Your best tool isn’t TensorFlow or PyTorch. It’s a <strong>simple baseline model</strong> (like a LogisticRegression or a simple average) to compare against. If your complex, 50-layer neural network can’t beat a simple average, you know you have a problem.</p>
+<p>Debugging is the most frustrating part of this job. It’s also the most rewarding. Every bug you fix teaches you something fundamental.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="how-to-become-a-generative-ai-specialist.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="a-beginner-s-guide-to-using-apis-in-data-science.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

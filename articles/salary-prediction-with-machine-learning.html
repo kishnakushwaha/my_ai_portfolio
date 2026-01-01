@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Salary Prediction with Machine Learning | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Salary Prediction with Machine Learning</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 03, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="diamond-price-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="retail-price-optimization-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Salary differs according to the job profile of the person. But generally, it’s the working experience that determines the salary. Salary prediction is a popular problem among the <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">Data Science</a></strong> community for complete beginners. So, if you are a beginner in Data Science, you should work on this problem to understand Machine Learning. In this article, I will take you through the task of salary prediction with Machine Learning using Python.</p>
+<h2 class="wp-block-heading">Salary Prediction with Machine Learning</h2>
+<p>For salary prediction, we need to find relationships in the data on how the salary is determined. For this task, we need to have a dataset based on salaries. I found a dataset that contains data about how job experience affects salary.</p>
+<p>The dataset contains two columns only:</p>
+<ol class="wp-block-list">
+<li>job experience</li>
+<li>salary</li>
+</ol>
+<p><strong>You can download the dataset from <a href="https://statso.io/salary-prediction-case-study/" rel="noreferrer noopener" target="_blank">here</a>.</strong></p>
+<p>In the section below, I will introduce how to use Machine Learning to predict the salary based on the job experience.</p>
+<h2 class="wp-block-heading">Salary Prediction using Python</h2>
+<p>Let’s start this task by importing the necessary Python libraries and the <strong><a href="https://statso.io/salary-prediction-case-study/" rel="noreferrer noopener" target="_blank">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+import plotly.express as px
+import plotly.graph_objects as go
+
+data = pd.read_csv("Salary_Data.csv")
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted"><strong>   YearsExperience   Salary
+0              1.1  39343.0
+1              1.3  46205.0
+2              1.5  37731.0
+3              2.0  43525.0
+4              2.2  39891.0</strong></pre>
+<p>Let’s check if the dataset has any null values or not:</p>
+<pre><code class="language-python">print(data.isnull().sum())</code></pre>
+<pre class="wp-block-preformatted"><strong>YearsExperience    0
+Salary             0
+dtype: int64</strong></pre>
+<p>The dataset doesn’t have any null values. Let’s have a look at the relationship between the salary and job experience of the people:</p>
+<pre><code class="language-python">figure = px.scatter(data_frame = data, 
+                    x="Salary",
+                    y="YearsExperience", 
+                    size="YearsExperience", 
+                    trendline="ols")
+figure.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="relationship between salary and job experience" class="wp-image-18750" data-attachment-id="18750" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="salary-prediction" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="410" sizes="(max-width: 670px) 100vw, 670px" src="../assets/datasets/salary-prediction.png" width="670"/></figure>
+<p>There is a perfect linear relationship between the salary and the job experience of the people. It means more job experience results in a higher salary.</p>
+<h2 class="wp-block-heading">Training a Machine Learning Model</h2>
+<p>As this is a regression analysis problem, we will train a regression model to predict salary with Machine Learning. Here’s how we can split the data into training and test sets before training the model:</p>
+<pre><code class="language-python">from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+
+x = np.asanyarray(data[["YearsExperience"]])
+y = np.asanyarray(data[["Salary"]])
+xtrain, xtest, ytrain, ytest = train_test_split(x, y, 
+                                                test_size=0.2, 
+                                                random_state=42)</code></pre>
+<p>Now here’s how we can train the Machine Learning model:</p>
+<pre><code class="language-python">model = LinearRegression()
+model.fit(xtrain, ytrain)</code></pre>
+<p>Now let’s predict the salary of a person using the trained Machine Learning model:</p>
+<pre><code class="language-python">a = float(input("Years of Experience : "))
+features = np.array([[a]])
+print("Predicted Salary = ", model.predict(features))</code></pre>
+<pre class="wp-block-preformatted"><strong>Years of Experience : 2
+Predicted Salary =  [[44169.21365784]]</strong></pre>
+<p>So this is how you can solve the salary prediction problem as a beginner in Data Science.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>Salary prediction is a popular problem among the Data Science community for complete beginners. Through this regression analysis, we found a perfect linear relationship between the salary and the job experience of the people. It means more job experience results in a higher salary. I hope you liked this article on the task of salary prediction with Machine Learning using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="diamond-price-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="retail-price-optimization-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

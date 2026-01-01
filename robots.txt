@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /migrate_articles.py
+Disallow: /generate_search_index.py
+Disallow: /assets/datasets/
+Disallow: /js/
+Disallow: /search.json

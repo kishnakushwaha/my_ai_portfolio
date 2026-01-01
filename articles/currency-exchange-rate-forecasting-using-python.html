@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Currency Exchange Rate Forecasting using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Currency Exchange Rate Forecasting using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 29, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="time-series-forecasting-with-arima.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="netflix-subscriptions-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>The currency conversion rate or exchange rate is an important economic indicator affecting several sectors, such as import-export businesses, foreign investment and tourism. By analyzing past data and predicting future exchange rates, we can gain valuable insights to help stakeholders reduce risk, optimize currency conversions, and design effective financial strategies. So, if you want to know how to forecast currency exchange rates, this article is for you. In this article, I will take you through Currency Exchange Rate Forecasting using Python.</p>
+<h2 class="wp-block-heading">Currency Exchange Rate Forecasting: An Overview</h2>
+<p>Currency exchange rate forecasting means predicting future fluctuations in the value of one currency against another. It involves the use of historical data, economic indicators, and mathematical models to make accurate predictions about the direction and magnitude of exchange rate movements.</p>
+<p>It helps individuals, businesses (such as import-export businesses, foreign investment and tourism), and financial institutions to anticipate market trends, mitigate risk, optimize currency conversions and plan strategic decisions.</p>
+<p>To forecast exchange rates, we need historical data on the exchange rates between two currencies. I found an ideal dataset for this task. The dataset contains weekly exchange rates between INR and USD. You can download the dataset from <a href="https://statso.io/usd-inr-conversion-rate-case-study/" rel="noreferrer noopener" target="_blank"><strong>here</strong></a>.</p>
+<p>In the section below, I will take you through the task of Currency Exchange Rate Forecasting with Python using the INR – USD exchange rate data.</p>
+<h2 class="wp-block-heading">Currency Exchange Rate Forecasting using Python</h2>
+<p>I’ll start this task of Currency Exchange Rate Forecasting by importing the necessary Python libraries and the <a href="https://statso.io/usd-inr-conversion-rate-case-study/" rel="noreferrer noopener" target="_blank"><strong>dataset</strong></a>:</p>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.express as px
+
+data = pd.read_csv("INR-USD.csv")
+
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>         Date       Open       High        Low      Close  Adj Close  Volume
+0  2003-12-01  45.709000  45.728001  45.449001  45.480000  45.480000     0.0
+1  2003-12-08  45.474998  45.507999  45.352001  45.451000  45.451000     0.0
+2  2003-12-15  45.450001  45.500000  45.332001  45.455002  45.455002     0.0
+3  2003-12-22  45.417000  45.549000  45.296001  45.507999  45.507999     0.0
+4  2003-12-29  45.439999  45.645000  45.421001  45.560001  45.560001     0.0</strong></pre>
+<p>Let’s check if the dataset contains any missing values before moving forward:</p>
+<pre><code class="language-python">print(data.isnull().sum())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Date         0
+Open         3
+High         3
+Low          3
+Close        3
+Adj Close    3
+Volume       3
+dtype: int64</strong></pre>
+<p>The dataset has some missing values. Here’s how to remove them:</p>
+<pre><code class="language-python">data = data.dropna()</code></pre>
+<p>Now let’s have a look at the descriptive statistics of this dataset:</p>
+<pre><code class="language-python">print(data.describe())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>              Open         High          Low        Close    Adj Close  Volume
+count  1013.000000  1013.000000  1013.000000  1013.000000  1013.000000  1013.0
+mean     58.035208    58.506681    57.654706    58.056509    58.056509     0.0
+std      12.614635    12.716632    12.565279    12.657407    12.657407     0.0
+min      38.995998    39.334999    38.979000    39.044998    39.044998     0.0
+25%      45.508999    45.775002    45.231998    45.498001    45.498001     0.0
+50%      59.702999    60.342999    59.209999    59.840000    59.840000     0.0
+75%      68.508499    69.099998    68.250000    68.538002    68.538002     0.0
+max      82.917999    83.386002    82.563004    82.932999    82.932999     0.0</strong></pre>
+<h3 class="wp-block-heading">USD – INR Conversion Rate Analysis</h3>
+<p>As we are using the USD – INR conversion rates data, let’s analyze the conversion rates between both currencies over the years. I’ll start with a line chart showing the trend of conversion rates over the years:</p>
+<pre><code class="language-python">figure = px.line(data, x="Date", 
+                 y="Close", 
+                 title='USD - INR Conversion Rate over the years')
+figure.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="USD - INR Conversion Rate over the years" class="wp-image-20434" data-attachment-id="20434" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="currency-exchange-1" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="../assets/datasets/currency-exchange-1.png" width="857"/></figure>
+<p>Now let’s add year and month columns in the data before moving forward:</p>
+<pre><code class="language-python">data["Date"] = pd.to_datetime(data["Date"], format = '%Y-%m-%d')
+data['Year'] = data['Date'].dt.year
+data["Month"] = data["Date"].dt.month
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>        Date       Open       High        Low      Close  Adj Close  Volume  \
+0 2003-12-01  45.709000  45.728001  45.449001  45.480000  45.480000     0.0   
+1 2003-12-08  45.474998  45.507999  45.352001  45.451000  45.451000     0.0   
+2 2003-12-15  45.450001  45.500000  45.332001  45.455002  45.455002     0.0   
+3 2003-12-22  45.417000  45.549000  45.296001  45.507999  45.507999     0.0   
+4 2003-12-29  45.439999  45.645000  45.421001  45.560001  45.560001     0.0   
+
+   Year  Month  
+0  2003     12  
+1  2003     12  
+2  2003     12  
+3  2003     12  
+4  2003     12  </strong></pre>
+<p>Now let’s have a look at the aggregated yearly growth of the conversion rates between INR and USD:</p>
+<pre><code class="language-python">import plotly.graph_objs as go
+import plotly.io as pio
+
+# Calculate yearly growth
+growth = data.groupby('Year').agg({'Close': lambda x: (x.iloc[-1]-x.iloc[0])/x.iloc[0]*100})
+
+fig = go.Figure()
+fig.add_trace(go.Bar(x=growth.index,
+                     y=growth['Close'],
+                     name='Yearly Growth'))
+
+fig.update_layout(title="Yearly Growth of USD - INR Conversion Rate",
+                  xaxis_title="Year",
+                  yaxis_title="Growth (%)",
+                  width=900,
+                  height=600)
+
+pio.show(fig)</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Currency Exchange Rate Forecasting: Yearly Growth of USD - INR Conversion Rate" class="wp-image-20437" data-attachment-id="20437" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="currency-exchange-2" data-orig-size="900,600" data-recalc-dims="1" decoding="async" height="600" sizes="(max-width: 900px) 100vw, 900px" src="../assets/datasets/currency-exchange-2.png" width="900"/></figure>
+<p>Now let’s have a look at the aggregated monthly growth of the conversion rates between INR and USD:</p>
+<pre><code class="language-python"># Calculate monthly growth
+data['Growth'] = data.groupby(['Year', 'Month'])['Close'].transform(lambda x: (x.iloc[-1] - x.iloc[0]) / x.iloc[0] * 100)
+
+# Group data by Month and calculate average growth
+grouped_data = data.groupby('Month').mean().reset_index()
+
+fig = go.Figure()
+
+fig.add_trace(go.Bar(
+    x=grouped_data['Month'],
+    y=grouped_data['Growth'],
+    marker_color=grouped_data['Growth'],
+    hovertemplate='Month: %{x}&lt;br&gt;Average Growth: %{y:.2f}%&lt;extra&gt;&lt;/extra&gt;'
+))
+
+fig.update_layout(
+    title="Aggregated Monthly Growth of USD - INR Conversion Rate",
+    xaxis_title="Month",
+    yaxis_title="Average Growth (%)",
+    width=900,
+    height=600
+)
+
+pio.show(fig)</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Aggregated Monthly Growth of USD - INR Conversion Rate" class="wp-image-20439" data-attachment-id="20439" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="currency-exchange-3" data-orig-size="900,600" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 900px) 100vw, 900px" src="../assets/datasets/currency-exchange-3.png" width="900"/></figure>
+<p>In the above graph, we can see that the value of USD always falls in January and March, while in the second quarter, USD becomes stronger against INR every year, the value of USD against INR peaks in August, but again falls in September, it rises again every year in the last quarter but falls again in December.</p>
+<h3 class="wp-block-heading">Forecasting Exchange Rates Using Time Series Forecasting</h3>
+<p>We will use time series forecasting to forecast exchange rates. To choose the most appropriate time series forecasting model, we need to perform seasonal decomposition, which will help us identify any recurring patterns, long-term trends, and random fluctuations present in the USD – INR exchange rate data:</p>
+<pre><code class="language-python">from statsmodels.tsa.seasonal import seasonal_decompose
+result = seasonal_decompose(data["Close"], model='multiplicative', period=24)
+fig = plt.figure()  
+fig = result.plot()  
+fig.set_size_inches(8, 6)
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Seasonal Decomposition for time series forecasting of the conversion rates" class="wp-image-20441" data-attachment-id="20441" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="currency-exchange-4" data-orig-size="760,570" data-recalc-dims="1" decoding="async" height="570" loading="lazy" sizes="auto, (max-width: 760px) 100vw, 760px" src="../assets/datasets/currency-exchange-4.png" width="760"/></figure>
+<p>So we can see that there’s a seasonal pattern in this data. So SARIMA will be the most appropriate algorithm for this data. Before using SARIMA, we need to find p,d, and q values. Here, I will be using the pmdarima library to find these values. You can install this library in your Python environment by executing the command mentioned below:</p>
+<ul class="wp-block-list">
+<li>For terminal or command prompt: <strong>pip install pmdarima</strong></li>
+<li>For Google Colab: <strong>!pip install pmdarima</strong></li>
+</ul>
+<p>Here’s how to find p,d, and q values using pmdarima:</p>
+<pre><code class="language-python">from pmdarima.arima import auto_arima
+model = auto_arima(data['Close'], seasonal=True, m=52, suppress_warnings=True)
+print(model.order)</code></pre>
+<pre class="wp-block-preformatted">(2, 1, 0)</pre>
+<pre><code class="language-python">p, d, q = 2, 1, 0</code></pre>
+<p>You can learn how to find these values manually without using pmdarima from <a href="time-series-forecasting-with-arima.html" rel="noreferrer noopener" target=""><strong>here</strong></a>.</p>
+<p>Now, here’s how to use SARIMA to train a model to forecast currency exchange rates:</p>
+<pre><code class="language-python">from statsmodels.tsa.statespace.sarimax import SARIMAX
+model = SARIMAX(data["Close"], order=(p, d, q), 
+                seasonal_order=(p, d, q, 52))  
+fitted = model.fit() 
+print(fitted.summary())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>                                    SARIMAX Results                                      
+==========================================================================================
+Dep. Variable:                              Close   No. Observations:                 1013
+Model:             SARIMAX(2, 1, 0)x(2, 1, 0, 52)   Log Likelihood                -905.797
+Date:                            Mon, 29 May 2023   AIC                           1821.594
+Time:                                    06:24:15   BIC                           1845.929
+Sample:                                         0   HQIC                          1830.861
+                                           - 1013                                         
+Covariance Type:                              opg                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+ar.L1          0.0313      0.026      1.193      0.233      -0.020       0.083
+ar.L2          0.0643      0.026      2.481      0.013       0.013       0.115
+ar.S.L52      -0.6358      0.026    -24.677      0.000      -0.686      -0.585
+ar.S.L104     -0.3075      0.029    -10.602      0.000      -0.364      -0.251
+sigma2         0.3767      0.013     28.481      0.000       0.351       0.403
+===================================================================================
+Ljung-Box (L1) (Q):                   0.00   Jarque-Bera (JB):                86.43
+Prob(Q):                              0.99   Prob(JB):                         0.00
+Heteroskedasticity (H):               1.57   Skew:                             0.06
+Prob(H) (two-sided):                  0.00   Kurtosis:                         4.47
+===================================================================================</strong></pre>
+<p>Now here’s how to make predictions about future currency exchange rates:</p>
+<pre><code class="language-python">predictions = fitted.predict(len(data), len(data)+60)
+print(predictions)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>1013    81.732807
+1014    81.886990
+1015    82.180319
+1016    82.607754
+1017    82.474242
+          ...    
+1069    84.906873
+1070    85.402528
+1071    85.520223
+1072    85.830554
+1073    85.687360</strong></pre>
+<p>Here’s how to visualize the forecasted results:</p>
+<pre><code class="language-python"># Create figure
+fig = go.Figure()
+
+# Add training data line plot
+fig.add_trace(go.Scatter(
+    x=data.index,
+    y=data['Close'],
+    mode='lines',
+    name='Training Data',
+    line=dict(color='blue')
+))
+
+# Add predictions line plot
+fig.add_trace(go.Scatter(
+    x=predictions.index,
+    y=predictions,
+    mode='lines',
+    name='Predictions',
+    line=dict(color='green')
+))
+
+fig.update_layout(
+    title="INR Rate - Training Data and Predictions",
+    xaxis_title="Date",
+    yaxis_title="Close",
+    legend_title="Data",
+    width=900,
+    height=600
+)
+
+pio.show(fig)</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Currency Exchange Rate Forecasting" class="wp-image-20446" data-attachment-id="20446" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="currency-exchange-5" data-orig-size="900,600" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 900px) 100vw, 900px" src="../assets/datasets/currency-exchange-5.png" width="900"/></figure>
+<p>So this is how you can use time series forecasting for the task of Currency Exchange Rate Forecasting using Python.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>Currency exchange rate forecasting means predicting future fluctuations in the value of one currency against another. It involves the use of historical data, economic indicators, and mathematical models to make accurate predictions about the direction and magnitude of exchange rate movements. I hope you liked this article on Currency Exchange Rate Forecasting using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="time-series-forecasting-with-arima.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="netflix-subscriptions-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

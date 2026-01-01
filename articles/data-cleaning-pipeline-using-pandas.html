@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Data Cleaning Pipeline using Pandas | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Data Cleaning Pipeline using Pandas</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 15, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="data-preprocessing-pipeline-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="real-time-news-data-collection-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>The use of Machine Learning Algorithms is not required for every dataset, but every dataset does require some data cleaning steps. So, building a data cleaning pipeline using Pandas is one of those bread-and-butter tasks every Data Scientist should master early on. In this article, I’ll take you through a tutorial on building a data cleaning pipeline using Pandas.</p>
+<h2 class="wp-block-heading">Data Cleaning Pipeline using Pandas</h2>
+<p>The dataset I will be using for this tutorial on building a data cleaning pipeline using Pandas is based on predicting loan approvals. You can download this dataset from <strong><a href="https://www.kaggle.com/datasets/ninzaami/loan-predication" rel="noreferrer noopener" target="_blank">here</a></strong>.</p>
+<p>Let’s get started with this tutorial by importing the dataset:</p>
+<pre><code class="language-python">import pandas as pd
+
+df = pd.read_csv('/content/loan_prediction.csv')
+
+df.head()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="" class="wp-image-26501" data-attachment-id="26501" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="2206,464" data-recalc-dims="1" decoding="async" height="215" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/image-3.png" width="1024"/><figcaption class="wp-element-caption"><strong>The dataset contains more columns</strong></figcaption></figure>
+<h4 class="wp-block-heading">Step 1: Understand the Data</h4>
+<p>Let’s explore the dataset to understand what needs fixing:</p>
+<pre><code class="language-python"># shape of the dataset
+print(f"Rows: {df.shape[0]}, Columns: {df.shape[1]}")</code></pre>
+<pre class="wp-block-preformatted"><strong>Rows: 614, Columns: 13</strong></pre>
+<pre><code class="language-python"># summary of the dataset
+df.info()</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>&lt;class 'pandas.core.frame.DataFrame'&gt;<br/>Index: 614 entries, 0 to 613<br/>Data columns (total 13 columns):<br/> #   Column             Non-Null Count  Dtype  <br/>---  ------             --------------  -----  <br/> 0   Loan_ID            614 non-null    object <br/> 1   Gender             601 non-null    object <br/> 2   Married            611 non-null    object <br/> 3   Dependents         599 non-null    object <br/> 4   Education          614 non-null    object <br/> 5   Self_Employed      582 non-null    object <br/> 6   ApplicantIncome    614 non-null    int64  <br/> 7   CoapplicantIncome  614 non-null    float64<br/> 8   LoanAmount         592 non-null    float64<br/> 9   Loan_Amount_Term   600 non-null    float64<br/> 10  Credit_History     564 non-null    float64<br/> 11  Property_Area      614 non-null    object <br/> 12  Loan_Status        614 non-null    object <br/>dtypes: float64(4), int64(1), object(8)<br/>memory usage: 67.2+ KB</strong></pre>
+<pre><code class="language-python"># quick stats for numeric and object columns
+print(df.describe(include='all'))</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>         Loan_ID Gender Married Dependents Education Self_Employed  \<br/>count        614    601     611        599       614           582   <br/>unique       614      2       2          4         2             2   <br/>top     LP002990   Male     Yes          0  Graduate            No   <br/>freq           1    489     398        345       480           500   <br/>mean         NaN    NaN     NaN        NaN       NaN           NaN   <br/>std          NaN    NaN     NaN        NaN       NaN           NaN   <br/>min          NaN    NaN     NaN        NaN       NaN           NaN   <br/>25%          NaN    NaN     NaN        NaN       NaN           NaN   <br/>50%          NaN    NaN     NaN        NaN       NaN           NaN   <br/>75%          NaN    NaN     NaN        NaN       NaN           NaN   <br/>max          NaN    NaN     NaN        NaN       NaN           NaN   <br/><br/>        ApplicantIncome  CoapplicantIncome  LoanAmount  Loan_Amount_Term  \<br/>count        614.000000         614.000000  592.000000         600.00000   <br/>unique              NaN                NaN         NaN               NaN   <br/>top                 NaN                NaN         NaN               NaN   <br/>freq                NaN                NaN         NaN               NaN   <br/>mean        5403.459283        1621.245798  146.412162         342.00000   <br/>std         6109.041673        2926.248369   85.587325          65.12041   <br/>min          150.000000           0.000000    9.000000          12.00000   <br/>25%         2877.500000           0.000000  100.000000         360.00000   <br/>50%         3812.500000        1188.500000  128.000000         360.00000   <br/>75%         5795.000000        2297.250000  168.000000         360.00000   <br/>max        81000.000000       41667.000000  700.000000         480.00000   <br/><br/>        Credit_History Property_Area Loan_Status  <br/>count       564.000000           614         614  <br/>unique             NaN             3           2  <br/>top                NaN     Semiurban           Y  <br/>freq               NaN           233         422  <br/>mean          0.842199           NaN         NaN  <br/>std           0.364878           NaN         NaN  <br/>min           0.000000           NaN         NaN  <br/>25%           1.000000           NaN         NaN  <br/>50%           1.000000           NaN         NaN  <br/>75%           1.000000           NaN         NaN  <br/>max           1.000000           NaN         NaN  </strong></pre>
+<p>In this step, always look for:</p>
+<ol class="wp-block-list">
+<li>Missing values</li>
+<li>Categorical variables</li>
+<li>Data types that might be wrong</li>
+<li>High cardinality in string columns</li>
+<li>Outliers or zero/negative values</li>
+</ol>
+<h4 class="wp-block-heading">Step 2: Handle Missing Values</h4>
+<p>Next, let’s summarize the missing data:</p>
+<pre><code class="language-python"># count of missing values
+missing = df.isnull().sum()
+missing = missing[missing &gt; 0].sort_values(ascending=False)
+print(missing)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Credit_History      50<br/>Self_Employed       32<br/>LoanAmount          22<br/>Dependents          15<br/>Loan_Amount_Term    14<br/>Gender              13<br/>Married              3<br/>dtype: int64</strong></pre>
+<p>Here’s how to deal with the missing values one by one:</p>
+<pre><code class="language-python"># fill categorical columns with mode
+cat_cols = df.select_dtypes(include='object').columns
+for col in cat_cols:
+    if df[col].isnull().sum() &gt; 0:
+        df[col].fillna(df[col].mode()[0], inplace=True)
+
+# fill numerical columns with median
+num_cols = df.select_dtypes(include=['int64', 'float64']).columns
+for col in num_cols:
+    if df[col].isnull().sum() &gt; 0:
+        df[col].fillna(df[col].median(), inplace=True)</code></pre>
+<p>The median is robust to outliers, and the mode is perfect for majority categories in classification tasks.</p>
+<h4 class="wp-block-heading">Step 3: Fix Data Types</h4>
+<p>However, our dataset doesn’t require this step. But, sometimes numeric fields are stored as objects, or categorical fields are not cast properly. So, here’s how to fix data types if any:</p>
+<pre><code class="language-python"># example: convert 'LoanAmount' to float
+df['LoanAmount'] = df['LoanAmount'].astype(float)
+
+# convert categorical variables to category type
+for col in cat_cols:
+    df[col] = df[col].astype('category')</code></pre>
+<p>This helps with memory optimization and model compatibility.</p>
+<h4 class="wp-block-heading">Step 4: Standardize Text Columns</h4>
+<p>Our dataset doesn’t require this step as well. But this step is necessary when you have extra spaces in the text columns:</p>
+<pre><code class="language-python"># strip whitespace and convert to consistent case
+for col in cat_cols:
+    df[col] = df[col].str.strip().str.lower()</code></pre>
+<h4 class="wp-block-heading">Step 5: Handle Outliers</h4>
+<p>This step is optional in the data cleaning part. You can either handle outliers after exploring the data in detail or remove the outliers if the problem you are solving is sensitive to outliers.</p>
+<p>For numerical columns like LoanAmount or ApplicantIncome, we can cap/floor them based on percentiles:</p>
+<pre><code class="language-python"># capping outliers at 99th percentile
+for col in ['LoanAmount', 'ApplicantIncome']:
+    upper = df[col].quantile(0.99)
+    df[col] = df[col].apply(lambda x: upper if x &gt; upper else x)</code></pre>
+<p>Once cleaned, you should save it for further steps:</p>
+<pre><code class="language-python">df.to_csv('cleaned_loan_data.csv', index=False)</code></pre>
+<h4 class="wp-block-heading">Final Pipeline Function</h4>
+<p>Here’s how to modularize everything into a reusable function:</p>
+<pre><code class="language-python">def clean_loan_data(df):
+    # fill missing values
+    for col in df.select_dtypes(include='object'):
+        df[col].fillna(df[col].mode()[0], inplace=True)
+    for col in df.select_dtypes(include=['int64', 'float64']):
+        df[col].fillna(df[col].median(), inplace=True)
+
+    # type conversions
+    for col in df.select_dtypes(include='object'):
+        df[col] = df[col].astype('category')
+        df[col] = df[col].str.strip().str.lower()
+
+    # outlier capping
+    for col in ['LoanAmount', 'ApplicantIncome']:
+        if col in df.columns:
+            upper = df[col].quantile(0.99)
+            df[col] = df[col].apply(lambda x: upper if x &gt; upper else x)
+
+    return df</code></pre>
+<p>Here’s how to use this function:</p>
+<pre><code class="language-python">df = pd.read_csv('/content/loan_prediction.csv')
+df_clean = clean_loan_data(df)</code></pre>
+<p>So, this is how to build a data cleaning pipeline using Pandas.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="data-preprocessing-pipeline-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="real-time-news-data-collection-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

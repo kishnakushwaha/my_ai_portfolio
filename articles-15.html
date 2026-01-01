@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Articles | Kishna Kushwaha
+  </title>
+  <meta content="Technical articles on Machine Learning, Data Science, and AI Agents." name="description"/>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <!-- Custom CSS -->
+  <link href="css/style.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <!-- Navigation -->
+  <header>
+   <div class="container nav-container">
+    <a class="logo" href="index.html">
+     <div class="logo-circle">
+     </div>
+     Kishna Kushwaha
+    </a>
+    <button aria-label="Toggle navigation" class="mobile-menu-btn">
+     <i class="fas fa-bars">
+     </i>
+    </button>
+    <ul class="nav-links">
+     <li>
+      <a href="index.html">
+       Home
+      </a>
+     </li>
+     <li>
+      <a href="about.html">
+       About
+      </a>
+     </li>
+     <li>
+      <a class="active" href="articles.html">
+       Articles
+      </a>
+     </li>
+     <li>
+      <a href="projects/machine_learning.html">
+       Projects
+      </a>
+     </li>
+     <li>
+      <a href="index.html#courses">
+       Recommended Resources
+      </a>
+     </li>
+     <li>
+      <button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+       <i class="fas fa-search">
+       </i>
+      </button>
+     </li>
+    </ul>
+   </div>
+  </header>
+  <main>
+   <!-- Header -->
+   <section class="articles-header">
+    <div class="container">
+     <h1>
+      Articles
+     </h1>
+     <p>
+      Tutorials, guides, and deep dives into AI technology.
+     </p>
+    </div>
+   </section>
+   <!-- Top Ad Banner -->
+   <div class="container">
+    <div class="ad-unit ad-leaderboard">
+     <span>
+      Advertisement (Leaderboard)
+     </span>
+    </div>
+   </div>
+   <!-- Articles Grid -->
+   <section class="container" style="padding-bottom: 5rem;">
+    <div class="articles-grid">
+     <article class="article-card">
+      <div class="article-card-image">
+       <div class="placeholder-img" style="background: linear-gradient(135deg, #2563EB, #1E40AF);">
+       </div>
+       <div class="blog-overlay">
+        <i class="fas fa-robot">
+        </i>
+       </div>
+      </div>
+      <div class="article-card-content">
+       <span class="article-meta-small">
+        Oct 20, 2025
+       </span>
+       <h3>
+        Process of NLP using Python
+       </h3>
+       <a class="article-read-btn" href="articles/process-of-nlp-using-python.html">
+        Read Article
+       </a>
+      </div>
+     </article>
+     <article class="article-card">
+      <div class="article-card-image">
+       <div class="placeholder-img" style="background: linear-gradient(135deg, #10B981, #059669);">
+       </div>
+       <div class="blog-overlay">
+        <i class="fas fa-brain">
+        </i>
+       </div>
+      </div>
+      <div class="article-card-content">
+       <span class="article-meta-small">
+        Oct 19, 2025
+       </span>
+       <h3>
+        Data Science Project Ideas on Clustering Analysis
+       </h3>
+       <a class="article-read-btn" href="articles/data-science-project-ideas-on-clustering-analysis.html">
+        Read Article
+       </a>
+      </div>
+     </article>
+     <article class="article-card">
+      <div class="article-card-image">
+       <div class="placeholder-img" style="background: linear-gradient(135deg, #8B5CF6, #6D28D9);">
+       </div>
+       <div class="blog-overlay">
+        <i class="fas fa-database">
+        </i>
+       </div>
+      </div>
+      <div class="article-card-content">
+       <span class="article-meta-small">
+        Oct 19, 2025
+       </span>
+       <h3>
+        Python Practice Questions for Coding Interviews
+       </h3>
+       <a class="article-read-btn" href="articles/python-practice-questions-for-coding-interviews.html">
+        Read Article
+       </a>
+      </div>
+     </article>
+    </div>
+    <div style="display:flex; justify-content:center; gap:1rem; margin-top:3rem;">
+     <a class="btn btn-secondary" href="articles-14.html">
+      Previous
+     </a>
+     <span style="align-self:center; font-weight:600;">
+      Page 15 of 15
+     </span>
+    </div>
+   </section>
+  </main>
+  <footer class="main-footer">
+   <div class="container">
+    <div class="footer-content">
+     <p>
+      © 2025 Kishna Kushwaha. All rights reserved.
+     </p>
+    </div>
+   </div>
+   <a class="go-top-btn" href="#">
+    <i class="fas fa-arrow-up">
+    </i>
+   </a>
+  </footer>
+  <!-- Custom JS -->
+  <script src="js/script.js">
+  </script>
+  <script src="js/search.js">
+  </script>
+  <!-- Search Overlay -->
+  <div class="search-overlay" id="search-overlay">
+   <div class="search-container">
+    <button class="search-close-btn" id="search-close">
+     ×
+    </button>
+    <input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+    <div class="search-results" id="search-results">
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

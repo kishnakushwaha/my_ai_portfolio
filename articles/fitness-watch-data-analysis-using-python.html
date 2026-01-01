@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Fitness Watch Data Analysis using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Fitness Watch Data Analysis using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 09, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="20-projects-to-master-ml-for-2026.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="chatgpt-reviews-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Fitness Watch <strong><a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">Data Analysis</a></strong> involves analyzing the data collected by fitness wearables or smartwatches to gain insights into users’ health and activity patterns. These devices track metrics like steps taken, energy burned, walking speed, and more. So, if you want to learn how to analyze the data of a fitness watch, this article is for you. In this article, I’ll take you through the task of Fitness Watch Data Analysis using Python.</p>
+<h2 class="wp-block-heading">Fitness Watch Data Analysis: Process We Can Follow</h2>
+<p>Fitness Watch Data Analysis is a crucial tool for businesses in the health and wellness domain. By analyzing user data from fitness wearables, companies can understand user behaviour, offer personalized solutions, and contribute to improving users’ overall health and well-being.</p>
+<p>Below is the process we can follow while working on the problem of Fitness Watch Data Analysis:</p>
+<ol class="wp-block-list">
+<li>Collect data from fitness watches, ensuring it’s accurate and reliable.</li>
+<li>Perform EDA to gain initial insights into the data.</li>
+<li>Create new features from the raw data that might provide more meaningful insights.</li>
+<li>Create visual representations of the data to communicate insights effectively.</li>
+<li>Segment user’s activity based on time intervals or the level of fitness metrics and analyze their performance.</li>
+</ol>
+<p>So, the process starts with collecting data from a fitness watch. Every fitness watch works with an app on your smartphone. You can collect data from that app on your smartphone. For example, in my case, I collected my fitness watch’s data from Apple’s Health app. If you will also collect fitness data from any app, it will not be in a format to be used for analysis. So, I have already made a clean version of the data available online. You can find the dataset from <a href="https://statso.io/fitness-data-analysis-case-study/" rel="noreferrer noopener" target="_blank"><strong>here</strong></a>.</p>
+<h2 class="wp-block-heading">Fitness Watch Data Analysis using Python</h2>
+<p>Now let’s get started with the task of Fitness Watch Data Analysis by importing the necessary Python libraries and the <a href="https://statso.io/fitness-data-analysis-case-study/" rel="noreferrer noopener" target="_blank"><strong>dataset</strong></a>:</p>
+<pre><code class="language-python">import pandas as pd
+import plotly.io as pio
+import plotly.graph_objects as go
+pio.templates.default = "plotly_white"
+import plotly.express as px
+
+data = pd.read_csv("Apple-Fitness-Data.csv")
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>         Date       Time  Step Count  Distance  Energy Burned  \
+0  2023-03-21  16:01:23           46   0.02543         14.620   
+1  2023-03-21  16:18:37          645   0.40041         14.722   
+2  2023-03-21  16:31:38           14   0.00996         14.603   
+3  2023-03-21  16:45:37           13   0.00901         14.811   
+4  2023-03-21  17:10:30           17   0.00904         15.153   
+
+   Flights Climbed  Walking Double Support Percentage  Walking Speed  
+0                3                              0.304          3.060  
+1                3                              0.309          3.852  
+2                4                              0.278          3.996  
+3                3                              0.278          5.040  
+4                3                              0.281          5.184  </strong></pre>
+<p>Let’s have a look if this data contains any null values or not:</p>
+<pre><code class="language-python">print(data.isnull().sum())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Date                                 0
+Time                                 0
+Step Count                           0
+Distance                             0
+Energy Burned                        0
+Flights Climbed                      0
+Walking Double Support Percentage    0
+Walking Speed                        0
+dtype: int64</strong></pre>
+<p>So, the data doesn’t have any null values. Let’s move further by analyzing my step count over time:</p>
+<pre><code class="language-python"># Step Count Over Time
+fig1 = px.line(data, x="Time",
+               y="Step Count",
+               title="Step Count Over Time")
+fig1.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Fitness Watch Data Analysis: Step Count Over Time" class="wp-image-21269" data-attachment-id="21269" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Fitness-Watch-1" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="../assets/datasets/Fitness-Watch-1.png" width="857"/></figure>
+<p>Now, let’s have a look at the distance covered over time:</p>
+<pre><code class="language-python"># Distance Covered Over Time
+fig2 = px.line(data, x="Time",
+               y="Distance",
+               title="Distance Covered Over Time")
+fig2.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Distance Covered Over Time" class="wp-image-21270" data-attachment-id="21270" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Fitness-Watch-2" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="../assets/datasets/Fitness-Watch-2.png" width="857"/></figure>
+<p>Now, let’s have a look at my energy burned over time:</p>
+<pre><code class="language-python"># Energy Burned Over Time
+fig3 = px.line(data, x="Time",
+               y="Energy Burned",
+               title="Energy Burned Over Time")
+fig3.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Fitness Watch Data Analysis: Energy Burned Over Time" class="wp-image-21272" data-attachment-id="21272" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Fitness-Watch-3" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/Fitness-Watch-3.png" width="857"/></figure>
+<p>Now, let’s have a look at my walking speed over time:</p>
+<pre><code class="language-python"># Walking Speed Over Time
+fig4 = px.line(data, x="Time",
+               y="Walking Speed",
+               title="Walking Speed Over Time")
+fig4.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Walking Speed Over Time" class="wp-image-21274" data-attachment-id="21274" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Fitness-Watch-4" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/Fitness-Watch-4.png" width="857"/></figure>
+<p>Now, let’s calculate and look at the average step counts per day:</p>
+<pre><code class="language-python"># Calculate Average Step Count per Day
+average_step_count_per_day = data.groupby("Date")["Step Count"].mean().reset_index()
+
+fig5 = px.bar(average_step_count_per_day, x="Date",
+              y="Step Count",
+              title="Average Step Count per Day")
+fig5.update_xaxes(type='category')
+fig5.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Fitness Watch Data Analysis: Average Step Count per Day" class="wp-image-21276" data-attachment-id="21276" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Fitness-Watch-5" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/Fitness-Watch-5.png" width="857"/></figure>
+<p>Now, let’s have a look at my walking efficiency over time:</p>
+<pre><code class="language-python"># Calculate Walking Efficiency
+data["Walking Efficiency"] = data["Distance"] / data["Step Count"]
+
+fig6 = px.line(data, x="Time",
+               y="Walking Efficiency",
+               title="Walking Efficiency Over Time")
+fig6.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Walking Efficiency Over Time" class="wp-image-21278" data-attachment-id="21278" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Fitness-Watch-6" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/Fitness-Watch-6.png" width="857"/></figure>
+<p>Now, let’s have a look at the step count and walking speed variations by time intervals:</p>
+<pre><code class="language-python"># Create Time Intervals
+time_intervals = pd.cut(pd.to_datetime(data["Time"]).dt.hour,
+                        bins=[0, 12, 18, 24],
+                        labels=["Morning", "Afternoon", "Evening"], 
+                        right=False)
+
+data["Time Interval"] = time_intervals
+
+# Variations in Step Count and Walking Speed by Time Interval
+fig7 = px.scatter(data, x="Step Count",
+                  y="Walking Speed",
+                  color="Time Interval",
+                  title="Step Count and Walking Speed Variations by Time Interval",
+                  trendline='ols')
+fig7.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Fitness Watch Data Analysis: Step Count and Walking Speed Variations by Time Interval" class="wp-image-21281" data-attachment-id="21281" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Fitness-Watch-7" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/Fitness-Watch-7.png" width="857"/></figure>
+<p>Now, let’s compare the daily average of all the health and fitness metrics:</p>
+<pre><code class="language-python"># Reshape data for treemap
+daily_avg_metrics = data.groupby("Date").mean().reset_index()
+
+daily_avg_metrics_melted = daily_avg_metrics.melt(id_vars=["Date"], 
+                                                  value_vars=["Step Count", "Distance", 
+                                                              "Energy Burned", "Flights Climbed", 
+                                                              "Walking Double Support Percentage", 
+                                                              "Walking Speed"])
+
+# Treemap of Daily Averages for Different Metrics Over Several Weeks
+fig = px.treemap(daily_avg_metrics_melted,
+                 path=["variable"],
+                 values="value",
+                 color="variable",
+                 hover_data=["value"],
+                 title="Daily Averages for Different Metrics")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Daily Averages for Different Metrics" class="wp-image-21283" data-attachment-id="21283" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Fitness-Watch-8" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/Fitness-Watch-8.png" width="857"/></figure>
+<p>The above graph represents each health and fitness metric as a rectangular tile. The size of each tile corresponds to the value of the metric and the colour of the tiles represents the metric itself. Hover data displays the exact average value for each metric when interacting with the visualization.</p>
+<p>The Step Count metric dominates the visualization due to its generally higher numerical values compared to other metrics, making it difficult to visualize variations in the other metrics effectively. As the value of step count is higher than the value of all other metrics, let’s have a look at this visualization again without step counts:</p>
+<pre><code class="language-python"># Select metrics excluding Step Count
+metrics_to_visualize = ["Distance", "Energy Burned", "Flights Climbed", 
+                        "Walking Double Support Percentage", "Walking Speed"]
+
+# Reshape data for treemap
+daily_avg_metrics_melted = daily_avg_metrics.melt(id_vars=["Date"], value_vars=metrics_to_visualize)
+
+fig = px.treemap(daily_avg_metrics_melted,
+                 path=["variable"],
+                 values="value",
+                 color="variable",
+                 hover_data=["value"],
+                 title="Daily Averages for Different Metrics (Excluding Step Count)")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Daily Averages for Different Metrics (Excluding Step Count)" class="wp-image-21285" data-attachment-id="21285" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Fitness-Watch-9" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/Fitness-Watch-9.png" width="857"/></figure>
+<p>So, this is how you can analyze and work with fitness data using Python.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So this is how to perform Fitness Data Analysis using Python. Fitness Watch Data Analysis is a crucial tool for businesses in the health and wellness domain. By analyzing user data from fitness wearables, companies can understand user behaviour, offer personalized solutions, and contribute to improving users’ overall health and well-being. I hope you liked this article on Fitness Watch Data Analysis using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="20-projects-to-master-ml-for-2026.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="chatgpt-reviews-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

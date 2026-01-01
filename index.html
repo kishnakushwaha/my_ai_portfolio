@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kishna Kushwaha | AI Portfolio</title>
+    <meta name="description" content="Portfolio of Kishna Kushwaha - AI, Machine Learning, and Data Science Projects.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <div class="logo-circle"></div> <!-- Placeholder for logo -->
+                Kishna Kushwaha
+            </a>
+
+            <button class="mobile-menu-btn" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="articles.html">Articles</a></li>
+                <li><a href="projects/machine_learning.html">Projects</a></li>
+                <li><a href="#courses">Recommended Resources</a></li>
+                <li>
+                    <button id="search-trigger" class="search-trigger-btn nav-link-btn" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content Placeholder -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Hi, I am Kishna Kushwaha</h1>
+                    <p class="hero-description">
+                        I simplify complex AI & Data Science topics through code and content.
+                        Targeting real-world problems with advanced machine learning solutions.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#courses" class="btn btn-primary">Recommended Resources</a>
+                        <a href="projects/machine_learning.html" class="btn btn-outline">View Projects</a>
+                    </div>
+                </div>
+
+                <div class="hero-slider">
+                    <!-- Slider Items -->
+                    <div class="slider-wrapper">
+                        <div class="slide active">
+                            <div class="slide-content">
+                                <span class="tag">Free Course</span>
+                                <h3>Mastering Data Structures & Algorithms</h3>
+                                <a class="slide-link" style="pointer-events: none; cursor: default;">Upcoming...</a>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <div class="slide-content">
+                                <span class="tag">Latest Project</span>
+                                <h3>Automated Trading Bot with Python</h3>
+                                <a class="slide-link" style="pointer-events: none; cursor: default;">Upcoming...</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slider-controls">
+                        <button class="slider-btn prev" aria-label="Previous slide"><i
+                                class="fas fa-chevron-left"></i></button>
+                        <button class="slider-btn next" aria-label="Next slide"><i
+                                class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Newsletter Section (Preview) -->
+        <section class="newsletter-section">
+            <div class="container">
+                <div class="newsletter-box">
+                    <h2>Subscribe to My Newsletter</h2>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Guided Projects Section -->
+        <section class="section projects-section" id="projects">
+            <div class="container">
+                <div class="section-header text-center">
+                    <h2 class="section-title">Try My Guided Projects!</h2>
+                    <p class="section-subtitle">Real-world applications to build your portfolio</p>
+                </div>
+
+
+
+                <div class="projects-grid">
+                    <a href="projects/machine_learning.html" class="project-card card-ml">
+                        <div class="card-icon"><i class="fas fa-brain"></i></div>
+                        <h3>Machine Learning Projects</h3>
+                        <p>End-to-end ML piplines and models</p>
+                    </a>
+                    <a href="#" class="project-card card-ds">
+                        <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                        <h3>Data Science Projects</h3>
+                        <p>Exploratory Analysis & Visualization</p>
+                    </a>
+                    <a href="#" class="project-card card-llm">
+                        <div class="card-icon"><i class="fas fa-robot"></i></div>
+                        <h3>Generative AI Projects</h3>
+                        <p>LLMs, RAG, and Agents</p>
+                    </a>
+                </div>
+
+
+            </div>
+        </section>
+
+        <!-- Articles Section -->
+        <section class="section articles-section" id="articles">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Latest Articles</h2>
+                    <a href="articles.html" class="view-all-link">View All Data Science Articles &rarr;</a>
+                </div>
+
+                <div class="articles-grid">
+                    <!-- Article 1 -->
+                    <article class="article-card">
+                        <div class="article-card-image">
+                            <div class="placeholder-img" style="background: linear-gradient(135deg, #2563EB, #1E40AF);">
+                            </div>
+                            <div class="blog-overlay"><i class="fas fa-robot"></i></div>
+                        </div>
+                        <div class="article-card-content">
+                            <span class="article-meta-small">Dec 15, 2025</span>
+                            <h3>Building AI Agents with LangChain</h3>
+                            <a href="articles/building-ai-agents.html" class="article-read-btn">Read Article</a>
+                        </div>
+                    </article>
+
+                    <!-- Article 2 -->
+                    <article class="article-card">
+                        <div class="article-card-image">
+                            <div class="placeholder-img" style="background: linear-gradient(135deg, #10B981, #059669);">
+                            </div>
+                            <div class="blog-overlay"><i class="fas fa-database"></i></div>
+                        </div>
+                        <div class="article-card-content">
+                            <span class="article-meta-small">Dec 20, 2025</span>
+                            <h3>Advanced RAG Design Patterns</h3>
+                            <a href="articles/rag-system-design.html" class="article-read-btn">Read Article</a>
+                        </div>
+                    </article>
+
+                    <!-- Article 3 -->
+                    <article class="article-card">
+                        <div class="article-card-image">
+                            <div class="placeholder-img" style="background: linear-gradient(135deg, #8B5CF6, #6D28D9);">
+                            </div>
+                            <div class="blog-overlay"><i class="fas fa-microchip"></i></div>
+                        </div>
+                        <div class="article-card-content">
+                            <span class="article-meta-small">Dec 22, 2025</span>
+                            <h3>Rise of Small Language Models</h3>
+                            <a href="articles/small-language-models.html" class="article-read-btn">Read Article</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Community Section -->
+    <section class="section community-section" id="contact">
+        <div class="container text-center">
+            <h2 class="section-title">Join my community</h2>
+            <div class="social-links">
+                <a href="#" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon" aria-label="Twitter / X"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-icon" aria-label="Medium"><i class="fab fa-medium"></i></a>
+                <a href="#" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Kishna Kushwaha. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+        <!-- Go to top button -->
+        <a href="#" class="go-top-btn" aria-label="Go to top"><i class="fas fa-arrow-up"></i></a>
+    </footer>
+
+    <!-- Custom JS -->
+    <script src="js/script.js"></script>
+    <script src="js/search.js"></script>
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay">
+        <div class="search-container">
+            <button id="search-close" class="search-close-btn">&times;</button>
+            <input type="text" id="search-input" placeholder="Search articles, projects..." autocomplete="off">
+            <div id="search-results" class="search-results"></div>
+        </div>
+    </div>
+</body>
+
+</html>

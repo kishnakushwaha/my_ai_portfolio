@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Text Generation Model using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Text Generation Model using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 05, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="next-word-prediction-model-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="code-generation-model-using-llms.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>A Text Generation Model is a type of Natural Language Processing (NLP) model that automatically generates human-like text. It can produce coherent and contextually relevant text based on the input text. So, if you want to learn how to build a Text Generation Model, this article is for you. In this article, I’ll take you through the task of building a Text Generation Model with Deep Learning using the Python programming language.</p>
+<h2 class="wp-block-heading">Text Generation Model: Process We Can Follow</h2>
+<p>Text Generation Models have various applications, such as content creation, chatbots, automated story writing, and more. They often utilize advanced <a href="https://play.google.com/store/books/details?id=gPPUEAAAQBAJ" rel="noreferrer noopener" target="_blank"><strong>Machine Learning</strong></a> techniques, particularly <a href="deep-learning-project-ideas-for-resume.html" rel="noreferrer noopener" target=""><strong>Deep Learning</strong></a> models like Recurrent Neural Networks (RNNs), Long Short-Term Memory Networks (LSTMs), and Transformer models like GPT (Generative Pre-trained Transformer).</p>
+<p>Below is the process we can follow for the task of building a Text Generation Model:</p>
+<ol class="wp-block-list">
+<li>Understand what you want to achieve with the text generation model (e.g., chatbot responses, creative writing, code generation).</li>
+<li>Consider the style, complexity, and length of the text to be generated.</li>
+<li>Collect a large dataset of text that’s representative of the style and content you want to generate.</li>
+<li>Clean the text data (remove unwanted characters, correct spellings), and preprocess it (tokenization, lowercasing, removing stop words if necessary).</li>
+<li>Choose a deep neural network architecture to handle sequences for text generation.</li>
+<li>Frame the problem as a sequence modelling task where the model learns to predict the next words in a sequence.</li>
+<li>Use your text data to train the model.</li>
+</ol>
+<p>For this task, we can use the Tiny Shakespeare dataset because of two reasons:</p>
+<ol class="wp-block-list">
+<li>It’s available in the format of dialogues, so you will learn how to generate text in the form of dialogues.</li>
+<li>Usually, we need huge textual datasets for building text generation models. The Tiny Shakespeare dataset is already available in the tensorflow datasets, so we don’t need to download any dataset externally.</li>
+</ol>
+<h2 class="wp-block-heading">Text Generation Model using Python</h2>
+<p>So, let’s understand how to build a Text Generation Model with Deep Learning using Python. I’ll start this task by importing the necessary Python libraries and the dataset:</p>
+<pre><code class="language-python">import tensorflow as tf
+import tensorflow_datasets as tfds
+import numpy as np
+
+# load the Tiny Shakespeare dataset
+dataset, info = tfds.load('tiny_shakespeare', with_info=True, as_supervised=False)</code></pre>
+<p>Our dataset contains data in a textual format. Language models need numerical data, so we’ll convert the text to sequences of integers. We’ll also create sequences for training:</p>
+<pre><code class="language-python"># get the text from the dataset
+text = next(iter(dataset['train']))['text'].numpy().decode('utf-8')
+
+# create a mapping from unique characters to indices
+vocab = sorted(set(text))
+char2idx = {char: idx for idx, char in enumerate(vocab)}
+idx2char = np.array(vocab)
+
+# numerically represent the characters
+text_as_int = np.array([char2idx[c] for c in text])
+
+# create training examples and targets
+seq_length = 100
+examples_per_epoch = len(text) // (seq_length + 1)
+
+# create training sequences
+char_dataset = tf.data.Dataset.from_tensor_slices(text_as_int)
+
+sequences = char_dataset.batch(seq_length + 1, drop_remainder=True)</code></pre>
+<p>For each sequence, we will now duplicate and shift it to form the input and target text by using the map method to apply a simple function to each batch:</p>
+<pre><code class="language-python">def split_input_target(chunk):
+    input_text = chunk[:-1]
+    target_text = chunk[1:]
+    return input_text, target_text
+
+dataset = sequences.map(split_input_target)</code></pre>
+<p>Now, we’ll shuffle the dataset and pack it into training batches:</p>
+<pre><code class="language-python"># batch size and buffer size
+BATCH_SIZE = 64
+BUFFER_SIZE = 10000
+
+dataset = (
+    dataset
+    .shuffle(BUFFER_SIZE)
+    .batch(BATCH_SIZE, drop_remainder=True)
+    .prefetch(tf.data.experimental.AUTOTUNE)
+)</code></pre>
+<p>Now, we’ll use a simple Recurrent Neural Network model with a few layers to build the model:</p>
+<pre><code class="language-python"># length of the vocabulary
+vocab_size = len(vocab)
+
+# the embedding dimension
+embedding_dim = 256
+
+# number of RNN units
+rnn_units = 1024
+
+def build_model(vocab_size, embedding_dim, rnn_units, batch_size):
+    model = tf.keras.Sequential([
+        tf.keras.layers.Embedding(vocab_size, embedding_dim, batch_input_shape=[batch_size, None]),
+        tf.keras.layers.LSTM(rnn_units, return_sequences=True, stateful=True, recurrent_initializer='glorot_uniform'),
+        tf.keras.layers.Dense(vocab_size)
+    ])
+    return model
+
+model = build_model(vocab_size, embedding_dim, rnn_units, BATCH_SIZE)</code></pre>
+<p>We’ll now choose an optimizer and a loss function to compile the model:</p>
+<pre><code class="language-python">def loss(labels, logits):
+    return tf.keras.losses.sparse_categorical_crossentropy(labels, logits, from_logits=True)
+
+model.compile(optimizer='adam', loss=loss)</code></pre>
+<p>We’ll now train the model:</p>
+<pre><code class="language-python">import os
+
+# directory where the checkpoints will be saved
+checkpoint_dir = './training_checkpoints'
+
+# name of the checkpoint files
+checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt_{epoch}")
+
+checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
+    filepath=checkpoint_prefix,
+    save_weights_only=True
+)
+
+# train the model
+EPOCHS = 10
+history = model.fit(dataset, epochs=EPOCHS, callbacks=[checkpoint_callback])</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Epoch 1/10<br/>155/155 [==============================] - 37s 211ms/step - loss: 2.6553<br/>Epoch 2/10<br/>155/155 [==============================] - 33s 212ms/step - loss: 1.9554<br/>Epoch 3/10<br/>155/155 [==============================] - 32s 204ms/step - loss: 1.6952<br/>Epoch 4/10<br/>155/155 [==============================] - 32s 205ms/step - loss: 1.5474<br/>Epoch 5/10<br/>155/155 [==============================] - 32s 203ms/step - loss: 1.4565<br/>Epoch 6/10<br/>155/155 [==============================] - 32s 205ms/step - loss: 1.3947<br/>Epoch 7/10<br/>155/155 [==============================] - 33s 208ms/step - loss: 1.3468<br/>Epoch 8/10<br/>155/155 [==============================] - 32s 205ms/step - loss: 1.3059<br/>Epoch 9/10<br/>155/155 [==============================] - 32s 205ms/step - loss: 1.2686<br/>Epoch 10/10<br/>155/155 [==============================] - 33s 212ms/step - loss: 1.2339</strong></pre>
+<p>After training, we can now use the model to generate text. First, we will restore the latest checkpoint and rebuild the model with a batch size of 1:</p>
+<pre><code class="language-python">model = build_model(vocab_size, embedding_dim, rnn_units, batch_size=1)
+model.load_weights(tf.train.latest_checkpoint(checkpoint_dir))
+model.build(tf.TensorShape([1, None]))</code></pre>
+<p>Now, to generate text, we’ll input a seed string, predict the next character, and then add it back to the input, continuing this process to generate longer text:</p>
+<pre><code class="language-python">def generate_text(model, start_string):
+    num_generate = 1000
+
+    input_eval = [char2idx[s] for s in start_string]
+    input_eval = tf.expand_dims(input_eval, 0)
+
+    text_generated = []
+
+    model.reset_states()
+    for i in range(num_generate):
+        predictions = model(input_eval)
+        predictions = tf.squeeze(predictions, 0)
+
+        predicted_id = tf.random.categorical(predictions, num_samples=1)[-1, 0].numpy()
+        input_eval = tf.expand_dims([predicted_id], 0)
+
+        text_generated.append(idx2char[predicted_id])
+
+    return (start_string + ''.join(text_generated))
+
+print(generate_text(model, start_string=u"QUEEN: So, lets end this"))</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>QUEEN: So, lets end this less<br/>Than the pointain to prison? 'tis the place<br/>That thought not down? even charping on peace<br/>By souther to corrupt the tears--O' mine!<br/><br/>JULIET:<br/>If it both my subject for succare,<br/>As said that speaks that did in this young pleasant field go 'll.<br/><br/>MENEPIUS:<br/>No, my good lord, it was preserves at my book,<br/>With silstity take in advice,<br/>Sected yort;<br/>And more bring a screporature and his bones,<br/>A heart of the prince and mind for herself:<br/>He this the devilining Past you gave in that<br/>proclaim than takes not so light;<br/>Since showing with the eagle blembours' more, but it shall prove<br/>These tongue fasting of a horse shall be in<br/>The aspergo and lawful rightly father,<br/>As I shall say that deneral prince,<br/>That ever marning sweet Tybalt of York,<br/>And made them weal an traitor, prevails, I will live<br/>All consceers and in a fielder head;<br/>And, if you move her signif live was shear--hearted mean's end:<br/>He did Sell's daughter that full us arrigabe,<br/>And patience discover'd; as the malmerer<br/>should say 'show t</strong></pre>
+<p>The generate_text function in the above code uses a trained Recurrent Neural Network model to generate a sequence of text, starting with a given seed phrase (start_string). It converts the seed phrase into a sequence of numeric indices, feeds these indices into the model, and then iteratively generates new characters, each time using the model’s most recent output as the input for the next step. This process continues for a specified number of iterations (num_generate), resulting in a stream of text that extends from the initial seed.</p>
+<p>The function employs randomness in character selection to ensure variability in the generated text, and the final output is a concatenation of the seed phrase with the newly generated characters, typically reflecting the style and content of the training data used for the model.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, this is how you can build a Text Generation Model with Deep Learning using Python. Text Generation Models have various applications, such as content creation, chatbots, automated story writing, and more. They often utilize advanced Machine Learning techniques, particularly Deep Learning models like Recurrent Neural Networks (RNNs), Long Short-Term Memory Networks (LSTMs), and Transformer models like GPT (Generative Pre-trained Transformer).</p>
+<p>I hope you liked this article on building a Text Generation Model with Deep Learning using Python. Feel free to ask valuable questions in the comments section below. You can follow me on <a href="https://www.instagram.com/amankharwal.official/" rel="noreferrer noopener" target="_blank"><strong>Instagram</strong></a> for many more resources.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="next-word-prediction-model-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="code-generation-model-using-llms.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

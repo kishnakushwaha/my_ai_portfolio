@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Music Popularity Prediction with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Music Popularity Prediction with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 01, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="loan-approval-prediction-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="smart-loan-recovery-system-with-machine-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Music popularity prediction involves developing <strong><a href="https://amzn.eu/d/3Bgb8IK">machine learning</a></strong> models to estimate the popularity of music tracks based on their audio features. Predicting the popularity of music can help music streaming platforms understand user preferences, optimize playlists and enhance <strong><a href="music-recommendation-system-using-python.html" target="">recommendation systems</a></strong> to improve user engagement and satisfaction. So, if you want to learn how to train a Machine Learning model for music popularity prediction, this article is for you. In this article, I’ll take you through the task of music popularity prediction with Machine Learning using Python.</p>
+<h2 class="wp-block-heading">Music Popularity Prediction: Overview</h2>
+<p>Music popularity prediction means using regression techniques to forecast the popularity of songs based on various music features and metadata. Expected results include accurate predictions of a song’s future performance in terms of streams, downloads, and chart positions, which enable music producers, artists, and marketers to make informed decisions.</p>
+<p>To get started with music popularity prediction, we need a dataset of various songs with their musical features and historical data on how much popularity the songs got. I found an ideal dataset for this task which includes 227 music tracks, each described by their music features along with additional metadata like track name, artists, album name, and release date. You can download the dataset from <strong><a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">here</a></strong>.</p>
+<h2 class="wp-block-heading">Music Popularity Prediction with Python</h2>
+<p>Now, let’s get started with the task of music popularity prediction by importing the necessary Python libraries and the <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+
+spotify_data = pd.read_csv("Spotify_data.csv")
+
+print(spotify_data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>   Unnamed: 0                  Track Name  \<br/>0           0                 Not Like Us   <br/>1           1                     Houdini   <br/>2           2  BAND4BAND (feat. Lil Baby)   <br/>3           3          I Don't Wanna Wait   <br/>4           4                       Pedro   <br/><br/>                                   Artists                  Album Name  \<br/>0                           Kendrick Lamar                 Not Like Us   <br/>1                                   Eminem                     Houdini   <br/>2                    Central Cee, Lil Baby  BAND4BAND (feat. Lil Baby)   <br/>3                David Guetta, OneRepublic          I Don't Wanna Wait   <br/>4  Jaxomy, Agatino Romero, Raffaella Carrà                       Pedro   <br/><br/>                 Album ID                Track ID  Popularity Release Date  \<br/>0  5JjnoGJyOxfSZUZtk2rRwZ  6AI3ezQ4o3HUoP6Dhudph3          96   2024-05-04   <br/>1  6Xuu2z00jxRPZei4IJ9neK  2HYFX63wP3otVIvopRS99Z          94   2024-05-31   <br/>2  4AzPr5SUpNF553eC1d3aRy  7iabz12vAuVQYyekFIWJxD          91   2024-05-23   <br/>3  0wCLHkBRKcndhMQQpeo8Ji  331l3xABO0HMr1Kkyh2LZq          90   2024-04-05   <br/>4  5y6RXjI5VPR0RyInghTbf1  48lxT5qJF0yYyf2z4wB4xW          89   2024-03-29   <br/><br/>   Duration (ms)  Explicit  ... Energy  Key  Loudness  Mode  Speechiness  \<br/>0         274192      True  ...  0.472    1    -7.001     1       0.0776   <br/>1         227239      True  ...  0.887    9    -2.760     0       0.0683   <br/>2         140733      True  ...  0.764   11    -5.241     1       0.2040   <br/>3         149668     False  ...  0.714    1    -4.617     0       0.0309   <br/>4         144846     False  ...  0.936    9    -6.294     1       0.3010   <br/><br/>   Acousticness  Instrumentalness  Liveness  Valence    Tempo  <br/>0        0.0107          0.000000    0.1410    0.214  101.061  <br/>1        0.0292          0.000002    0.0582    0.889  127.003  <br/>2        0.3590          0.000000    0.1190    0.886  140.113  <br/>3        0.0375          0.000000    0.2320    0.554  129.976  <br/>4        0.0229          0.000001    0.3110    0.844  151.019  <br/><br/>[5 rows x 22 columns]</strong></pre>
+<p>The dataset has an unnamed column, I’ll drop it and move forward:</p>
+<pre><code class="language-python">spotify_data.drop(columns=['Unnamed: 0'], inplace=True)</code></pre>
+<p>Now, let’s have a look at the column info before moving forward:</p>
+<pre><code class="language-python">spotify_data.info()</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>&lt;class 'pandas.core.frame.DataFrame'&gt;<br/>RangeIndex: 227 entries, 0 to 226<br/>Data columns (total 21 columns):<br/> #   Column            Non-Null Count  Dtype  <br/>---  ------            --------------  -----  <br/> 0   Track Name        227 non-null    object <br/> 1   Artists           227 non-null    object <br/> 2   Album Name        227 non-null    object <br/> 3   Album ID          227 non-null    object <br/> 4   Track ID          227 non-null    object <br/> 5   Popularity        227 non-null    int64  <br/> 6   Release Date      227 non-null    object <br/> 7   Duration (ms)     227 non-null    int64  <br/> 8   Explicit          227 non-null    bool   <br/> 9   External URLs     227 non-null    object <br/> 10  Danceability      227 non-null    float64<br/> 11  Energy            227 non-null    float64<br/> 12  Key               227 non-null    int64  <br/> 13  Loudness          227 non-null    float64<br/> 14  Mode              227 non-null    int64  <br/> 15  Speechiness       227 non-null    float64<br/> 16  Acousticness      227 non-null    float64<br/> 17  Instrumentalness  227 non-null    float64<br/> 18  Liveness          227 non-null    float64<br/> 19  Valence           227 non-null    float64<br/> 20  Tempo             227 non-null    float64<br/>dtypes: bool(1), float64(9), int64(4), object(7)<br/>memory usage: 35.8+ KB</strong></pre>
+<p>Now, let’s get started with EDA. As popularity is the target variable, I’ll have a look at the relationship between all the music features with popularity:</p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+import seaborn as sns
+features = ['Energy', 'Valence', 'Danceability', 'Loudness', 'Acousticness']
+for feature in features:
+    plt.figure(figsize=(8, 5))
+    sns.scatterplot(data=spotify_data, x=feature, y='Popularity')
+    plt.title(f'Popularity vs {feature}')
+    plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Music Popularity Prediction: popularity vs energy" class="wp-image-24059" data-attachment-id="24059" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="music-features-1" data-orig-size="699,470" data-recalc-dims="1" decoding="async" height="470" sizes="(max-width: 699px) 100vw, 699px" src="../assets/datasets/music-features-1.png" width="699"/></figure>
+<figure class="wp-block-image aligncenter size-full"><img alt="valence" class="wp-image-24061" data-attachment-id="24061" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="music-features-2" data-orig-size="695,470" data-recalc-dims="1" decoding="async" height="470" sizes="(max-width: 695px) 100vw, 695px" src="../assets/datasets/music-features-2.png" width="695"/></figure>
+<figure class="wp-block-image aligncenter size-full"><img alt="Music Popularity Prediction: popularity vs danceability" class="wp-image-24062" data-attachment-id="24062" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="music-features-3" data-orig-size="695,470" data-recalc-dims="1" decoding="async" height="470" loading="lazy" sizes="auto, (max-width: 695px) 100vw, 695px" src="../assets/datasets/music-features-3.png" width="695"/></figure>
+<figure class="wp-block-image aligncenter size-full"><img alt="loudness" class="wp-image-24063" data-attachment-id="24063" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="music-features-4" data-orig-size="695,470" data-recalc-dims="1" decoding="async" height="470" loading="lazy" sizes="auto, (max-width: 695px) 100vw, 695px" src="../assets/datasets/music-features-4.png" width="695"/></figure>
+<figure class="wp-block-image aligncenter size-full"><img alt="Music Popularity Prediction: acousticness" class="wp-image-24064" data-attachment-id="24064" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="music-features-5" data-orig-size="695,470" data-recalc-dims="1" decoding="async" height="470" loading="lazy" sizes="auto, (max-width: 695px) 100vw, 695px" src="../assets/datasets/music-features-5.png" width="695"/></figure>
+<p>From these visualizations, we can observe that higher energy levels and danceability tend to correlate positively with higher popularity scores. Conversely, increased acousticness and lower loudness levels generally correspond with lower popularity, suggesting that more energetic and less acoustic tracks are favoured. Valence shows a weaker, less clear relationship with popularity, indicating that the emotional positivity of a track alone doesn’t strongly predict its popularity.</p>
+<p>Now, let’s have a look at the correlation between all the features:</p>
+<pre><code class="language-python">numeric_columns = spotify_data.select_dtypes(include=['float64', 'int64']).columns
+numeric_data = spotify_data[numeric_columns]
+
+corr_matrix = numeric_data.corr()
+
+plt.figure(figsize=(12, 8))
+sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.5)
+plt.title('Correlation Matrix')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Correlation Matrix" class="wp-image-24067" data-attachment-id="24067" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="music-features-6" data-orig-size="1014,788" data-recalc-dims="1" decoding="async" height="788" loading="lazy" sizes="auto, (max-width: 1014px) 100vw, 1014px" src="../assets/datasets/music-features-6.png" width="1014"/></figure>
+<p>From the above correlation matrix, we can see that popularity has a moderate positive correlation with loudness (0.31) and danceability (0.25), indicating that louder and more danceable tracks tend to be more popular. There is a moderate negative correlation between popularity and acousticness (-0.43), suggesting that tracks with higher acousticness are generally less popular. Energy also has a positive correlation with popularity (0.25).</p>
+<p>Now, let’s have a look at the distribution of all the music features:</p>
+<pre><code class="language-python">for feature in features:
+    plt.figure(figsize=(8, 5))
+    sns.histplot(spotify_data[feature], kde=True)
+    plt.title(f'Distribution of {feature}')
+    plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Music Popularity Prediction: Distribution of energy" class="wp-image-24069" data-attachment-id="24069" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="music-features-7" data-orig-size="691,470" data-recalc-dims="1" decoding="async" height="470" loading="lazy" sizes="auto, (max-width: 691px) 100vw, 691px" src="../assets/datasets/music-features-7.png" width="691"/></figure>
+<figure class="wp-block-image aligncenter size-full"><img alt="Distribution of valence" class="wp-image-24070" data-attachment-id="24070" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="music-features-8" data-orig-size="686,470" data-recalc-dims="1" decoding="async" height="470" loading="lazy" sizes="auto, (max-width: 686px) 100vw, 686px" src="../assets/datasets/music-features-8.png" width="686"/></figure>
+<figure class="wp-block-image aligncenter size-full"><img alt="Music Popularity Prediction: distribution of danceability" class="wp-image-24071" data-attachment-id="24071" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="music-features-9" data-orig-size="686,470" data-recalc-dims="1" decoding="async" height="470" loading="lazy" sizes="auto, (max-width: 686px) 100vw, 686px" src="../assets/datasets/music-features-9.png" width="686"/></figure>
+<figure class="wp-block-image aligncenter size-full"><img alt="Distribution of loudness" class="wp-image-24072" data-attachment-id="24072" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="music-features-10" data-orig-size="686,470" data-recalc-dims="1" decoding="async" height="470" loading="lazy" sizes="auto, (max-width: 686px) 100vw, 686px" src="../assets/datasets/music-features-10.png" width="686"/></figure>
+<figure class="wp-block-image aligncenter size-full"><img alt="Music Popularity Prediction: Distribution of acousticness" class="wp-image-24074" data-attachment-id="24074" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="music-features-11" data-orig-size="686,470" data-recalc-dims="1" decoding="async" height="470" loading="lazy" sizes="auto, (max-width: 686px) 100vw, 686px" src="../assets/datasets/music-features-11.png" width="686"/></figure>
+<p>The distribution of energy is roughly bell-shaped, which indicates a balanced range of energy levels in the tracks. Valence and danceability also follow a similar distribution, with most tracks having mid-range values, which suggests an even mix of emotionally positive and danceable tracks. Loudness has a near-normal distribution centred around -6 dB, which reflects typical volume levels in the dataset. Acousticness, however, is skewed towards lower values, indicating that most tracks are not highly acoustic.</p>
+<h4 class="wp-block-heading">Feature Selection and Model Training</h4>
+<p>Based on the correlation analysis and visualizations, the following features show a significant relationship with popularity and can be used to train a music popularity prediction model:</p>
+<ul class="wp-block-list">
+<li>Energy</li>
+<li>Valence</li>
+<li>Danceability</li>
+<li>Loudness</li>
+<li>Acousticness</li>
+<li>Tempo</li>
+<li>Speechiness</li>
+<li>Liveness</li>
+</ul>
+<p>These features capture various audio characteristics that influence the popularity of music tracks.</p>
+<p>The next step is to train a Machine Learning model to predict the popularity of music using the features we have selected. So, let’s split and scale the data and then train the model using the random forest regression algorithm:</p>
+<pre><code class="language-python">from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error, r2_score
+
+# select the features and target variable
+features = ['Energy', 'Valence', 'Danceability', 'Loudness', 'Acousticness', 'Tempo', 'Speechiness', 'Liveness']
+X = spotify_data[features]
+y = spotify_data['Popularity']
+
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# normalize the features
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# define the parameter grid for Random Forest
+param_grid = {
+    'n_estimators': [50, 100, 200],
+    'max_features': ['auto', 'sqrt', 'log2'],
+    'max_depth': [10, 20, 30, None],
+    'min_samples_split': [2, 5, 10],
+    'min_samples_leaf': [1, 2, 4]
+}
+
+grid_search_rf = GridSearchCV(RandomForestRegressor(random_state=42), param_grid, refit=True, verbose=2, cv=5)
+
+grid_search_rf.fit(X_train_scaled, y_train)
+
+best_params_rf = grid_search_rf.best_params_
+
+best_rf_model = grid_search_rf.best_estimator_
+
+y_pred_best_rf = best_rf_model.predict(X_test_scaled)</code></pre>
+<blockquote class="wp-block-quote is-style-plain is-layout-flow wp-block-quote-is-layout-flow">
+<p><strong><em>Note: I selected the random forest algorithm after going through various algorithms. The random forest algorithm resulted in better performance in comparison to the other algorithms after hyperparameter tuning.</em></strong></p>
+</blockquote>
+<p>Now, let’s have a look at the actual vs predicted results of the test data:</p>
+<pre><code class="language-python"># make predictions
+y_pred_best_rf = best_rf_model.predict(X_test_scaled)
+
+plt.figure(figsize=(10, 6))
+plt.scatter(y_test, y_pred_best_rf, alpha=0.7)
+plt.plot([min(y_test), max(y_test)], [min(y_test), max(y_test)], color='red', linewidth=2)
+plt.xlabel('Actual Popularity')
+plt.ylabel('Predicted Popularity')
+plt.title('Actual vs Predicted Popularity (Best Random Forest Model)')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Music Popularity Prediction: actual vs predicted" class="wp-image-24078" data-attachment-id="24078" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="music-features-12" data-orig-size="841,547" data-recalc-dims="1" decoding="async" height="547" loading="lazy" sizes="auto, (max-width: 841px) 100vw, 841px" src="../assets/datasets/music-features-12.png" width="841"/></figure>
+<p>The red line represents perfect predictions, where the predicted popularity would exactly match the actual popularity. Most of the points are clustered around this line, which indicates that the model is making reasonably accurate predictions. However, there are some deviations, particularly at lower popularity values, which suggest areas where the model’s predictions are less precise.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, this is how we can train a Machine Learning model for the task of Music popularity prediction with Python. Predicting the popularity of music can help music streaming platforms understand user preferences, optimize playlists and enhance recommendation systems to improve user engagement and satisfaction.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="loan-approval-prediction-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="smart-loan-recovery-system-with-machine-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

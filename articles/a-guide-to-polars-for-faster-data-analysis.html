@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>A Guide to Polars for Faster Data Analysis | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a class="active" href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        A Guide to Polars for Faster Data Analysis</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 22, 2025 • 5 min read</div>
+<p>For a long time, Pandas has been the go-to tool for <strong><a href="python-libraries-to-drop-and-adopt-in-2026.html">Python</a></strong> data analysis, offering reliability, familiarity, and the ability to handle most tasks. However, as your datasets grow larger, Pandas can begin to slow down. Polars is different. It’s built in Rust, a language known for being safe and fast. This lets Polars use all your computer’s cores at once and plan the most efficient way to process your data. Let’s dive in and see how you can use Polars for faster data analysis.</p>
+<h2 class="wp-block-heading">A Quick Start Guide to Polars for Faster Data Analysis</h2>
+<p>Let’s ground this in reality. We will analyse a dataset representing the Sensex (Indian Stock Market Index) historical data. This file (<strong><a href="https://my-ai-portfolio.com/wp-content/uploads/2025/12/sensex.csv">sensex.csv</a></strong>) contains daily price information.</p>
+<p>We will walk through how to set up Polars, load this data, clean it up, and perform some lightning-fast analysis.</p>
+<h4 class="wp-block-heading">Step 0: The Setup</h4>
+<p>First, you need to install the library. Open your terminal or command prompt and run:</p>
+<pre class="wp-block-preformatted">pip install polars</pre>
+<p>Once installed, we import it into our Python script:</p>
+<pre><code class="language-python">import polars as pl</code></pre>
+<p>Note the abbreviation pl, just like pd for Pandas, pl is the standard shorthand for Polars.</p>
+<h4 class="wp-block-heading">Step 1: Loading the Data</h4>
+<p>Polars is incredibly fast at reading CSV files. Let’s load our <strong><a href="../assets/datasets/sensex.csv">data</a></strong>:</p>
+<pre><code class="language-python"># Read the CSV file
+df = pl.read_csv("sensex.csv")
+
+# Take a quick look at the first few rows
+print(df.head())</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Polars Guide: Loading the Data" class="wp-image-30924" data-attachment-id="30924" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-1.png?fit=1024%2C318&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-1.png?fit=300%2C93&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-1.png?fit=1430%2C444&amp;ssl=1" data-orig-size="1430,444" data-permalink="https://my-ai-portfolio.com/2025/12/11/a-guide-to-polars-for-faster-data-analysis/image-259/" data-recalc-dims="1" decoding="async" height="318" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-1.png?resize=1024%2C318&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-1.png?resize=1024%2C318&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-1.png?resize=300%2C93&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-1.png?resize=768%2C238&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-1.png?resize=1200%2C373&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-1.png?w=1430&amp;ssl=1 1430w" width="1024"/></figure>
+<p>When we inspect this specific dataset, we might notice a quirk. The column headers are Price, Close, High, Low, Open, Volume. However, the first row of actual data contains the word “Date” under Price and nulls elsewhere. Real-world data is rarely perfect!</p>
+<p>We need to clean this up immediately.</p>
+<h4 class="wp-block-heading">Step 2: Cleaning and Preparing Data</h4>
+<p>In Pandas, you might iterate or use complex indexing. In Polars, we chain expressions. It reads almost like a sentence. Here is our plan:</p>
+<ol class="wp-block-list">
+<li><strong>Filter</strong> out the row where the “Price” column is just the text “Date”.</li>
+<li><strong>Rename</strong> the “Price” column to “Date” so it makes sense.</li>
+<li><strong>Cast</strong> the “Date” column to a proper Date object (so we can extract years/months later).</li>
+</ol>
+<pre><code class="language-python"># Clean the dataframe in one smooth chain
+df_clean = (
+    df
+    .filter(pl.col("Price") != "Date")       # 1. Remove the bad row
+    .rename({"Price": "Date"})               # 2. Fix the column name
+    .with_columns(                           # 3. Convert types
+        pl.col("Date").str.strptime(pl.Date, "%Y-%m-%d"),
+        pl.col("Close").cast(pl.Float64)
+    )
+)
+
+print(df_clean.head())</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Cleaning and Preparing Data" class="wp-image-30926" data-attachment-id="30926" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-2.png?fit=1024%2C311&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-2.png?fit=300%2C91&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-2.png?fit=1424%2C432&amp;ssl=1" data-orig-size="1424,432" data-permalink="https://my-ai-portfolio.com/2025/12/11/a-guide-to-polars-for-faster-data-analysis/image-260/" data-recalc-dims="1" decoding="async" height="311" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-2.png?resize=1024%2C311&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-2.png?resize=1024%2C311&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-2.png?resize=300%2C91&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-2.png?resize=768%2C233&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-2.png?resize=1200%2C364&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-2.png?w=1424&amp;ssl=1 1424w" width="1024"/></figure>
+<p><em>Note: str.strptime parses the string into a Date object. The format “%Y-%m-%d” matches dates like “1997-07-01”.</em></p>
+<h4 class="wp-block-heading">Step 3: Filtering and Selecting</h4>
+<p>Let’s say we only care about the market performance after the year 2020. In Polars, filter and select are your primary tools:</p>
+<pre><code class="language-python"># Filter for data after Jan 1st, 2020
+recent_data = df_clean.filter(
+    pl.col("Date") &gt; pl.date(2020, 1, 1)
+)
+
+# Select only the Date and Close columns to view
+view_data = recent_data.select(["Date", "Close"])
+
+print(view_data.head())</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Polars Guide: Filtering and Selecting" class="wp-image-30929" data-attachment-id="30929" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-3.png?fit=626%2C432&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-3.png?fit=300%2C207&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-3.png?fit=626%2C432&amp;ssl=1" data-orig-size="626,432" data-permalink="https://my-ai-portfolio.com/2025/12/11/a-guide-to-polars-for-faster-data-analysis/image-261/" data-recalc-dims="1" decoding="async" height="432" loading="lazy" sizes="auto, (max-width: 626px) 100vw, 626px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-3.png?resize=626%2C432&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-3.png?w=626&amp;ssl=1 626w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-3.png?resize=300%2C207&amp;ssl=1 300w" width="626"/></figure>
+<p>Notice the syntax pl.col(“Name”). This is a Polars <strong>Expression</strong>. It refers to the column abstractly, allowing Polars to optimise the query under the hood before executing it.</p>
+<h4 class="wp-block-heading">Step 4: Aggregation</h4>
+<p>This is where Polars is best for. Let’s calculate the average closing price for every year in our dataset. To do this, we need to:</p>
+<ol class="wp-block-list">
+<li>Extract the <strong>year</strong> from the Date column.</li>
+<li><strong>Group by</strong> that year.</li>
+<li>Calculate the <strong>mean</strong> of the Close price.</li>
+</ol>
+<pre><code class="language-python">yearly_stats = (
+    df_clean
+    .with_columns(pl.col("Date").dt.year().alias("Year")) # Create a Year column
+    .group_by("Year")                                     # Group by it
+    .agg(                                                 # Aggregate
+        pl.col("Close").mean().alias("Average_Close"),
+        pl.col("Volume").sum().alias("Total_Volume")
+    )
+    .sort("Year")                                         # Sort by Year
+)
+
+print(yearly_stats)</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Aggregation" class="wp-image-30932" data-attachment-id="30932" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-4.png?fit=804%2C640&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-4.png?fit=300%2C239&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-4.png?fit=804%2C640&amp;ssl=1" data-orig-size="804,640" data-permalink="https://my-ai-portfolio.com/2025/12/11/a-guide-to-polars-for-faster-data-analysis/image-262/" data-recalc-dims="1" decoding="async" height="640" loading="lazy" sizes="auto, (max-width: 804px) 100vw, 804px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-4.png?resize=804%2C640&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-4.png?w=804&amp;ssl=1 804w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-4.png?resize=300%2C239&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-4.png?resize=768%2C611&amp;ssl=1 768w" width="804"/></figure>
+<p>In just a few lines, we’ve transformed thousands of daily records into a clean yearly summary.</p>
+<h4 class="wp-block-heading">Step 5: Lazy Execution</h4>
+<p>The examples above were Eager; they ran immediately. But Polars has a superpower called <strong>Lazy API</strong>.</p>
+<p>By adding .lazy(), you tell Polars not to run this yet, just memorise the plan. Polars then looks at your entire plan, optimises it (e.g., if you only use 2 columns, it won’t load the other 4 from the CSV), and then runs it when you call .collect(). Here’s an example:</p>
+<pre><code class="language-python"># The Lazy Way
+q = (
+    pl.scan_csv("sensex.csv")                # 'scan' instead of 'read'
+    .filter(pl.col("Price") != "Date")
+    .rename({"Price": "Date"})
+    .with_columns(
+        pl.col("Date").str.strptime(pl.Date, "%Y-%m-%d"),
+        pl.col("Close").cast(pl.Float64)
+    )
+    .filter(pl.col("Date").dt.year() &gt; 2020)
+    .select(["Date", "Close"])
+)
+
+# Nothing has happened yet! 'q' is just a plan.
+# Now we execute it:
+result = q.collect()
+print(result)</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Polars Guide: Lazy Execution" class="wp-image-30934" data-attachment-id="30934" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-5.png?fit=644%2C636&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-5.png?fit=300%2C296&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-5.png?fit=644%2C636&amp;ssl=1" data-orig-size="644,636" data-permalink="https://my-ai-portfolio.com/2025/12/11/a-guide-to-polars-for-faster-data-analysis/image-263/" data-recalc-dims="1" decoding="async" height="636" loading="lazy" sizes="auto, (max-width: 644px) 100vw, 644px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-5.png?resize=644%2C636&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-5.png?w=644&amp;ssl=1 644w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-5.png?resize=300%2C296&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-5.png?resize=50%2C50&amp;ssl=1 50w" width="644"/></figure>
+<p>For small files like this, the difference is negligible. But for a 10GB file? The Lazy API can be the difference between your code crashing your laptop and running smoothly.</p>
+<h3 class="wp-block-heading">Closing Thoughts</h3>
+<p>Learning a new tool like Polars isn’t just about syntax; it’s about changing your relationship with data. When your tools are fast, you ask more questions. You experiment more. You can learn more about Polars as a Data Analyst/Scientist <strong><a href="https://docs.pola.rs/user-guide/getting-started/#reading-writing">here</a></strong>.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="feature-engineering-tricks-i-use-as-an-ml-engineer.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="ai-agent-projects-to-build-this-weekend.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

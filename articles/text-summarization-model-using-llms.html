@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Text Summarization Model using LLMs | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Text Summarization Model using LLMs</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 06, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="code-generation-model-using-llms.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="synthetic-data-generation-with-generative-ai.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>A text summarization model takes a long text and creates a shorter version while preserving its main points. It works by extracting key sentences directly (extractive summarization) or rephrasing the content into a shorter form (abstractive summarization). If you want to learn how to build a text summarization model using <strong><a href="roadmap-to-learn-nlp-and-llms.html" rel="noreferrer noopener" target="">LLMs</a></strong>, this article is for you. In this article, I’ll take you through a guide to building a text summarization model using LLMs with Python.</p>
+<h2 class="wp-block-heading">Text Summarization Model using LLMs</h2>
+<p>To build a text summarization model, first, we need to choose a pre-trained language model like T5. Then, we need to tokenize the input text, which converts it into a format the model can process. The next step will be to use the model to generate a summary by specifying parameters like maximum length and beam search for better results. The final step will be to decode the generated tokens back into readable text and adjust parameters to improve the summary quality.</p>
+<p>So, let’s start building a text summarization model using LLMs with Python step by step.</p>
+<h4 class="wp-block-heading">Step 1: Select a Suitable LLM</h4>
+<p>Choose a pre-trained model designed for text generation tasks. The T5 model (Text-to-Text Transfer Transformer) by Google is one such model that is effective for various text-based tasks like translation, question-answering, and summarization. You can learn about this model in detail <strong><a href="https://huggingface.co/docs/transformers/en/model_doc/t5" rel="noreferrer noopener" target="_blank">here</a></strong>.</p>
+<h4 class="wp-block-heading">Step 2: Install Required Libraries</h4>
+<p>Install the transformers library by Hugging Face. It provides easy access to various pre-trained models and tokenizers. If you are using Google Colab, you will find it pre-installed in the Colab environment. To install it on your local machine, run the command mentioned below on your terminal or command prompt:</p>
+<pre class="wp-block-preformatted">pip install transformers</pre>
+<h4 class="wp-block-heading">Step 3: Load the Pre-trained Model and Tokenizer</h4>
+<p>Now, we need to import the <strong>T5Tokenizer</strong> and <strong>T5ForConditionalGeneration</strong> classes from the transformers library. Select a model like <strong>t5-small, t5-base, </strong>or<strong> t5-large</strong> based on the requirement and computational capacity:</p>
+<pre><code class="language-python">from transformers import T5Tokenizer, T5ForConditionalGeneration
+
+# load pre-trained T5 model and tokenizer
+model_name = "t5-small"
+tokenizer = T5Tokenizer.from_pretrained(model_name)
+model = T5ForConditionalGeneration.from_pretrained(model_name)</code></pre>
+<p>To select between t5-small, t5-base, or t5-large, consider your computational resources and accuracy needs. t5-small is faster and requires less memory, which makes it suitable for quick tasks or limited hardware. t5-base offers a balance between speed and performance, ideal for general use. t5-large provides the highest accuracy but needs more memory and processing power, which makes it better for scenarios where performance is more important than speed.</p>
+<h4 class="wp-block-heading">Step 4: Prepare the Text for Summarization</h4>
+<p>Next, we need to define the text that needs to be summarized. The text should be prefixed with the keyword “summarize:” for the T5 model to recognize the task properly:</p>
+<pre><code class="language-python">text = """
+The COVID-19 pandemic has brought unprecedented challenges to the global economy...
+"""
+# prepare the text for the T5 model by adding the "summarize:" prefix
+input_text = "summarize: " + text</code></pre>
+<p>The “summarize:” prefix for the T5 model is necessary because T5 is a “text-to-text” model that needs to understand what task it should perform (e.g., summarization, translation, or question-answering). The prefix helps the model identify that it should generate a summary of the input text. Without this instruction, the model might not produce the intended summarization output.</p>
+<h4 class="wp-block-heading">Step 5: Tokenize the Input Text</h4>
+<p>The next step is tokenization. Tokenization is the process of converting text into a sequence of integers that represent the model’s vocabulary. The max_length parameter helps manage large texts by truncating or limiting the input size:</p>
+<pre><code class="language-python"># tokenize the input text
+input_ids = tokenizer.encode(input_text, 
+                             return_tensors="pt",
+                             max_length=512,
+                             truncation=True)</code></pre>
+<h4 class="wp-block-heading">Step 6: Generate the Summary</h4>
+<p>Now, use the generate method to produce the summary. Important parameters include:</p>
+<ol class="wp-block-list">
+<li><strong>max_length:</strong> The maximum number of tokens in the output.</li>
+<li><strong>num_beams:</strong> The number of beams for beam search (higher values improve results but increase computation).</li>
+<li><strong>length_penalty:</strong> Adjusts the length of the summary (penalizes lengthy outputs).</li>
+</ol>
+<pre><code class="language-python"># generate the summary
+summary_ids = model.generate(
+    input_ids, 
+    max_length=50,   # maximum length of the summary
+    num_beams=4,     # beam search for better results
+    length_penalty=2.0,  # length penalty to avoid lengthy summaries
+    early_stopping=True
+)</code></pre>
+<h4 class="wp-block-heading">Step 7: Decode and Display the Summary</h4>
+<p>The final step is to decode the generated summary using the tokenizer to convert the tokens back to readable text:</p>
+<pre><code class="language-python"># decode the summary
+summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+
+print("Summary:", summary)</code></pre>
+<pre class="wp-block-preformatted"><strong>Summary: the pandemic has brought unprecedented challenges to the global economy. governments have implemented strict lockdowns and social distancing measures. many industries have been severely affected, leading to widespread job losses and financial instability.</strong></pre>
+<p>By following this step-by-step approach, you can build and customize a text summarization model using LLMs like T5 with Python.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, to build a text summarization model, first, we need to choose a pre-trained language model like T5. Then, we need to tokenize the input text, which converts it into a format the model can process. The next step will be to use the model to generate a summary by specifying parameters like maximum length and beam search for better results. The final step will be to decode the generated tokens back into readable text and adjust parameters to improve the summary quality.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="code-generation-model-using-llms.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="synthetic-data-generation-with-generative-ai.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

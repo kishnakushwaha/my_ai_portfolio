@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>T20 World Cup 2024 Match Analysis | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        T20 World Cup 2024 Match Analysis</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 27, 2025 • 5 min read</div>
+<p>If you want to practice <strong><a href="https://my-ai-portfolio.com/2023/09/12/data-storytelling-guide/">data storytelling</a></strong>, then analyzing and summarizing the complete cricket match is one of the best tasks you should try. I recently collected data about the match between India and the USA in the T20 World Cup 2024. If you want to learn how we can analyze and perform data storytelling of a cricket match, this article is for you. In this article, I’ll take you through T20 World Cup 2024 match analysis using data storytelling techniques with Python.</p>
+<h2 class="wp-block-heading">T20 World Cup 2024 Match Analysis</h2>
+<p>The dataset I am using provides a comprehensive record of the innings, including player performance, team statistics, and specific events like dismissals and reviews. <strong>You can download the dataset from <a href="https://statso.io/t20-world-cup-2024-match-data/" rel="noreferrer noopener" target="_blank">here</a>.</strong></p>
+<p>Now, let’s get started with T20 World Cup 2024 match analysis by importing the necessary Python libraries and the <strong><a href="https://statso.io/t20-world-cup-2024-match-data/" rel="noreferrer noopener" target="_blank">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+
+data = pd.read_csv("india-usa_innings_data.csv")
+
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>            batter          bowler non_striker  runs_batter  runs_extras  \<br/>0  Shayan Jahangir  Arshdeep Singh   SR Taylor            0            0   <br/>1         AGS Gous  Arshdeep Singh   SR Taylor            0            0   <br/>2         AGS Gous  Arshdeep Singh   SR Taylor            0            0   <br/>3         AGS Gous  Arshdeep Singh   SR Taylor            0            1   <br/>4         AGS Gous  Arshdeep Singh   SR Taylor            2            0   <br/><br/>   runs_total wickets_0_player_out wickets_0_kind                      team  \<br/>0           0      Shayan Jahangir            lbw  United States of America   <br/>1           0                  NaN            NaN  United States of America   <br/>2           0                  NaN            NaN  United States of America   <br/>3           1                  NaN            NaN  United States of America   <br/>4           2                  NaN            NaN  United States of America   <br/><br/>   over  ...  wickets_0_fielders_0_name review_by review_umpire review_batter  \<br/>0     0  ...                        NaN       NaN           NaN           NaN   <br/>1     0  ...                        NaN       NaN           NaN           NaN   <br/>2     0  ...                        NaN       NaN           NaN           NaN   <br/>3     0  ...                        NaN       NaN           NaN           NaN   <br/>4     0  ...                        NaN       NaN           NaN           NaN   <br/><br/>  review_decision review_type extras_legbyes  wickets_0_fielders_1_name  \<br/>0             NaN         NaN            NaN                        NaN   <br/>1             NaN         NaN            NaN                        NaN   <br/>2             NaN         NaN            NaN                        NaN   <br/>3             NaN         NaN            NaN                        NaN   <br/>4             NaN         NaN            NaN                        NaN   <br/><br/>  extras_noballs  extras_penalty  <br/>0            NaN             NaN  <br/>1            NaN             NaN  <br/>2            NaN             NaN  <br/>3            NaN             NaN  <br/>4            NaN             NaN  <br/><br/>[5 rows x 21 columns]</strong></pre>
+<p>Let’s have a look at the missing values and data types:</p>
+<pre><code class="language-python"># checking for missing values in the dataset
+missing_values = data.isnull().sum()
+
+# checking data types of the columns
+data_types = data.dtypes
+
+missing_values</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>batter                         0<br/>bowler                         0<br/>non_striker                    0<br/>runs_batter                    0<br/>runs_extras                    0<br/>runs_total                     0<br/>wickets_0_player_out         225<br/>wickets_0_kind               225<br/>team                           0<br/>over                           0<br/>extras_wides                 231<br/>wickets_0_fielders_0_name    228<br/>review_by                    235<br/>review_umpire                235<br/>review_batter                235<br/>review_decision              235<br/>review_type                  235<br/>extras_legbyes               234<br/>wickets_0_fielders_1_name    235<br/>extras_noballs               235<br/>extras_penalty               235<br/>dtype: int64</strong></pre>
+<pre><code class="language-python">data_types</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>batter                        object<br/>bowler                        object<br/>non_striker                   object<br/>runs_batter                    int64<br/>runs_extras                    int64<br/>runs_total                     int64<br/>wickets_0_player_out          object<br/>wickets_0_kind                object<br/>team                          object<br/>over                           int64<br/>extras_wides                 float64<br/>wickets_0_fielders_0_name     object<br/>review_by                     object<br/>review_umpire                 object<br/>review_batter                 object<br/>review_decision               object<br/>review_type                   object<br/>extras_legbyes               float64<br/>wickets_0_fielders_1_name     object<br/>extras_noballs               float64<br/>extras_penalty               float64<br/>dtype: object</strong></pre>
+<p>The data has null values in various columns. But in such datasets, even null values have a meaning, so we will leave them as it is and move forward.</p>
+<p>Let’s group the data for analysis:</p>
+<pre><code class="language-python"># total runs scored by each team
+total_runs = data.groupby('team')['runs_total'].sum()
+
+# total wickets taken by each team
+total_wickets = data['wickets_0_player_out'].notna().groupby(data['team']).sum()
+
+# total extras
+total_extras = data[['team', 'runs_extras', 'extras_wides', 'extras_noballs', 'extras_legbyes', 'extras_penalty']].groupby('team').sum()
+
+# runs scored by each batter
+batter_runs = data.groupby('batter')['runs_batter'].sum()
+
+# balls faced by each batter
+balls_faced = data.groupby('batter').size()
+
+# strike rate of each batter
+strike_rate = (batter_runs / balls_faced) * 100
+
+# boundaries hit by each batter
+boundaries = data[(data['runs_batter'] == 4) | (data['runs_batter'] == 6)].groupby(['batter', 'runs_batter']).size().unstack(fill_value=0)
+
+# wickets taken by each bowler
+wickets_taken = data['wickets_0_player_out'].notna().groupby(data['bowler']).sum()
+
+# runs conceded by each bowler
+runs_conceded = data.groupby('bowler')['runs_total'].sum()
+
+# balls bowled by each bowler
+balls_bowled = data.groupby('bowler').size()
+
+# economy rate of each bowler
+economy_rate = runs_conceded / (balls_bowled / 6)
+
+# dott balls bowled by each bowler
+dot_balls = data[data['runs_total'] == 0].groupby('bowler').size()
+
+# combine all these statistics into dataframes for batters and bowlers
+batter_stats = pd.DataFrame({
+    'Runs': batter_runs,
+    'Balls Faced': balls_faced,
+    'Strike Rate': strike_rate,
+}).join(boundaries)
+
+bowler_stats = pd.DataFrame({
+    'Wickets': wickets_taken,
+    'Runs Conceded': runs_conceded,
+    'Balls Bowled': balls_bowled,
+    'Economy Rate': economy_rate,
+    'Dot Balls': dot_balls,
+})</code></pre>
+<p>I have grouped the data that we needed to analyze this data properly. You can look at all the grouped insights one by one. Here’s an example:</p>
+<pre><code class="language-python">total_runs</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>team<br/>India                       111<br/>United States of America    110<br/>Name: runs_total, dtype: int64</strong></pre>
+<pre><code class="language-python">total_wickets</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>team<br/>India                       3<br/>United States of America    8<br/>Name: wickets_0_player_out, dtype: int64</strong></pre>
+<pre><code class="language-python">total_extras</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Extras: India vs USA Match" class="wp-image-23859" data-attachment-id="23859" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image-7" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-7.png?fit=1024%2C164&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-7.png?fit=300%2C48&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-7.png?fit=1624%2C260&amp;ssl=1" data-orig-size="1624,260" data-permalink="https://my-ai-portfolio.com/2024/06/17/t20-world-cup-2024-match-analysis/image-7-16/" data-recalc-dims="1" decoding="async" height="164" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-7.png?resize=1024%2C164&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-7.png?resize=1024%2C164&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-7.png?resize=300%2C48&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-7.png?resize=768%2C123&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-7.png?resize=1536%2C246&amp;ssl=1 1536w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-7.png?resize=1200%2C192&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-7.png?w=1624&amp;ssl=1 1624w" width="1024"/></figure>
+<p>Now, let’s have a look at the progression of the run over overs:</p>
+<pre><code class="language-python">import plotly.graph_objects as go
+
+india_runs_progression = data[data['team'] == 'India'].groupby('over')['runs_total'].sum().cumsum()
+usa_runs_progression = data[data['team'] == 'United States of America'].groupby('over')['runs_total'].sum().cumsum()
+
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(
+    x=india_runs_progression.index,
+    y=india_runs_progression.values,
+    mode='lines+markers',
+    name='India'
+))
+
+fig.add_trace(go.Scatter(
+    x=usa_runs_progression.index,
+    y=usa_runs_progression.values,
+    mode='lines+markers',
+    name='USA'
+))
+
+fig.update_layout(
+    title='Runs Progression Over Overs',
+    xaxis_title='Overs',
+    yaxis_title='Cumulative Runs',
+    legend_title='Teams',
+    template='plotly_white'
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="T20 World Cup 2024 Match Analysis: Runs Progression Over Overs" class="wp-image-23862" data-attachment-id="23862" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ind-vs-usa-1" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-1.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-1.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-1.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/06/17/t20-world-cup-2024-match-analysis/ind-vs-usa-1/" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-1.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-1.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-1.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-1.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The graph shows the progression of the cumulative run over the overs for both India and the USA in their T20 World Cup match. Initially, both teams had a steady run rate, with India slightly ahead in the early overs. As the innings progressed, USA gained momentum and took the lead briefly around the middle overs. However, India accelerated their scoring in the later overs, surpassing the USA and maintaining the lead until the end. The key takeaway is India’s strong finish, which enabled them to secure the win by consistently increasing their run rate in the final overs.</p>
+<p>Now, let’s have a look at the wickets timeline:</p>
+<pre><code class="language-python">india_wickets = data[(data['team'] == 'India') &amp; data['wickets_0_player_out'].notna()].groupby('over').size()
+usa_wickets = data[(data['team'] == 'United States of America') &amp; data['wickets_0_player_out'].notna()].groupby('over').size()
+
+fig = go.Figure()
+
+fig.add_trace(go.Bar(
+    x=india_wickets.index,
+    y=india_wickets.values,
+    name='India',
+    marker_color='blue',
+    opacity=0.7
+))
+
+fig.add_trace(go.Bar(
+    x=usa_wickets.index,
+    y=usa_wickets.values,
+    name='USA',
+    marker_color='red',
+    opacity=0.7
+))
+
+fig.update_layout(
+    title='Wickets Timeline',
+    xaxis_title='Overs',
+    yaxis_title='Number of Wickets',
+    barmode='group',
+    template='plotly_white',
+    legend_title='Teams'
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Wickets Timeline" class="wp-image-23864" data-attachment-id="23864" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ind-vs-usa-2" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-2.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-2.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-2.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/06/17/t20-world-cup-2024-match-analysis/ind-vs-usa-2/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-2.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-2.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-2.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-2.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The wickets timeline graph illustrates the distribution of wickets taken over the overs for both India and the USA. The USA lost wickets more frequently, especially in the early overs, with two wickets falling in the first over, followed by consistent wicket losses throughout their innings. In contrast, India experienced their wicket losses more evenly spread across their innings, with a couple of early wickets but maintaining longer partnerships in the middle overs. The frequent loss of wickets by the USA disrupted their momentum, while India’s ability to avoid clusters of wickets falling in succession helped them maintain a steady scoring rate and ultimately secure the win.</p>
+<p>Now, let’s have a look at the run distribution by batters:</p>
+<pre><code class="language-python">import plotly.express as px
+
+fig = px.bar(
+    batter_stats,
+    x=batter_stats.index,
+    y='Runs',
+    title='Run Distribution by Batters',
+    labels={'x': 'Batter', 'Runs': 'Runs Scored'},
+    template='plotly_white'
+)
+
+fig.update_layout(
+    xaxis_title='Batter',
+    yaxis_title='Runs Scored',
+    xaxis=dict(tickangle=90)
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="T20 World Cup 2024 Match Analysis: Run Distribution by Batters" class="wp-image-23866" data-attachment-id="23866" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ind-vs-usa-3" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-3.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-3.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-3.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/06/17/t20-world-cup-2024-match-analysis/ind-vs-usa-3/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-3.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-3.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-3.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-3.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>Notably, S. A. Yadav emerged as the highest scorer with a significant contribution, followed by NR Kumar and S. Dube. These three players were pivotal in their team’s innings, providing the bulk of the runs.</p>
+<p>Now, let’s have a look at the bowling performance:</p>
+<pre><code class="language-python">fig = go.Figure()
+
+fig.add_trace(go.Scatter(
+    x=bowler_stats['Economy Rate'],
+    y=bowler_stats['Wickets'],
+    mode='markers+text',
+    text=bowler_stats.index,
+    textposition='top center',
+    textfont=dict(
+        family="sans serif",
+        size=12,
+        color="black"
+    ),
+    marker=dict(color='red', size=10),
+    name='Bowlers'
+))
+
+fig.update_layout(
+    title='Bowling Performance',
+    xaxis_title='Economy Rate',
+    yaxis_title='Wickets Taken',
+    template='plotly_white',
+    autosize=False,
+    width=800,
+    height=600
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Bowling Performance" class="wp-image-23868" data-attachment-id="23868" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ind-vs-usa-4" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-4.png?fit=800%2C600&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-4.png?fit=300%2C225&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-4.png?fit=800%2C600&amp;ssl=1" data-orig-size="800,600" data-permalink="https://my-ai-portfolio.com/2024/06/17/t20-world-cup-2024-match-analysis/ind-vs-usa-4/" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 800px) 100vw, 800px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-4.png?resize=800%2C600&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-4.png?w=800&amp;ssl=1 800w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-4.png?resize=300%2C225&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-4.png?resize=768%2C576&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-4.png?resize=600%2C450&amp;ssl=1 600w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-4.png?resize=400%2C300&amp;ssl=1 400w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-4.png?resize=200%2C150&amp;ssl=1 200w" width="800"/></figure>
+<p>The bowling performance graph compares the economy rate and wickets taken by various bowlers in the match between India and the USA. Arshdeep Singh stands out as the most effective bowler, taking the highest number of wickets (4) with a commendable economy rate. Other notable performances include HH Pandya and SN Netravalkar, both taking 2 wickets each with moderate economy rates. Bowlers like S Dube, having a higher economy rate, contributed less in terms of wickets.</p>
+<p>Now, let’s have a look at the partnership contributions in the India’s innings:</p>
+<pre><code class="language-python"># separate data for India and USA
+india_partnership_data = data[data['team'] == 'India'].groupby(['over', 'batter', 'non_striker'])['runs_total'].sum().reset_index()
+usa_partnership_data = data[data['team'] == 'United States of America'].groupby(['over', 'batter', 'non_striker'])['runs_total'].sum().reset_index()
+
+# create pivot tables for better visualization
+india_partnership_pivot = india_partnership_data.pivot(index='over', columns=['batter', 'non_striker'], values='runs_total').fillna(0)
+usa_partnership_pivot = usa_partnership_data.pivot(index='over', columns=['batter', 'non_striker'], values='runs_total').fillna(0)
+
+
+# convert the pivot table to a long format
+india_partnership_long = india_partnership_pivot.reset_index().melt(id_vars='over', var_name=['batter', 'non_striker'], value_name='runs_total')
+
+# create a stacked bar chart
+fig = go.Figure()
+
+# add bars for each partnership
+for (batter, non_striker) in india_partnership_pivot.columns:
+    partnership_data = india_partnership_long[(india_partnership_long['batter'] == batter) &amp; (india_partnership_long['non_striker'] == non_striker)]
+    fig.add_trace(go.Bar(
+        x=partnership_data['over'],
+        y=partnership_data['runs_total'],
+        name=f'{batter} &amp; {non_striker}'
+    ))
+
+fig.update_layout(
+    title='Partnership Contributions - India',
+    xaxis_title='Over',
+    yaxis_title='Runs',
+    barmode='stack',
+    template='plotly_white',
+    legend_title='Partnership',
+    legend=dict(
+        x=1.05,
+        y=1,
+        traceorder='normal',
+        font=dict(size=10)
+    ),
+    autosize=False,
+    width=900,
+    height=600
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="T20 World Cup 2024 Match Analysis: Partnership Contributions - India" class="wp-image-23870" data-attachment-id="23870" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ind-vs-usa-5" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-5.png?fit=900%2C600&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-5.png?fit=300%2C200&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-5.png?fit=900%2C600&amp;ssl=1" data-orig-size="900,600" data-permalink="https://my-ai-portfolio.com/2024/06/17/t20-world-cup-2024-match-analysis/ind-vs-usa-5/" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 900px) 100vw, 900px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-5.png?resize=900%2C600&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-5.png?w=900&amp;ssl=1 900w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-5.png?resize=300%2C200&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-5.png?resize=768%2C512&amp;ssl=1 768w" width="900"/></figure>
+<p>The partnership contributions graph for India shows the runs scored by various batting partnerships over each over. Notably, the partnerships of RG Sharma &amp; RR Pant and SA Yadav &amp; S Dube were particularly productive, especially in the middle and death overs, contributing significantly to the team’s total.</p>
+<p>Now, let’s have a look at the partnership contributions in the USA’s innings:</p>
+<pre><code class="language-python">usa_partnership_long = usa_partnership_pivot.reset_index().melt(id_vars='over', var_name=['batter', 'non_striker'], value_name='runs_total')
+
+# create a stacked bar chart
+fig = go.Figure()
+
+# add bars for each partnership
+for (batter, non_striker) in usa_partnership_pivot.columns:
+    partnership_data = usa_partnership_long[(usa_partnership_long['batter'] == batter) &amp; (usa_partnership_long['non_striker'] == non_striker)]
+    fig.add_trace(go.Bar(
+        x=partnership_data['over'],
+        y=partnership_data['runs_total'],
+        name=f'{batter} &amp; {non_striker}'
+    ))
+
+fig.update_layout(
+    title='Partnership Contributions - USA',
+    xaxis_title='Over',
+    yaxis_title='Runs',
+    barmode='stack',
+    template='plotly_white',
+    legend_title='Partnership',
+    legend=dict(
+        x=1.05,
+        y=1,
+        traceorder='normal',
+        font=dict(size=10)
+    ),
+    autosize=False,
+    width=900,
+    height=600
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Partnership Contributions - USA" class="wp-image-23873" data-attachment-id="23873" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ind-vs-usa-6" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-6.png?fit=900%2C600&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-6.png?fit=300%2C200&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-6.png?fit=900%2C600&amp;ssl=1" data-orig-size="900,600" data-permalink="https://my-ai-portfolio.com/2024/06/17/t20-world-cup-2024-match-analysis/ind-vs-usa-6/" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 900px) 100vw, 900px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-6.png?resize=900%2C600&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-6.png?w=900&amp;ssl=1 900w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-6.png?resize=300%2C200&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-6.png?resize=768%2C512&amp;ssl=1 768w" width="900"/></figure>
+<p>The partnership contributions graph for the USA highlights the runs scored by different batting pairs over each over. Key partnerships such as SR Taylor &amp; Aaron Jones and NR Kumar &amp; SR Taylor significantly boosted the scoring, particularly in the middle and late overs. However, the contributions are more sporadic compared to India, with several partnerships contributing only marginally.</p>
+<p>Now, let’s have a look at the key moments for the USA in the innings which resulted in a low target:</p>
+<pre><code class="language-python"># cumulative runs for both teams over the overs
+india_cumulative_runs = data[data['team'] == 'India'].groupby('over')['runs_total'].sum().cumsum()
+usa_cumulative_runs = data[data['team'] == 'United States of America'].groupby('over')['runs_total'].sum().cumsum()
+
+# extract key moments where wickets fell or significant runs were scored
+india_key_moments = data[(data['team'] == 'India') &amp; data['wickets_0_player_out'].notna()]
+usa_key_moments = data[(data['team'] == 'United States of America') &amp; data['wickets_0_player_out'].notna()]
+
+# significant runs scored by India
+india_significant_runs = data[(data['team'] == 'India') &amp; (data['runs_total'] &gt;= 4)]
+
+# significant runs scored by USA
+usa_significant_runs = data[(data['team'] == 'United States of America') &amp; (data['runs_total'] &gt;= 4)]
+
+usa_wickets_fall = data[(data['team'] == 'United States of America') &amp; data['wickets_0_player_out'].notna()].groupby('over').size().cumsum()
+
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(
+    x=usa_cumulative_runs.index,
+    y=usa_cumulative_runs.values,
+    mode='lines+markers',
+    name='USA Cumulative Runs',
+    line=dict(color='blue')
+))
+
+fig.add_trace(go.Scatter(
+    x=usa_wickets_fall.index,
+    y=usa_cumulative_runs.loc[usa_wickets_fall.index],
+    mode='markers',
+    name='USA Wickets',
+    marker=dict(color='red', size=10)
+))
+
+# Add annotations for key moments
+for _, row in usa_key_moments.iterrows():
+    fig.add_annotation(
+        x=row['over'],
+        y=usa_cumulative_runs.loc[row['over']],
+        text=f"{row['batter']} ({row['over']})",
+        showarrow=True,
+        arrowhead=2,
+        ax=row['over'],
+        ay=usa_cumulative_runs.loc[row['over']] + 5,
+        arrowcolor='black'
+    )
+
+fig.update_layout(
+    title='USA Key Moments in Innings',
+    xaxis_title='Overs',
+    yaxis_title='Cumulative Runs',
+    template='plotly_white',
+    legend_title='USA Innings',
+    autosize=False,
+    width=900,
+    height=600
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="T20 World Cup 2024 Match Analysis: USA Key Moments in Innings" class="wp-image-23875" data-attachment-id="23875" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ind-vs-usa-7" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-7.png?fit=900%2C600&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-7.png?fit=300%2C200&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-7.png?fit=900%2C600&amp;ssl=1" data-orig-size="900,600" data-permalink="https://my-ai-portfolio.com/2024/06/17/t20-world-cup-2024-match-analysis/ind-vs-usa-7/" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 900px) 100vw, 900px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-7.png?resize=900%2C600&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-7.png?w=900&amp;ssl=1 900w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-7.png?resize=300%2C200&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-7.png?resize=768%2C512&amp;ssl=1 768w" width="900"/></figure>
+<p>The graph highlights the key moments in the USA’s innings, showing the progression of the cumulative run with wickets marked. Early wickets, such as those of Shayan Jahangir and AGS Gous in the first over, set back the USA’s momentum. Despite recoveries led by partnerships involving SR Taylor and NR Kumar, regular wickets in the middle and late overs, particularly around the 14th to 19th overs, hindered their progress. The dismissals of key players like Aaron Jones, SR Taylor, and later batsmen such as Harmeet Singh and CJ Anderson, prevented the USA from building a substantial and uninterrupted run flow, ultimately impacting their total score.</p>
+<p>Now, let’s have a look at the key moments for India:</p>
+<pre><code class="language-python">india_cumulative_runs = data[data['team'] == 'India'].groupby('over')['runs_total'].sum().cumsum()
+india_wickets_fall = data[(data['team'] == 'India') &amp; data['wickets_0_player_out'].notna()].groupby('over').size().cumsum()
+india_key_moments = data[(data['team'] == 'India') &amp; data['wickets_0_player_out'].notna()].reset_index()
+
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(
+    x=india_cumulative_runs.index,
+    y=india_cumulative_runs.values,
+    mode='lines+markers',
+    name='India Cumulative Runs',
+    line=dict(color='green')
+))
+
+fig.add_trace(go.Scatter(
+    x=india_wickets_fall.index,
+    y=india_cumulative_runs.loc[india_wickets_fall.index],
+    mode='markers',
+    name='India Wickets',
+    marker=dict(color='red', size=10)
+))
+
+for _, row in india_key_moments.iterrows():
+    fig.add_annotation(
+        x=row['over'],
+        y=india_cumulative_runs.loc[row['over']],
+        text=f"{row['batter']} ({row['over']})",
+        showarrow=True,
+        arrowhead=2,
+        ax=row['over'],
+        ay=india_cumulative_runs.loc[row['over']] + 5,
+        arrowcolor='black'
+    )
+
+fig.update_layout(
+    title='India Key Moments in Innings',
+    xaxis_title='Overs',
+    yaxis_title='Cumulative Runs',
+    template='plotly_white',
+    legend_title='India Innings',
+    autosize=False,
+    width=900,
+    height=600
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="India Key Moments in Innings" class="wp-image-23877" data-attachment-id="23877" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ind-vs-usa-8" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-8.png?fit=900%2C600&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-8.png?fit=300%2C200&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-8.png?fit=900%2C600&amp;ssl=1" data-orig-size="900,600" data-permalink="https://my-ai-portfolio.com/2024/06/17/t20-world-cup-2024-match-analysis/ind-vs-usa-8/" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 900px) 100vw, 900px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-8.png?resize=900%2C600&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-8.png?w=900&amp;ssl=1 900w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-8.png?resize=300%2C200&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-8.png?resize=768%2C512&amp;ssl=1 768w" width="900"/></figure>
+<p>Despite an early setback with the dismissals of V. Kohli and RG Sharma in the first two overs, India managed to maintain a steady run rate. The wicket of RR Pant in the 7th over was another crucial moment, but subsequent partnerships helped stabilize the innings.</p>
+<p>Now, let’s compare the average run rate for both teams:</p>
+<pre><code class="language-python">india_run_rate = data[data['team'] == 'India'].groupby('over')['runs_total'].sum().mean()
+usa_run_rate = data[data['team'] == 'United States of America'].groupby('over')['runs_total'].sum().mean()
+
+fig = go.Figure()
+
+fig.add_trace(go.Bar(
+    x=['India', 'USA'],
+    y=[india_run_rate, usa_run_rate],
+    marker_color=['green', 'blue']
+))
+
+fig.add_annotation(
+    x='India',
+    y=india_run_rate,
+    text=f"{india_run_rate:.2f}",
+    showarrow=False,
+    yshift=10
+)
+
+fig.add_annotation(
+    x='USA',
+    y=usa_run_rate,
+    text=f"{usa_run_rate:.2f}",
+    showarrow=False,
+    yshift=10
+)
+
+fig.update_layout(
+    title='Comparison of Average Run Rate per Over',
+    xaxis_title='Team',
+    yaxis_title='Average Run Rate per Over',
+    template='plotly_white'
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="T20 World Cup 2024 Match Analysis: Comparison of Average Run Rate per Over" class="wp-image-23879" data-attachment-id="23879" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ind-vs-usa-9" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-9.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-9.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-9.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/06/17/t20-world-cup-2024-match-analysis/ind-vs-usa-9/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-9.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-9.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-9.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-9.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The comparison of average run rate per over shows that India had a higher average run rate of 5.84 compared to the USA’s 5.50. This indicates that India scored runs more efficiently throughout their innings. The higher run rate for India reflects their ability to maintain a steady flow of runs, despite early setbacks, which was crucial in achieving their target. The slightly lower run rate for the USA suggests they struggled to accelerate their scoring, especially in the middle overs, which impacted their overall total.</p>
+<p>Now, let’s finish with a comparison of the run rate per over:</p>
+<pre><code class="language-python">india_run_rate_per_over = data[data['team'] == 'India'].groupby('over')['runs_total'].sum()
+usa_run_rate_per_over = data[data['team'] == 'United States of America'].groupby('over')['runs_total'].sum()
+
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(
+    x=india_run_rate_per_over.index,
+    y=india_run_rate_per_over.values,
+    mode='lines+markers',
+    name='India Run Rate',
+    line=dict(color='green')
+))
+
+fig.add_trace(go.Scatter(
+    x=usa_run_rate_per_over.index,
+    y=usa_run_rate_per_over.values,
+    mode='lines+markers',
+    name='USA Run Rate',
+    line=dict(color='blue')
+))
+
+fig.update_layout(
+    title='Comparison of Run Rate per Over',
+    xaxis_title='Overs',
+    yaxis_title='Runs',
+    template='plotly_white',
+    legend_title='Runrate',
+    autosize=False,
+    width=1000,
+    height=600
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Comparison of Run Rate per Over" class="wp-image-23881" data-attachment-id="23881" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ind-vs-usa-10" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-10.png?fit=1000%2C600&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-10.png?fit=300%2C180&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-10.png?fit=1000%2C600&amp;ssl=1" data-orig-size="1000,600" data-permalink="https://my-ai-portfolio.com/2024/06/17/t20-world-cup-2024-match-analysis/ind-vs-usa-10/" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 1000px) 100vw, 1000px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-10.png?resize=1000%2C600&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-10.png?w=1000&amp;ssl=1 1000w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-10.png?resize=300%2C180&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/ind-vs-usa-10.png?resize=768%2C461&amp;ssl=1 768w" width="1000"/></figure>
+<p>The USA experienced significant fluctuations in their run rate, with peaks in the 10th and 15th overs, but also several low-scoring overs, indicating inconsistency. India’s run rate was relatively more stable, with a notable increase towards the end of their innings. This stability in India’s run rate, especially in the death overs, allowed them to maintain pressure and chase the target successfully. The graph highlights India’s ability to keep a more consistent scoring pace, while the USA’s variable run rate reflects periods of struggle to maintain momentum.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>In conclusion, India’s strategy of consistent scoring, effective partnerships, and a balanced bowling attack proved successful against the USA’s inconsistent batting performance and less impactful bowling. So, this is how you can analyze a cricket match and tell the story behind it as a Data Analyst/Scientist.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="consumer-price-index-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="customer-satisfaction-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

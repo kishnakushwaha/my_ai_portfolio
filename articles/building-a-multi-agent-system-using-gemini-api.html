@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Building a Multi-Agent System using Gemini API | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Building a Multi-Agent System using Gemini API</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 27, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="build-an-ai-resume-screener-with-python-llama-3.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="building-ai-agents-with-crewai.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>As an aspiring <strong><a href="machine-learning-projects-to-learn-deployment.html" rel="noreferrer noopener" target="">ML engineer</a></strong>, you’ve probably worked on single-agent models, like a chatbot that responds to a single query. But the next frontier in AI isn’t about one agent; it’s about a team of agents known as Multi-Agent Systems. If you want to learn building multi agent systems, this article is for you. In this article, I’ll guide you through the process of building a multi-agent system from the ground up, using the Gemini API.</p>
+<h2 class="wp-block-heading"><strong>Building a Multi-Agent System using Gemini API</strong></h2>
+<p>In multi-agent systems, we design a system of multiple agents, where each agent is a simple AI model given one specific job. They work in sequence, passing information to each other to achieve a complex goal.</p>
+<p>In our project, we’ll build an AI Research Assistant. It will be composed of a team of three specialist agents:</p>
+<ol class="wp-block-list">
+<li><strong>The Planner:</strong> The project manager who breaks down the main topic into manageable components.</li>
+<li><strong>The Researcher:</strong> The diligent analyst who finds information for each sub-topic.</li>
+<li><strong>The Synthesizer:</strong> The expert writer who compiles all the research into a final report.</li>
+</ol>
+<p>So, let’s build this multi-agent system using the Gemini API step by step.</p>
+<h4 class="wp-block-heading">Setting Up the Environment</h4>
+<p>As we will use the Gemini API to build this agent, let’s first start by configuring the Gemini model with a secure API key. Make sure to get your Gemini API key from <strong><a href="https://ai.google.dev/gemini-api/docs" rel="noreferrer noopener" target="_blank">here</a>. Store your API Key in your colab like this:</strong></p>
+<figure class="wp-block-image aligncenter size-large"><img alt="Store your API Key in your colab" class="wp-image-27881" data-attachment-id="27881" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="1238,604" data-recalc-dims="1" decoding="async" height="500" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/image-2.png" width="1024"/></figure>
+<p>This is a crucial first step for any Gemini project. Your notebook does this perfectly by fetching the key from Colab’s user data. Next, write the code below to complete your setup:</p>
+<pre class="wp-block-preformatted"><strong>pip install google-generativeai</strong></pre>
+<pre><code class="language-python">import os
+from google.colab import userdata
+import google.generativeai as genai
+
+def configure():
+    secret_name = "GOOGLE_API_KEY"
+
+    api_key = userdata.get(secret_name)
+    if not api_key:
+        raise ValueError(f"Secret '{secret_name}' not found. Please check the name in Colab's Secrets.")
+
+    genai.configure(api_key=api_key)
+    return genai.GenerativeModel('gemini-1.5-pro-latest')</code></pre>
+<h4 class="wp-block-heading">Agent 1: The Planner</h4>
+<p>Every good research project starts with a solid plan. A vague goal leads to an unclear outcome. The Planner’s only job is to prevent this by breaking down a broad topic into a list of specific, researchable questions.</p>
+<p>Its role will be to provide structure and focus. Here’s how to build the planner agent:</p>
+<pre><code class="language-python">def planner_agent(model, topic: str) -&gt; list[str]:
+    print("Planner Agent: Creating a research plan...")
+    prompt = f"""
+    You are an expert research planner. Your task is to break down the following topic
+    into 3-5 specific, answerable questions. Return these questions as a Python list of strings.
+
+    TOPIC: "{topic}"
+
+    Example output: ["question 1", "question 2", "question 3"]
+    """
+    try:
+        response = model.generate_content(prompt)
+        plan_str = response.text.strip().replace('[', '').replace(']', '').replace('"', '')
+        plan = [q.strip() for q in plan_str.split(',') if q.strip()]
+
+        print("Plan created:")
+        for i, q in enumerate(plan, 1):
+            print(f"   {i}. {q}")
+        return plan
+    except Exception as e:
+        print(f"Error in Planner Agent: {e}")
+        return []</code></pre>
+<p>The core part here is in the prompt engineering. We explicitly tell the model its persona (You are an expert research planner) and its exact task, including the output format (Return these questions as a Python list of strings). This is a core skill in AI engineering; constraining the model to get predictable, sound output.</p>
+<h4 class="wp-block-heading">Agent 2: The Search Agent</h4>
+<p>Once the plan is set, we need an agent to execute it. The Search Agent takes one question at a time from the Planner’s list and uses a special tool, Google Search, to find the answer.</p>
+<p>The role of this agent will be to gather raw, factual information for a single, specific question. It doesn’t write the report; it just finds the data. Here’s how to build the search agent:</p>
+<pre><code class="language-python">def search_agent(model, question: str) -&gt; str:
+    print(f"Search Agent: Researching question: '{question}'...")
+    try:
+        search_tool = genai.protos.Tool(
+            google_search_retrieval=genai.protos.GoogleSearchRetrieval(disable_attribution=True)
+        )
+        prompt = f"Provide a detailed answer to the following question: {question}"
+        response = model.generate_content(prompt, tools=[search_tool])
+
+        print("   - Information found.")
+        return response.text
+    except Exception as e:
+        print(f"Error in Search Agent: {e}")
+        return ""</code></pre>
+<p>The key line is genai.protos.Tool(…). Here, you’re telling the model, “You are no longer just a text generator. You can now browse the internet.” When you pass this tool in the generate_content call, the model can decide on its own to use Google Search to find up-to-date, relevant information to answer the prompt. This is a fundamental concept in building modern, grounded AI applications.</p>
+<h4 class="wp-block-heading">Agent 3: The Synthesizer</h4>
+<p>With a pile of research notes, we need someone to make sense of it all. The Synthesizer’s job is to take all the fragmented answers from the Search Agent and weave them into a single, well-structured, and coherent report.</p>
+<p>The role of this agent is to synthesize information, not to find it. It is explicitly stated that only the data provided by the Search Agent should be used. Here’s how to build the synthesizer agent:</p>
+<pre><code class="language-python">def synthesizer_agent(model, topic: str, research_results: list) -&gt; str:
+    print("Synthesizer Agent: Writing the final report...")
+
+    research_notes = ""
+    for question, data in research_results:
+        research_notes += f"### Question: {question}\n### Research Data:\n{data}\n\n---\n\n"
+
+    prompt = f"""
+    You are an expert research analyst. Your task is to synthesize the provided research notes
+    into a comprehensive, well-structured report on the topic: "{topic}".
+
+    The report should have an introduction, a body that covers the key findings from the notes,
+    and a conclusion. Use the information from the research notes ONLY.
+
+    ## Research Notes ##
+    {research_notes}
+    """
+    try:
+        response = model.generate_content(prompt)
+        return response.text
+    except Exception as e:
+        print(f"Error in Synthesizer Agent: {e}")
+        return "Error: Could not generate the final report."</code></pre>
+<p>Notice how we first aggregate all the research results into a single research_notes string. This becomes the context for the final prompt. The instruction “Use the information from the research notes ONLY” is a critical constraint that dramatically improves the quality and reliability of the output.</p>
+<h4 class="wp-block-heading">The Conductor: The main() Orchestrator</h4>
+<p>Now, we will build the main function that directs the entire process, ensuring each agent performs at the right time and that their work flows seamlessly from one to the next:</p>
+<pre><code class="language-python">def main():    
+    try:
+        model = configure()
+    except ValueError as e:
+        print(e)
+        return
+
+    print("\nHello! I am your AI Research Assistant.")
+    topic = input("What topic would you like me to research today? ")
+
+    if not topic.strip():
+        print("A topic is required to begin research. Exiting.")
+        return
+
+    print(f"\nStarting research process for: '{topic}'")
+
+    research_plan = planner_agent(model, topic)
+    if not research_plan:
+        print("Could not create a research plan. Exiting.")
+        return
+
+    research_results = []
+    for question in research_plan:
+        research_data = search_agent(model, question)
+        if research_data:
+            research_results.append((question, research_data))
+
+    if not research_results:
+        print("Could not find any information during research. Exiting.")
+        return
+
+    final_report = synthesizer_agent(model, topic, research_results)
+
+    print("\n\n--- FINAL RESEARCH REPORT ---")
+    print(f"## Topic: {topic}\n")
+    print(final_report)
+    print("--- END OF REPORT ---")
+
+main()</code></pre>
+<p>The flow is simple and logical:</p>
+<ol class="wp-block-list">
+<li>Get the topic.</li>
+<li>Call the <strong>Planner</strong> to create the plan.</li>
+<li>Loop through the plan, calling the <strong>Searcher</strong> for each item.</li>
+<li>Call the <strong>Synthesizer</strong> with the collected research.</li>
+<li>Present the final report.</li>
+</ol>
+<p>This orchestration is the essence of a multi-agent system. Here’s the kind of output you will see in the end:</p>
+<pre class="wp-block-preformatted"><strong>AI Research Assistant is active.<br/>Starting research for: 'Why Himachal Pradesh is facing so much rainfall this year'<br/>Planner Agent: Creating a research plan...<br/>Plan created.<br/>Search Agent: Researching: 'What is the interaction between the Western Disturbance and the monsoon in 2025?'...<br/>...</strong></pre>
+<h3 class="wp-block-heading">Final Words</h3>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="build-an-ai-resume-screener-with-python-llama-3.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="building-ai-agents-with-crewai.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

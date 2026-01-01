@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Consumer Price Index Analysis with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Consumer Price Index Analysis with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 28, 2025 • 5 min read</div>
+<p>Consumer Price Index (CPI) Analysis involves tracking the average price change over time for a basket of goods and services typically consumed by households. It serves as a primary measure of inflation, which helps companies and governments understand purchasing power trends, inflationary pressures, and economic stability. So, if you want to understand how to analyze the Consumer Price Index, this article is for you. In this article, I’ll take you through the task of Consumer Price Index Analysis with Python.</p>
+<h2 class="wp-block-heading">Consumer Price Index Analysis with Python</h2>
+<p>Let’s get started with the task of Consumer Price Index Analysis by importing the necessary Python libraries and the <strong><a href="../assets/datasets/All-India-Consumer-Price-Index.csv">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+from statsmodels.tsa.seasonal import seasonal_decompose
+
+cpi_data = pd.read_csv("/content/All India Consumer Price Index.csv")
+print(cpi_data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>        Sector  Year     Month  Cereals and products  Meat and fish    Egg  \<br/>0        Rural  2013   January                 107.5          106.3  108.1   <br/>1        Urban  2013   January                 110.5          109.1  113.0   <br/>2  Rural+Urban  2013   January                 108.4          107.3  110.0   <br/>3        Rural  2013  February                 109.2          108.7  110.2   <br/>4        Urban  2013  February                 112.9          112.9  116.9   <br/><br/>   Milk and products  Oils and fats  Fruits  Vegetables  ...  Housing  \<br/>0              104.9          106.1   103.9       101.9  ...      NaN   <br/>1              103.6          103.4   102.3       102.9  ...    100.3   <br/>2              104.4          105.1   103.2       102.2  ...    100.3   <br/>3              105.4          106.7   104.0       102.4  ...      NaN   <br/>4              104.0          103.5   103.1       104.9  ...    100.4   <br/><br/>   Fuel and light  Household goods and services  Health  \<br/>0           105.5                         104.8   104.0   <br/>1           105.4                         104.8   104.1   <br/>2           105.5                         104.8   104.0   <br/>3           106.2                         105.2   104.4   <br/>4           105.7                         105.2   104.7   <br/><br/>   Transport and communication  Recreation and amusement  Education  \<br/>0                        103.3                     103.4      103.8   <br/>1                        103.2                     102.9      103.5   <br/>2                        103.2                     103.1      103.6   <br/>3                        103.9                     104.0      104.1   <br/>4                        104.4                     103.3      103.7   <br/><br/>   Personal care and effects  Miscellaneous  General index  <br/>0                      104.7          104.0          105.1  <br/>1                      104.3          103.7          104.0  <br/>2                      104.5          103.9          104.6  <br/>3                      104.6          104.4          105.8  <br/>4                      104.3          104.3          104.7  <br/><br/>[5 rows x 30 columns]</strong></pre>
+<p>During the initial analysis of this dataset, I found that some of the month values contain extra whitespace, which can cause errors in parsing. So, I’ll clean up the data before the data conversion to ensure smooth analysis. I also noticed a typo in the Month column, such as “Marcrh” instead of “March”. I’ll check for such inconsistencies, correct them, and then proceed with the analysis:</p>
+<pre><code class="language-python">cpi_data['Month'] = cpi_data['Month'].str.strip()
+cpi_data['Month'] = cpi_data['Month'].replace('Marcrh', 'March')
+cpi_data['Date'] = pd.to_datetime(cpi_data['Year'].astype(str) + '-' + cpi_data['Month'], format='%Y-%B')</code></pre>
+<h4 class="wp-block-heading">Inflation Trend Analysis</h4>
+<p>Now, I will analyze the general CPI index over time for the Rural+Urban sector. This trend can help in identifying periods of inflationary spikes or stability:</p>
+<pre><code class="language-python"># filter for "Rural+Urban" sector
+rural_urban_cpi = cpi_data[cpi_data['Sector'] == 'Rural+Urban'].sort_values('Date')
+
+# inflation trend analysis
+fig = px.line(rural_urban_cpi, x='Date', y='General index', title='Inflation Trend Analysis (General CPI Index)')
+fig.update_layout(xaxis_title='Date', yaxis_title='CPI - General Index')
+fig.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Consumer Price Index Analysis: Inflation Trend Analysis" class="wp-image-25122" data-attachment-id="25122" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="cpi 1" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-1.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-1.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-1.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/11/11/consumer-price-index-analysis-with-python/cpi-1/" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-1.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-1.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-1.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-1.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>From around 2013 to 2023, there is a steady increase in the CPI in India, which reflects a continuous rise in inflation. The general upward trend suggests that the cost of goods and services has gradually increased over this period, with occasional fluctuations. The sharp rise in the last few years points to a significant inflationary impact, especially around and after 2020.</p>
+<h4 class="wp-block-heading">Seasonal and Cyclical Patterns</h4>
+<p>Now, I’ll decompose the CPI data into seasonal, trend, and residual components to identify patterns:</p>
+<pre><code class="language-python"># seasonal and cyclical patterns
+rural_urban_cpi.set_index('Date', inplace=True)
+monthly_cpi = rural_urban_cpi['General index'].resample('M').mean().interpolate(method='linear')
+decomposition = seasonal_decompose(monthly_cpi, model='multiplicative', period=12)
+
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=decomposition.observed.index, y=decomposition.observed, mode='lines', name='Observed'))
+fig.add_trace(go.Scatter(x=decomposition.trend.index, y=decomposition.trend, mode='lines', name='Trend'))
+fig.add_trace(go.Scatter(x=decomposition.seasonal.index, y=decomposition.seasonal, mode='lines', name='Seasonal'))
+fig.add_trace(go.Scatter(x=decomposition.resid.index, y=decomposition.resid, mode='lines', name='Residual'))
+fig.update_layout(title='Seasonal Decomposition of CPI (Observed, Trend, Seasonal, Residual)', xaxis_title='Date')
+fig.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Seasonal and Cyclical Patterns" class="wp-image-25125" data-attachment-id="25125" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="cpi 2" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-2.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-2.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-2.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/11/11/consumer-price-index-analysis-with-python/cpi-2/" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-2.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-2.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-2.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-2.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The trend line (in red) closely follows the observed CPI values, which indicates a steady upward trend over time. The seasonal component (in green) is minimal, which suggests little seasonal fluctuation in the CPI. The residual component (in purple) is close to zero, which indicates minimal random variation, which implies that the CPI trend is consistent and primarily driven by long-term factors rather than seasonal or irregular influences.</p>
+<h4 class="wp-block-heading">Comparison Across Sectors or Regions</h4>
+<p>Now, let’s compare the average CPI across different sectors (Rural, Urban, Rural+Urban):</p>
+<pre><code class="language-python"># comparison across sectors or regions
+sector_cpi_means = cpi_data.groupby(['Sector'])['General index'].mean().reset_index()
+fig = px.bar(sector_cpi_means, x='Sector', y='General index', title='Average CPI Comparison Across Sectors (Rural, Urban, Rural+Urban)')
+fig.update_layout(xaxis_title='Sector', yaxis_title='Average CPI - General Index')
+fig.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Consumer Price Index Analysis: Comparison Across Sectors or Regions" class="wp-image-25127" data-attachment-id="25127" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="cpi 3" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-3.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-3.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-3.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/11/11/consumer-price-index-analysis-with-python/cpi-3/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-3.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-3.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-3.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-3.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The CPI values are relatively consistent across all sectors, with only slight differences, which indicates that inflation, as measured by the CPI, affects rural and urban areas similarly. This suggests that price changes in goods and services are fairly uniform across these regions.</p>
+<h4 class="wp-block-heading">Correlation with Economic Indicators</h4>
+<p>Now, let’s examine the correlation between various categories within the CPI (e.g., Food, Fuel, Health) and the overall General index:</p>
+<pre><code class="language-python"># replace non-numeric values with NaN and ensure all columns are numeric
+cpi_categories = cpi_data[['Cereals and products', 'Meat and fish', 'Egg', 'Milk and products', 'Oils and fats',
+                           'Fruits', 'Vegetables', 'Fuel and light', 'Housing', 'Health', 'Transport and communication',
+                           'Recreation and amusement', 'Education', 'Personal care and effects', 'Miscellaneous', 'General index']]
+cpi_categories = cpi_categories.apply(pd.to_numeric, errors='coerce')  # convert to numeric
+
+# calculate the correlation matrix
+correlation_matrix = cpi_categories.corr()
+
+# plot the correlation matrix as a heatmap
+fig = px.imshow(correlation_matrix, text_auto=True, color_continuous_scale='RdBu_r', zmin=-1, zmax=1,
+                title='Correlation between CPI Categories and General Index')
+fig.update_layout(xaxis_title='CPI Category', yaxis_title='CPI Category')
+fig.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Correlation with Economic Indicators" class="wp-image-25128" data-attachment-id="25128" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="cpi 4" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-4.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-4.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-4.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/11/11/consumer-price-index-analysis-with-python/cpi-4/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-4.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-4.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-4.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-4.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>Categories such as Housing, Transport and communication, and Miscellaneous show high positive correlations with each other and with the overall index, which suggests that changes in these categories have a significant impact on the general CPI. Conversely, categories like Egg and Vegetables show relatively lower correlations with other categories, which indicates more independent or variable price movements in these areas.</p>
+<h4 class="wp-block-heading">CPI and Specific Sector Analysis</h4>
+<p>Now, let’s analyze the inflation trends within specific sectors over time:</p>
+<pre><code class="language-python"># CPI and specific sector analysis
+sectors_to_analyze = ['Fuel and light', 'Health', 'Housing', 'Cereals and products']
+sector_data = rural_urban_cpi[sectors_to_analyze].fillna(method='ffill').reset_index()
+
+fig = go.Figure()
+for sector in sectors_to_analyze:
+    fig.add_trace(go.Scatter(x=sector_data['Date'], y=sector_data[sector], mode='lines', name=sector))
+fig.update_layout(title='CPI Trends for Selected Sectors', xaxis_title='Date', yaxis_title='CPI Value')
+fig.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Consumer Price Index Analysis: CPI and Specific Sector Analysis" class="wp-image-25130" data-attachment-id="25130" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="cpi 5" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-5.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-5.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-5.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/11/11/consumer-price-index-analysis-with-python/cpi-5/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-5.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-5.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-5.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-5.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>Each sector shows a general upward trend over time, which indicates rising prices. Fuel and light have experienced the steepest increase, particularly after 2020, which reflectes higher inflation in this category. Health and Housing have followed a more gradual, steady increase over the years, with Health showing a relatively consistent rise. Cereals and products, while generally increasing, show more fluctuations, particularly around 2020, which indicates price volatility in this category.</p>
+<h4 class="wp-block-heading">Event-Based Analysis (COVID-19 Periods)</h4>
+<p>Now, let’s analyze CPI trends specifically during the COVID-19 period (2020-2021):</p>
+<pre><code class="language-python"># event-based analysis (COVID-19 Period)
+covid_period = rural_urban_cpi[(rural_urban_cpi.index &gt;= '2020-01-01') &amp; (rural_urban_cpi.index &lt;= '2021-12-31')][sectors_to_analyze + ['General index']].fillna(method='ffill').reset_index()
+
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=covid_period['Date'], y=covid_period['General index'], mode='lines', name='General CPI Index', line=dict(width=2, color='black')))
+for sector in sectors_to_analyze:
+    fig.add_trace(go.Scatter(x=covid_period['Date'], y=covid_period[sector], mode='lines', name=sector))
+fig.update_layout(title='CPI Trends During COVID-19 Period (2020-2021)', xaxis_title='Date', yaxis_title='CPI Value')
+fig.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Event-Based Analysis (COVID-19 Periods)" class="wp-image-25132" data-attachment-id="25132" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="cpi 6" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-6.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-6.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-6.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/11/11/consumer-price-index-analysis-with-python/cpi-6/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-6.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-6.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-6.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-6.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The Health and Housing sectors experienced notable increases, with Health showing a steady rise and Housing seeing a sharper increase from early 2021. Fuel and light saw a significant decline in early 2020, possibly due to reduced demand during lockdowns, followed by a steep rise in 2021 as economic activities resumed. Cereals and products remained relatively stable with minor fluctuations. Overall, the graph reflects the varied inflationary impacts of COVID-19 across these sectors, with essentials like health and housing showing resilience and growth.</p>
+<h3 class="wp-block-heading">Conclusion</h3>
+<p>The key findings from the CPI analysis are as follows:</p>
+<ol class="wp-block-list">
+<li><strong>Overall Inflation Trend</strong>: There has been a steady increase in the CPI over the past decade, with inflation particularly rising after 2020.</li>
+<li><strong>Minimal Seasonal Effect</strong>: The seasonal decomposition shows minimal seasonal fluctuations, indicating that CPI trends are mainly driven by long-term factors.</li>
+<li><strong>Rural vs. Urban Impact</strong>: Inflation levels are consistent across rural, urban, and combined sectors, suggesting uniform price changes in these regions.</li>
+<li><strong>Sectoral Correlations</strong>: High correlations are observed between sectors like housing, transport, and miscellaneous, indicating their significant impact on overall inflation, while categories like eggs and vegetables show more independent price movements.</li>
+<li><strong>Sector-Specific Trends</strong>: Fuel and light have experienced the steepest price increase, especially post-2020, while health and housing show steady inflation growth. Cereals and products display more volatility.</li>
+<li><strong>COVID-19 Impact (2020-2021)</strong>: During the pandemic, fuel prices initially dropped due to lower demand, then surged in 2021. Health and housing sectors saw consistent price increases, reflecting inflationary pressures on essential services during this period.</li>
+</ol>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="roadmap-to-learn-cloud-platforms-for-data-science.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="t20-world-cup-2024-match-analysis.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

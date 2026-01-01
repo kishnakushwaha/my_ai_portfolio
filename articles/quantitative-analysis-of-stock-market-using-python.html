@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Quantitative Analysis of Stock Market using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Quantitative Analysis of Stock Market using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 13, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="price-elasticity-of-demand-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="financial-data-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Quantitative Analysis in the stock market involves the use of mathematical and statistical techniques to understand, predict, and make decisions about financial investments. If you want to learn how to perform Quantitative Analysis on stock market data, this article is for you. In this article, I’ll take you through the task of Quantitative Analysis of the stock market using Python.</p>
+<h2 class="wp-block-heading">Quantitative Analysis of Stock Market: Process We Can Follow</h2>
+<p>Quantitative Analysis in the stock market is a financial methodology that utilizes mathematical and statistical techniques to analyze stocks and financial markets.</p>
+<p>Below is the process we can follow for the task of Quantitative Analysis of the stock market:</p>
+<ul class="wp-block-list">
+<li>Clearly define the objectives and questions to be answered.</li>
+<li>Identify the key performance indicators (KPIs) relevant to the analysis.</li>
+<li>Gather historical stock market data, including prices, volumes, and other relevant financial indicators.</li>
+<li>Clean and preprocess the data to handle missing values, outliers, and errors.</li>
+<li>Conduct initial analysis to understand data distributions, patterns, and correlations.</li>
+<li>Implement various strategies based on quantitative analysis.</li>
+</ul>
+<p>To get started with this task, we need appropriate data. I found an ideal dataset for this task. You can download the dataset from <a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;"><strong>here</strong></a>.</p>
+<h2 class="wp-block-heading">Quantitative Analysis of Stock Market using Python</h2>
+<p>Now, let’s get started with the task of Quantitative Analysis of the stock market by importing the necessary Python libraries and the <a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;"><strong>dataset</strong></a>:</p>
+<pre><code class="language-python">import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import plotly.io as pio
+pio.templates.default = "plotly_white"
+
+# Load the dataset
+stocks_data = pd.read_csv("stocks.csv")
+
+# Display the first few rows of the dataset
+print(stocks_data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>  Ticker        Date        Open        High         Low       Close  \<br/>0   AAPL  2023-02-07  150.639999  155.229996  150.639999  154.649994   <br/>1   AAPL  2023-02-08  153.880005  154.580002  151.169998  151.919998   <br/>2   AAPL  2023-02-09  153.779999  154.330002  150.419998  150.869995   <br/>3   AAPL  2023-02-10  149.460007  151.339996  149.220001  151.009995   <br/>4   AAPL  2023-02-13  150.949997  154.259995  150.919998  153.850006   <br/><br/>    Adj Close    Volume  <br/>0  154.414230  83322600  <br/>1  151.688400  64120100  <br/>2  150.639999  56007100  <br/>3  151.009995  57450700  <br/>4  153.850006  62199000  </strong></pre>
+<p>The dataset contains the following columns for stock market data:</p>
+<ul class="wp-block-list">
+<li>Ticker: The stock ticker symbol.</li>
+<li>Date: The trading date.</li>
+<li>Open: The opening price of the stock for the day.</li>
+<li>High: The highest price of the stock during the day.</li>
+<li>Low: The lowest price of the stock during the day.</li>
+<li>Close: The closing price of the stock for the day.</li>
+<li>Adj Close: The adjusted closing price, which accounts for all corporate actions such as dividends, stock splits, etc.</li>
+<li>Volume: The number of shares traded during the day.</li>
+</ul>
+<p>To perform a quantitative analysis, we can explore various statistical concepts like descriptive statistics, <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">time series analysis</a></strong>, correlation analysis, and more. Here are some potential analyses we can perform:</p>
+<ol class="wp-block-list">
+<li><strong>Descriptive Statistics</strong>: Summary statistics (mean, median, standard deviation, etc.) for each stock.</li>
+<li><strong>Time Series Analysis</strong>: Trends and patterns over time, especially for closing prices.</li>
+<li><strong>Volatility Analysis</strong>: How much the stock price fluctuates over a period.</li>
+<li><strong>Correlation Analysis</strong>: How stock prices of different companies are related to each other.</li>
+<li><strong>Comparative Analysis</strong>: Comparing the performance of different stocks.</li>
+<li><strong>Risk-Return Trade-off Analysis</strong>: Analyzing the balance between the potential risks and rewards of different stocks, aiding in portfolio management.</li>
+</ol>
+<p>Let’s implement all these concepts of Quantitative Analysis of the stock market one by one.</p>
+<h4 class="wp-block-heading">Descriptive Statistics</h4>
+<p>Descriptive Statistics will provide summary statistics for each stock in the dataset. We’ll look at measures such as mean, median, standard deviation, and more for the Close prices:</p>
+<pre><code class="language-python"># Descriptive Statistics for each stock
+descriptive_stats = stocks_data.groupby('Ticker')['Close'].describe()
+
+print(descriptive_stats)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>        count        mean        std         min         25%         50%  \<br/>Ticker                                                                     <br/>AAPL     62.0  158.240645   7.360485  145.309998  152.077499  158.055000   <br/>GOOG     62.0  100.631532   6.279464   89.349998   94.702501  102.759998   <br/>MSFT     62.0  275.039839  17.676231  246.270004  258.742500  275.810013   <br/>NFLX     62.0  327.614677  18.554419  292.760010  315.672493  325.600006   <br/><br/>               75%         max  <br/>Ticker                          <br/>AAPL    165.162506  173.570007  <br/>GOOG    105.962503  109.459999  <br/>MSFT    287.217506  310.649994  <br/>NFLX    338.899994  366.829987  </strong></pre>
+<p>Let’s break down the results for each stock:</p>
+<h5 class="wp-block-heading"><strong>AAPL (Apple Inc.)</strong></h5>
+<ul class="wp-block-list">
+<li><strong>Count</strong>: 62.0 (The number of observations or trading days included in the dataset for AAPL)</li>
+<li><strong>Mean</strong>: 158.24 (The average closing price)</li>
+<li><strong>Standard Deviation</strong>: 7.36 (Measures the amount of variation or dispersion of closing prices)</li>
+<li><strong>Minimum</strong>: 145.31 (The lowest closing price in the dataset)</li>
+<li><strong>25th Percentile</strong>: 152.08 (25% of the closing prices are below this value)</li>
+<li><strong>Median (50%)</strong>: 158.06 (The middle value of the closing prices)</li>
+<li><strong>75th Percentile</strong>: 165.16 (75% of the closing prices are below this value)</li>
+<li><strong>Maximum</strong>: 173.57 (The highest closing price in the dataset)</li>
+</ul>
+<h5 class="wp-block-heading"><strong>GOOG (Alphabet Inc.)</strong></h5>
+<p>Similar statistics as AAPL, but for GOOG. The mean closing price is 100.63, with a standard deviation of 6.28, indicating less variability in closing prices compared to AAPL.</p>
+<h5 class="wp-block-heading"><strong>MSFT (Microsoft Corporation)</strong></h5>
+<p>The dataset includes the same number of observations for MSFT. It has a higher mean closing price of 275.04 and a higher standard deviation of 17.68, suggesting greater price variability than AAPL and GOOG.</p>
+<h5 class="wp-block-heading"><strong>NFLX (Netflix Inc.)</strong></h5>
+<p>NFLX shows the highest mean closing price (327.61) among these stocks and the highest standard deviation (18.55), indicating the most significant price fluctuation.</p>
+<h4 class="wp-block-heading">Time Series Analysis</h4>
+<p>Next, we’ll proceed with the Time Series Analysis to examine trends and patterns over time, focusing on the closing prices:</p>
+<pre><code class="language-python"># Time Series Analysis
+stocks_data['Date'] = pd.to_datetime(stocks_data['Date'])
+pivot_data = stocks_data.pivot(index='Date', columns='Ticker', values='Close')
+
+# Create a subplot
+fig = make_subplots(rows=1, cols=1)
+
+# Add traces for each stock ticker
+for column in pivot_data.columns:
+    fig.add_trace(
+        go.Scatter(x=pivot_data.index, y=pivot_data[column], name=column),
+        row=1, col=1
+    )
+
+# Update layout
+fig.update_layout(
+    title_text='Time Series of Closing Prices',
+    xaxis_title='Date',
+    yaxis_title='Closing Price',
+    legend_title='Ticker',
+    showlegend=True
+)
+
+# Show the plot
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Quantitative Analysis of Stock Market: Time Series of Closing Prices" class="wp-image-22303" data-attachment-id="22303" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Quantitative-Analysis-1" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 855px) 100vw, 855px" src="../assets/datasets/Quantitative-Analysis-1.png" width="855"/></figure>
+<p>The above plot displays the time series of the closing prices for each stock (AAPL, GOOG, MSFT, NFLX) over the observed period. Here are some key observations:</p>
+<ol class="wp-block-list">
+<li><strong>Trend</strong>: Each stock shows its unique trend over time. For instance, AAPL and MSFT exhibit a general upward trend in this period.</li>
+<li><strong>Volatility</strong>: There is noticeable volatility in the stock prices. For example, NFLX shows more pronounced fluctuations compared to others.</li>
+<li><strong>Comparative Performance</strong>: When comparing the stocks, MSFT and NFLX generally trade at higher price levels than AAPL and GOOG in this dataset.</li>
+</ol>
+<h4 class="wp-block-heading">Volatility Analysis</h4>
+<p>Next, let’s focus on Volatility Analysis. We’ll calculate and compare the volatility (standard deviation) of the closing prices for each stock. It will give us an insight into how much the stock prices fluctuated over the period:</p>
+<pre><code class="language-python"># Volatility Analysis
+volatility = pivot_data.std().sort_values(ascending=False)
+
+fig = px.bar(volatility,
+             x=volatility.index,
+             y=volatility.values,
+             labels={'y': 'Standard Deviation', 'x': 'Ticker'},
+             title='Volatility of Closing Prices (Standard Deviation)')
+
+# Show the figure
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Volatility of Closing Prices (Standard Deviation)" class="wp-image-22305" data-attachment-id="22305" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Quantitative-Analysis-2" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 855px) 100vw, 855px" src="../assets/datasets/Quantitative-Analysis-2.png" width="855"/></figure>
+<p>The bar chart and the accompanying data show the volatility (measured as standard deviation) of the closing prices for each stock. Here’s how they rank in terms of volatility:</p>
+<ol class="wp-block-list">
+<li><strong>NFLX</strong>: Highest volatility with a standard deviation of approximately 18.55.</li>
+<li><strong>MSFT</strong>: Next highest, with a standard deviation of around 17.68.</li>
+<li><strong>AAPL</strong>: Lower volatility compared to NFLX and MSFT, with a standard deviation of about 7.36.</li>
+<li><strong>GOOG</strong>: The least volatile in this set, with a standard deviation of approximately 6.28.</li>
+</ol>
+<p>It indicates that NFLX and MSFT stocks were more prone to price fluctuations during this period compared to AAPL and GOOG.</p>
+<h4 class="wp-block-heading">Correlation Analysis</h4>
+<p>Next, we’ll perform a Correlation Analysis to understand how the stock prices of these companies are related to each other:</p>
+<pre><code class="language-python"># Correlation Analysis
+correlation_matrix = pivot_data.corr()
+
+fig = go.Figure(data=go.Heatmap(
+                    z=correlation_matrix,
+                    x=correlation_matrix.columns,
+                    y=correlation_matrix.columns,
+                    colorscale='blues',
+                    colorbar=dict(title='Correlation'),
+                    ))
+
+# Update layout
+fig.update_layout(
+    title='Correlation Matrix of Closing Prices',
+    xaxis_title='Ticker',
+    yaxis_title='Ticker'
+)
+
+# Show the figure
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Quantitative Analysis of Stock Market: Correlation Matrix of Closing Prices" class="wp-image-22307" data-attachment-id="22307" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Quantitative-Analysis-3" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/Quantitative-Analysis-3.png" width="855"/></figure>
+<p>The heatmap above displays the correlation matrix of the closing prices of the four stocks (AAPL, GOOG, MSFT, NFLX). Here’s what the correlation coefficients suggest:</p>
+<ul class="wp-block-list">
+<li>Values close to +1 indicate a strong positive correlation, meaning that as one stock’s price increases, the other tends to increase as well.</li>
+<li>Values close to -1 indicate a strong negative correlation, where one stock’s price increase corresponds to a decrease in the other.</li>
+<li>Values around 0 indicate a lack of correlation.</li>
+</ul>
+<p>From the heatmap, we can observe that there are varying degrees of positive correlations between the stock prices, with some pairs showing stronger correlations than others. For instance, AAPL and MSFT seem to have a relatively higher positive correlation.</p>
+<h4 class="wp-block-heading">Comparative Analysis</h4>
+<p>Now, let’s move on to Comparative Analysis. In this step, we’ll compare the performance of different stocks based on their returns over the period. We’ll calculate the percentage change in closing prices from the start to the end of the period for each stock:</p>
+<pre><code class="language-python"># Calculating the percentage change in closing prices
+percentage_change = ((pivot_data.iloc[-1] - pivot_data.iloc[0]) / pivot_data.iloc[0]) * 100
+
+fig = px.bar(percentage_change,
+             x=percentage_change.index,
+             y=percentage_change.values,
+             labels={'y': 'Percentage Change (%)', 'x': 'Ticker'},
+             title='Percentage Change in Closing Prices')
+
+# Show the plot
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Percentage Change in Closing Prices" class="wp-image-22308" data-attachment-id="22308" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Quantitative-Analysis-4" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/Quantitative-Analysis-4.png" width="855"/></figure>
+<p>The bar chart and the accompanying data show the percentage change in the closing prices of the stocks from the start to the end of the observed period:</p>
+<ul class="wp-block-list">
+<li><strong>MSFT</strong>: The highest positive change of approximately 16.10%.</li>
+<li><strong>AAPL</strong>: Exhibited a positive change of approximately 12.23%. It indicates a solid performance, though slightly lower than MSFT’s.</li>
+<li><strong>GOOG</strong>: Showed a slight negative change of about -1.69%. It indicates a minor decline in its stock price over the observed period.</li>
+<li><strong>NFLX</strong>: Experienced the most significant negative change, at approximately -11.07%. It suggests a notable decrease in its stock price during the period.</li>
+</ul>
+<h4 class="wp-block-heading">Daily Risk Vs. Return Analysis</h4>
+<p>To perform a Risk vs. Return Analysis, we will calculate the average daily return and the standard deviation of daily returns for each stock. The standard deviation will serve as a proxy for risk, while the average daily return represents the expected return.</p>
+<p>We will then plot these values to visually assess the risk-return profile of each stock. Stocks with higher average returns and lower risk (standard deviation) are generally more desirable, but investment decisions often depend on the investor’s risk tolerance:</p>
+<pre><code class="language-python">daily_returns = pivot_data.pct_change().dropna()
+
+# Recalculating average daily return and standard deviation (risk)
+avg_daily_return = daily_returns.mean()
+risk = daily_returns.std()
+
+# Creating a DataFrame for plotting
+risk_return_df = pd.DataFrame({'Risk': risk, 'Average Daily Return': avg_daily_return})
+
+fig = go.Figure()
+
+# Add scatter plot points
+fig.add_trace(go.Scatter(
+    x=risk_return_df['Risk'],
+    y=risk_return_df['Average Daily Return'],
+    mode='markers+text',
+    text=risk_return_df.index,
+    textposition="top center",
+    marker=dict(size=10)
+))
+
+# Update layout
+fig.update_layout(
+    title='Risk vs. Return Analysis',
+    xaxis_title='Risk (Standard Deviation)',
+    yaxis_title='Average Daily Return',
+    showlegend=False
+)
+
+# Show the plot
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Quantitative Analysis of Stock Market: Risk vs. Return Analysis" class="wp-image-22310" data-attachment-id="22310" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Quantitative-Analysis-5" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/Quantitative-Analysis-5.png" width="855"/></figure>
+<p>So, AAPL shows the lowest risk combined with a positive average daily return, suggesting a more stable investment with consistent returns. GOOG has higher volatility than AAPL and, on average, a slightly negative daily return, indicating a riskier and less rewarding investment during this period.</p>
+<p>MSFT shows moderate risk with the highest average daily return, suggesting a potentially more rewarding investment, although with higher volatility compared to AAPL. NFLX exhibits the highest risk and a negative average daily return, indicating it was the most volatile and least rewarding investment among these stocks over the analyzed period.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, this is how you can perform a Quantitative Analysis of the Stock Market using Python. Quantitative Analysis in the stock market is a financial methodology that utilizes mathematical and statistical techniques to analyze stocks and financial markets. I hope you liked this article on Quantitative Analysis of Stock Market using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="price-elasticity-of-demand-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="financial-data-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

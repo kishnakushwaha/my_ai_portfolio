@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>End to End Chatbot using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        End to End Chatbot using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 04, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="packaging-machine-learning-models-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="building-an-ai-agent-using-agentic-ai.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>A chatbot is a computer program that understands the intent of your query to answer with a solution. Chatbots are the most popular applications of Natural Language Processing in the industry. So, if you want to build an end-to-end chatbot, this article is for you. In this article, I will take you through how to create an end-to-end chatbot using <strong><a href="roadmap-to-learn-python.html" target="">Python</a></strong>.</p>
+<h2 class="wp-block-heading">What is an End to End Chatbot?</h2>
+<p>An end-to-end chatbot refers to a chatbot that can handle a complete conversation from start to finish without requiring human assistance. To create an end-to-end chatbot, you need to write a computer program that can understand user requests, generate appropriate responses, and take action when necessary. This involves collecting data, choosing a programming language and NLP tools, training the chatbot, and testing and refining it before making it available to users. </p>
+<p>Once deployed, users can interact with the chatbot by sending it multiple requests and the chatbot can handle the entire conversation itself. To create an end-to-end chatbot using Python, we can follow the steps mentioned below:</p>
+<ol class="wp-block-list">
+<li>Define Intents</li>
+<li>Create training data</li>
+<li>Train the chatbot</li>
+<li>Build the chatbot</li>
+<li>Test the chatbot</li>
+<li>Deploy the chatbot</li>
+</ol>
+<p>I hope you now have understood what an end-to-end chatbot is and the process of creating an end-to-end chatbot. In the section below, I’ll walk you through how to build an end-to-end chatbot using Python.</p>
+<h2 class="wp-block-heading">End to End Chatbot using Python</h2>
+<p>Now let’s start with creating an end-to-end chatbot using Python. I’ll start this task by importing the necessary Python libraries for this task:</p>
+<pre><code class="language-python">import os
+import nltk
+import ssl
+import streamlit as st
+import random
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+
+ssl._create_default_https_context = ssl._create_unverified_context
+nltk.data.path.append(os.path.abspath("nltk_data"))
+nltk.download('punkt')</code></pre>
+<p>Now let’s define some intents of the chatbot. You can add more intents to make the chatbot more helpful and more functional:</p>
+<pre><code class="language-python">intents = [
+    {
+        "tag": "greeting",
+        "patterns": ["Hi", "Hello", "Hey", "How are you", "What's up"],
+        "responses": ["Hi there", "Hello", "Hey", "I'm fine, thank you", "Nothing much"]
+    },
+    {
+        "tag": "goodbye",
+        "patterns": ["Bye", "See you later", "Goodbye", "Take care"],
+        "responses": ["Goodbye", "See you later", "Take care"]
+    },
+    {
+        "tag": "thanks",
+        "patterns": ["Thank you", "Thanks", "Thanks a lot", "I appreciate it"],
+        "responses": ["You're welcome", "No problem", "Glad I could help"]
+    },
+    {
+        "tag": "about",
+        "patterns": ["What can you do", "Who are you", "What are you", "What is your purpose"],
+        "responses": ["I am a chatbot", "My purpose is to assist you", "I can answer questions and provide assistance"]
+    },
+    {
+        "tag": "help",
+        "patterns": ["Help", "I need help", "Can you help me", "What should I do"],
+        "responses": ["Sure, what do you need help with?", "I'm here to help. What's the problem?", "How can I assist you?"]
+    },
+    {
+        "tag": "age",
+        "patterns": ["How old are you", "What's your age"],
+        "responses": ["I don't have an age. I'm a chatbot.", "I was just born in the digital world.", "Age is just a number for me."]
+    },
+    {
+        "tag": "weather",
+        "patterns": ["What's the weather like", "How's the weather today"],
+        "responses": ["I'm sorry, I cannot provide real-time weather information.", "You can check the weather on a weather app or website."]
+    },
+    {
+        "tag": "budget",
+        "patterns": ["How can I make a budget", "What's a good budgeting strategy", "How do I create a budget"],
+        "responses": ["To make a budget, start by tracking your income and expenses. Then, allocate your income towards essential expenses like rent, food, and bills. Next, allocate some of your income towards savings and debt repayment. Finally, allocate the remainder of your income towards discretionary expenses like entertainment and hobbies.", "A good budgeting strategy is to use the 50/30/20 rule. This means allocating 50% of your income towards essential expenses, 30% towards discretionary expenses, and 20% towards savings and debt repayment.", "To create a budget, start by setting financial goals for yourself. Then, track your income and expenses for a few months to get a sense of where your money is going. Next, create a budget by allocating your income towards essential expenses, savings and debt repayment, and discretionary expenses."]
+    },
+    {
+        "tag": "credit_score",
+        "patterns": ["What is a credit score", "How do I check my credit score", "How can I improve my credit score"],
+        "responses": ["A credit score is a number that represents your creditworthiness. It is based on your credit history and is used by lenders to determine whether or not to lend you money. The higher your credit score, the more likely you are to be approved for credit.", "You can check your credit score for free on several websites such as Credit Karma and Credit Sesame."]
+    }
+]</code></pre>
+<p>Now let’s prepare the intents and train a Machine Learning model for the chatbot:</p>
+<pre><code class="language-python"># Create the vectorizer and classifier
+vectorizer = TfidfVectorizer()
+clf = LogisticRegression(random_state=0, max_iter=10000)
+
+# Preprocess the data
+tags = []
+patterns = []
+for intent in intents:
+    for pattern in intent['patterns']:
+        tags.append(intent['tag'])
+        patterns.append(pattern)
+
+# training the model
+x = vectorizer.fit_transform(patterns)
+y = tags
+clf.fit(x, y)</code></pre>
+<p>Now let’s write a Python function to chat with the chatbot:</p>
+<pre><code class="language-python">def chatbot(input_text):
+    input_text = vectorizer.transform([input_text])
+    tag = clf.predict(input_text)[0]
+    for intent in intents:
+        if intent['tag'] == tag:
+            response = random.choice(intent['responses'])
+            return response</code></pre>
+<p>Till now, we have created the chatbot. After running the code, you can interact with the chatbot in the terminal itself. To turn this chatbot into an end-to-end chatbot, we need to deploy it to interact with the chatbot using a user interface. To deploy the chatbot, I will use the <strong><a href="streamlit-tutorial-using-python.html" rel="noreferrer noopener" target="">streamlit</a></strong> library in Python, which provides amazing features to create a user interface for a Machine Learning application in just a few lines of code.</p>
+<p>So, here’s how we can deploy the chatbot using Python:</p>
+<pre><code class="language-python">counter = 0
+
+def main():
+    global counter
+    st.title("Chatbot")
+    st.write("Welcome to the chatbot. Please type a message and press Enter to start the conversation.")
+
+    counter += 1
+    user_input = st.text_input("You:", key=f"user_input_{counter}")
+
+    if user_input:
+        response = chatbot(user_input)
+        st.text_area("Chatbot:", value=response, height=100, max_chars=None, key=f"chatbot_response_{counter}")
+
+        if response.lower() in ['goodbye', 'bye']:
+            st.write("Thank you for chatting with me. Have a great day!")
+            st.stop()
+
+if __name__ == '__main__':
+    main()</code></pre>
+<p>To run this chatbot, use the command mentioned below in your terminal:</p>
+<ul class="wp-block-list">
+<li>streamlit run filename.py</li>
+</ul>
+<p>After executing the command, you will see a UI of your chatbot in your web browser as shown below:</p>
+<figure class="wp-block-image aligncenter size-large"><img alt="End to End Chatbot" class="wp-image-19890" data-attachment-id="19890" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="chatbot-output" data-orig-size="1622,804" data-recalc-dims="1" decoding="async" height="508" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/chatbot-output.png" width="1024"/><figcaption class="wp-element-caption"><strong><a href="https://fb.watch/jx5yYDAv6h/?mibextid=v7YzmG">Output Video</a></strong></figcaption></figure>
+<p>So, this is how you can create an end-to-end chatbot using the Python programming language.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>An end-to-end chatbot refers to a chatbot that can handle a complete conversation from start to finish without requiring human assistance. Creating an end-to-end Chatbot involves collecting data, choosing a programming language and NLP tools, training the chatbot, and testing and refining it before making it available to users. I hope you liked this article on building an end-to-end chatbot using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="packaging-machine-learning-models-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="building-an-ai-agent-using-agentic-ai.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

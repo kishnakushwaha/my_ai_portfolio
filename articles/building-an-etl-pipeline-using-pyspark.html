@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Building an ETL Pipeline using PySpark | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Building an ETL Pipeline using PySpark</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 10, 2025 • 5 min read</div>
+<p>An <strong><a href="https://my-ai-portfolio.com/2023/08/14/web-data-etl-pipeline-using-python/">ETL</a></strong> (Extract, Transform, and Load) pipeline extracts data from sources, transforms it, and loads it into a storage system. It helps create clean, usable data formats for analysis. PySpark is ideal for building ETL pipelines for large-scale data processing. It offers distributed computing, high performance, and handles structured and unstructured data efficiently. This article will take you through building an ETL pipeline using PySpark.</p>
+<h2 class="wp-block-heading">Building an ETL Pipeline using PySpark</h2>
+<p>The dataset we will be using for building an ETL Pipeline contains temperature-related data for various countries from 1961 to 2022. The columns include identifiers like ObjectId, Country, ISO2, and ISO3, along with year-wise temperature data such as F1961, F1962, etc., as floating-point values. Some columns contain missing values. <strong>You can download this dataset from <a href="../assets/datasets/bb808-carbon-emissions.zip" rel="noreferrer noopener" target="_blank">here</a>.</strong></p>
+<p>We’ll develop an ETL Pipeline using PySpark to process this dataset to handle the following tasks:</p>
+<ol class="wp-block-list">
+<li><strong>Extract</strong>: Load the dataset from the CSV file.</li>
+<li><strong>Transform</strong>: Clean the data, handle missing values, and pivot year-wise temperature data for analysis.</li>
+<li><strong>Load</strong>: Save the processed data into a new storage format (e.g., Parquet or a database).</li>
+</ol>
+<h4 class="wp-block-heading">Step 1: Setting Up the Environment &amp; Initializing a PySpark Session</h4>
+<p>Ensure that PySpark is installed and set up. Run the following command to install PySpark if it’s not already installed:</p>
+<pre class="wp-block-preformatted"><strong>pip install pyspark</strong></pre>
+<p>Initialize a PySpark session to enable interaction with the Spark framework:</p>
+<pre><code class="language-python">from pyspark.sql import SparkSession
+
+# initialize SparkSession
+spark = SparkSession.builder \
+    .appName("ETL Pipeline") \
+    .getOrCreate()</code></pre>
+<h4 class="wp-block-heading">Step 2: Extract – Load the Dataset</h4>
+<p>The next step is to load the <strong><a href="../assets/datasets/bb808-carbon-emissions.zip" rel="noreferrer noopener" target="_blank">dataset</a></strong> into a PySpark DataFrame:</p>
+<pre><code class="language-python"># load the CSV file into a Spark DataFrame
+file_path = "/content/temperature.csv"
+df = spark.read.csv(file_path, header=True, inferSchema=True)
+
+# display the schema and preview the data
+df.printSchema()
+df.show(5)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size">root<br/> |-- ObjectId: integer (nullable = true)<br/> |-- Country: string (nullable = true)<br/> |-- ISO2: string (nullable = true)<br/> |-- ISO3: string (nullable = true)<br/> |-- F1961: double (nullable = true)<br/> |-- F1962: double (nullable = true)<br/> |-- F1963: double (nullable = true)<br/> |-- F1964: double (nullable = true)<br/> |-- F1965: double (nullable = true)<br/> |-- F1966: double (nullable = true)<br/> |-- F1967: double (nullable = true)<br/> |-- F1968: double (nullable = true)<br/> |-- F1969: double (nullable = true)<br/> |-- F1970: double (nullable = true)<br/> |-- F1971: double (nullable = true)<br/> |-- F1972: double (nullable = true)<br/>...</pre>
+<p>In PySpark, we are loading a CSV file into a distributed DataFrame, which is similar to using <strong>pandas.read_csv()</strong> to load data into a Pandas DataFrame. However, unlike Pandas, which uses memory and runs on a single machine, PySpark handles large datasets distributed across a cluster. The <strong>methods df.printSchema() and df.show(5) provide insights into the schema and preview the data, comparable to df.info() and df.head() in Pandas</strong>, but designed for scalable data exploration on big data workloads.</p>
+<h4 class="wp-block-heading">Step 3: Transform – Clean and Process the Data</h4>
+<p>All datasets require different types of cleaning and processing steps. In this data, we will replace missing values in important columns like ISO2 or impute missing temperature values:</p>
+<pre><code class="language-python"># fill missing values for country codes
+df = df.fillna({"ISO2": "Unknown"})
+
+# drop rows where all temperature values are null
+temperature_columns = [col for col in df.columns if col.startswith('F')]
+df = df.dropna(subset=temperature_columns, how="all")</code></pre>
+<p>Next, we will transform the dataset to have “Year” as a single column and its temperature value:</p>
+<pre><code class="language-python">from pyspark.sql.functions import expr
+
+# reshape temperature data to have 'Year' and 'Temperature' columns
+df_pivot = df.selectExpr(
+    "ObjectId", "Country", "ISO3",
+    "stack(62, " + 
+    ",".join([f"'F{1961 + i}', F{1961 + i}" for i in range(62)]) +
+    ") as (Year, Temperature)"
+)
+
+# convert 'Year' column to integer
+df_pivot = df_pivot.withColumn("Year", expr("int(substring(Year, 2, 4))"))
+df_pivot.show(5)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>+--------+--------------------+----+----+-----------+<br/>|ObjectId|             Country|ISO3|Year|Temperature|<br/>+--------+--------------------+----+----+-----------+<br/>|       1|Afghanistan, Isla...| AFG|1961|     -0.113|<br/>|       1|Afghanistan, Isla...| AFG|1962|     -0.164|<br/>|       1|Afghanistan, Isla...| AFG|1963|      0.847|<br/>|       1|Afghanistan, Isla...| AFG|1964|     -0.764|<br/>|       1|Afghanistan, Isla...| AFG|1965|     -0.244|<br/>+--------+--------------------+----+----+-----------+<br/>only showing top 5 rows</strong></pre>
+<h4 class="wp-block-heading">Step 4: Load – Save the Processed Data</h4>
+<p>After completing all the processing steps, you save the transformed data to a Parquet file for efficient storage and querying:</p>
+<pre><code class="language-python">output_path = "/processed_temperature.parquet"
+df_pivot.write.mode("overwrite").parquet(output_path)</code></pre>
+<p>This operation saves the transformed DataFrame as a Parquet file, which optimizes it for storage and querying in a distributed environment.</p>
+<p>We can load the saved Parquet file to ensure the data was correctly saved:</p>
+<pre><code class="language-python"># load the saved parquet file
+processed_df = spark.read.parquet(output_path)
+processed_df.show(5)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>+--------+--------------------+----+----+-----------+<br/>|ObjectId|             Country|ISO3|Year|Temperature|<br/>+--------+--------------------+----+----+-----------+<br/>|       1|Afghanistan, Isla...| AFG|1961|     -0.113|<br/>|       1|Afghanistan, Isla...| AFG|1962|     -0.164|<br/>|       1|Afghanistan, Isla...| AFG|1963|      0.847|<br/>|       1|Afghanistan, Isla...| AFG|1964|     -0.764|<br/>|       1|Afghanistan, Isla...| AFG|1965|     -0.244|<br/>+--------+--------------------+----+----+-----------+<br/>only showing top 5 rows</strong></pre>
+<h3 class="wp-block-heading">Summary</h3>
+<p>PySpark is ideal for building ETL pipelines for large-scale data processing. It offers distributed computing, high performance, and handles structured and unstructured data efficiently. I hope you liked this article on building an ETL Pipeline using PySpark. Feel free to ask valuable questions in the comments section below. You can follow me on <strong><a href="https://www.instagram.com/amankharwal.official/" rel="noreferrer noopener" target="_blank">Instagram</a></strong> for many more resources.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="data-collection-with-an-api-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="exploratory-data-analysis-using-sql.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Python Libraries to Drop and Adopt in 2026 | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a class="active" href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Python Libraries to Drop and Adopt in 2026</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 20, 2025 • 5 min read</div>
+<p>If you’ve been coding in <strong><a href="how-to-learn-python-for-ai-from-scratch.html" rel="noreferrer noopener" target="_blank">Python</a></strong> for a few years, you’ve likely felt that familiar itch. You spend hours debugging a library that feels clunky, or you watch a simple script eat up all your RAM. As we look toward 2026, the industry is shifting from <strong>simple model building</strong> to <strong>complex system engineering</strong> (Agents, RAG, and heavy data lifting). The tools we use need to reflect that. This isn’t about chasing hype; it’s about respecting your own time and computational resources. So, let’s go through the Python libraries you need to drop and adopt in 2026.</p>
+<h2 class="wp-block-heading">Python Libraries to Drop and Adopt in 2026</h2>
+<p>Here is a humble guide on what to pick up and what to gently set aside for your next project.</p>
+<h4 class="wp-block-heading">For Data Wrangling</h4>
+<p><strong>Drop Pandas (For Large Scale). </strong>Don’t panic. Pandas isn’t dying. It is still the best tool for quick exploration and small datasets. But for production pipelines or datasets approaching the gigabyte range, Pandas is showing its age. It is single-threaded (uses only one CPU core) and memory-hungry (often requiring 5-10x RAM of your dataset size). In 2026, waiting 5 minutes for a CSV to load is a productivity killer.</p>
+<p><strong>Adopt <a href="https://docs.pola.rs/">Polars</a>. </strong>Polars is written in Rust, but it speaks Python fluently. It uses <strong>lazy evaluation</strong>; it doesn’t actually touch the data until you ask for the final result, allowing it to optimise the query plan beforehand. It also parallelises operations across all your CPU cores automatically.</p>
+<p>If you are learning Data Science now, start with Polars for any file over 500MB. The syntax is remarkably similar to Pandas but encourages better coding practices (expression-based rather than index-based).</p>
+<h4 class="wp-block-heading">For Generative AI</h4>
+<p><strong>Start With <a href="https://docs.langchain.com/oss/python/langchain/overview">LangChain</a> (Linear &amp; Modular Thinking). </strong>LangChain remains the best entry point for <strong>learning how LLM workflows are built.</strong> Its Chain abstraction forces you to think step-by-step: prompt → tool → model → output. That structure is perfect when your workflow is predictable and linear, such as generating SQL from natural language, summarising a document, or conducting Q&amp;A over RAG.</p>
+<p>Use cases where LangChain still wins:</p>
+<ul class="wp-block-list">
+<li>RAG-based document Q&amp;A</li>
+<li>PDF chat, summarisation, and extraction flows</li>
+<li>Input → transformation → output tasks (like embedding pipelines)</li>
+</ul>
+<p><strong>Upgrade To <a href="https://docs.langchain.com/oss/python/langgraph/overview">LangGraph</a> (Decision-Making &amp; Agentic Behaviour). </strong>Once your project needs loops, retries, reflection, or goal-based reasoning, LangGraph becomes essential. It treats your system like a <strong>state-driven graph</strong>, not a straight line. Nodes represent reasoning or actions, and edges represent decisions. This allows complex behaviour like clarification, self-correction, retrieval, planning, and execution.</p>
+<p>Use cases where LangGraph is mandatory:</p>
+<ul class="wp-block-list">
+<li>AI Agents with planning and tool use</li>
+<li>Autonomous workflows with loops and conditional logic</li>
+<li>Apps requiring state persistence across turns or tools</li>
+<li>Web-searching, coding, file-editing, or multi-step reasoning agents</li>
+</ul>
+<p>Start with LangChain to learn the fundamentals. Build with LangGraph when your AI needs to <strong>think, decide, retry, and act, </strong>not just respond.</p>
+<h4 class="wp-block-heading">For Deep Learning</h4>
+<p><strong>Drop TensorFlow (For New Projects). </strong>TensorFlow is a giant. It powers massive enterprise systems and isn’t going anywhere in legacy codebases. However, for students and startups in 2026, the friction is too high. The debugging is opaque, and the Pythonic feel is often missing. The research community has largely abandoned it for publishing new papers.</p>
+<p><strong>Adopt <a href="https://docs.pytorch.org/docs/stable/index.html">PyTorch</a>. </strong>PyTorch has won the war for mindshare. It is the engine behind almost every major GenAI breakthrough (including GPT and Llama). PyTorch operates dynamically. You can inspect your neural network layers just like you would inspect a standard Python variable. It feels like writing NumPy, but with GPU superpowers.</p>
+<p>If you want to work in GenAI, you need to read research papers. 90% of those papers release their code in PyTorch. Learning PyTorch means you can download the latest model from Hugging Face and understand how it works under the hood.</p>
+<h3 class="wp-block-heading">Final Thoughts</h3>
+<p>It is easy to feel overwhelmed by this list. Please remember that <strong>tools change, but the foundations remain.</strong></p>
+<p>If you learned Pandas last year, you didn’t waste your time. You learned how to think about dataframes. Moving to Polars is just learning a new syntax for the same concepts. If you learned TensorFlow, you learned how neural networks optimise. PyTorch is just a different dialect.</p>
+<p>The goal isn’t to memorise every library. The goal is to be a builder who picks the right hammer for the job. In 2026, the jobs are bigger, the data is faster, and the AI is smarter. Your toolkit should be too.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="the-best-resources-to-learn-llms-and-ai-agents-in-2026.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="introducing-hands-on-genai-llms-and-ai-agents.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>LangGraph Explained from Scratch | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        LangGraph Explained from Scratch</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 10, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="recommendation-system-using-python-and-tensorflow.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="4-llm-project-ideas-for-your-resume.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>If you’ve spent some time working with Large Language Models, you’ve probably built a Chain before. In LangChain, this usually means moving from user input to a prompt, then to the LLM, and finally to the output. <strong>LangGraph</strong> is a library that helps us create these cycles. It takes us from Chains, which are Directed Acyclic Graphs (DAGs), to Graphs, where loops and cycles are possible. This is key for building real Agents; systems that can reason, loop, and make decisions on their own. In this article, I’ll walk you through a complete guide to LangGraph from the ground up.</p>
+<h2 class="wp-block-heading">LangGraph Explained</h2>
+<p>In this guide, we’ll build a simple agent from scratch using LangGraph. You won’t need any paid APIs like OpenAI. Everything will run on your local machine using open-source tools.</p>
+<p>Before we start coding in Python, let’s break down the main idea. Graph Theory might sound complex, but you use this kind of thinking all the time. Think of a team working together on a project:</p>
+<ol class="wp-block-list">
+<li><strong>The State, like a whiteboard,</strong> is the shared context. Everyone in the room checks the whiteboard to see the project’s current status. In LangGraph, the State is a dictionary object that gets passed around.</li>
+<li><strong>The Nodes are like workers, each handling a specific task. </strong>For example, one node could be “Generate Code” and another could be “Review Code.”</li>
+<li><strong>The Edges represent the flow of work</strong>. After “Generate Code,” do we move to “Finish” or to “Review Code”? If the review doesn’t pass, we go back to “Generate Code.”</li>
+</ol>
+<p>This ability to loop back to a previous step based on a decision is what makes LangGraph unique.</p>
+<h2 class="wp-block-heading">Prerequisites to Get Started with LangGraph</h2>
+<p>To make this easy for everyone, we’ll use <strong>Ollama</strong>. With Ollama, you can run powerful models like Llama 3 or Mistral right on your laptop.</p>
+<p><strong>First, </strong>download and install Ollama from <strong><a href="http://ollama.com">ollama.com</a></strong>. After installing, open your terminal and pull a model:</p>
+<pre class="wp-block-preformatted">ollama pull llama3</pre>
+<p><strong>Next, install the Python libraries. </strong>We’ll need the LangGraph library and the LangChain integration for Ollama:</p>
+<pre class="wp-block-preformatted">pip install langgraph langchain langchain-ollama</pre>
+<p>We’re going to build a system that sorts a user’s question into categories:</p>
+<ul class="wp-block-list">
+<li>If the user asks about <strong>Math</strong>, we send it to a Math Node.</li>
+<li>If the user talks about <strong>anything else</strong>, we send it to a General Chat Node.</li>
+</ul>
+<p>This shows how Conditional Edges let us make decisions without needing complicated tools.</p>
+<h4 class="wp-block-heading">Step 1: Define the State</h4>
+<p>The State is simply a Python class, specifically a TypedDict. It keeps track of everything that has happened so far:</p>
+<pre><code class="language-python">from typing import TypedDict, List
+from langchain_core.messages import BaseMessage, HumanMessage, AIMessage
+
+# The State dictates what data flows through the graph.
+# Here, we just track the list of messages in the conversation.
+class AgentState(TypedDict):
+    messages: List[BaseMessage]
+    category: str # We will store the classification here (Math vs General)</code></pre>
+<p>In a regular script, variables can get lost. In LangGraph, the AgentState sticks around. Each node gets this state, updates it, and passes it along.</p>
+<h4 class="wp-block-heading">Step 2: Initialise the Local LLM</h4>
+<p>Now, let’s connect to the Ollama instance running on your computer:</p>
+<pre><code class="language-python">from langchain_ollama import ChatOllama
+
+# Ensure you have run `ollama pull llama3` in your terminal
+llm = ChatOllama(model="llama3", temperature=0)</code></pre>
+<h4 class="wp-block-heading">Step 3: Define the Nodes (The Workers)</h4>
+<p>Next, we’ll create three functions, which act as our Nodes:</p>
+<ol class="wp-block-list">
+<li><strong>Categoriser:</strong> Decides what the input is about.</li>
+<li><strong>Math Expert:</strong> Handles math questions.</li>
+<li><strong>General Chat:</strong> Handles casual conversation.</li>
+</ol>
+<pre><code class="language-python"># Node 1: The Categorizer
+def categorize_input(state: AgentState):
+    """
+    Analyzes the user's last message and decides if it's 'Math' or 'General'.
+    """
+    last_message = state["messages"][-1].content
+    
+    # We ask the LLM to classify strictly.
+    prompt = f"""
+    You are a router. Classify the following input as either 'Math' or 'General'. 
+    Return ONLY the word 'Math' or 'General'. Do not add punctuation.
+    
+    Input: {last_message}
+    """
+    response = llm.invoke(prompt)
+    category = response.content.strip()
+    
+    # Update the state with the category
+    return {"category": category}
+
+# Node 2: The Math Expert
+def handle_math(state: AgentState):
+    print("--- 🧮 Entering Math Node ---")
+    last_message = state["messages"][-1].content
+    response = llm.invoke(f"You are a mathematician. Solve this simply: {last_message}")
+    # We append the AI's response to the message history
+    return {"messages": [response]}
+
+# Node 3: The General Chat
+def handle_general(state: AgentState):
+    print("--- 💬 Entering General Chat Node ---")
+    last_message = state["messages"][-1].content
+    response = llm.invoke(f"You are a helpful assistant. Reply to: {last_message}")
+    return {"messages": [response]}</code></pre>
+<p>In LangGraph, each node function returns a dictionary. This gets merged into the global State.</p>
+<h4 class="wp-block-heading">Step 4: Define the Logic</h4>
+<p>Now we’ll write a function that checks the category in the state and tells the graph what to do next:</p>
+<pre><code class="language-python">def routing_logic(state: AgentState):
+    # If the category is Math, go to 'math_node'
+    if state["category"] == "Math":
+        return "math_node"
+    # Otherwise, go to 'general_node'
+    return "general_node"</code></pre>
+<h4 class="wp-block-heading">Step 5: Build the Graph</h4>
+<p>This is where we connect everything:</p>
+<pre><code class="language-python">from langgraph.graph import StateGraph, END
+
+# 1. Initialize the Graph with our State structure
+workflow = StateGraph(AgentState)
+
+# 2. Add the Nodes
+workflow.add_node("categorizer", categorize_input)
+workflow.add_node("math_node", handle_math)
+workflow.add_node("general_node", handle_general)
+
+# 3. Set the Entry Point
+# When the graph starts, the first person to touch the ball is the 'categorizer'
+workflow.set_entry_point("categorizer")
+
+# 4. Add Conditional Edges
+# After 'categorizer' runs, look at 'routing_logic' to decide where to go next.
+workflow.add_conditional_edges(
+    "categorizer",        # From this node...
+    routing_logic,        # ...run this logic...
+    {                     # ...and map the output to a node.
+        "math_node": "math_node",
+        "general_node": "general_node"
+    }
+)
+
+# 5. Add Normal Edges
+# After math or general chat, we are done. Go to END.
+workflow.add_edge("math_node", END)
+workflow.add_edge("general_node", END)
+
+# 6. Compile
+app = workflow.compile()</code></pre>
+<h4 class="wp-block-heading">Step 6: Running the Agent</h4>
+<p>Now it’s time to test what we’ve built. We’ll try out two different user inputs:</p>
+<pre><code class="language-python"># Test 1: A Math Question
+print("\n--- TEST 1: Math ---")
+inputs_1 = {"messages": [HumanMessage(content="What is 55 multiplied by 10?")]}
+
+# Stream the output to see the steps
+for event in app.stream(inputs_1):
+    for key, value in event.items():
+        print(f"Finished running: {key}")
+
+# Test 2: A Casual Greeting
+print("\n--- TEST 2: General ---")
+inputs_2 = {"messages": [HumanMessage(content="Tell me a fun fact about history.")]}
+
+for event in app.stream(inputs_2):
+    for key, value in event.items():
+        print(f"Finished running: {key}")</code></pre>
+<pre class="wp-block-preformatted"><strong>(env) (base) amankharwal@Amans-MacBook-Pro aiagent % python lang.py<br/><br/>--- TEST 1: Math ---<br/>Finished running: categorizer<br/>--- 🧮 Entering Math Node ---<br/>Finished running: math_node<br/><br/>--- TEST 2: General ---<br/>Finished running: categorizer<br/>--- 💬 Entering General Chat Node ---<br/>Finished running: general_node<br/>(env) (base) amankharwal@Amans-MacBook-Pro aiagent % </strong></pre>
+<p>In Test 1, the console shows that it finished running the categoriser and then moved to math_node. In Test 2, it runs the categoriser and then goes to general_node.</p>
+<h3 class="wp-block-heading">Closing Thoughts</h3>
+<p>What we built might look simple; a few if/else statements could do the job. But imagine the Math Node tries to solve a problem, finds a mistake, and needs to try again. In a regular Python script, this logic can get messy quickly. With LangGraph, it’s just an edge that points back to itself.</p>
+<p>Now you have the basics to build agents that can code, research, and fix their own mistakes, all running on your own computer.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="recommendation-system-using-python-and-tensorflow.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="4-llm-project-ideas-for-your-resume.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

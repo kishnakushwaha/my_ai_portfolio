@@ -1,0 +1,2072 @@
+[
+  {
+    "title": "Data Resampling using Python",
+    "description": "Data Resampling is a technique used in Data Science to adjust the size or distribution of a dataset. It involves modifying the existing dataset by eit...",
+    "url": "articles/data-resampling-using-python.html",
+    "category": "Article",
+    "date": "Oct 21, 2025",
+    "image": ""
+  },
+  {
+    "title": "Car Insurance Modelling using Python",
+    "description": "Car insurance modelling refers to the use of statistical and mathematical models to accurately predict events such as the frequency of claims, the sev...",
+    "url": "articles/car-insurance-modelling-using-python.html",
+    "category": "Article",
+    "date": "Nov 02, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/car-insurance.png?resize=1024%2C280&ssl=1"
+  },
+  {
+    "title": "Data Augmentation using LLMs",
+    "description": "Data Augmentation is a fundamental technique in machine learning used to expand and diversify datasets by generating synthetic data. With the rise of ...",
+    "url": "articles/data-augmentation-using-llms.html",
+    "category": "Article",
+    "date": "Nov 18, 2025",
+    "image": "assets/datasets/image-3.png"
+  },
+  {
+    "title": "Diamond Price Analysis using Python",
+    "description": "A diamond is one of the most expensive stones. The price of diamonds varies irrespective of the size because of the factors affecting the price of a d...",
+    "url": "articles/diamond-price-analysis-using-python.html",
+    "category": "Article",
+    "date": "Nov 02, 2025",
+    "image": "assets/datasets/diamond-1.png"
+  },
+  {
+    "title": "The Ultimate 2026 ML Engineering Roadmap",
+    "description": "Three years ago, ML Engineers took pride in training a ResNet from scratch to classify cats and dogs. Now, that task can be done with a single API cal...",
+    "url": "articles/the-ultimate-2026-ml-engineering-roadmap.html",
+    "category": "Article",
+    "date": "Dec 23, 2025",
+    "image": ""
+  },
+  {
+    "title": "Smart Loan Recovery System with Machine Learning",
+    "description": "Loan defaults pose a significant challenge for financial institutions by affecting profitability and cash flow. Using historical loan repayment data, ...",
+    "url": "articles/smart-loan-recovery-system-with-machine-learning.html",
+    "category": "Article",
+    "date": "Dec 02, 2025",
+    "image": "assets/datasets/image.png"
+  },
+  {
+    "title": "A Beginner\u2019s Guide to Using APIs in Data Science",
+    "description": "Your first data science project probably involved a perfectly clean CSV file. You loaded it into a notebook, ran .describe(), and felt like a pro. In ...",
+    "url": "articles/a-beginner-s-guide-to-using-apis-in-data-science.html",
+    "category": "Article",
+    "date": "Dec 06, 2025",
+    "image": ""
+  },
+  {
+    "title": "Credit Scoring and Segmentation using Python",
+    "description": "Credit scoring and segmentation refer to the process of evaluating the creditworthiness of individuals or businesses and dividing them into distinct g...",
+    "url": "articles/credit-scoring-and-segmentation-using-python.html",
+    "category": "Article",
+    "date": "Nov 01, 2025",
+    "image": "assets/datasets/credit-score-1.png"
+  },
+  {
+    "title": "Quantitative Analysis of Stock Market using Python",
+    "description": "Quantitative Analysis in the stock market involves the use of mathematical and statistical techniques to understand, predict, and make decisions about...",
+    "url": "articles/quantitative-analysis-of-stock-market-using-python.html",
+    "category": "Article",
+    "date": "Nov 13, 2025",
+    "image": "assets/datasets/Quantitative-Analysis-1.png"
+  },
+  {
+    "title": "Building a Predictive Keyboard Model",
+    "description": "Every time you type on your smartphone, you see three words pop up as suggestions. That\u2019s a predictive keyboard in action. These suggestions aren\u2019t ra...",
+    "url": "articles/building-a-predictive-keyboard-model.html",
+    "category": "Article",
+    "date": "Jan 01, 2026",
+    "image": ""
+  },
+  {
+    "title": "Deep Learning Projects using Python",
+    "description": "When we use deep neural architecture instead of classic machine learning algorithms, it\u2019s nothing but deep learning. In this article, I\u2019m going to int...",
+    "url": "articles/deep-learning-projects-using-python.html",
+    "category": "Article",
+    "date": "Nov 06, 2025",
+    "image": ""
+  },
+  {
+    "title": "Code Generation Model using LLMs",
+    "description": "A code generation model is a type of artificial intelligence that can automatically generate source code based on a given input, which can be natural ...",
+    "url": "articles/code-generation-model-using-llms.html",
+    "category": "Article",
+    "date": "Dec 06, 2025",
+    "image": "assets/datasets/image-7.png"
+  },
+  {
+    "title": "Fine-Tuning LLMs Guide",
+    "description": "Fine-tuning large language models (LLMs) involves adapting a pre-trained model to perform well on a specific task or to reflect a specialized domain o...",
+    "url": "articles/fine-tuning-llms-guide.html",
+    "category": "Article",
+    "date": "Nov 18, 2025",
+    "image": ""
+  },
+  {
+    "title": "Text Generation Model using Python",
+    "description": "A Text Generation Model is a type of Natural Language Processing (NLP) model that automatically generates human-like text. It can produce coherent and...",
+    "url": "articles/text-generation-model-using-python.html",
+    "category": "Article",
+    "date": "Dec 05, 2025",
+    "image": ""
+  },
+  {
+    "title": "Building AI Agents with CrewAI",
+    "description": "CrewAI is an agent orchestration framework that allows you to coordinate multiple AI agents (each with a role, goal, memory, and tool access) to solve...",
+    "url": "articles/building-ai-agents-with-crewai.html",
+    "category": "Article",
+    "date": "Dec 27, 2025",
+    "image": ""
+  },
+  {
+    "title": "How Much Python Is Enough to Start With AI",
+    "description": "Many people new to Artificial Intelligence fall into the same trap. They think they need to be Python experts and know every library and bit of syntax...",
+    "url": "articles/how-much-python-is-enough-to-start-with-ai.html",
+    "category": "Article",
+    "date": "Dec 25, 2025",
+    "image": ""
+  },
+  {
+    "title": "Generative AI Projects with Python",
+    "description": "Generative AI means building models to generate data using existing data. It is revolutionizing industries by enabling machines to produce text, image...",
+    "url": "articles/generative-ai-projects-with-python.html",
+    "category": "Article",
+    "date": "Oct 29, 2025",
+    "image": ""
+  },
+  {
+    "title": "A Guide to Polars for Faster Data Analysis",
+    "description": "For a long time, Pandas has been the go-to tool for Python data analysis, offering reliability, familiarity, and the ability to handle most tasks. How...",
+    "url": "articles/a-guide-to-polars-for-faster-data-analysis.html",
+    "category": "Article",
+    "date": "Dec 22, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/12/image-1.png?resize=1024%2C318&ssl=1"
+  },
+  {
+    "title": "Generative AI Models Guide",
+    "description": "The road to learning Generative AI starts with Machine Learning algorithms. However, some specialized models are used in Generative AI problems, that ...",
+    "url": "articles/generative-ai-models-guide.html",
+    "category": "Article",
+    "date": "Dec 20, 2025",
+    "image": "assets/datasets/image-4.png"
+  },
+  {
+    "title": "Multimodal AI Systems",
+    "description": "Beyond text: How models like Gemini and\n                        GPT-4o process images, audio, and video simultaneously.",
+    "url": "articles/multimodal-ai-systems.html",
+    "category": "Article",
+    "date": "Dec 24, 2025",
+    "image": ""
+  },
+  {
+    "title": "Elections Ad Spending Analysis with Python",
+    "description": "If you are highly active on Facebook and Instagram, you must have seen ads based on elections by any\u00a0of the\u00a0political parties, especially BJP and INC....",
+    "url": "articles/elections-ad-spending-analysis-with-python.html",
+    "category": "Article",
+    "date": "Nov 06, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-1.png?resize=1024%2C277&ssl=1"
+  },
+  {
+    "title": "ARIMA and SARIMA for Time Series Forecasting",
+    "description": "Time Series Forecasting is a statistical technique used to make predictions based on historical time-ordered data points. It\u2019s valuable when dealing w...",
+    "url": "articles/arima-and-sarima-for-time-series-forecasting.html",
+    "category": "Article",
+    "date": "Oct 17, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2023/10/ARIMA-and-SARIMA-1.png?resize=857%2C525&ssl=1"
+  },
+  {
+    "title": "Run a Powerful LLM Locally on Your Laptop",
+    "description": "Did you know that you can run powerful, multi-billion-parameter large language models like Llama 3.1 and Mistral on your own laptop? Not long ago, thi...",
+    "url": "articles/run-a-powerful-llm-locally-on-your-laptop.html",
+    "category": "Article",
+    "date": "Dec 17, 2025",
+    "image": ""
+  },
+  {
+    "title": "Why Your 2026 AI Roadmap Needs More Than Just LLMs",
+    "description": "The conversation around AI is shifting. If 2024 was the year of chatting with AI, and 2025 is the year of integrating it, 2026 will be the year AI sta...",
+    "url": "articles/why-your-2026-ai-roadmap-needs-more-than-just-llms.html",
+    "category": "Article",
+    "date": "Dec 03, 2025",
+    "image": ""
+  },
+  {
+    "title": "How to Actually Learn AI to Get a Job",
+    "description": "Recent research on what employers want now and expect to need by 2026 shows an interesting divide. They want more than just people who know theory or ...",
+    "url": "articles/how-to-actually-learn-ai-to-get-a-job.html",
+    "category": "Article",
+    "date": "Oct 23, 2025",
+    "image": ""
+  },
+  {
+    "title": "Roadmap to Learn Machine Learning",
+    "description": "In Machine Learning, we use data and algorithms to build intelligent systems. It doesn\u2019t matter if you want to become a Machine Learning Engineer, Dat...",
+    "url": "articles/roadmap-to-learn-machine-learning.html",
+    "category": "Article",
+    "date": "Oct 23, 2025",
+    "image": ""
+  },
+  {
+    "title": "Weather Forecasting using Python",
+    "description": "In Data Science, weather forecasting is an application of Time Series Forecasting where we use time-series data and algorithms to make forecasts for a...",
+    "url": "articles/weather-forecasting-using-python.html",
+    "category": "Article",
+    "date": "Nov 19, 2025",
+    "image": "assets/datasets/weather-forecasting-1.png"
+  },
+  {
+    "title": "Fitness Watch Data Analysis using Python",
+    "description": "Fitness Watch Data Analysis involves analyzing the data collected by fitness wearables or smartwatches to gain insights into users\u2019 health and activit...",
+    "url": "articles/fitness-watch-data-analysis-using-python.html",
+    "category": "Article",
+    "date": "Nov 09, 2025",
+    "image": "assets/datasets/Fitness-Watch-1.png"
+  },
+  {
+    "title": "Popular E-books for AI/ML Beginners",
+    "description": "I\u2019ve been in this industry for years, from building classic recommendation engines to fine-tuning massive language models. And I can tell you the sing...",
+    "url": "articles/popular-e-books-for-ai-ml-beginners.html",
+    "category": "Article",
+    "date": "Dec 04, 2025",
+    "image": ""
+  },
+  {
+    "title": "Essential SQL Topics for Data Science",
+    "description": "SQL is an essential tool in almost all Data Science roles. It is one of the most fundamental tools to work with data. So, if you don\u2019t know how much k...",
+    "url": "articles/essential-sql-topics-for-data-science.html",
+    "category": "Article",
+    "date": "Oct 22, 2025",
+    "image": ""
+  },
+  {
+    "title": "LLM Projects for All Levels",
+    "description": "Large Language Models (LLMs) like GPT-4, LLaMA, and Mistral have revolutionized the way we interact with machines, write code, analyze documents, and ...",
+    "url": "articles/llm-projects-for-all-levels.html",
+    "category": "Article",
+    "date": "Dec 15, 2025",
+    "image": ""
+  },
+  {
+    "title": "Streamlit Tutorial using Python",
+    "description": "Streamlit is an open-source Python framework used to deploy machine learning models in beautiful web applications in just a few lines of code. You don...",
+    "url": "articles/streamlit-tutorial-using-python.html",
+    "category": "Article",
+    "date": "Oct 26, 2025",
+    "image": ""
+  },
+  {
+    "title": "Building a Large Language Model from Scratch",
+    "description": "Large Language Models (LLMs) are the backbone of modern AI applications, from chatbots to code generators. But how are large language models built? If...",
+    "url": "articles/building-a-large-language-model-from-scratch.html",
+    "category": "Article",
+    "date": "Dec 10, 2025",
+    "image": ""
+  },
+  {
+    "title": "Ads Click Through Rate Prediction using Python",
+    "description": "Ads Click Through Rate is the ratio of how many users clicked on your ad to how many users viewed your ad. For example, 5 out of 100 users click on th...",
+    "url": "articles/ads-click-through-rate-prediction-using-python.html",
+    "category": "Article",
+    "date": "Nov 01, 2025",
+    "image": "assets/datasets/ctr1.png"
+  },
+  {
+    "title": "NLP Techniques Every Data Scientist Should Know",
+    "description": "Natural Language Processing (NLP) is a critical field in data science, especially with the growth in data generated from online sources like social me...",
+    "url": "articles/nlp-techniques-every-data-scientist-should-know.html",
+    "category": "Article",
+    "date": "Oct 30, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image.png?resize=938%2C78&ssl=1"
+  },
+  {
+    "title": "Real-Time News Data Collection using Python",
+    "description": "As a Data Scientist, having the ability to collect, process, and analyze live news data is a seriously valuable skill. It covers everything from query...",
+    "url": "articles/real-time-news-data-collection-using-python.html",
+    "category": "Article",
+    "date": "Nov 16, 2025",
+    "image": "assets/datasets/Word-Cloud-of-News-Headlines.png"
+  },
+  {
+    "title": "Explain Your ML Model Predictions with a Visualization",
+    "description": "Training a Machine Learning model is easy. But once someone asks you to explain the predictions of your ML model, it becomes a challenge. You always k...",
+    "url": "articles/explain-your-ml-model-predictions-with-a-visualization.html",
+    "category": "Article",
+    "date": "Dec 05, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-8.png?resize=1024%2C699&ssl=1"
+  },
+  {
+    "title": "Projects to Learn Data Science the Practical Way",
+    "description": "Learning data science isn\u2019t just about memorizing formulas and theories; it\u2019s about getting your hands dirty with real-world data. While online course...",
+    "url": "articles/projects-to-learn-data-science-the-practical-way.html",
+    "category": "Article",
+    "date": "Dec 16, 2025",
+    "image": ""
+  },
+  {
+    "title": "Build An End-to-End Machine Learning Model",
+    "description": "An End-to-End Machine Learning Model is a comprehensive system that contains all the stages of a machine learning project, from data collection and pr...",
+    "url": "articles/build-an-end-to-end-machine-learning-model.html",
+    "category": "Article",
+    "date": "Nov 28, 2025",
+    "image": "assets/datasets/image-1.png"
+  },
+  {
+    "title": "Machine Learning Projects to Learn Deployment",
+    "description": "The biggest hurdle for most aspiring data scientists isn\u2019t building a model; it\u2019s deploying it so that others can actually use it. As your mentor in t...",
+    "url": "articles/machine-learning-projects-to-learn-deployment.html",
+    "category": "Article",
+    "date": "Dec 18, 2025",
+    "image": ""
+  },
+  {
+    "title": "Building an AI Agent using OpenAI API",
+    "description": "With the rise of large language models like GPT-4o, building intelligent AI agents has never been more accessible. Using the OpenAI API, we can create...",
+    "url": "articles/building-an-ai-agent-using-openai-api.html",
+    "category": "Article",
+    "date": "Dec 09, 2025",
+    "image": ""
+  },
+  {
+    "title": "Python Practice Questions for Coding Interviews",
+    "description": "While learning a new programming language, it is valuable to solve practice questions. When you solve questions, it develops problem-solving skills. I...",
+    "url": "articles/python-practice-questions-for-coding-interviews.html",
+    "category": "Article",
+    "date": "Oct 19, 2025",
+    "image": ""
+  },
+  {
+    "title": "AI Agent Projects to Build This Weekend",
+    "description": "",
+    "url": "articles/ai-agent-projects-to-build-this-weekend.html",
+    "category": "Article",
+    "date": "Dec 22, 2025",
+    "image": ""
+  },
+  {
+    "title": "Food Delivery Cost and Profitability Analysis using Python",
+    "description": "Food Delivery Cost and Profitability Analysis is a comprehensive evaluation aimed at understanding and optimizing the financial dynamics of a food del...",
+    "url": "articles/food-delivery-cost-and-profitability-analysis-using-python.html",
+    "category": "Article",
+    "date": "Nov 03, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/Food-Delivery-Cost-and-Profitability-Analysis-1.png?resize=850%2C547&ssl=1"
+  },
+  {
+    "title": "Building an AI Agent using Agentic AI",
+    "description": "Agentic AI refers to artificial intelligence systems that can perceive their environment, make decisions, and act autonomously to achieve a goal. Thes...",
+    "url": "articles/building-an-ai-agent-using-agentic-ai.html",
+    "category": "Article",
+    "date": "Dec 04, 2025",
+    "image": ""
+  },
+  {
+    "title": "Build Your Personal AI Data Analyst",
+    "description": "We have all been there. You have a messy CSV file, a deadline, and a head full of questions. But instead of finding answers, you find yourself trying ...",
+    "url": "articles/build-your-personal-ai-data-analyst.html",
+    "category": "Article",
+    "date": "Dec 25, 2025",
+    "image": "assets/datasets/image-5.png"
+  },
+  {
+    "title": "Audio Data Processing and Analysis with Python",
+    "description": "Audio data is ubiquitous today, from music streaming platforms to virtual assistants. Analyzing and processing audio requires a solid understanding of...",
+    "url": "articles/audio-data-processing-and-analysis-with-python.html",
+    "category": "Article",
+    "date": "Nov 02, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Waveform.png?resize=800%2C400&ssl=1"
+  },
+  {
+    "title": "How Neural Network Works",
+    "description": "A neural network is a computational structure that connects an input layer to an output layer. This computational structure is used in training deep l...",
+    "url": "articles/how-neural-network-works.html",
+    "category": "Article",
+    "date": "Oct 20, 2025",
+    "image": "assets/datasets/input-hidden-and-output-layer.png"
+  },
+  {
+    "title": "Machine Learning Projects to Stand Out",
+    "description": "In 2025, mastering Machine Learning isn\u2019t enough; you need to build projects that can prove you are job-ready. Employers now look for ML engineers who...",
+    "url": "articles/machine-learning-projects-to-stand-out.html",
+    "category": "Article",
+    "date": "Dec 17, 2025",
+    "image": ""
+  },
+  {
+    "title": "Deploy Your First ML Model as a REST API",
+    "description": "The gap between an ML model in your .ipynb file and a real, production-ready model is where your career starts as an ML Engineer. Deploying your ML mo...",
+    "url": "articles/deploy-your-first-ml-model-as-a-rest-api.html",
+    "category": "Article",
+    "date": "Dec 23, 2025",
+    "image": "assets/datasets/image-1.png"
+  },
+  {
+    "title": "Feature Engineering Tricks for Time Series Data",
+    "description": "Learn advanced feature engineering techniques for time series forecasting to improve your machine learning models.",
+    "url": "articles/feature-engineering-time-series.html",
+    "category": "Article",
+    "date": "Dec 18, 2025",
+    "image": ""
+  },
+  {
+    "title": "Data Science Roadmap",
+    "description": "Data science is one of the highest-paying career options in this data-driven world. Every company now makes decisions based on the data generated by i...",
+    "url": "articles/data-science-roadmap.html",
+    "category": "Article",
+    "date": "Oct 19, 2025",
+    "image": ""
+  },
+  {
+    "title": "Real Estate Price Prediction using Python",
+    "description": "Real Estate Price Prediction is the process of estimating or forecasting the future prices of real estate properties, such as houses, apartments, or c...",
+    "url": "articles/real-estate-price-prediction-using-python.html",
+    "category": "Article",
+    "date": "Nov 29, 2025",
+    "image": "assets/datasets/Real-Estate-Prices-1.png"
+  },
+  {
+    "title": "Build a Visual Question Answering App",
+    "description": "For a long time, I used models separately: Natural Language Processing for text and Computer Vision for images. Each was powerful, but they missed con...",
+    "url": "articles/build-a-visual-question-answering-app.html",
+    "category": "Article",
+    "date": "Nov 07, 2025",
+    "image": "assets/datasets/image-2.png"
+  },
+  {
+    "title": "SQL Aggregation Functions",
+    "description": "SQL aggregation functions allow you to perform calculations on data to summarise it in various ways. Data Analysts spend a lot of time using SQL aggre...",
+    "url": "articles/sql-aggregation-functions.html",
+    "category": "Article",
+    "date": "Oct 19, 2025",
+    "image": ""
+  },
+  {
+    "title": "Generative AI Projects That Will Get You Hired",
+    "description": "The current AI job market is flooded with prompt engineers and individuals who have only ever interacted with an API. To break into Generative AI, you...",
+    "url": "articles/generative-ai-projects-that-will-get-you-hired.html",
+    "category": "Article",
+    "date": "Dec 02, 2025",
+    "image": ""
+  },
+  {
+    "title": "50 Projects to Master AI & ML with Python",
+    "description": "Project-based learning is one strategy I used to master various concepts in AI & ML. If you are aiming for a career in AI & ML, I recommend you start ...",
+    "url": "articles/50-projects-to-master-ai-ml-with-python.html",
+    "category": "Article",
+    "date": "Nov 04, 2025",
+    "image": ""
+  },
+  {
+    "title": "Build Your First RAG System From Scratch",
+    "description": "The single biggest problem with the AI everyone is so excited about is that it\u2019s confidently lying to you. You ask a powerful LLM a simple question ab...",
+    "url": "articles/build-your-first-rag-system-from-scratch.html",
+    "category": "Article",
+    "date": "Dec 30, 2025",
+    "image": ""
+  },
+  {
+    "title": "Clustering Algorithms in Machine Learning",
+    "description": "Clustering is the task of identifying similar instances based on similar features and assigning them to clusters based on similar instances. It sounds...",
+    "url": "articles/clustering-algorithms-in-machine-learning.html",
+    "category": "Article",
+    "date": "Oct 23, 2025",
+    "image": ""
+  },
+  {
+    "title": "Introducing: Hands-on GenAI, LLMs and AI Agents",
+    "description": "You see the headlines every day. New models, bigger benchmarks, flashier demos. It is thrilling, but let\u2019s be honest, it can also be incredibly overwh...",
+    "url": "articles/introducing-hands-on-genai-llms-and-ai-agents.html",
+    "category": "Article",
+    "date": "Dec 20, 2025",
+    "image": ""
+  },
+  {
+    "title": "Topic Modelling using Python",
+    "description": "Topic Modelling means assigning topic labels to a collection of text documents. The goal of topic modelling is to identify topics present in the text ...",
+    "url": "articles/topic-modelling-using-python.html",
+    "category": "Article",
+    "date": "Nov 22, 2025",
+    "image": ""
+  },
+  {
+    "title": "Stock Market Anomaly Detection using Python",
+    "description": "Stock market anomaly detection refers to the process of identifying unusual patterns or behaviours in stock market data that deviate significantly fro...",
+    "url": "articles/stock-market-anomaly-detection-using-python.html",
+    "category": "Article",
+    "date": "Oct 31, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/stock-market-anomalies-1.png?resize=1024%2C456&ssl=1"
+  },
+  {
+    "title": "Neural Networks in Machine Learning",
+    "description": "The way birds inspired humans to create an aeroplane the same way a human\u2019s brain inspired humans to build intelligent machines. Neural networks were ...",
+    "url": "articles/neural-networks-in-machine-learning.html",
+    "category": "Article",
+    "date": "Nov 07, 2025",
+    "image": "assets/datasets/neural.png"
+  },
+  {
+    "title": "How to Learn Python for AI from Scratch",
+    "description": "You do not need to master software development to build Artificial Intelligence. Many students get stuck in tutorial hell, trying to learn every nuanc...",
+    "url": "articles/how-to-learn-python-for-ai-from-scratch.html",
+    "category": "Article",
+    "date": "Dec 19, 2025",
+    "image": ""
+  },
+  {
+    "title": "Text Classification Pipeline with Hugging Face Transformers",
+    "description": "Text classification is one of the most practical tasks in NLP. If you\u2019re starting out and want to build your first real-world text classification pipe...",
+    "url": "articles/text-classification-pipeline-with-hugging-face-transformers.html",
+    "category": "Article",
+    "date": "Jan 01, 2026",
+    "image": "assets/datasets/image-1.png"
+  },
+  {
+    "title": "Data Science Projects to Master Storytelling",
+    "description": "If you\u2019ve been learning Data Science for a while, taking courses, building projects, even putting models in notebooks, but still feel stuck when it co...",
+    "url": "articles/data-science-projects-to-master-storytelling.html",
+    "category": "Article",
+    "date": "Nov 03, 2025",
+    "image": ""
+  },
+  {
+    "title": "LLM Project Ideas for Resume",
+    "description": "If you are aiming for a career as a Machine Learning Engineer, an LLM Engineer, or any role where the use of Generative AI and LLMs is rising, it\u2019s im...",
+    "url": "articles/llm-project-ideas-for-resume.html",
+    "category": "Article",
+    "date": "Oct 30, 2025",
+    "image": ""
+  },
+  {
+    "title": "Roadmap to Learn Python",
+    "description": "Python is one of the most popular programming languages today. It is preferred by Data Science professionals and Web Developers worldwide. If you are ...",
+    "url": "articles/roadmap-to-learn-python.html",
+    "category": "Article",
+    "date": "Oct 26, 2025",
+    "image": ""
+  },
+  {
+    "title": "AI Agents Projects for Resume",
+    "description": "Just like large language models, the use of AI Agents is increasing to automate tasks where decision-making is required. Hiring managers will love to ...",
+    "url": "articles/ai-agents-projects-for-resume.html",
+    "category": "Article",
+    "date": "Dec 19, 2025",
+    "image": ""
+  },
+  {
+    "title": "Delhi Metro Network Analysis using Python",
+    "description": "Metro Network Analysis involves examining the network of metro systems to understand their structure, efficiency, and effectiveness. It typically incl...",
+    "url": "articles/delhi-metro-network-analysis-using-python.html",
+    "category": "Article",
+    "date": "Oct 25, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-1.png?resize=1024%2C609&ssl=1"
+  },
+  {
+    "title": "Hybrid Machine Learning Model with Python",
+    "description": "Hybrid machine learning models combine different types of algorithms to leverage their unique strengths, which results in improved predictive performa...",
+    "url": "articles/hybrid-machine-learning-model-with-python.html",
+    "category": "Article",
+    "date": "Nov 27, 2025",
+    "image": ""
+  },
+  {
+    "title": "Building a Predictive Keyboard Model with PyTorch",
+    "description": "Every time you type on your smartphone, you see three words pop up as suggestions. That\u2019s a predictive keyboard in action. These suggestions aren\u2019t ra...",
+    "url": "articles/building-a-predictive-keyboard-model-with-pytorch.html",
+    "category": "Article",
+    "date": "Dec 02, 2025",
+    "image": ""
+  },
+  {
+    "title": "Build an AI Agent to Master a Game using Python",
+    "description": "Do you know how AI opponents in video games seem to think, adapt, and sometimes, even outsmart you? The secret behind this is a powerful branch of AI ...",
+    "url": "articles/build-an-ai-agent-to-master-a-game-using-python.html",
+    "category": "Article",
+    "date": "Nov 29, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/09/what-is-an-AI-Agent.png?resize=1024%2C1024&ssl=1"
+  },
+  {
+    "title": "How to Become a Generative AI Specialist",
+    "description": "You don\u2019t need to build the next GPT-4 to have a career in Generative AI. I\u2019ve been in this industry for years, and I\u2019ll tell you a secret: the most v...",
+    "url": "articles/how-to-become-a-generative-ai-specialist.html",
+    "category": "Article",
+    "date": "Dec 07, 2025",
+    "image": ""
+  },
+  {
+    "title": "Carbon Emissions Impact Analysis with Python",
+    "description": "Climate change is one of the most critical challenges of our time, with rising carbon emissions playing a pivotal role in driving global temperature a...",
+    "url": "articles/carbon-emissions-impact-analysis-with-python.html",
+    "category": "Article",
+    "date": "Nov 08, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/Time-series-of-Temperature-Change-and-CO%E2%82%82-Concentrations.png?resize=855%2C525&ssl=1"
+  },
+  {
+    "title": "Build an AI Resume Screener with Python & Llama 3",
+    "description": "Recruiters often have to sort through hundreds of PDFs to find the right candidate. In this article, we\u2019ll create a local AI Resume Screener using Pyt...",
+    "url": "articles/build-an-ai-resume-screener-with-python-llama-3.html",
+    "category": "Article",
+    "date": "Dec 26, 2025",
+    "image": ""
+  },
+  {
+    "title": "Responsible AI Guidelines",
+    "description": "Navigating bias, toxicity, and copyright\n                        in the age of generative models.",
+    "url": "articles/responsible-ai-guidelines.html",
+    "category": "Article",
+    "date": "Dec 27, 2025",
+    "image": ""
+  },
+  {
+    "title": "ChatGPT Reviews Analysis with Python",
+    "description": "Analyzing reviews is one of the best data-driven strategies to improve your product or services. It helps in understanding what people think about you...",
+    "url": "articles/chatgpt-reviews-analysis-with-python.html",
+    "category": "Article",
+    "date": "Nov 10, 2025",
+    "image": "assets/datasets/image-7.png"
+  },
+  {
+    "title": "SQL Joins Guide",
+    "description": "SQL joins are essential when combining data from multiple tables in a relational database. It is one of the popular SQL topics asked in Data Science I...",
+    "url": "articles/sql-joins-guide.html",
+    "category": "Article",
+    "date": "Oct 19, 2025",
+    "image": ""
+  },
+  {
+    "title": "Currency Exchange Rate Forecasting using Python",
+    "description": "The currency conversion rate or exchange rate is an important economic indicator affecting several sectors, such as import-export businesses, foreign ...",
+    "url": "articles/currency-exchange-rate-forecasting-using-python.html",
+    "category": "Article",
+    "date": "Oct 29, 2025",
+    "image": "assets/datasets/currency-exchange-1.png"
+  },
+  {
+    "title": "Demand Forecasting and Inventory Optimization using Python",
+    "description": "Demand Forecasting means estimating future customer demand for a product or service based on historical data and relevant factors. Inventory Optimizat...",
+    "url": "articles/demand-forecasting-and-inventory-optimization-using-python.html",
+    "category": "Article",
+    "date": "Nov 19, 2025",
+    "image": "assets/datasets/Demand-Forecasting-and-Inventory-Optimization-1.png"
+  },
+  {
+    "title": "Need Portfolio Ideas? Here Are 4 AI Projects You Can Build",
+    "description": "The gap between understanding AI and building AI applications can feel massive. You ask yourself, can you build something that hasn\u2019t been done a thou...",
+    "url": "articles/need-portfolio-ideas-here-are-4-ai-projects-you-can-build.html",
+    "category": "Article",
+    "date": "Dec 16, 2025",
+    "image": ""
+  },
+  {
+    "title": "Here\u2019s How Zomato Uses Data Science",
+    "description": "Zomato is an Indian restaurant aggregator and food delivery company. It is known for faster delivery of food from anywhere in your city. Like every su...",
+    "url": "articles/here-s-how-zomato-uses-data-science.html",
+    "category": "Article",
+    "date": "Oct 22, 2025",
+    "image": ""
+  },
+  {
+    "title": "Machine Learning Projects using Python",
+    "description": "A Machine Learning Engineer uses data and algorithms to build intelligent systems. If you are new to machine learning, you need to work on beginner-le...",
+    "url": "articles/machine-learning-projects-using-python.html",
+    "category": "Article",
+    "date": "Nov 05, 2025",
+    "image": ""
+  },
+  {
+    "title": "Metro Operations Optimization using Python",
+    "description": "Metro Operations Optimization refers to the systematic process of enhancing the efficiency, reliability, and effectiveness of Metro services through v...",
+    "url": "articles/metro-operations-optimization-using-python.html",
+    "category": "Article",
+    "date": "Nov 05, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/delhi-metro-1.png?resize=863%2C701&ssl=1"
+  },
+  {
+    "title": "20 Projects to Master ML for 2026",
+    "description": "Machine learning is shifting from building single models to creating smart systems that work together. Now, it\u2019s important to think about things like ...",
+    "url": "articles/20-projects-to-master-ml-for-2026.html",
+    "category": "Article",
+    "date": "Nov 09, 2025",
+    "image": ""
+  },
+  {
+    "title": "50+ AI & ML Projects with Python",
+    "description": "An AWS report showed that 80% of AI & ML professionals gain the most practical insights from solving real-world projects. If you are aiming for a care...",
+    "url": "articles/50-ai-ml-projects-with-python.html",
+    "category": "Article",
+    "date": "Oct 27, 2025",
+    "image": ""
+  },
+  {
+    "title": "Health Monitoring and Analysis using Python",
+    "description": "Health Monitoring and Analysis refers to the systematic use of health data to track and evaluate the health status of individuals or populations over ...",
+    "url": "articles/health-monitoring-and-analysis-using-python.html",
+    "category": "Article",
+    "date": "Oct 21, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/health-1.png?resize=794%2C1024&ssl=1"
+  },
+  {
+    "title": "Here\u2019s How Linear Regression Algorithm Works",
+    "description": "In Machine Learning, Linear Regression Algorithm is a statistical technique for calculating the value of a dependent variable based on the value of an...",
+    "url": "articles/here-s-how-linear-regression-algorithm-works.html",
+    "category": "Article",
+    "date": "Oct 24, 2025",
+    "image": "assets/datasets/linear-regression-graph.png"
+  },
+  {
+    "title": "How to Add Memory to Your Chatbot Using LangChain",
+    "description": "If your chatbot forgets everything after each message, it doesn\u2019t seem very smart. What makes a chatbot truly intelligent is memory; the ability to re...",
+    "url": "articles/how-to-add-memory-to-your-chatbot-using-langchain.html",
+    "category": "Article",
+    "date": "Dec 08, 2025",
+    "image": ""
+  },
+  {
+    "title": "LangGraph Explained from Scratch",
+    "description": "If you\u2019ve spent some time working with Large Language Models, you\u2019ve probably built a Chain before. In LangChain, this usually means moving from user ...",
+    "url": "articles/langgraph-explained-from-scratch.html",
+    "category": "Article",
+    "date": "Dec 10, 2025",
+    "image": ""
+  },
+  {
+    "title": "10 Generative AI Projects to Build for Your Portfolio",
+    "description": "Did you know that 78% of hiring managers say they value a portfolio of hands-on projects more than certifications alone? A strong portfolio isn\u2019t just...",
+    "url": "articles/10-generative-ai-projects-to-build-for-your-portfolio.html",
+    "category": "Article",
+    "date": "Dec 14, 2025",
+    "image": ""
+  },
+  {
+    "title": "Data Science Projects",
+    "description": "As a beginner in data science, it\u2019s hard to understand all the concepts you learn without implementing them on a dataset. Working on data science proj...",
+    "url": "articles/data-science-projects.html",
+    "category": "Article",
+    "date": "Oct 17, 2025",
+    "image": ""
+  },
+  {
+    "title": "My Exact Workflow for Building AI Projects Faster",
+    "description": "I remember the first time I tried to build a serious machine learning project. I spent three weeks just cleaning the data. Then I spent another week r...",
+    "url": "articles/my-exact-workflow-for-building-ai-projects-faster.html",
+    "category": "Article",
+    "date": "Dec 25, 2025",
+    "image": ""
+  },
+  {
+    "title": "Automate Data Cleaning using Python",
+    "description": "If you\u2019ve worked on any real-world data project, you already know the truth that most of the time isn\u2019t spent building models, it\u2019s spent cleaning mes...",
+    "url": "articles/automate-data-cleaning-using-python.html",
+    "category": "Article",
+    "date": "Nov 14, 2025",
+    "image": ""
+  },
+  {
+    "title": "Food Delivery Time Prediction using Python",
+    "description": "Food Delivery services like Zomato and Swiggy need to show the accurate time it will take to deliver your order to keep transparency with their custom...",
+    "url": "articles/food-delivery-time-prediction-using-python.html",
+    "category": "Article",
+    "date": "Nov 25, 2025",
+    "image": "assets/datasets/food-delivery1.png"
+  },
+  {
+    "title": "Geospatial Clustering with Python",
+    "description": "Geospatial clustering is the process of grouping geographical points, such as delivery locations, store addresses, or sensor coordinates, into cluster...",
+    "url": "articles/geospatial-clustering-with-python.html",
+    "category": "Article",
+    "date": "Nov 23, 2025",
+    "image": "assets/datasets/image-4.png"
+  },
+  {
+    "title": "What are Tokens in LLMs",
+    "description": "When I first started learning about Large Language Models, I was surprised to find out that they don\u2019t actually read like we do. They don\u2019t see words,...",
+    "url": "articles/what-are-tokens-in-llms.html",
+    "category": "Article",
+    "date": "Dec 11, 2025",
+    "image": ""
+  },
+  {
+    "title": "Deep Learning Project Ideas for Resume",
+    "description": "Deep Learning is a subset of Machine Learning that leverages deep neural networks to learn and represent complex patterns and features from data. If y...",
+    "url": "articles/deep-learning-project-ideas-for-resume.html",
+    "category": "Article",
+    "date": "Oct 27, 2025",
+    "image": ""
+  },
+  {
+    "title": "Data Science Projects with Python",
+    "description": "If you are learning Data Science, one of the best strategies you can follow is to work on projects based on the concepts you are learning. It will hel...",
+    "url": "articles/data-science-projects-with-python.html",
+    "category": "Article",
+    "date": "Oct 19, 2025",
+    "image": ""
+  },
+  {
+    "title": "75 Data Science Projects for Every Level",
+    "description": "You\u2019ve finished another online course and watched hours of tutorials, but you still don\u2019t feel confident enough to apply for your first Data Science j...",
+    "url": "articles/75-data-science-projects-for-every-level.html",
+    "category": "Article",
+    "date": "Nov 08, 2025",
+    "image": ""
+  },
+  {
+    "title": "The Pandas Shortcut to Instant Data Insights",
+    "description": "You usually spend hours meticulously cleaning, merging, and reshaping your data. Then, you run a .head(), a .describe(), and stare at a wall of number...",
+    "url": "articles/the-pandas-shortcut-to-instant-data-insights.html",
+    "category": "Article",
+    "date": "Dec 03, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-2.png?resize=930%2C472&ssl=1"
+  },
+  {
+    "title": "Document Analysis using LLMs with Python",
+    "description": "Document analysis refers to extracting, interpreting, and understanding the information contained within a document. Traditionally, this involved manu...",
+    "url": "articles/document-analysis-using-llms-with-python.html",
+    "category": "Article",
+    "date": "Dec 09, 2025",
+    "image": ""
+  },
+  {
+    "title": "The Best Resources to Learn LLMs and AI Agents in 2026",
+    "description": "The landscape of Artificial Intelligence has shifted. We\u2019ve moved past simple chatbots; the industry now demands systems that can reason, plan, and ac...",
+    "url": "articles/the-best-resources-to-learn-llms-and-ai-agents-in-2026.html",
+    "category": "Article",
+    "date": "Dec 18, 2025",
+    "image": ""
+  },
+  {
+    "title": "Video Chaptering using Python",
+    "description": "You must have seen video chapters in a YouTube video. Video chaptering is\u00a0the process of\u00a0dividing a video into distinct segments, each labelled with a...",
+    "url": "articles/video-chaptering-using-python.html",
+    "category": "Article",
+    "date": "Nov 17, 2025",
+    "image": "assets/datasets/video-chapter-1.png"
+  },
+  {
+    "title": "Best AI Internship Programs for Summer 2025",
+    "description": "Artificial Intelligence isn\u2019t the future anymore, it is the present. Every sector is on the lookout for top-tier AI talent, from financial giants and ...",
+    "url": "articles/best-ai-internship-programs-for-summer-2025.html",
+    "category": "Article",
+    "date": "Dec 20, 2025",
+    "image": ""
+  },
+  {
+    "title": "Generative AI Roadmap",
+    "description": "Generative AI is a subset of Artificial Intelligence where we generate new data samples using the existing data. It can include generating text, image...",
+    "url": "articles/generative-ai-roadmap.html",
+    "category": "Article",
+    "date": "Oct 28, 2025",
+    "image": ""
+  },
+  {
+    "title": "Netflix Content Strategy Analysis with Python",
+    "description": "Content Strategy Analysis means analyzing how content is created, released, distributed, and consumed to achieve specific goals, such as maximizing au...",
+    "url": "articles/netflix-content-strategy-analysis-with-python.html",
+    "category": "Article",
+    "date": "Nov 09, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-8.png?resize=1024%2C293&ssl=1"
+  },
+  {
+    "title": "The Right Way to Save Your ML Models for Production",
+    "description": "After your machine learning model is performing well, it might seem ready for production. You might save it with pickle.dump(model, open(\u2018model.pkl\u2019, ...",
+    "url": "articles/the-right-way-to-save-your-ml-models-for-production.html",
+    "category": "Article",
+    "date": "Dec 09, 2025",
+    "image": ""
+  },
+  {
+    "title": "Batting Intent Analysis in IPL 2025 with Python",
+    "description": "In modern T20 cricket, especially in high-stakes tournaments like the IPL, understanding a batter\u2019s intent is as important as analyzing their strike r...",
+    "url": "articles/batting-intent-analysis-in-ipl-2025-with-python.html",
+    "category": "Article",
+    "date": "Nov 03, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/04/image-2.png?resize=1024%2C316&ssl=1"
+  },
+  {
+    "title": "Building a RAG Pipeline for LLMs",
+    "description": "Large Language Models (LLMs) are powerful, but they have a major limitation: their knowledge is static and limited to the data they were trained on. T...",
+    "url": "articles/building-a-rag-pipeline-for-llms.html",
+    "category": "Article",
+    "date": "Dec 08, 2025",
+    "image": ""
+  },
+  {
+    "title": "AI & ML Projects with Python",
+    "description": "If you\u2019re looking to master AI and Machine Learning, there\u2019s no better way than building real-world projects. Whether you\u2019re a beginner exploring ML o...",
+    "url": "articles/ai-ml-projects-with-python.html",
+    "category": "Article",
+    "date": "Dec 07, 2025",
+    "image": ""
+  },
+  {
+    "title": "Machine Learning Roadmap",
+    "description": "In Machine Learning, we use data and algorithms to build intelligent systems. In the next ten years, you will explore many new high-paying jobs that r...",
+    "url": "articles/machine-learning-roadmap.html",
+    "category": "Article",
+    "date": "Oct 24, 2025",
+    "image": ""
+  },
+  {
+    "title": "Stress Detection with Machine Learning",
+    "description": "Stress, anxiety, and depression are threatening the mental health of people. Every person has a reason for having a stressful life. People often share...",
+    "url": "articles/stress-detection-with-machine-learning.html",
+    "category": "Article",
+    "date": "Oct 21, 2025",
+    "image": "assets/datasets/word-cloud-for-stress-detection.png"
+  },
+  {
+    "title": "Electric Vehicles Market Size Analysis using Python",
+    "description": "Market size analysis is a crucial aspect of market research that determines the potential sales volume within a given market. It helps businesses unde...",
+    "url": "articles/electric-vehicles-market-size-analysis-using-python.html",
+    "category": "Article",
+    "date": "Nov 05, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/ev-market-size-1.png?resize=1024%2C508&ssl=1"
+  },
+  {
+    "title": "Hypothesis Testing using Python",
+    "description": "Hypothesis Testing is a statistical method used to make inferences or decisions about a population based on sample data. It starts with a null hypothe...",
+    "url": "articles/hypothesis-testing-using-python.html",
+    "category": "Article",
+    "date": "Oct 26, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/image-10.png?resize=684%2C308&ssl=1"
+  },
+  {
+    "title": "Data Analysis Projects using Python",
+    "description": "Data Analysis means understanding the story behind the numbers. It is a systematic process of examining, cleaning, transforming, and interpreting raw ...",
+    "url": "articles/data-analysis-projects-using-python.html",
+    "category": "Article",
+    "date": "Oct 15, 2025",
+    "image": ""
+  },
+  {
+    "title": "Multivariate Time Series Forecasting using Python",
+    "description": "Multivariate Time Series Forecasting involves predicting future values of multiple time-dependent variables using historical data. Unlike univariate t...",
+    "url": "articles/multivariate-time-series-forecasting-using-python.html",
+    "category": "Article",
+    "date": "Nov 21, 2025",
+    "image": "assets/datasets/multivariate-time-series-1.png"
+  },
+  {
+    "title": "App User Segmentation using Python",
+    "description": "App user segmentation is the task of grouping users based on how they engage with the app. It helps find retained users, find the user segment for a m...",
+    "url": "articles/app-user-segmentation-using-python.html",
+    "category": "Article",
+    "date": "Oct 31, 2025",
+    "image": "assets/datasets/app-users1.png"
+  },
+  {
+    "title": "Price Optimization using Python",
+    "description": "Price optimization is a strategic approach that uses data analysis and modelling to determine the optimal pricing of products or services. This proces...",
+    "url": "articles/price-optimization-using-python.html",
+    "category": "Article",
+    "date": "Nov 01, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/price-optimization-1.png?resize=1024%2C508&ssl=1"
+  },
+  {
+    "title": "Exploratory Data Analysis using Python",
+    "description": "Exploratory data analysis (EDA) is a Data Science concept where we analyze a dataset to discover patterns, trends, and relationships within the data. ...",
+    "url": "articles/exploratory-data-analysis-using-python.html",
+    "category": "Article",
+    "date": "Oct 18, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2023/05/EDA-1.png?resize=857%2C525&ssl=1"
+  },
+  {
+    "title": "10 GenAI & LLM Projects That Will Get You Hired in 2026",
+    "description": "I talk to hiring managers and CTOs often, and the signal is getting clearer; they are no longer impressed by candidates who can call an API. Anyone ca...",
+    "url": "articles/10-genai-llm-projects-that-will-get-you-hired-in-2026.html",
+    "category": "Article",
+    "date": "Nov 08, 2025",
+    "image": ""
+  },
+  {
+    "title": "Image Classification Model with Deep Learning",
+    "description": "If you are a beginner in Machine Learning, you must have heard about Deep Learning, which we use for working with larger datasets based on tabular dat...",
+    "url": "articles/image-classification-model-with-deep-learning.html",
+    "category": "Article",
+    "date": "Nov 27, 2025",
+    "image": "assets/datasets/visualize-a-sample-of-the-data.png"
+  },
+  {
+    "title": "AI/ML Study Plan for 2026",
+    "description": "The landscape of Artificial Intelligence is shifting. In 2024, we learned to chat with AI. In 2025, we learned to build applications with it. By 2026,...",
+    "url": "articles/ai-ml-study-plan-for-2026.html",
+    "category": "Article",
+    "date": "Dec 14, 2025",
+    "image": ""
+  },
+  {
+    "title": "Which AI Role Fits You Best?",
+    "description": "The world of Artificial Intelligence is booming, but for a student or career switcher, it often feels like a loud, crowded party where everyone is spe...",
+    "url": "articles/which-ai-role-fits-you-best.html",
+    "category": "Article",
+    "date": "Dec 18, 2025",
+    "image": ""
+  },
+  {
+    "title": "Here\u2019s How to Choose Data Visualization Graphs",
+    "description": "Many beginners in Data Science often get confused about how to choose data visualization graphs to visualize the data they are working on. Choosing th...",
+    "url": "articles/here-s-how-to-choose-data-visualization-graphs.html",
+    "category": "Article",
+    "date": "Oct 20, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/how-to-choose-graphs-1.png?resize=1024%2C522&ssl=1"
+  },
+  {
+    "title": "Statistical Modelling using Python",
+    "description": "Statistical\u00a0modelling\u00a0is a form of mathematical\u00a0modelling\u00a0that involves statistics to estimate or predict real-world behaviours, trends, and future ou...",
+    "url": "articles/statistical-modelling-using-python.html",
+    "category": "Article",
+    "date": "Oct 22, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/music-popularity-1.png?resize=865%2C556&ssl=1"
+  },
+  {
+    "title": "Generative AI Model From Scratch with Python",
+    "description": "A Machine Learning model is used to make predictions based on historical data. Similarly, a Generative AI model creates new original data by learning ...",
+    "url": "articles/generative-ai-model-from-scratch-with-python.html",
+    "category": "Article",
+    "date": "Dec 10, 2025",
+    "image": "assets/datasets/image.png"
+  },
+  {
+    "title": "AI & ML Projects to Become a Pro",
+    "description": "The biggest mistake I see aspiring AI & ML Engineers make is getting stuck in the tutorial hell. The actual learning, the kind that sticks and gets yo...",
+    "url": "articles/ai-ml-projects-to-become-a-pro.html",
+    "category": "Article",
+    "date": "Nov 22, 2025",
+    "image": ""
+  },
+  {
+    "title": "Data Preprocessing Pipeline using Python",
+    "description": "Data preprocessing is a critical step in\u00a0data science\u00a0tasks, ensuring that raw data is transformed into a clean, organized, and structured format suit...",
+    "url": "articles/data-preprocessing-pipeline-using-python.html",
+    "category": "Article",
+    "date": "Nov 15, 2025",
+    "image": ""
+  },
+  {
+    "title": "The Data Analyst to AI Engineer Roadmap",
+    "description": "As a Data Analyst, you usually help others make decisions by sharing insights. In contrast, as an AI Engineer, you create products and systems that wo...",
+    "url": "articles/the-data-analyst-to-ai-engineer-roadmap.html",
+    "category": "Article",
+    "date": "Dec 14, 2025",
+    "image": ""
+  },
+  {
+    "title": "Rainfall Trends in India Analysis with Python",
+    "description": "Rainfall is a critical element of India\u2019s climate system, which impacts agriculture, water resources, and the overall economy. Understanding rainfall ...",
+    "url": "articles/rainfall-trends-in-india-analysis-with-python.html",
+    "category": "Article",
+    "date": "Nov 20, 2025",
+    "image": "assets/datasets/Trend-in-Annual-Rainfall-in-India-1901-2015.png"
+  },
+  {
+    "title": "Build a Multi-Agent System With LangGraph",
+    "description": "The future of AI isn\u2019t about building a smarter chatbot; it\u2019s about building a team. Today, we will build that team using LangGraph. We will create a ...",
+    "url": "articles/build-a-multi-agent-system-with-langgraph.html",
+    "category": "Article",
+    "date": "Dec 26, 2025",
+    "image": ""
+  },
+  {
+    "title": "Analyzing Screen Time with Python",
+    "description": "Screen time analysis refers to analyzing the amount of time a user spends interacting with their device (such as a smartphone, tablet, or computer) an...",
+    "url": "articles/analyzing-screen-time-with-python.html",
+    "category": "Article",
+    "date": "Nov 07, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-1.png?resize=1024%2C341&ssl=1"
+  },
+  {
+    "title": "Data Collection with an API using Python",
+    "description": "APIs, or Application Programming Interfaces, are sets of protocols and tools that allow different software applications to communicate with each other...",
+    "url": "articles/data-collection-with-an-api-using-python.html",
+    "category": "Article",
+    "date": "Nov 11, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/Image.png?resize=1024%2C742&ssl=1"
+  },
+  {
+    "title": "Consumer Price Index Analysis with Python",
+    "description": "Consumer Price Index (CPI) Analysis involves tracking the average price change over time for a basket of goods and services typically consumed by hous...",
+    "url": "articles/consumer-price-index-analysis-with-python.html",
+    "category": "Article",
+    "date": "Oct 28, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/11/cpi-1.png?resize=855%2C525&ssl=1"
+  },
+  {
+    "title": "Data Visualization Rules to Never Go Wrong",
+    "description": "Visualizing data effectively is crucial for analysis and communication. There are some data visualization rules that you should always follow to ensur...",
+    "url": "articles/data-visualization-rules-to-never-go-wrong.html",
+    "category": "Article",
+    "date": "Oct 24, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/02/data-visualization-rules-1.png?resize=1024%2C576&ssl=1"
+  },
+  {
+    "title": "Cohort Analysis using Python",
+    "description": "Cohort Analysis is a data analysis technique used to gain insights into the behaviour and characteristics of specific groups of users or customers ove...",
+    "url": "articles/cohort-analysis-using-python.html",
+    "category": "Article",
+    "date": "Nov 10, 2025",
+    "image": "assets/datasets/Cohort-1.png"
+  },
+  {
+    "title": "Hypothesis Testing for Data Scientists with Python",
+    "description": "As a Data Scientist, you\u2019re often tasked with determining whether a difference in outcomes or a trend in the data is significant, or simply the result...",
+    "url": "articles/hypothesis-testing-for-data-scientists-with-python.html",
+    "category": "Article",
+    "date": "Oct 31, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/05/image.png?resize=1024%2C253&ssl=1"
+  },
+  {
+    "title": "How to Pick the Right AI Model for Your Project",
+    "description": "There is a specific kind of paralysis that hits every Data Scientist when they open Hugging Face or the OpenAI docs today. It used to be a choice betw...",
+    "url": "articles/how-to-pick-the-right-ai-model-for-your-project.html",
+    "category": "Article",
+    "date": "Dec 15, 2025",
+    "image": ""
+  },
+  {
+    "title": "A Guide to Debug your ML Model",
+    "description": "Your model trains flawlessly. No SyntaxError. You run model.predict() on new data, hold your breath, and the results are garbage. In machine learning,...",
+    "url": "articles/a-guide-to-debug-your-ml-model.html",
+    "category": "Article",
+    "date": "Dec 07, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-12.png?resize=860%2C932&ssl=1"
+  },
+  {
+    "title": "Build a Live Machine Learning App in 5 Minutes",
+    "description": "Have you ever thought about building live and shareable Machine Learning apps? As your mentor, I\u2019m here to tell you that the gap between a trained mod...",
+    "url": "articles/build-a-live-machine-learning-app-in-5-minutes.html",
+    "category": "Article",
+    "date": "Dec 24, 2025",
+    "image": "assets/datasets/image-1.png"
+  },
+  {
+    "title": "Building a Multi-Agent System using Gemini API",
+    "description": "As an aspiring ML engineer, you\u2019ve probably worked on single-agent models, like a chatbot that responds to a single query. But the next frontier in AI...",
+    "url": "articles/building-a-multi-agent-system-using-gemini-api.html",
+    "category": "Article",
+    "date": "Dec 27, 2025",
+    "image": "assets/datasets/image-2.png"
+  },
+  {
+    "title": "MLOps Best Practices 2025",
+    "description": "Adapting CI/CD pipelines for Large\n                        Language Models. Evaludation, monitoring, and finetuning strategies.",
+    "url": "articles/mlops-best-practices.html",
+    "category": "Article",
+    "date": "Dec 26, 2025",
+    "image": ""
+  },
+  {
+    "title": "SQL Data Cleaning Methods",
+    "description": "Data cleaning is an essential step in the process of solving a Data Science problem to ensure the data\u2019s quality and reliability. If you are learning ...",
+    "url": "articles/sql-data-cleaning-methods.html",
+    "category": "Article",
+    "date": "Oct 18, 2025",
+    "image": ""
+  },
+  {
+    "title": "Building Synthetic Medical Records using GANs",
+    "description": "If you\u2019ve been following the Generative AI wave, you\u2019ve probably seen AI generate images, text, and even code. You can use the same technology to crea...",
+    "url": "articles/building-synthetic-medical-records-using-gans.html",
+    "category": "Article",
+    "date": "Dec 28, 2025",
+    "image": ""
+  },
+  {
+    "title": "A Guide to RFM Analysis using Python",
+    "description": "A common mistake many businesses make is treating all customers the same. They run generic promotions, send the same emails, and wonder why their reve...",
+    "url": "articles/a-guide-to-rfm-analysis-using-python.html",
+    "category": "Article",
+    "date": "Nov 07, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/08/image.png?resize=1024%2C174&ssl=1"
+  },
+  {
+    "title": "T20 World Cup 2024 Match Analysis",
+    "description": "If you want to practice data storytelling,\u00a0then\u00a0analyzing and summarizing the complete cricket match is one of the best tasks\u00a0you should try.\u00a0I recent...",
+    "url": "articles/t20-world-cup-2024-match-analysis.html",
+    "category": "Article",
+    "date": "Oct 27, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-7.png?resize=1024%2C164&ssl=1"
+  },
+  {
+    "title": "Types of Neural Networks",
+    "description": "A neural network is a subset of machine learning that mimics the workings of a human brain while solving a complex problem based on deep learning. Neu...",
+    "url": "articles/types-of-neural-networks.html",
+    "category": "Article",
+    "date": "Dec 12, 2025",
+    "image": ""
+  },
+  {
+    "title": "Packaging Machine Learning Models with Python",
+    "description": "Model packaging is an essential step in the Machine Learning deployment process, where the trained model is prepared in a format that can be easily de...",
+    "url": "articles/packaging-machine-learning-models-with-python.html",
+    "category": "Article",
+    "date": "Dec 03, 2025",
+    "image": "assets/datasets/image.png"
+  },
+  {
+    "title": "The 4 Best AI Courses to Take in 2026",
+    "description": "Have you noticed how quickly AI is changing? Not long ago, prompt engineering was a new idea. Now, we have AI agents that can plan, reason, and handle...",
+    "url": "articles/the-4-best-ai-courses-to-take-in-2026.html",
+    "category": "Article",
+    "date": "Oct 29, 2025",
+    "image": ""
+  },
+  {
+    "title": "RAG System Design",
+    "description": "Retrieval-Augmented Generation (RAG) is the gold standard for connecting LLMs to private data.\n                        But Naive RAG often fails in pr...",
+    "url": "articles/rag-system-design.html",
+    "category": "Article",
+    "date": "Dec 20, 2025",
+    "image": ""
+  },
+  {
+    "title": "Fashion Recommendation System using Image Features",
+    "description": "A Fashion Recommendation System using Image Features leverages computer vision and machine learning techniques to analyze fashion items\u2019 visual aspect...",
+    "url": "articles/fashion-recommendation-system-using-image-features.html",
+    "category": "Article",
+    "date": "Dec 11, 2025",
+    "image": "assets/datasets/fashion-recommendations-1.png"
+  },
+  {
+    "title": "Computation on NumPy Arrays using Python",
+    "description": "NumPy is the backbone of numerical computing in Python and is preferred in Data Science due to its efficiency, versatility, and extensive mathematical...",
+    "url": "articles/computation-on-numpy-arrays-using-python.html",
+    "category": "Article",
+    "date": "Nov 06, 2025",
+    "image": ""
+  },
+  {
+    "title": "Building a Diffusion Model From Scratch",
+    "description": "The rise of Generative AI has been nothing short of explosive. Just a few years ago, generating high-quality images was the domain of complex and ofte...",
+    "url": "articles/building-a-diffusion-model-from-scratch.html",
+    "category": "Article",
+    "date": "Dec 29, 2025",
+    "image": "assets/datasets/how-diffusion-models-work.png"
+  },
+  {
+    "title": "Deep Learning & NLP Project Ideas",
+    "description": "The world of AI is exploding, and if you\u2019re serious about mastering Deep Learning or NLP, you can\u2019t just watch tutorials or read research papers. You ...",
+    "url": "articles/deep-learning-nlp-project-ideas.html",
+    "category": "Article",
+    "date": "Dec 21, 2025",
+    "image": ""
+  },
+  {
+    "title": "Stock Price Prediction with LSTM",
+    "description": "LSTM stands for Long Short Term Memory Networks. It is a type of recurrent neural network that is commonly used for regression and time series forecas...",
+    "url": "articles/stock-price-prediction-with-lstm.html",
+    "category": "Article",
+    "date": "Dec 22, 2025",
+    "image": "assets/datasets/apple-stocks-price-prediction-with-lstm.png"
+  },
+  {
+    "title": "Data Science Project Ideas on Clustering Analysis",
+    "description": "Clustering analysis is a Machine Learning technique used to group a set of objects in a way that the data points in the same group (called a cluster) ...",
+    "url": "articles/data-science-project-ideas-on-clustering-analysis.html",
+    "category": "Article",
+    "date": "Oct 19, 2025",
+    "image": "assets/datasets/image-10.png"
+  },
+  {
+    "title": "Time Series Forecasting with ARIMA",
+    "description": "Time Series Forecasting means analyzing and modeling time-series data to make future decisions. Some of the applications of Time Series Forecasting ar...",
+    "url": "articles/time-series-forecasting-with-arima.html",
+    "category": "Article",
+    "date": "Oct 28, 2025",
+    "image": "assets/datasets/google-stocks-ARIMA.png"
+  },
+  {
+    "title": "Credit Score Classification with Machine Learning",
+    "description": "Banks and credit card companies calculate your credit score to determine your creditworthiness. It helps banks and credit card companies immediately t...",
+    "url": "articles/credit-score-classification-with-machine-learning.html",
+    "category": "Article",
+    "date": "Nov 30, 2025",
+    "image": "assets/datasets/newplot-15.png"
+  },
+  {
+    "title": "Customer Satisfaction Analysis with Python",
+    "description": "Customer Satisfaction Analysis is the process of collecting, analyzing, and interpreting data regarding how satisfied customers are with a company\u2019s p...",
+    "url": "articles/customer-satisfaction-analysis-with-python.html",
+    "category": "Article",
+    "date": "Oct 27, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/customer-satisfaction-1.png?resize=766%2C1024&ssl=1"
+  },
+  {
+    "title": "AI & ML Roadmap",
+    "description": "If you are aiming for a career in Artificial Intelligence, then AI Engineer and AI/ML Engineer are the right roles that you can target. If you are pre...",
+    "url": "articles/ai-ml-roadmap.html",
+    "category": "Article",
+    "date": "Oct 22, 2025",
+    "image": ""
+  },
+  {
+    "title": "Building a Multimodal AI Model",
+    "description": "Multimodal AI is one of the most exciting fields in artificial intelligence today. It\u2019s powering some smartest systems, like Google Lens to ChatGPT-4o...",
+    "url": "articles/building-a-multimodal-ai-model.html",
+    "category": "Article",
+    "date": "Dec 30, 2025",
+    "image": ""
+  },
+  {
+    "title": "Text Emotions Classification using Python",
+    "description": "Text emotions classification is the problem of assigning emotion to a text by understanding the context and the emotion behind the text. One real-worl...",
+    "url": "articles/text-emotions-classification-using-python.html",
+    "category": "Article",
+    "date": "Nov 02, 2025",
+    "image": ""
+  },
+  {
+    "title": "Instagram Content Strategy Optimization with Python",
+    "description": "Many people see Instagram as a social media app, but for businesses, it\u2019s more than that. For businesses, it\u2019s a platform which gives the idea of cont...",
+    "url": "articles/instagram-content-strategy-optimization-with-python.html",
+    "category": "Article",
+    "date": "Nov 09, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/01/image.png?resize=1024%2C587&ssl=1"
+  },
+  {
+    "title": "Customer Lifetime Value Analysis using Python",
+    "description": "Customer lifetime value analysis is used to estimate the total value of customers to the business over the lifetime of their relationship. It helps bu...",
+    "url": "articles/customer-lifetime-value-analysis-using-python.html",
+    "category": "Article",
+    "date": "Nov 12, 2025",
+    "image": "assets/datasets/CLTV-1.png"
+  },
+  {
+    "title": "Python Problems for Coding Interviews",
+    "description": "Python is preferred in various fields in the industry like Data Science, Web Development, and API Development. If you are learning Python for any of t...",
+    "url": "articles/python-problems-for-coding-interviews.html",
+    "category": "Article",
+    "date": "Oct 19, 2025",
+    "image": ""
+  },
+  {
+    "title": "Data Analytics Guided Projects with Python",
+    "description": "One of the best ways to learn Data Analytics is by working on projects that help you understand the concepts you are learning and implementing them on...",
+    "url": "articles/data-analytics-guided-projects-with-python.html",
+    "category": "Article",
+    "date": "Oct 25, 2025",
+    "image": ""
+  },
+  {
+    "title": "Build a Real-Time Voice AI Assistant",
+    "description": "We\u2019ve all watched Iron Man and quietly envied Tony Stark\u2019s banter with JARVIS. There is something profoundly magical about speaking to a machine and h...",
+    "url": "articles/build-a-real-time-voice-ai-assistant.html",
+    "category": "Article",
+    "date": "Dec 25, 2025",
+    "image": "assets/datasets/image.png"
+  },
+  {
+    "title": "End to End Chatbot using Python",
+    "description": "A chatbot is a computer program that understands the intent of your query to answer with a solution. Chatbots are the most popular applications of Nat...",
+    "url": "articles/end-to-end-chatbot-using-python.html",
+    "category": "Article",
+    "date": "Dec 04, 2025",
+    "image": "assets/datasets/chatbot-output.png"
+  },
+  {
+    "title": "Building an ETL Pipeline using PySpark",
+    "description": "An ETL (Extract, Transform, and Load) pipeline extracts data from sources, transforms it, and loads it into a storage system. It helps create clean, u...",
+    "url": "articles/building-an-etl-pipeline-using-pyspark.html",
+    "category": "Article",
+    "date": "Nov 10, 2025",
+    "image": ""
+  },
+  {
+    "title": "Python Libraries to Drop and Adopt in 2026",
+    "description": "If you\u2019ve been coding in Python for a few years, you\u2019ve likely felt that familiar itch. You spend hours debugging a library that feels clunky, or you ...",
+    "url": "articles/python-libraries-to-drop-and-adopt-in-2026.html",
+    "category": "Article",
+    "date": "Dec 20, 2025",
+    "image": ""
+  },
+  {
+    "title": "Dynamic Pricing Strategy using Python",
+    "description": "Dynamic Pricing is an application of data science that involves adjusting the prices of a product or service based on various factors in real time. It...",
+    "url": "articles/dynamic-pricing-strategy-using-python.html",
+    "category": "Article",
+    "date": "Nov 20, 2025",
+    "image": "assets/datasets/dynamic-pricing-1.png"
+  },
+  {
+    "title": "The 2026 AI Stack Decoded",
+    "description": "By 2026, the era of just wrapping an API call is over. We are no longer building simple chatbots; we are engineering systems; autonomous, reliable, an...",
+    "url": "articles/the-2026-ai-stack-decoded.html",
+    "category": "Article",
+    "date": "Dec 17, 2025",
+    "image": ""
+  },
+  {
+    "title": "Roadmap to Learn Cloud Platforms for Data Science",
+    "description": "The use of cloud platforms in Data Science is to provide space to store data and computational resources to solve problems at scale. A company generat...",
+    "url": "articles/roadmap-to-learn-cloud-platforms-for-data-science.html",
+    "category": "Article",
+    "date": "Oct 28, 2025",
+    "image": ""
+  },
+  {
+    "title": "Projects to Master Modern Machine Learning",
+    "description": "The field of AI is moving at a speed we\u2019ve never seen before. What was state-of-the-art six months ago is now a standard library import. I see so many...",
+    "url": "articles/projects-to-master-modern-machine-learning.html",
+    "category": "Article",
+    "date": "Dec 06, 2025",
+    "image": ""
+  },
+  {
+    "title": "Building AI Agents with LangChain",
+    "description": "A comprehensive guide to building autonomous AI agents using LangChain and LLMs.",
+    "url": "articles/building-ai-agents.html",
+    "category": "Article",
+    "date": "Dec 15, 2025",
+    "image": ""
+  },
+  {
+    "title": "Classification on Imbalanced Data using Python",
+    "description": "In Machine Learning, imbalanced data refers to a situation in classification problems where the number of observations in each class significantly dif...",
+    "url": "articles/classification-on-imbalanced-data-using-python.html",
+    "category": "Article",
+    "date": "Nov 25, 2025",
+    "image": "assets/datasets/classification-on-imbalanced-data-1.png"
+  },
+  {
+    "title": "Credit Card Clustering with Machine Learning",
+    "description": "Credit card clustering is the task of grouping credit card holders based on their buying habits, credit limits, and many other financial factors. If y...",
+    "url": "articles/credit-card-clustering-with-machine-learning.html",
+    "category": "Article",
+    "date": "Nov 28, 2025",
+    "image": "assets/datasets/credit-card-segments.png"
+  },
+  {
+    "title": "From Data Scientist to GenAI Engineer Roadmap",
+    "description": "When I switched from working with pure statistics to machine learning, it was a big change. Now, with the rise of the Generative AI Engineer, we\u2019re se...",
+    "url": "articles/from-data-scientist-to-genai-engineer-roadmap.html",
+    "category": "Article",
+    "date": "Dec 09, 2025",
+    "image": ""
+  },
+  {
+    "title": "Roadmap to Become a Freelance ML Engineer",
+    "description": "Did you know that top freelance ML Engineers on platforms like Toptal can command rates of over $100, sometimes even $200 per hour? The demand for spe...",
+    "url": "articles/roadmap-to-become-a-freelance-ml-engineer.html",
+    "category": "Article",
+    "date": "Nov 04, 2025",
+    "image": ""
+  },
+  {
+    "title": "Deploy a Machine Learning Model with Docker",
+    "description": "Deploying a Machine Learning model is the last mile problem of AI, and solving it is one of the most valuable skills you can learn. You must have hear...",
+    "url": "articles/deploy-a-machine-learning-model-with-docker.html",
+    "category": "Article",
+    "date": "Dec 23, 2025",
+    "image": "assets/datasets/image-3.png"
+  },
+  {
+    "title": "Build an AI Agent to Automate Your Research",
+    "description": "If you\u2019re a student or working in AI, you probably feel overwhelmed by the amount of information out there. The answers exist, but sorting through and...",
+    "url": "articles/build-an-ai-agent-to-automate-your-research.html",
+    "category": "Article",
+    "date": "Oct 25, 2025",
+    "image": "assets/datasets/image-3.png"
+  },
+  {
+    "title": "AI Projects Based on Every Domain",
+    "description": "Learning AI today can feel more challenging than it did three years ago. There are new papers, frameworks, and models coming out every week. But you r...",
+    "url": "articles/ai-projects-based-on-every-domain.html",
+    "category": "Article",
+    "date": "Dec 10, 2025",
+    "image": ""
+  },
+  {
+    "title": "Salary Prediction with Machine Learning",
+    "description": "Salary differs according to the job profile of the person. But generally, it\u2019s the working experience that determines the salary. Salary prediction is...",
+    "url": "articles/salary-prediction-with-machine-learning.html",
+    "category": "Article",
+    "date": "Nov 03, 2025",
+    "image": "assets/datasets/salary-prediction.png"
+  },
+  {
+    "title": "Inflation Impact Analysis with Python",
+    "description": "Inflation is the rate at which the general level of prices for goods and services rises over time, which leads to a decrease in the purchasing power o...",
+    "url": "articles/inflation-impact-analysis-with-python.html",
+    "category": "Article",
+    "date": "Nov 04, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-1.png?resize=728%2C382&ssl=1"
+  },
+  {
+    "title": "House Rent Prediction with Machine Learning",
+    "description": "The rent of a house depends on a lot of factors. With appropriate data and Machine Learning techniques, many real estate platforms find the housing op...",
+    "url": "articles/house-rent-prediction-with-machine-learning.html",
+    "category": "Article",
+    "date": "Nov 30, 2025",
+    "image": "assets/datasets/house-rent-1.png"
+  },
+  {
+    "title": "Synthetic Data Generation with Generative AI",
+    "description": "Synthetic data is artificially generated data that mimics real-world data. It is created by algorithms, models, or simulations rather than being colle...",
+    "url": "articles/synthetic-data-generation-with-generative-ai.html",
+    "category": "Article",
+    "date": "Dec 07, 2025",
+    "image": "assets/datasets/image-1.png"
+  },
+  {
+    "title": "Analytics Dashboard using Python",
+    "description": "An analytics dashboard is a data visualization tool that aggregates, displays, and analyzes key performance indicators (KPIs), metrics, and other key ...",
+    "url": "articles/analytics-dashboard-using-python.html",
+    "category": "Article",
+    "date": "Nov 06, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/image.png?resize=1024%2C697&ssl=1"
+  },
+  {
+    "title": "Compare Multiple Machine Learning Models",
+    "description": "The comparison of multiple Machine Learning models refers to training, evaluating, and analyzing the performance of different algorithms on the same d...",
+    "url": "articles/compare-multiple-machine-learning-models.html",
+    "category": "Article",
+    "date": "Nov 23, 2025",
+    "image": "assets/datasets/image-17.png"
+  },
+  {
+    "title": "Instagram Reach Forecasting using Python",
+    "description": "Not everyone is always available on social media all the time. Some people limit the use of social media during festive seasons, while some avoid soci...",
+    "url": "articles/instagram-reach-forecasting-using-python.html",
+    "category": "Article",
+    "date": "Nov 21, 2025",
+    "image": "assets/datasets/instagram-forecast-1.png"
+  },
+  {
+    "title": "Building an Agentic RAG Pipeline",
+    "description": "A typical RAG system quickly searches your uploaded tax documents or technical manuals to find a relevant snippet, even for something as simple as a c...",
+    "url": "articles/building-an-agentic-rag-pipeline.html",
+    "category": "Article",
+    "date": "Dec 15, 2025",
+    "image": ""
+  },
+  {
+    "title": "Next Word Prediction Model using Python",
+    "description": "Next Word Prediction means predicting the most likely word or phrase that will come next in a sentence or text. It is like having an inbuilt feature o...",
+    "url": "articles/next-word-prediction-model-using-python.html",
+    "category": "Article",
+    "date": "Dec 05, 2025",
+    "image": "assets/datasets/IMG_0876.jpg"
+  },
+  {
+    "title": "Retail Price Optimization using Python",
+    "description": "Retail price optimization involves determining the optimal selling price for products or services to maximize revenue and profit. So, if you want to l...",
+    "url": "articles/retail-price-optimization-using-python.html",
+    "category": "Article",
+    "date": "Nov 03, 2025",
+    "image": "assets/datasets/retail-price-1.png"
+  },
+  {
+    "title": "4 LLM Project Ideas for Your Resume",
+    "description": "Generative AI is changing fast, and recruiters want people who can make these large models do useful things, not just explain how they work. If you\u2019re...",
+    "url": "articles/4-llm-project-ideas-for-your-resume.html",
+    "category": "Article",
+    "date": "Dec 12, 2025",
+    "image": ""
+  },
+  {
+    "title": "Remote AI/ML Internships This Week",
+    "description": "Moving from following tutorials to actually writing code for a company can seem like a huge leap. The good news is that internships make this transiti...",
+    "url": "articles/remote-ai-ml-internships-this-week.html",
+    "category": "Article",
+    "date": "Dec 13, 2025",
+    "image": ""
+  },
+  {
+    "title": "Search Queries Anomaly Detection using Python",
+    "description": "Search Queries Anomaly Detection means identifying queries that are outliers according to their performance metrics. It is valuable for businesses to ...",
+    "url": "articles/search-queries-anomaly-detection-using-python.html",
+    "category": "Article",
+    "date": "Nov 26, 2025",
+    "image": "assets/datasets/search-queries-1.png"
+  },
+  {
+    "title": "Build a Real-Time AI Assistant Using RAG + LangChain",
+    "description": "If you\u2019ve ever wanted to build your own real-time AI assistant that can answer questions from your documents, websites, PDFs, notes, or knowledge base...",
+    "url": "articles/build-a-real-time-ai-assistant-using-rag-langchain.html",
+    "category": "Article",
+    "date": "Dec 24, 2025",
+    "image": ""
+  },
+  {
+    "title": "Roadmap to Learn NLP and LLMs",
+    "description": "If you are aiming for a career in Natural language Processing (NLP), learning about Large Language Models (LLMs) is a must for you now. Although you w...",
+    "url": "articles/roadmap-to-learn-nlp-and-llms.html",
+    "category": "Article",
+    "date": "Nov 04, 2025",
+    "image": ""
+  },
+  {
+    "title": "Prompt Engineering 101 for AI/ML Engineers",
+    "description": "Prompt engineering comes in handy when fine-tuning is too costly. Fine-tuning needs a large, clean dataset, lots of computing power, and special MLOps...",
+    "url": "articles/prompt-engineering-101-for-ai-ml-engineers.html",
+    "category": "Article",
+    "date": "Dec 08, 2025",
+    "image": ""
+  },
+  {
+    "title": "RFM Analysis using Python",
+    "description": "RFM Analysis is used to understand and segment customers based on their buying behaviour. RFM stands for recency, frequency, and monetary value, which...",
+    "url": "articles/rfm-analysis-using-python.html",
+    "category": "Article",
+    "date": "Nov 11, 2025",
+    "image": "assets/datasets/RFM-1.png"
+  },
+  {
+    "title": "Consumer Complaint Classification with Machine Learning",
+    "description": "Consumer Complaint Classification means classifying the nature of the complaint reported by the consumer. It is helpful for consumer care departments ...",
+    "url": "articles/consumer-complaint-classification-with-machine-learning.html",
+    "category": "Article",
+    "date": "Nov 24, 2025",
+    "image": ""
+  },
+  {
+    "title": "Data Analyst Roadmap",
+    "description": "Data analysis is the systematic process of inspecting, cleaning, transforming, and interpreting raw data to uncover meaningful patterns, trends, and i...",
+    "url": "articles/data-analyst-roadmap.html",
+    "category": "Article",
+    "date": "Oct 15, 2025",
+    "image": ""
+  },
+  {
+    "title": "AI Image Caption Recommendation System",
+    "description": "Applications like Instagram still lack a caption-generation tool because most LLMs don\u2019t write captions; they describe the image instead. This is wher...",
+    "url": "articles/ai-image-caption-recommendation-system.html",
+    "category": "Article",
+    "date": "Dec 08, 2025",
+    "image": "assets/datasets/aman.png"
+  },
+  {
+    "title": "Stock Market Crash Analysis with Python",
+    "description": "Stock market crashes are periods of rapid and significant declines in market values. Understanding these events and their precursors can provide valua...",
+    "url": "articles/stock-market-crash-analysis-with-python.html",
+    "category": "Article",
+    "date": "Nov 14, 2025",
+    "image": "assets/datasets/Sensex-Closing-Price-with-Daily-Crashes-Highlighted.png"
+  },
+  {
+    "title": "AI Image Generation using Diffusion Models",
+    "description": "Diffusion models are generative models that create new data (like images). At a high level, diffusion models start with pure noise (like a static TV s...",
+    "url": "articles/ai-image-generation-using-diffusion-models.html",
+    "category": "Article",
+    "date": "Dec 29, 2025",
+    "image": "assets/datasets/generated_image.png"
+  },
+  {
+    "title": "Data Cleaning Pipeline using Pandas",
+    "description": "The use of Machine Learning Algorithms is not required for every dataset, but every dataset does require some data cleaning steps. So, building a data...",
+    "url": "articles/data-cleaning-pipeline-using-pandas.html",
+    "category": "Article",
+    "date": "Nov 15, 2025",
+    "image": "assets/datasets/image-3.png"
+  },
+  {
+    "title": "Process of NLP using Python",
+    "description": "Natural Language Processing (NLP) is a subset of Artificial Intelligence where we aim to train computers to understand human languages. Some real-worl...",
+    "url": "articles/process-of-nlp-using-python.html",
+    "category": "Article",
+    "date": "Oct 20, 2025",
+    "image": "assets/datasets/process-of-nlp-wordcloud.png"
+  },
+  {
+    "title": "Price Elasticity of Demand Analysis with Python",
+    "description": "Price Elasticity of Demand (PED) measures the responsiveness of the quantity demanded of a product to changes in its price. It is calculated as the pe...",
+    "url": "articles/price-elasticity-of-demand-analysis-with-python.html",
+    "category": "Article",
+    "date": "Nov 12, 2025",
+    "image": "assets/datasets/image-5.png"
+  },
+  {
+    "title": "Website Performance Analysis using Python",
+    "description": "Website Performance Analysis involves evaluating\u00a0various metrics related to a website\u2019s functionality, user engagement, and overall success in achievi...",
+    "url": "articles/website-performance-analysis-using-python.html",
+    "category": "Article",
+    "date": "Oct 30, 2025",
+    "image": "assets/datasets/website-performance-1.png"
+  },
+  {
+    "title": "Types of AI Agents You Should Know",
+    "description": "As an aspiring AI & ML Engineer, it\u2019s vital to understand the foundational concepts behind AI agents. Think of AI agents as software entities that can...",
+    "url": "articles/types-of-ai-agents-you-should-know.html",
+    "category": "Article",
+    "date": "Dec 19, 2025",
+    "image": "assets/datasets/ai-agents-1.jpg"
+  },
+  {
+    "title": "Financial Data Analysis with Python",
+    "description": "Financial data analysis involves examining financial information, such as stock prices, market trends, and company performance, to derive insights tha...",
+    "url": "articles/financial-data-analysis-with-python.html",
+    "category": "Article",
+    "date": "Nov 13, 2025",
+    "image": "assets/datasets/image-5.png"
+  },
+  {
+    "title": "Netflix Subscriptions Forecasting using Python",
+    "description": "Forecasting the number of subscriptions Netflix will achieve in a time period is a vital business practice that enables them to plan, strategize, and ...",
+    "url": "articles/netflix-subscriptions-forecasting-using-python.html",
+    "category": "Article",
+    "date": "Oct 29, 2025",
+    "image": "assets/datasets/netflix-1.png"
+  },
+  {
+    "title": "SQL Subqueries Guide",
+    "description": "SQL Subqueries are a powerful tool used to perform operations within a query by embedding one query within another. Data Analysts/Scientists use SQL s...",
+    "url": "articles/sql-subqueries-guide.html",
+    "category": "Article",
+    "date": "Oct 18, 2025",
+    "image": ""
+  },
+  {
+    "title": "AI/ML Resume Checklist for Freshers",
+    "description": "Most entry-level AI/ML resumes look the same. They mention Python, TensorFlow, and Scikit-learn, then hope for the best. But in such a competitive fie...",
+    "url": "articles/ai-ml-resume-checklist-for-freshers.html",
+    "category": "Article",
+    "date": "Dec 11, 2025",
+    "image": ""
+  },
+  {
+    "title": "Music Recommendation System using Python",
+    "description": "A Music Recommendation System is an application of Data Science that aims to assist users in discovering new and relevant musical content based on the...",
+    "url": "articles/music-recommendation-system-using-python.html",
+    "category": "Article",
+    "date": "Oct 31, 2025",
+    "image": "assets/datasets/IMG_1003.jpg"
+  },
+  {
+    "title": "How I Decide Whether a Dataset Is Worth Using",
+    "description": "The saying \u2018Garbage In, Garbage Out\u2019 is common in Data Science, and for good reason. From my experience, picking the right dataset matters more than p...",
+    "url": "articles/how-i-decide-whether-a-dataset-is-worth-using.html",
+    "category": "Article",
+    "date": "Dec 14, 2025",
+    "image": "assets/datasets/data-leakage-example.png"
+  },
+  {
+    "title": "Data Preprocessing Techniques You Should Know",
+    "description": "Data preprocessing is a critical step in the data analysis and machine learning workflow. It involves transforming raw data into a clean, understandab...",
+    "url": "articles/data-preprocessing-techniques-you-should-know.html",
+    "category": "Article",
+    "date": "Oct 24, 2025",
+    "image": ""
+  },
+  {
+    "title": "Exploratory Data Analysis using SQL",
+    "description": "Data Scientists use SQL for Exploratory Data Analysis (EDA) to query, filter, aggregate, and extract specific subsets of data efficiently when working...",
+    "url": "articles/exploratory-data-analysis-using-sql.html",
+    "category": "Article",
+    "date": "Nov 10, 2025",
+    "image": ""
+  },
+  {
+    "title": "Fine-Tuning LLMs using LoRA",
+    "description": "For years, the idea of truly customizing a Large Language Model felt like a privilege reserved for tech giants with bottomless budgets. The barrier to...",
+    "url": "articles/fine-tuning-llms-using-lora.html",
+    "category": "Article",
+    "date": "Dec 31, 2025",
+    "image": "assets/datasets/image-7.png"
+  },
+  {
+    "title": "Pandas Tricks for Data Scientists",
+    "description": "When I was starting, I wasted countless hours writing verbose, inefficient code, only to discover elegant, one-line solutions. Now, after years of wra...",
+    "url": "articles/pandas-tricks-for-data-scientists.html",
+    "category": "Article",
+    "date": "Nov 13, 2025",
+    "image": ""
+  },
+  {
+    "title": "Machine Learning Projects for All Levels",
+    "description": "The single most significant gap between a beginner and a pro in machine learning isn\u2019t more courses; it\u2019s hands-on experience. It\u2019s about getting your...",
+    "url": "articles/machine-learning-projects-for-all-levels.html",
+    "category": "Article",
+    "date": "Dec 16, 2025",
+    "image": ""
+  },
+  {
+    "title": "Music Popularity Prediction with Python",
+    "description": "Music popularity prediction involves developing machine learning models to estimate the popularity of music tracks based on their audio features. Pred...",
+    "url": "articles/music-popularity-prediction-with-python.html",
+    "category": "Article",
+    "date": "Dec 01, 2025",
+    "image": "assets/datasets/music-features-1.png"
+  },
+  {
+    "title": "Best Datasets for Generative AI Projects",
+    "description": "Generative AI, whether it\u2019s large language models or diffusion models, acts as a creative partner. Like any artist, its abilities and perspective depe...",
+    "url": "articles/best-datasets-for-generative-ai-projects.html",
+    "category": "Article",
+    "date": "Dec 09, 2025",
+    "image": ""
+  },
+  {
+    "title": "Classification with Neural Networks using Python",
+    "description": "In machine learning, classification means categorizing the known classes, For example, categorizing the most profitable and non-interested customers f...",
+    "url": "articles/classification-with-neural-networks-using-python.html",
+    "category": "Article",
+    "date": "Nov 24, 2025",
+    "image": "assets/datasets/mnistsample.png"
+  },
+  {
+    "title": "Missing Value Imputation Methods using Python",
+    "description": "In any real-world data collection, missing values can occur due to various reasons like errors in data entry, non-response in surveys, equipment malfu...",
+    "url": "articles/missing-value-imputation-methods-using-python.html",
+    "category": "Article",
+    "date": "Oct 20, 2025",
+    "image": ""
+  },
+  {
+    "title": "Creating a Mutual Fund Plan with Python",
+    "description": "Mutual funds are investment plans that pool money from multiple investors to purchase a diversified portfolio of stocks, bonds, and other securities, ...",
+    "url": "articles/creating-a-mutual-fund-plan-with-python.html",
+    "category": "Article",
+    "date": "Nov 01, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Stock-Price-Trends-of-All-Indian-Companies.png?resize=855%2C525&ssl=1"
+  },
+  {
+    "title": "EDA for Feature Selection using Python",
+    "description": "Exploratory Data Analysis (EDA) is an approach in data analysis that uses various techniques to maximize insight into a dataset, uncover underlying st...",
+    "url": "articles/eda-for-feature-selection-using-python.html",
+    "category": "Article",
+    "date": "Oct 21, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-Feature-Selection-1.png?resize=1024%2C886&ssl=1"
+  },
+  {
+    "title": "Connecting Python to OpenAI (Step-by-Step)",
+    "description": "Using ChatGPT in your browser is very different from building with it in code. By connecting Python to OpenAI, you move from just using AI to actually...",
+    "url": "articles/connecting-python-to-openai-step-by-step.html",
+    "category": "Article",
+    "date": "Dec 13, 2025",
+    "image": ""
+  },
+  {
+    "title": "MLOps Project Ideas to Get You Hired",
+    "description": "The truth, as I learned the hard way, is that a model sitting in a Jupyter notebook is nothing but a practice exercise. It hasn\u2019t delivered any value ...",
+    "url": "articles/mlops-project-ideas-to-get-you-hired.html",
+    "category": "Article",
+    "date": "Dec 12, 2025",
+    "image": ""
+  },
+  {
+    "title": "Text Summarization Model using LLMs",
+    "description": "A text summarization model takes a long text and creates a shorter version while preserving its main points. It works by extracting key sentences dire...",
+    "url": "articles/text-summarization-model-using-llms.html",
+    "category": "Article",
+    "date": "Dec 06, 2025",
+    "image": ""
+  },
+  {
+    "title": "Fine-tuning LLMs on Your Own Data",
+    "description": "Large Language Models like BERT, RoBERTa, and GPT have been pretrained on massive text corpora. But when it comes to solving specific tasks, like clas...",
+    "url": "articles/fine-tuning-llms-on-your-own-data.html",
+    "category": "Article",
+    "date": "Dec 31, 2025",
+    "image": "assets/datasets/image.png"
+  },
+  {
+    "title": "Building a Multimodal AI Model with Python",
+    "description": "Multimodal AI is one of the most exciting fields in artificial intelligence today. It\u2019s powering some smartest systems, like Google Lens to ChatGPT-4o...",
+    "url": "articles/building-a-multimodal-ai-model-with-python.html",
+    "category": "Article",
+    "date": "Dec 01, 2025",
+    "image": ""
+  },
+  {
+    "title": "Demographics Analysis with Python",
+    "description": "Demographics analysis involves examining the characteristics of a population based on factors such as age, gender, location, income, education, and mo...",
+    "url": "articles/demographics-analysis-with-python.html",
+    "category": "Article",
+    "date": "Oct 23, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/demographics-1.png?resize=1024%2C660&ssl=1"
+  },
+  {
+    "title": "Building AI Agents with CrewAI using Python",
+    "description": "CrewAI is an agent orchestration framework that allows you to coordinate multiple AI agents (each with a role, goal, memory, and tool access) to solve...",
+    "url": "articles/building-ai-agents-with-crewai-using-python.html",
+    "category": "Article",
+    "date": "Nov 28, 2025",
+    "image": ""
+  },
+  {
+    "title": "IPL 2024 RCB vs DC Analysis using Python",
+    "description": "If you are\u00a0someone\u00a0interested in learning about the use of Data Science in cricket analytics, this article is for you. The match between RCB and Delhi...",
+    "url": "articles/ipl-2024-rcb-vs-dc-analysis-using-python.html",
+    "category": "Article",
+    "date": "Nov 04, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-1.png?resize=1024%2C483&ssl=1"
+  },
+  {
+    "title": "Market Basket Analysis using Python",
+    "description": "Market Basket Analysis is a data-driven technique used to uncover patterns and relationships within large transactional datasets, particularly in reta...",
+    "url": "articles/market-basket-analysis-using-python.html",
+    "category": "Article",
+    "date": "Nov 11, 2025",
+    "image": "assets/datasets/Market-basket-1.png"
+  },
+  {
+    "title": "Best Resources to Learn LLMs",
+    "description": "Large Language Models (LLMs) are transforming industries with their ability to generate text, answer questions, assist in coding, and power AI-driven ...",
+    "url": "articles/best-resources-to-learn-llms.html",
+    "category": "Article",
+    "date": "Nov 05, 2025",
+    "image": ""
+  },
+  {
+    "title": "B2B Courier Charges Accuracy Analysis using Python",
+    "description": "In today\u2019s fast-paced e-commerce industry, fast and efficient order delivery is crucial to business success. To ensure seamless order fulfilment, busi...",
+    "url": "articles/b2b-courier-charges-accuracy-analysis-using-python.html",
+    "category": "Article",
+    "date": "Nov 16, 2025",
+    "image": "assets/datasets/b2b-accuracy-plot.png"
+  },
+  {
+    "title": "A Guide to Fine-Tuning LLMs using LoRA",
+    "description": "For years, the idea of truly customizing a Large Language Model felt like a privilege reserved for tech giants with bottomless budgets. The barrier to...",
+    "url": "articles/a-guide-to-fine-tuning-llms-using-lora.html",
+    "category": "Article",
+    "date": "Dec 03, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/10/image-7.png?resize=1024%2C689&ssl=1"
+  },
+  {
+    "title": "Loan Approval Prediction using Python",
+    "description": "Loan Approval Prediction is one of the problems that Machine Learning has solved in fintech businesses like banks and financial institutions. Loan app...",
+    "url": "articles/loan-approval-prediction-using-python.html",
+    "category": "Article",
+    "date": "Dec 01, 2025",
+    "image": "assets/datasets/newplot-8.png"
+  },
+  {
+    "title": "Recommendation System using Python and TensorFlow",
+    "description": "Recommendation systems are the invisible engine behind the success of platforms like Netflix, Amazon, Spotify, and YouTube. They personalize your expe...",
+    "url": "articles/recommendation-system-using-python-and-tensorflow.html",
+    "category": "Article",
+    "date": "Dec 11, 2025",
+    "image": "assets/datasets/image.png"
+  },
+  {
+    "title": "Ads CTR Forecasting using Python",
+    "description": "Ads CTR Analysis stands for Click-Through Rate Analysis for advertisements. Ads CTR Analysis is the process of examining the effectiveness of online a...",
+    "url": "articles/ads-ctr-forecasting-using-python.html",
+    "category": "Article",
+    "date": "Oct 30, 2025",
+    "image": "assets/datasets/ad-ctr-1.png"
+  },
+  {
+    "title": "Stock Market Portfolio Optimization with Python",
+    "description": "Stock market portfolio optimization is the process of selecting the best combination of stocks to maximize returns while minimizing the risk, based on...",
+    "url": "articles/stock-market-portfolio-optimization-with-python.html",
+    "category": "Article",
+    "date": "Oct 18, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-1.png?resize=1024%2C586&ssl=1"
+  },
+  {
+    "title": "Feature Engineering Tricks I Use as an ML Engineer",
+    "description": "People often call feature engineering the black art of machine learning. Even if you use the most advanced algorithm, like a deep neural network with ...",
+    "url": "articles/feature-engineering-tricks-i-use-as-an-ml-engineer.html",
+    "category": "Article",
+    "date": "Dec 23, 2025",
+    "image": ""
+  },
+  {
+    "title": "How I Use AI to Automate My Machine Learning Workflow",
+    "description": "We are often told that Data Science is about math and insights. But in reality, it\u2019s mostly plumbing. It\u2019s connecting pipes, cleaning leaks, and ensur...",
+    "url": "articles/how-i-use-ai-to-automate-my-machine-learning-workflow.html",
+    "category": "Article",
+    "date": "Dec 17, 2025",
+    "image": ""
+  },
+  {
+    "title": "Anomaly Detection in Transactions using Python",
+    "description": "Anomaly detection in transactions means identifying unusual or unexpected patterns within transactions or related activities. These patterns, known as...",
+    "url": "articles/anomaly-detection-in-transactions-using-python.html",
+    "category": "Article",
+    "date": "Nov 26, 2025",
+    "image": "assets/datasets/Anomaly-Detection-1.png"
+  },
+  {
+    "title": "Top AI Blogs You Should Read to Stay Ahead",
+    "description": "The world of AI moves at a dizzying pace. One day, everyone is talking about diffusion models; the next, it\u2019s all about Mixture of Experts. Your feed ...",
+    "url": "articles/top-ai-blogs-you-should-read-to-stay-ahead.html",
+    "category": "Article",
+    "date": "Nov 14, 2025",
+    "image": ""
+  },
+  {
+    "title": "5 Real World LLM Project Ideas",
+    "description": "Large Language Models (LLMs) are no longer just academic experiments, they are powering everything from enterprise automation to creative tools. So, i...",
+    "url": "articles/5-real-world-llm-project-ideas.html",
+    "category": "Article",
+    "date": "Dec 21, 2025",
+    "image": ""
+  },
+  {
+    "title": "The Rise of Small Language Models",
+    "description": "Why bigger isn't always better. Phi-3,\n                        Gemma, and Llama 3-8B are changing usage on edge devices.",
+    "url": "articles/small-language-models.html",
+    "category": "Article",
+    "date": "Dec 22, 2025",
+    "image": ""
+  },
+  {
+    "title": "Machine Learning Guided Projects with Python",
+    "description": "If you are learning Machine Learning, one of the best strategies you can follow is to work on projects based on the concepts you are learning. It will...",
+    "url": "articles/machine-learning-guided-projects-with-python.html",
+    "category": "Article",
+    "date": "Oct 25, 2025",
+    "image": ""
+  },
+  {
+    "title": "Build an AI Agent to Master a Game",
+    "description": "Do you know how AI opponents in video games seem to think, adapt, and sometimes, even outsmart you? The secret behind this is a powerful branch of AI ...",
+    "url": "articles/build-an-ai-agent-to-master-a-game.html",
+    "category": "Article",
+    "date": "Dec 28, 2025",
+    "image": "assets/datasets/what-is-an-AI-Agent.png"
+  },
+  {
+    "title": "SQL Concepts for Data Science Interviews",
+    "description": "Data Scientists use SQL to solve complex data manipulation, aggregation, and transformation problems. In Data Science interviews, Interviewers often t...",
+    "url": "articles/sql-concepts-for-data-science-interviews.html",
+    "category": "Article",
+    "date": "Oct 26, 2025",
+    "image": ""
+  },
+  {
+    "title": "MLOps Pipeline using Apache Airflow",
+    "description": "Machine Learning Operations (MLOps) integrates machine learning model development and deployment into a robust, automated pipeline. Every machine Lear...",
+    "url": "articles/mlops-pipeline-using-apache-airflow.html",
+    "category": "Article",
+    "date": "Nov 17, 2025",
+    "image": ""
+  },
+  {
+    "title": "User Profiling and Segmentation using Python",
+    "description": "User profiling refers to creating detailed profiles that represent the behaviours and preferences of users, and segmentation divides the user base int...",
+    "url": "articles/user-profiling-and-segmentation-using-python.html",
+    "category": "Article",
+    "date": "Nov 22, 2025",
+    "image": "assets/datasets/user-profiling-1.png"
+  },
+  {
+    "title": "Clustering Music Genres with Machine Learning",
+    "description": "Clustering is a machine learning technique to group data points characterized by specific features. Clustering music genres is a task of grouping musi...",
+    "url": "articles/clustering-music-genres-with-machine-learning.html",
+    "category": "Article",
+    "date": "Nov 29, 2025",
+    "image": "assets/datasets/music-clusters.png"
+  },
+  {
+    "title": "YouTube Data Collection and Analysis with Python",
+    "description": "If you are learning Data Science, YouTube is\u00a0an amazing\u00a0data source\u00a0for you. There are so many problems we can solve by collecting data from YouTube. ...",
+    "url": "articles/youtube-data-collection-and-analysis-with-python.html",
+    "category": "Article",
+    "date": "Nov 08, 2025",
+    "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image.png?resize=1024%2C561&ssl=1"
+  },
+  {
+    "title": "Machine Learning Projects",
+    "description": "A collection of machine learning projects and case studies.",
+    "url": "projects/machine_learning.html",
+    "category": "Project",
+    "date": ""
+  },
+  {
+    "title": "About Kishna Kushwaha",
+    "description": "Learn more about Kishna Kushwaha, an AI Engineer.",
+    "url": "about.html",
+    "category": "Page",
+    "date": ""
+  }
+]

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Hybrid Machine Learning Model with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Hybrid Machine Learning Model with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 27, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="image-classification-model-with-deep-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="build-an-end-to-end-machine-learning-model.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Hybrid <strong><a href="ai-ml-roadmap.html" target="">machine learning</a></strong> models combine different types of algorithms to leverage their unique strengths, which results in improved predictive performance and robustness. If you want to learn about building a hybrid machine learning model, this article is for you. In this article, I’ll take you through a step-by-step guide on creating a hybrid machine learning model to use the predictive power of multiple algorithms together.</p>
+<h2 class="wp-block-heading">When to Build a Hybrid Machine Learning Model?</h2>
+<p>Build a hybrid machine learning model when a single algorithm cannot capture data complexity. Different data types or patterns may require this. For example, use a hybrid approach when handling sequential patterns and broader trends in the data.</p>
+<p>Combine models like LSTM for sequence learning and Linear Regression for trend analysis to improve performance.</p>
+<p>Identify the need for a hybrid model when single models perform poorly based on performance metrics. Different models combined can provide unique strengths in predictive modeling.</p>
+<h2 class="wp-block-heading">Building a Hybrid Machine Learning Model with Python</h2>
+<p>Now, I’ll take you through a step-by-step guide on building a hybrid machine learning model where we will be combining the predictive power of two different models to create a hybrid model. The dataset I will be using for this task can be downloaded from <strong><a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">here</a></strong>.</p>
+<p>Now, let’s get started with the task of building a hybrid machine learning model by importing the necessary Python libraries and the dataset:</p>
+<pre><code class="language-python">import pandas as pd
+data = pd.read_csv('/content/apple_stock_data.csv')
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>                        Date   Adj Close       Close        High         Low  \<br/>0  2023-11-02 00:00:00+00:00  176.665985  177.570007  177.779999  175.460007   <br/>1  2023-11-03 00:00:00+00:00  175.750671  176.649994  176.820007  173.350006   <br/>2  2023-11-06 00:00:00+00:00  178.317520  179.229996  179.429993  176.210007   <br/>3  2023-11-07 00:00:00+00:00  180.894333  181.820007  182.440002  178.970001   <br/>4  2023-11-08 00:00:00+00:00  181.958893  182.889999  183.449997  181.589996   <br/><br/>         Open    Volume  <br/>0  175.520004  77334800  <br/>1  174.240005  79763700  <br/>2  176.380005  63841300  <br/>3  179.179993  70530000  <br/>4  182.350006  49340300  </strong></pre>
+<p>As the dataset is based on stock market data, I’ll convert the date column to a datetime type, set it as the index, and focus on the Close price:</p>
+<pre><code class="language-python">data['Date'] = pd.to_datetime(data['Date'])
+data.set_index('Date', inplace=True)
+data = data[['Close']]</code></pre>
+<h3 class="wp-block-heading">Choosing the Hybrid Models</h3>
+<p>We will be using<strong> LSTM (Long Short-Term Memory)</strong> and <strong>Linear Regression</strong> models for this task. I chose LSTM because it effectively captures sequential dependencies and patterns in time-series data, which makes it suitable for modelling stock price movements influenced by historical trends.</p>
+<p>Linear Regression, on the other hand, is a straightforward model that captures simple linear relationships and long-term trends in data. By combining these two models into a hybrid approach, we leverage the LSTM’s ability to model complex time-dependent patterns alongside the Linear Regression’s ability to identify and follow broader trends. This combination aims to create a more balanced and accurate prediction system.</p>
+<p>So, let’s scale the Close price data between 0 and 1 using MinMaxScaler to ensure compatibility with the LSTM model:</p>
+<pre><code class="language-python">from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler(feature_range=(0, 1))
+data['Close'] = scaler.fit_transform(data[['Close']])</code></pre>
+<p>Now, let’s prepare the data for LSTM by creating sequences of a defined length (e.g., 60 days) to predict the next day’s price:</p>
+<pre><code class="language-python">import numpy as np
+def create_sequences(data, seq_length=60):
+    X, y = [], []
+    for i in range(len(data) - seq_length):
+        X.append(data[i:i+seq_length])
+        y.append(data[i+seq_length])
+    return np.array(X), np.array(y)
+
+seq_length = 60
+X, y = create_sequences(data['Close'].values, seq_length)</code></pre>
+<p>Now, we will split the sequences into training and test sets (e.g., 80% training, 20% testing):</p>
+<pre><code class="language-python">train_size = int(len(X) * 0.8)
+X_train, X_test = X[:train_size], X[train_size:]
+y_train, y_test = y[:train_size], y[train_size:]</code></pre>
+<p>Now, we will build a sequential LSTM model with layers to capture the temporal dependencies in the data:</p>
+<pre><code class="language-python">from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import LSTM, Dense
+
+lstm_model = Sequential()
+lstm_model.add(LSTM(units=50, return_sequences=True, input_shape=(X_train.shape[1], 1)))
+lstm_model.add(LSTM(units=50))
+lstm_model.add(Dense(1))</code></pre>
+<p>Now, we will compile the model using an appropriate optimizer and loss function, and fit it into the training data:</p>
+<pre><code class="language-python">lstm_model.compile(optimizer='adam', loss='mean_squared_error')
+lstm_model.fit(X_train, y_train, epochs=20, batch_size=32)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size">Epoch 1/20<br/>5/5 ━━━━━━━━━━━━━━━━━━━━ 6s 64ms/step - loss: 0.2519<br/>Epoch 2/20<br/>5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 59ms/step - loss: 0.0425<br/>Epoch 3/20<br/>5/5 ━━━━━━━━━━━━━━━━━━━━ 1s 59ms/step - loss: 0.0396<br/>Epoch 4/20<br/>5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 57ms/step - loss: 0.0167<br/>Epoch 5/20<br/>5/5 ━━━━━━━━━━━━━━━━━━━━ 1s 52ms/step - loss: 0.0199<br/>Epoch 6/20<br/>5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 48ms/step - loss: 0.0152<br/>Epoch 7/20<br/>5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 49ms/step - loss: 0.0127<br/>Epoch 8/20<br/>5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 75ms/step - loss: 0.0130<br/>Epoch 9/20<br/>5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 60ms/step - loss: 0.0104<br/>Epoch 10/20<br/>5/5 ━━━━━━━━━━━━━━━━━━━━ 1s 81ms/step - loss: 0.0107<br/>Epoch 11/20<br/>5/5 ━━━━━━━━━━━━━━━━━━━━ 1s 64ms/step - loss: 0.0091<br/>Epoch 12/20<br/>5/5 ━━━━━━━━━━━━━━━━━━━━ 1s 65ms/step - loss: 0.0094<br/>Epoch 13/20<br/>5/5 ━━━━━━━━━━━━━━━━━━━━ 1s 62ms/step - loss: 0.0098<br/>Epoch 14/20<br/>5/5 ━━━━━━━━━━━━━━━━━━━━ 1s 62ms/step - loss: 0.0087<br/>Epoch 15/20<br/>5/5 ━━━━━━━━━━━━━━━━━━━━ 1s 62ms/step - loss: 0.0081<br/>Epoch 16/20<br/>5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 56ms/step - loss: 0.0081<br/>Epoch 17/20<br/>5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 64ms/step - loss: 0.0093<br/>Epoch 18/20<br/>5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 61ms/step - loss: 0.0078<br/>Epoch 19/20<br/>5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 57ms/step - loss: 0.0078<br/>Epoch 20/20<br/>5/5 ━━━━━━━━━━━━━━━━━━━━ 0s 66ms/step - loss: 0.0073</pre>
+<p>Now, let’s train the second model. I’ll start by generating lagged features for Linear Regression (e.g., using the past 3 days as predictors):</p>
+<pre><code class="language-python">data['Lag_1'] = data['Close'].shift(1)
+data['Lag_2'] = data['Close'].shift(2)
+data['Lag_3'] = data['Close'].shift(3)
+data = data.dropna()</code></pre>
+<p>Now, we will split the data accordingly for training and testing:</p>
+<pre><code class="language-python">X_lin = data[['Lag_1', 'Lag_2', 'Lag_3']]
+y_lin = data['Close']
+X_train_lin, X_test_lin = X_lin[:train_size], X_lin[train_size:]
+y_train_lin, y_test_lin = y_lin[:train_size], y_lin[train_size:]</code></pre>
+<p>Now, let’s train the linear regression model:</p>
+<pre><code class="language-python">from sklearn.linear_model import LinearRegression
+lin_model = LinearRegression()
+lin_model.fit(X_train_lin, y_train_lin)</code></pre>
+<p>Now, here’s how to make predictions using LSTM on the test set and inverse transform the scaled predictions:</p>
+<pre><code class="language-python">X_test_lstm = X_test.reshape((X_test.shape[0], X_test.shape[1], 1))
+lstm_predictions = lstm_model.predict(X_test_lstm)
+lstm_predictions = scaler.inverse_transform(lstm_predictions)</code></pre>
+<p>Here’s how to generate predictions using Linear Regression and inverse-transform them:</p>
+<pre><code class="language-python">lin_predictions = lin_model.predict(X_test_lin)
+lin_predictions = scaler.inverse_transform(lin_predictions.reshape(-1, 1))</code></pre>
+<p>And, here’s how to use a weighted average to create hybrid predictions:</p>
+<pre><code class="language-python">hybrid_predictions = (0.7 * lstm_predictions) + (0.3 * lin_predictions)</code></pre>
+<h4 class="wp-block-heading">Predicting using the Hybrid Model</h4>
+<p>Let’s see how to make predictions for the next 10 days using our hybrid model. Here’s how to predict the Next 10 Days using LSTM:</p>
+<pre><code class="language-python">lstm_future_predictions = []
+last_sequence = X[-1].reshape(1, seq_length, 1)
+for _ in range(10):
+    lstm_pred = lstm_model.predict(last_sequence)[0, 0]
+    lstm_future_predictions.append(lstm_pred)
+    lstm_pred_reshaped = np.array([[lstm_pred]]).reshape(1, 1, 1)
+    last_sequence = np.append(last_sequence[:, 1:, :], lstm_pred_reshaped, axis=1)
+lstm_future_predictions = scaler.inverse_transform(np.array(lstm_future_predictions).reshape(-1, 1))</code></pre>
+<p>Here’s how to predict the Next 10 Days using Linear Regression:</p>
+<pre><code class="language-python">recent_data = data['Close'].values[-3:]
+lin_future_predictions = []
+for _ in range(10):
+    lin_pred = lin_model.predict(recent_data.reshape(1, -1))[0]
+    lin_future_predictions.append(lin_pred)
+    recent_data = np.append(recent_data[1:], lin_pred)
+lin_future_predictions = scaler.inverse_transform(np.array(lin_future_predictions).reshape(-1, 1))</code></pre>
+<p>And, here’s how to combine the predictive power of both models to make predictions for the next 10 days:</p>
+<pre><code class="language-python">hybrid_future_predictions = (0.7 * lstm_future_predictions) + (0.3 * lin_future_predictions)</code></pre>
+<p>Here’s how to create the final DataFrame to look at the predictions:</p>
+<pre><code class="language-python">future_dates = pd.date_range(start=data.index[-1] + pd.Timedelta(days=1), periods=10)
+predictions_df = pd.DataFrame({
+    'Date': future_dates,
+    'LSTM Predictions': lstm_future_predictions.flatten(),
+    'Linear Regression Predictions': lin_future_predictions.flatten(),
+    'Hybrid Model Predictions': hybrid_future_predictions.flatten()
+})
+print(predictions_df)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>                       Date  LSTM Predictions  Linear Regression Predictions  \<br/>0 2024-11-02 00:00:00+00:00        232.222122                     230.355192   <br/>1 2024-11-03 00:00:00+00:00        231.944504                     225.707291   <br/>2 2024-11-04 00:00:00+00:00        231.732971                     222.703426   <br/>3 2024-11-05 00:00:00+00:00        231.574249                     230.631535   <br/>4 2024-11-06 00:00:00+00:00        231.456375                     225.486380   <br/>5 2024-11-07 00:00:00+00:00        231.368454                     222.494588   <br/>6 2024-11-08 00:00:00+00:00        231.301605                     230.930195   <br/>7 2024-11-09 00:00:00+00:00        231.249008                     225.245599   <br/>8 2024-11-10 00:00:00+00:00        231.205811                     222.284007   <br/>9 2024-11-11 00:00:00+00:00        231.168671                     231.252375   <br/><br/>   Hybrid Model Predictions  <br/>0                231.662038  <br/>1                230.073332  <br/>2                229.024102  <br/>3                231.291435  <br/>4                229.665369  <br/>5                228.706293  <br/>6                231.190176  <br/>7                229.447978  <br/>8                228.529273  <br/>9                231.193782</strong></pre>
+<h3 class="wp-block-heading">Summary</h3>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="image-classification-model-with-deep-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="build-an-end-to-end-machine-learning-model.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Analyzing Screen Time with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Analyzing Screen Time with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 07, 2025 • 5 min read</div>
+<p>Screen time analysis refers to analyzing the amount of time a user spends interacting with their device (such as a smartphone, tablet, or computer) and various applications on a daily, weekly, or monthly basis. So, if you want to learn how to analyze the screen time of a user, this article is for you. In this article, I’ll take you through the task of analyzing the screen time of a user using Python.</p>
+<h2 class="wp-block-heading">Analyzing Screen Time: Getting Started</h2>
+<p>For the task of analyzing the screen time of a user, we need data about the app usage activity of a user on a particular device. I found an ideal dataset for this task, which contains features like:</p>
+<ul class="wp-block-list">
+<li><strong>Date</strong>: The date on which the data was recorded.</li>
+<li><strong>App</strong>: The name of the application being used (e.g., Instagram, WhatsApp).</li>
+<li><strong>Usage (minutes)</strong>: The total number of minutes spent on the app daily.</li>
+<li><strong>Notifications</strong>: The number of notifications received from the app each day.</li>
+<li><strong>Times Opened</strong>: The number of times the app was opened on the recorded day.</li>
+</ul>
+<p>You can download the dataset from <strong><a href="https://statso.io/screen-time-case-study/">here</a></strong>.</p>
+<h2 class="wp-block-heading">Analyzing Screen Time with Python</h2>
+<p>Now, let’s get started with the task of analyzing the screen time of a user by importing the necessary Python libraries and the <strong><a href="https://statso.io/screen-time-case-study/">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+
+data = pd.read_csv("/content/screentime_analysis.csv")
+
+data.head()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Analyzing Screen Time: data" class="wp-image-24636" data-attachment-id="24636" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-1.png?fit=1024%2C341&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-1.png?fit=300%2C100&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-1.png?fit=1160%2C386&amp;ssl=1" data-orig-size="1160,386" data-permalink="https://my-ai-portfolio.com/2024/09/16/analyzing-screen-time-with-python/image-169/" data-recalc-dims="1" decoding="async" height="341" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-1.png?resize=1024%2C341&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-1.png?resize=1024%2C341&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-1.png?resize=300%2C100&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-1.png?resize=768%2C256&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-1.png?w=1160&amp;ssl=1 1160w" width="1024"/></figure>
+<p>Let’s have a quick look at the summary statistics before moving forward:</p>
+<pre><code class="language-python">data.describe()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="summary statistics of the data" class="wp-image-24638" data-attachment-id="24638" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-2.png?fit=904%2C580&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-2.png?fit=300%2C192&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-2.png?fit=904%2C580&amp;ssl=1" data-orig-size="904,580" data-permalink="https://my-ai-portfolio.com/2024/09/16/analyzing-screen-time-with-python/image-170/" data-recalc-dims="1" decoding="async" height="580" sizes="(max-width: 904px) 100vw, 904px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-2.png?resize=904%2C580&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-2.png?w=904&amp;ssl=1 904w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-2.png?resize=300%2C192&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-2.png?resize=768%2C493&amp;ssl=1 768w" style="width:659px;height:auto" width="904"/></figure>
+<p>Let’s start by analyzing the screen time trends of all the apps in the data over time:</p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+import seaborn as sns
+
+data['Date'] = pd.to_datetime(data['Date'])
+
+plt.figure(figsize=(12, 6))
+sns.lineplot(x='Date', y='Usage (minutes)', hue='App', data=data, marker="o")
+plt.title('Screen Time Trends for Different Apps')
+plt.ylabel('Usage (minutes)')
+plt.xlabel('Date')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image alignwide size-large"><img alt="Screen Time Trends for Different Apps" class="wp-image-24640" data-attachment-id="24640" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Screen Time Trends for Different Apps" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Screen-Time-Trends-for-Different-Apps.png?fit=1024%2C508&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Screen-Time-Trends-for-Different-Apps.png?fit=300%2C149&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Screen-Time-Trends-for-Different-Apps.png?fit=1189%2C590&amp;ssl=1" data-orig-size="1189,590" data-permalink="https://my-ai-portfolio.com/2024/09/16/analyzing-screen-time-with-python/screen-time-trends-for-different-apps/" data-recalc-dims="1" decoding="async" height="508" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Screen-Time-Trends-for-Different-Apps.png?resize=1024%2C508&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Screen-Time-Trends-for-Different-Apps.png?resize=1024%2C508&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Screen-Time-Trends-for-Different-Apps.png?resize=300%2C149&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Screen-Time-Trends-for-Different-Apps.png?resize=768%2C381&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Screen-Time-Trends-for-Different-Apps.png?w=1189&amp;ssl=1 1189w" width="1024"/></figure>
+<p>The graph illustrates the screen time usage of various apps throughout August 2024. Instagram shows the most fluctuating and high usage, peaking around mid-August and August 26. Apps like X, WhatsApp, and Netflix generally show lower and more consistent usage. Safari and 8 Ball Pool also show significant variability, with 8 Ball Pool reaching its highest point around August 11. LinkedIn and Facebook maintain relatively low and stable usage throughout the period. Overall, Instagram dominates screen time, while other apps experience occasional spikes but lower overall engagement.</p>
+<p>Now, let’s have a look at the relationship between the screen time of the user, the number of notifications the user received, and the number of times the user opened any app:</p>
+<pre><code class="language-python">plt.figure(figsize=(8, 6))
+
+pairplot = sns.pairplot(
+    data[['Usage (minutes)', 'Notifications', 'Times Opened']], 
+    kind="scatter", 
+    diag_kind="kde",  
+    plot_kws={'alpha':0.6, 's':50}  
+)
+
+pairplot.fig.suptitle('Relationships between Screen Time, Notifications, and Times Opened', y=1.02, fontsize=14)
+
+plt.tight_layout()
+
+plt.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Relationships between Screen Time, Notifications, and Times Opened" class="wp-image-24642" data-attachment-id="24642" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Relationships between Screen Time, Notifications, and Times Opened" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Relationships-between-Screen-Time-Notifications-and-Times-Opened.png?fit=740%2C769&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Relationships-between-Screen-Time-Notifications-and-Times-Opened.png?fit=289%2C300&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Relationships-between-Screen-Time-Notifications-and-Times-Opened.png?fit=740%2C769&amp;ssl=1" data-orig-size="740,769" data-permalink="https://my-ai-portfolio.com/2024/09/16/analyzing-screen-time-with-python/relationships-between-screen-time-notifications-and-times-opened/" data-recalc-dims="1" decoding="async" height="769" loading="lazy" sizes="auto, (max-width: 740px) 100vw, 740px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Relationships-between-Screen-Time-Notifications-and-Times-Opened.png?resize=740%2C769&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Relationships-between-Screen-Time-Notifications-and-Times-Opened.png?w=740&amp;ssl=1 740w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Relationships-between-Screen-Time-Notifications-and-Times-Opened.png?resize=289%2C300&amp;ssl=1 289w" width="740"/></figure>
+<p>The above pair plot shows relationships between screen time (usage in minutes), notifications, and times an app was opened. The scatter plots indicate a moderate positive correlation between notifications and times opened, as well as between times opened and usage minutes, which suggests that more notifications lead to more app usage and openings. However, the correlation between usage and notifications is weaker, showing that receiving many notifications does not always result in higher screen time. The histograms on the diagonal also show that most data points cluster around low values for usage, notifications, and times opened.</p>
+<p>Now, let’s analyze the top apps based on screen time and break down the average usage, notifications, and times opened per app. It will give us a clearer picture of user behaviour across apps:</p>
+<pre><code class="language-python">app_analysis = data.groupby('App').agg(
+    avg_usage=('Usage (minutes)', 'mean'),
+    avg_notifications=('Notifications', 'mean'),
+    avg_times_opened=('Times Opened', 'mean')
+).reset_index()
+
+app_analysis = app_analysis.sort_values(by='avg_usage', ascending=False)
+
+app_analysis</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Analyzing screen time: avg times opened" class="wp-image-24644" data-attachment-id="24644" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-3.png?fit=1024%2C567&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-3.png?fit=300%2C166&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-3.png?fit=1052%2C582&amp;ssl=1" data-orig-size="1052,582" data-permalink="https://my-ai-portfolio.com/2024/09/16/analyzing-screen-time-with-python/image-171/" data-recalc-dims="1" decoding="async" height="567" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-3.png?resize=1024%2C567&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-3.png?resize=1024%2C567&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-3.png?resize=300%2C166&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-3.png?resize=768%2C425&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-3.png?w=1052&amp;ssl=1 1052w" style="width:717px;height:auto" width="1024"/></figure>
+<p>The table displays the average screen time usage, notifications, and times opened for each app. Here are the key insights:</p>
+<ol class="wp-block-list">
+<li><strong>Instagram:</strong> This app leads in both screen time and notifications, averaging about 76 minutes of usage per day, with 49 notifications and being opened around 41 times.</li>
+<li><strong>WhatsApp:</strong> It ranks second in terms of times opened (averaging 68 times), with a very high number of notifications (around 100), though its screen time is lower than Instagram and Netflix.</li>
+<li><strong>Netflix:</strong> Users spend significant time on Netflix (72 minutes/day), but it stands out for its low interaction frequency, with only 2.56 app opens and almost no notifications. This reflects the nature of long, continuous usage (e.g., watching shows or movies).</li>
+<li><strong>Other Apps:</strong> Apps like Facebook, LinkedIn, and Safari have lower usage and interaction metrics, showing they are used less frequently and for shorter sessions.</li>
+</ol>
+<p>Now, let’s have a look at the average screen time of the user by day of the week:</p>
+<pre><code class="language-python">data['Day of Week'] = data['Date'].dt.day_name()
+
+weekly_usage = data.groupby('Day of Week')['Usage (minutes)'].mean().reindex(
+    ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
+
+plt.figure(figsize=(12, 6))
+
+ax = sns.barplot(x=weekly_usage.index, y=weekly_usage.values, palette="crest")
+
+for p in ax.patches:
+    ax.annotate(format(p.get_height(), '.1f'), 
+                (p.get_x() + p.get_width() / 2., p.get_height()), 
+                ha = 'center', va = 'center', 
+                xytext = (0, 9), textcoords = 'offset points')
+
+plt.title('Average Screen Time Usage per Day of the Week', fontsize=16)
+plt.ylabel('Average Usage (minutes)', fontsize=12)
+plt.xlabel('Day of the Week', fontsize=12)
+plt.xticks(rotation=45, fontsize=10)
+plt.yticks(fontsize=10)
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image alignwide size-large"><img alt="Usage per Day of the Week" class="wp-image-24647" data-attachment-id="24647" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Average Screen Time Usage per Day of the Week" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Average-Screen-Time-Usage-per-Day-of-the-Week.png?fit=1024%2C508&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Average-Screen-Time-Usage-per-Day-of-the-Week.png?fit=300%2C149&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Average-Screen-Time-Usage-per-Day-of-the-Week.png?fit=1189%2C590&amp;ssl=1" data-orig-size="1189,590" data-permalink="https://my-ai-portfolio.com/2024/09/16/analyzing-screen-time-with-python/average-screen-time-usage-per-day-of-the-week/" data-recalc-dims="1" decoding="async" height="508" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Average-Screen-Time-Usage-per-Day-of-the-Week.png?resize=1024%2C508&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Average-Screen-Time-Usage-per-Day-of-the-Week.png?resize=1024%2C508&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Average-Screen-Time-Usage-per-Day-of-the-Week.png?resize=300%2C149&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Average-Screen-Time-Usage-per-Day-of-the-Week.png?resize=768%2C381&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Average-Screen-Time-Usage-per-Day-of-the-Week.png?w=1189&amp;ssl=1 1189w" width="1024"/></figure>
+<p>The highest usage occurs on Monday (48.6 minutes) and Wednesday (46.5 minutes), which indicates that the beginning and middle of the week see the most screen time. Usage decreases towards the end of the week, with Friday having the lowest average (27.1 minutes). Screen time increases again on Saturday (41.4 minutes) and slightly drops on Sunday (35.8 minutes). This pattern suggests higher screen engagement during workdays and moderate usage over the weekend.</p>
+<p>Now, let’s analyze the daily patterns for the top three apps: Instagram, Netflix, and WhatsApp. It will give us insights into how users engage with these apps throughout the week:</p>
+<pre><code class="language-python">top_apps_data = data[data['App'].isin(['Instagram', 'Netflix', 'WhatsApp'])]
+
+daily_app_usage = top_apps_data.groupby(['App', 'Day of Week'])['Usage (minutes)'].mean().reindex(
+    pd.MultiIndex.from_product([['Instagram', 'Netflix', 'WhatsApp'], 
+                                ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']],
+                               names=['App', 'Day of Week'])).reset_index()
+
+plt.figure(figsize=(12, 6))
+
+ax = sns.barplot(x='Day of Week', y='Usage (minutes)', hue='App', data=daily_app_usage, palette='Set2')
+
+for p in ax.patches:
+    height = p.get_height()
+    if height &gt; 0:
+        ax.annotate(f'{height:.1f}', 
+                    (p.get_x() + p.get_width() / 2., height), 
+                    ha='center', va='center', 
+                    xytext=(0, 8), textcoords='offset points')
+
+plt.title('Average Daily Usage for Instagram, Netflix, and WhatsApp', fontsize=16)
+plt.ylabel('Average Usage (minutes)', fontsize=12)
+plt.xlabel('Day of the Week', fontsize=12)
+plt.xticks(rotation=45, fontsize=10)
+plt.yticks(fontsize=10)
+plt.legend(title='App', fontsize=10, title_fontsize=12)
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image alignwide size-large"><img alt="Average Daily Usage for Instagram, Netflix, and WhatsApp" class="wp-image-24649" data-attachment-id="24649" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Average Daily Usage for Instagram, Netflix, and WhatsApp" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Average-Daily-Usage-for-Instagram-Netflix-and-WhatsApp.png?fit=1024%2C508&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Average-Daily-Usage-for-Instagram-Netflix-and-WhatsApp.png?fit=300%2C149&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Average-Daily-Usage-for-Instagram-Netflix-and-WhatsApp.png?fit=1189%2C590&amp;ssl=1" data-orig-size="1189,590" data-permalink="https://my-ai-portfolio.com/2024/09/16/analyzing-screen-time-with-python/average-daily-usage-for-instagram-netflix-and-whatsapp/" data-recalc-dims="1" decoding="async" height="508" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Average-Daily-Usage-for-Instagram-Netflix-and-WhatsApp.png?resize=1024%2C508&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Average-Daily-Usage-for-Instagram-Netflix-and-WhatsApp.png?resize=1024%2C508&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Average-Daily-Usage-for-Instagram-Netflix-and-WhatsApp.png?resize=300%2C149&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Average-Daily-Usage-for-Instagram-Netflix-and-WhatsApp.png?resize=768%2C381&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Average-Daily-Usage-for-Instagram-Netflix-and-WhatsApp.png?w=1189&amp;ssl=1 1189w" width="1024"/></figure>
+<p>Instagram consistently has the highest usage, especially on Saturday (91.0 minutes) and Wednesday (90.4 minutes). Netflix usage peaks on Wednesday (110.0 minutes) and Saturday (78.8 minutes), which shows strong mid-week and weekend engagement. WhatsApp usage is generally lower than Instagram and Netflix, with its highest usage on Sunday (59.0 minutes) and Wednesday (76.0 minutes). Overall, Wednesday and Saturday are the days with the highest overall screen time across these three apps.</p>
+<h4 class="wp-block-heading">Calculating the Probability of App Openings Through Notifications</h4>
+<p>Now, we will calculate the probability of the user opening the app from each notification. To calculate the probability of a user opening each app when there is a notification, we can use the following approach:</p>
+<ul class="wp-block-list">
+<li><strong>Step 1</strong>: Calculate the number of instances where there were notifications (Notifications &gt; 0).</li>
+<li><strong>Step 2</strong>: Calculate how often the app was opened on those days (Times Opened &gt; 0).</li>
+</ul>
+<p>In this scenario, the probability can be calculated as:</p>
+<blockquote class="wp-block-quote has-text-align-center is-style-plain is-layout-flow wp-block-quote-is-layout-flow">
+<p><strong>P(Open|Notification) = Number of days the app was opened when notifications were received​ / Total number of days notifications were received</strong></p>
+</blockquote>
+<p>I will calculate this for each app in the dataset:</p>
+<pre><code class="language-python">notifications_data = data[data['Notifications'] &gt; 0]
+
+app_opened_when_notif = notifications_data.groupby('App').apply(
+    lambda x: (x['Times Opened'] &gt; 0).sum() / len(x)
+).reset_index(name='Probability of Open with Notification')
+
+app_opened_when_notif</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="analyzing scree time: probability of app openings" class="wp-image-24652" data-attachment-id="24652" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-4.png?fit=880%2C562&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-4.png?fit=300%2C192&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-4.png?fit=880%2C562&amp;ssl=1" data-orig-size="880,562" data-permalink="https://my-ai-portfolio.com/2024/09/16/analyzing-screen-time-with-python/image-172/" data-recalc-dims="1" decoding="async" height="562" loading="lazy" sizes="auto, (max-width: 880px) 100vw, 880px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-4.png?resize=880%2C562&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-4.png?w=880&amp;ssl=1 880w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-4.png?resize=300%2C192&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-4.png?resize=768%2C490&amp;ssl=1 768w" width="880"/></figure>
+<p>For all listed apps, including 8 Ball Pool, Facebook, Instagram, LinkedIn, Netflix, Safari, WhatsApp, and X (formerly Twitter), the probability is 1.0, which means that every time a notification is received for any of these apps, the user opens the app. It indicates a strong responsiveness to notifications across all the apps, which suggests that notifications are a highly effective way to prompt user engagement for these applications. Conversely, if the user wants to decrease screen time, the first step should be to turn off the notifications.</p>
+<p><strong>Find more examples to improve your Data Analytics skills <a href="data-analytics-guided-projects-with-python.html" target="">here</a>.</strong></p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, the screen time analysis reveals that Instagram consistently dominates user engagement, with high usage peaks during the week, particularly on Mondays, Wednesdays, and Saturdays. Netflix also shows strong mid-week and weekend engagement, while WhatsApp remains moderate throughout. Additionally, all apps have a 100% probability of being opened upon receiving a notification, which indicates high user responsiveness to notifications across various apps.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="a-guide-to-rfm-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="analytics-dashboard-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

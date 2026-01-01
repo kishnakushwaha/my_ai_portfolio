@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Time Series Forecasting with ARIMA | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Time Series Forecasting with ARIMA</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 28, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="generative-ai-roadmap.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="currency-exchange-rate-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Time Series Forecasting means analyzing and modeling time-series data to make future decisions. Some of the applications of Time Series Forecasting are weather forecasting, sales forecasting, business forecasting, stock price forecasting, etc. The ARIMA model is a popular statistical technique used for Time Series Forecasting. If you want to learn Time Series Forecasting with ARIMA, this article is for you. In this article, I will take you through the task of Time Series Forecasting with ARIMA using the Python programming language.</p>
+<h2 class="wp-block-heading">What is ARIMA?</h2>
+<p>ARIMA stands for Autoregressive Integrated Moving Average. It is an algorithm used for forecasting Time Series Data. ARIMA models have three parameters like ARIMA(<strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">p, d, q</a></strong>). Here p, d, and q are defined as:</p>
+<ol class="wp-block-list">
+<li>p is the number of lagged values that need to be added or subtracted from the values (label column). It captures the autoregressive part of ARIMA.</li>
+<li>d represents the number of times the data needs to differentiate to produce a stationary signal. If it’s stationary data, the value of d should be 0, and if it’s seasonal data, the value of d should be 1. d captures the integrated part of ARIMA.</li>
+<li>q is the number of lagged values for the error term added or subtracted from the values (label column). It captures the moving average part of ARIMA.</li>
+</ol>
+<p>I hope you have now understood the ARIMA model. In the section below, I will take you through the task of Time Series Forecasting of stock prices with ARIMA using the Python programming language.</p>
+<h2 class="wp-block-heading">Time Series Forecasting with ARIMA</h2>
+<p>Now let’s start with the task of Time Series Forecasting with ARIMA. I will first collect Google stock price data using the Yahoo Finance API. If you have never used Yahoo Finance API, you can learn more about it <a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;"><strong>here</strong></a>.</p>
+<p>Now here’s how to collect data about the Google’s Stock Price:</p>
+<pre><code class="language-python">import pandas as pd
+import yfinance as yf
+import datetime
+from datetime import date, timedelta
+today = date.today()
+
+d1 = today.strftime("%Y-%m-%d")
+end_date = d1
+d2 = date.today() - timedelta(days=365)
+d2 = d2.strftime("%Y-%m-%d")
+start_date = d2
+
+data = yf.download('GOOG', 
+                      start=start_date, 
+                      end=end_date, 
+                      progress=False)
+data["Date"] = data.index
+data = data[["Date", "Open", "High", "Low", "Close", "Adj Close", "Volume"]]
+data.reset_index(drop=True, inplace=True)
+print(data.tail())</code></pre>
+<pre class="wp-block-preformatted"><strong>          Date         Open         High          Low        Close  \
+247 2022-06-13  2148.919922  2184.370117  2131.760986  2137.530029   
+248 2022-06-14  2137.800049  2169.149902  2127.040039  2143.879883   
+249 2022-06-15  2177.989990  2241.260010  2162.375000  2207.810059   
+250 2022-06-16  2162.989990  2185.810059  2115.850098  2132.719971   
+251 2022-06-17  2130.699951  2184.989990  2112.571045  2157.310059   
+
+       Adj Close   Volume  
+247  2137.530029  1837800  
+248  2143.879883  1274000  
+249  2207.810059  1659600  
+250  2132.719971  1765700  
+251  2157.310059  2163500  </strong></pre>
+<p>We only need the date and close prices columns for the rest of the task, so let’s select both the columns and move further:</p>
+<pre><code class="language-python">data = data[["Date", "Close"]]
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted"><strong>        Date        Close
+0 2021-06-21  2529.100098
+1 2021-06-22  2539.989990
+2 2021-06-23  2529.229980
+3 2021-06-24  2545.639893
+4 2021-06-25  2539.899902</strong></pre>
+<p>Now let’s visualize the close prices of Google before moving forward:</p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+plt.style.use('fivethirtyeight')
+plt.figure(figsize=(15, 10))
+plt.plot(data["Date"], data["Close"])</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="close prices of Google" class="wp-image-17776" data-attachment-id="17776" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="google-stocks-ARIMA" data-orig-size="1012,615" data-recalc-dims="1" decoding="async" height="615" sizes="(max-width: 1012px) 100vw, 1012px" src="../assets/datasets/google-stocks-ARIMA.png" width="1012"/></figure>
+<h2 class="wp-block-heading">Using ARIMA for Time Series Forecasting</h2>
+<p>Before using the ARIMA model, we have to figure out whether our data is stationary or seasonal. The data visualization graph about the closing stock prices above shows that our dataset is not stationary. To check whether our dataset is stationary or seasonal properly, we can use the <strong><a href="https://otexts.com/fpp2/components.html">seasonal decomposition</a></strong> method that splits the time series data into trend, seasonal, and residuals for a better understanding of the time series data:</p>
+<pre><code class="language-python">from statsmodels.tsa.seasonal import seasonal_decompose
+result = seasonal_decompose(data["Close"], 
+                            model='multiplicative', freq = 30)
+fig = plt.figure()  
+fig = result.plot()  
+fig.set_size_inches(15, 10)</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="seasonal decomposition: Time Series Forecasting with ARIMA" class="wp-image-17778" data-attachment-id="17778" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="seasonal-decomposition-ARIMA" data-orig-size="927,600" data-recalc-dims="1" decoding="async" height="600" sizes="(max-width: 927px) 100vw, 927px" src="../assets/datasets/seasonal-decomposition-ARIMA.png" width="927"/></figure>
+<p>So our data is not stationary it is seasonal. We need to use the Seasonal ARIMA (SARIMA) model for Time Series Forecasting on this data. But before using the SARIMA model, we will use the ARIMA model. It will help you learn using both models.</p>
+<p>To use ARIMA or SARIMA, we need to find the p, d, and q values. We can find the value of p by plotting the autocorrelation of the Close column and the value of q by plotting the partial autocorrelation plot. The value of d is either 0 or 1. If the data is stationary, we should use 0, and if the data is seasonal, we should use 1. As our data is seasonal, we should use 1 as the d value.</p>
+<p>Now here’s how to find the value of p:</p>
+<pre><code class="language-python">pd.plotting.autocorrelation_plot(data["Close"])</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="p-value: ARIMA" class="wp-image-17781" data-attachment-id="17781" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="p-value-arima" data-orig-size="468,292" data-recalc-dims="1" decoding="async" height="292" loading="lazy" sizes="auto, (max-width: 468px) 100vw, 468px" src="../assets/datasets/p-value-arima.png" width="468"/></figure>
+<p>In the above autocorrelation plot, the curve is moving down after the 5th line of the first boundary. That is how to decide the p-value. Hence the value of p is 5. Now let’s find the value of q (moving average):</p>
+<pre><code class="language-python">from statsmodels.graphics.tsaplots import plot_pacf
+plot_pacf(data["Close"], lags = 100)</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="q value: ARIMA" class="wp-image-17783" data-attachment-id="17783" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="q-value-arima" data-orig-size="427,286" data-recalc-dims="1" decoding="async" height="286" loading="lazy" sizes="auto, (max-width: 427px) 100vw, 427px" src="../assets/datasets/q-value-arima.png" width="427"/></figure>
+<p>In the above partial autocorrelation plot, we can see that only two points are far away from all the points. That is how to decide the q value. Hence the value of q is 2. Now let’s build an ARIMA model:</p>
+<pre><code class="language-python">p, d, q = 5, 1, 2
+from statsmodels.tsa.arima_model import ARIMA
+model = ARIMA(data["Close"], order=(p,d,q))  
+fitted = model.fit(disp=-1)  
+print(fitted.summary())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>                             ARIMA Model Results                              
+==============================================================================
+Dep. Variable:                D.Close   No. Observations:                  251
+Model:                 ARIMA(5, 1, 2)   Log Likelihood               -1328.041
+Method:                       css-mle   S.D. of innovations             48.034
+Date:                Tue, 21 Jun 2022   AIC                           2674.083
+Time:                        06:12:58   BIC                           2705.812
+Sample:                             1   HQIC                          2686.851
+                                                                              
+=================================================================================
+                    coef    std err          z      P&gt;|z|      [0.025      0.975]
+---------------------------------------------------------------------------------
+const            -1.5031      2.251     -0.668      0.505      -5.914       2.908
+ar.L1.D.Close     0.0443      0.243      0.182      0.856      -0.432       0.520
+ar.L2.D.Close     0.7582      0.204      3.712      0.000       0.358       1.158
+ar.L3.D.Close    -0.0690      0.079     -0.870      0.385      -0.224       0.086
+ar.L4.D.Close    -0.0623      0.069     -0.901      0.369      -0.198       0.073
+ar.L5.D.Close     0.0992      0.075      1.327      0.186      -0.047       0.246
+ma.L1.D.Close    -0.0923      0.234     -0.394      0.694      -0.552       0.367
+ma.L2.D.Close    -0.7388      0.191     -3.877      0.000      -1.112      -0.365
+                                    Roots                                    
+=============================================================================
+                  Real          Imaginary           Modulus         Frequency
+-----------------------------------------------------------------------------
+AR.1            1.1301           -0.0000j            1.1301           -0.0000
+AR.2           -1.4091           -0.2578j            1.4325           -0.4712
+AR.3           -1.4091           +0.2578j            1.4325            0.4712
+AR.4            1.1583           -1.7339j            2.0852           -0.1563
+AR.5            1.1583           +1.7339j            2.0852            0.1563
+MA.1            1.1026           +0.0000j            1.1026            0.0000
+MA.2           -1.2276           +0.0000j            1.2276            0.5000
+-----------------------------------------------------------------------------</strong></pre>
+<p>Here’s how to predict the values using the ARIMA model:</p>
+<pre><code class="language-python">predictions = fitted.predict()
+print(predictions)</code></pre>
+<pre class="wp-block-preformatted"><strong>2     -2.108482
+3     -0.789990
+4     -3.688940
+5     -0.777623
+6     -2.472432
+         ...   
+247    2.866723
+248    2.486679
+249    7.659670
+250    5.277199
+251    8.960482
+Length: 250, dtype: float64</strong></pre>
+<p>The predicted values are wrong because the data is seasonal. ARIMA model will never perform well on seasonal time series data. So, here’s how to build a SARIMA model:</p>
+<pre><code class="language-python">import statsmodels.api as sm
+import warnings
+model=sm.tsa.statespace.SARIMAX(data['Close'],
+                                order=(p, d, q),
+                                seasonal_order=(p, d, q, 12))
+model=model.fit()
+print(model.summary())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>                                 Statespace Model Results                                 
+==========================================================================================
+Dep. Variable:                              Close   No. Observations:                  252
+Model:             SARIMAX(5, 1, 2)x(5, 1, 2, 12)   Log Likelihood               -1280.516
+Date:                            Tue, 21 Jun 2022   AIC                           2591.032
+Time:                                    06:15:00   BIC                           2643.179
+Sample:                                         0   HQIC                          2612.046
+                                            - 252                                         
+Covariance Type:                              opg                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+ar.L1         -0.0803      3.857     -0.021      0.983      -7.639       7.479
+ar.L2          0.9622      3.583      0.269      0.788      -6.060       7.984
+ar.L3         -0.0029      0.182     -0.016      0.987      -0.360       0.354
+ar.L4          0.0123      0.193      0.064      0.949      -0.365       0.390
+ar.L5          0.0586      0.249      0.236      0.814      -0.429       0.546
+ma.L1          0.0256      3.032      0.008      0.993      -5.918       5.969
+ma.L2         -0.9726      2.979     -0.327      0.744      -6.811       4.866
+ar.S.L12       0.2082      0.783      0.266      0.790      -1.327       1.743
+ar.S.L24       0.1491      0.086      1.738      0.082      -0.019       0.317
+ar.S.L36      -0.0226      0.182     -0.124      0.901      -0.379       0.334
+ar.S.L48      -0.1415      0.089     -1.595      0.111      -0.315       0.032
+ar.S.L60      -0.0981      0.132     -0.744      0.457      -0.356       0.160
+ma.S.L12      -1.2637      0.717     -1.762      0.078      -2.669       0.142
+ma.S.L24       0.2782      0.759      0.367      0.714      -1.210       1.766
+sigma2      2203.0788   1934.635      1.139      0.255   -1588.737    5994.894
+===================================================================================
+Ljung-Box (Q):                       29.16   Jarque-Bera (JB):                21.53
+Prob(Q):                              0.90   Prob(JB):                         0.00
+Heteroskedasticity (H):               2.69   Skew:                             0.15
+Prob(H) (two-sided):                  0.00   Kurtosis:                         4.44
+===================================================================================</strong></pre>
+<p>Now let’s predict the future stock prices using the SARIMA model for the next 10 days:</p>
+<pre><code class="language-python">predictions = model.predict(len(data), len(data)+10)
+print(predictions)</code></pre>
+<pre class="wp-block-preformatted"><strong>252    2155.450727
+253    2174.383879
+254    2138.454522
+255    2118.298381
+256    2117.235728
+257    2112.857380
+258    2099.387811
+259    2085.703155
+260    2117.912628
+261    2133.935300
+262    2168.589946
+dtype: float64</strong></pre>
+<p>Here’s how you can plot the predictions:</p>
+<pre><code class="language-python">data["Close"].plot(legend=True, label="Training Data", figsize=(15, 10))
+predictions.plot(legend=True, label="Predictions")</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Predictions: Time Series Forecasting with ARIMA" class="wp-image-17788" data-attachment-id="17788" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="sarima-predictions" data-orig-size="992,615" data-recalc-dims="1" decoding="async" height="615" loading="lazy" sizes="auto, (max-width: 992px) 100vw, 992px" src="../assets/datasets/sarima-predictions.png" width="992"/></figure>
+<p>So this is how you can use ARIMA or SARIMA models for Time Series Forecasting using Python.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>ARIMA stands for Autoregressive Integrated Moving Average. It is an algorithm used for forecasting Time Series Data. If the data is stationary, we need to use ARIMA, if the data is seasonal, we need to use Seasonal ARIMA (SARIMA). I hope you liked this article about Time Series Forecasting with ARIMA using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="generative-ai-roadmap.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="currency-exchange-rate-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

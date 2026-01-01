@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Hypothesis Testing using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Hypothesis Testing using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 26, 2025 • 5 min read</div>
+<p>Hypothesis Testing is a statistical method used to make inferences or decisions about a population based on sample data. It starts with a null hypothesis (H0), which represents a default stance or no effect, and an alternative hypothesis (H1 or Ha), which represents what we aim to prove or expect to find. The process involves using sample data to determine whether to reject the null hypothesis in favor of the alternative hypothesis, based on the likelihood of observing the sample data under the null hypothesis. So, if you want to learn how to perform Hypothesis Testing, this article is for you. In this article, I’ll take you through the task of Hypothesis Testing using Python.</p>
+<h2 class="wp-block-heading">Hypothesis Testing: Process We Can Follow</h2>
+<p>So, Hypothesis Testing is a fundamental process in data science for making data-driven decisions and inferences about populations based on sample data. Below is the process we can follow for the task of Hypothesis Testing:</p>
+<ol class="wp-block-list">
+<li>Gather the necessary data required for the hypothesis test.</li>
+<li>Define Null (H0) and Alternative Hypothesis (H1 or Ha).</li>
+<li>Choose the <a href="https://my-ai-portfolio.com/2023/11/15/significance-level-and-p-values-in-hypothesis-testing/" rel="noreferrer noopener" target="_blank"><strong>Significance Level (α)</strong></a>, which is the probability of rejecting the null hypothesis when it is true.</li>
+<li>Select the appropriate statistical tests. Examples include t-tests for comparing means, chi-square tests for categorical data, and ANOVA for comparing means across more than two groups.</li>
+<li>Perform the chosen statistical test on your data.</li>
+<li>Determine the <a href="https://my-ai-portfolio.com/2023/11/15/significance-level-and-p-values-in-hypothesis-testing/" rel="noreferrer noopener" target="_blank"><strong>p-value</strong></a> and interpret the results of your statistical tests.</li>
+</ol>
+<p>To get started with Hypothesis Testing, we need appropriate data. I found an ideal dataset for this task. You can download the dataset from <a href="https://statso.io/light-theme-and-dark-theme-case-study/" rel="noreferrer noopener" target="_blank"><strong>here</strong></a>.</p>
+<h2 class="wp-block-heading">Hypothesis Testing using Python</h2>
+<p>Now, let’s get started with the task of Hypothesis Testing by importing the necessary Python libraries and the <a href="https://statso.io/light-theme-and-dark-theme-case-study/" rel="noreferrer noopener" target="_blank"><strong>dataset</strong></a>:</p>
+<pre><code class="language-python">import pandas as pd
+from scipy.stats import ttest_ind
+
+df = pd.read_csv("website_ab_test.csv")
+
+print(df.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>         Theme  Click Through Rate  Conversion Rate  Bounce Rate  \<br/>0  Light Theme            0.054920         0.282367     0.405085   <br/>1  Light Theme            0.113932         0.032973     0.732759   <br/>2   Dark Theme            0.323352         0.178763     0.296543   <br/>3  Light Theme            0.485836         0.325225     0.245001   <br/>4  Light Theme            0.034783         0.196766     0.765100   <br/><br/>   Scroll_Depth  Age   Location  Session_Duration Purchases Added_to_Cart  <br/>0     72.489458   25    Chennai              1535        No           Yes  <br/>1     61.858568   19       Pune               303        No           Yes  <br/>2     45.737376   47    Chennai               563       Yes           Yes  <br/>3     76.305298   58       Pune               385       Yes            No  <br/>4     48.927407   25  New Delhi              1437        No            No  </strong></pre>
+<p>So, the dataset is based on the performance of two themes on a website. Our task is to find which theme performs better using Hypothesis Testing. Let’s go through the summary of the dataset, including the number of records, the presence of missing values, and basic statistics for the numerical columns:</p>
+<pre><code class="language-python"># dataset summary
+summary = {
+    'Number of Records': df.shape[0],
+    'Number of Columns': df.shape[1],
+    'Missing Values': df.isnull().sum(),
+    'Numerical Columns Summary': df.describe()
+}
+
+summary</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>{'Number of Records': 1000,<br/> 'Number of Columns': 10,<br/> 'Missing Values': Theme                 0<br/> Click Through Rate    0<br/> Conversion Rate       0<br/> Bounce Rate           0<br/> Scroll_Depth          0<br/> Age                   0<br/> Location              0<br/> Session_Duration      0<br/> Purchases             0<br/> Added_to_Cart         0<br/> dtype: int64,<br/> 'Numerical Columns Summary':        Click Through Rate  Conversion Rate  Bounce Rate  Scroll_Depth  \<br/> count         1000.000000      1000.000000  1000.000000   1000.000000   <br/> mean             0.256048         0.253312     0.505758     50.319494   <br/> std              0.139265         0.139092     0.172195     16.895269   <br/> min              0.010767         0.010881     0.200720     20.011738   <br/> 25%              0.140794         0.131564     0.353609     35.655167   <br/> 50%              0.253715         0.252823     0.514049     51.130712   <br/> 75%              0.370674         0.373040     0.648557     64.666258   <br/> max              0.499989         0.498916     0.799658     79.997108   <br/> <br/>                Age  Session_Duration  <br/> count  1000.000000       1000.000000  <br/> mean     41.528000        924.999000  <br/> std      14.114334        508.231723  <br/> min      18.000000         38.000000  <br/> 25%      29.000000        466.500000  <br/> 50%      42.000000        931.000000  <br/> 75%      54.000000       1375.250000  <br/> max      65.000000       1797.000000  }</strong></pre>
+<p>The dataset contains 1,000 records across 10 columns, with no missing values. Here’s a quick summary of the numerical columns:</p>
+<ul class="wp-block-list">
+<li><strong>Click Through Rate</strong>: Ranges from about 0.01 to 0.50 with a mean of approximately 0.26.</li>
+<li><strong>Conversion Rate</strong>: Also ranges from about 0.01 to 0.50 with a mean close to the Click Through Rate, approximately 0.25.</li>
+<li><strong>Bounce Rate</strong>: Varies between 0.20 and 0.80, with a mean around 0.51.</li>
+<li><strong>Scroll Depth</strong>: Shows a spread from 20.01 to nearly 80, with a mean of 50.32.</li>
+<li><strong>Age</strong>: The age of users ranges from 18 to 65 years, with a mean age of about 41.5 years.</li>
+<li><strong>Session Duration</strong>: This varies widely from 38 seconds to nearly 1800 seconds (30 minutes), with a mean session duration of approximately 925 seconds (about 15 minutes).</li>
+</ul>
+<p>Now, let’s move on to comparing the performance of both themes based on the provided metrics. We’ll look into the average Click Through Rate, Conversion Rate, Bounce Rate, and other relevant metrics for each theme. Afterwards, we can perform hypothesis testing to identify if there’s a statistically significant difference between the themes:</p>
+<pre><code class="language-python"># grouping data by theme and calculating mean values for the metrics
+theme_performance = df.groupby('Theme').mean()
+
+# sorting the data by conversion rate for a better comparison
+theme_performance_sorted = theme_performance.sort_values(by='Conversion Rate', ascending=False)
+
+print(theme_performance_sorted)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>             Click Through Rate  Conversion Rate  Bounce Rate  Scroll_Depth  \<br/>Theme                                                                         <br/>Light Theme            0.247109         0.255459     0.499035     50.735232   <br/>Dark Theme             0.264501         0.251282     0.512115     49.926404   <br/><br/>                   Age  Session_Duration  <br/>Theme                                     <br/>Light Theme  41.734568        930.833333  <br/>Dark Theme   41.332685        919.482490  </strong></pre>
+<p>The comparison between the Light Theme and Dark Theme on average performance metrics reveals the following insights:</p>
+<ul class="wp-block-list">
+<li><strong>Click Through Rate (CTR)</strong>: The Dark Theme has a slightly higher average CTR (0.2645) compared to the Light Theme (0.2471).</li>
+<li><strong>Conversion Rate</strong>: The Light Theme leads with a marginally higher average Conversion Rate (0.2555) compared to the Dark Theme (0.2513).</li>
+<li><strong>Bounce Rate</strong>: The Bounce Rate is slightly higher for the Dark Theme (0.5121) than for the Light Theme (0.4990).</li>
+<li><strong>Scroll Depth</strong>: Users on the Light Theme scroll slightly further on average (50.74%) compared to those on the Dark Theme (49.93%).</li>
+<li><strong>Age</strong>: The average age of users is similar across themes, with the Light Theme at approximately 41.73 years and the Dark Theme at 41.33 years.</li>
+<li><strong>Session Duration</strong>: The average session duration is slightly longer for users on the Light Theme (930.83 seconds) than for those on the Dark Theme (919.48 seconds).</li>
+</ul>
+<p>From these insights, it appears that the Light Theme slightly outperforms the Dark Theme in terms of Conversion Rate, Bounce Rate, Scroll Depth, and Session Duration, while the Dark Theme leads in Click Through Rate. However, the differences are relatively minor across all metrics.</p>
+<h2 class="wp-block-heading">Getting Started with Hypothesis Testing</h2>
+<p>We’ll use a significance level (alpha) of 0.05 for our hypothesis testing. It means we’ll consider a result statistically significant if the p-value from our test is less than 0.05.</p>
+<p>Let’s start with hypothesis testing based on the Conversion Rate between the Light Theme and Dark Theme. Our hypotheses are as follows:</p>
+<ul class="wp-block-list">
+<li><strong>Null Hypothesis (H0​):</strong> There is no difference in Conversion Rates between the Light Theme and Dark Theme.</li>
+<li><strong>Alternative Hypothesis (Ha​):</strong> There is a difference in Conversion Rates between the Light Theme and Dark Theme.</li>
+</ul>
+<p>We’ll use a two-sample t-test to compare the means of the two independent samples. Let’s proceed with the test:</p>
+<pre><code class="language-python"># extracting conversion rates for both themes
+conversion_rates_light = df[df['Theme'] == 'Light Theme']['Conversion Rate']
+conversion_rates_dark = df[df['Theme'] == 'Dark Theme']['Conversion Rate']
+
+# performing a two-sample t-test
+t_stat, p_value = ttest_ind(conversion_rates_light, conversion_rates_dark, equal_var=False)
+
+t_stat, p_value</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>(0.4748494462782632, 0.6349982678451778)</strong></pre>
+<p>The result of the two-sample t-test gives a p-value of approximately 0.635. Since this p-value is much greater than our significance level of 0.05, we do not have enough evidence to reject the null hypothesis. Therefore, we conclude that there is no statistically significant difference in Conversion Rates between the Light Theme and Dark Theme based on the data provided.</p>
+<p>Now, let’s conduct hypothesis testing based on the Click Through Rate (CTR) to see if there’s a statistically significant difference between the Light Theme and Dark Theme regarding how often users click through. Our hypotheses remain structured similarly:</p>
+<ul class="wp-block-list">
+<li><strong>Null Hypothesis (H0​):</strong> There is no difference in Click Through Rates between the Light Theme and Dark Theme.</li>
+<li><strong>Alternative Hypothesis (Ha​):</strong> There is a difference in Click Rates between the Light Theme and Dark Theme.</li>
+</ul>
+<p>We’ll perform a two-sample t-test on the CTR for both themes. Let’s proceed with the calculation:</p>
+<pre><code class="language-python"># extracting click through rates for both themes
+ctr_light = df[df['Theme'] == 'Light Theme']['Click Through Rate']
+ctr_dark = df[df['Theme'] == 'Dark Theme']['Click Through Rate']
+
+# performing a two-sample t-test
+t_stat_ctr, p_value_ctr = ttest_ind(ctr_light, ctr_dark, equal_var=False)
+
+t_stat_ctr, p_value_ctr</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>(-1.9781708664172253, 0.04818435371010704)</strong></pre>
+<p>The two-sample t-test for the Click Through Rate (CTR) between the Light Theme and Dark Theme yields a p-value of approximately 0.048. This p-value is slightly below our significance level of 0.05, indicating that there is a statistically significant difference in Click Through Rates between the Light Theme and Dark Theme, with the Dark Theme likely having a higher CTR given the direction of the test statistic.</p>
+<p>Now, let’s perform Hypothesis Testing based on two other metrics: bounce rate and scroll depth, which are important metrics for analyzing the performance of a theme or a design on a website. I’ll first perform these statistical tests and then create a table to show the report of all the tests we have done:</p>
+<pre><code class="language-python"># extracting bounce rates for both themes
+bounce_rates_light = df[df['Theme'] == 'Light Theme']['Bounce Rate']
+bounce_rates_dark = df[df['Theme'] == 'Dark Theme']['Bounce Rate']
+
+# performing a two-sample t-test for bounce rate
+t_stat_bounce, p_value_bounce = ttest_ind(bounce_rates_light, bounce_rates_dark, equal_var=False)
+
+# extracting scroll depths for both themes
+scroll_depth_light = df[df['Theme'] == 'Light Theme']['Scroll_Depth']
+scroll_depth_dark = df[df['Theme'] == 'Dark Theme']['Scroll_Depth']
+
+# performing a two-sample t-test for scroll depth
+t_stat_scroll, p_value_scroll = ttest_ind(scroll_depth_light, scroll_depth_dark, equal_var=False)
+
+# creating a table for comparison
+comparison_table = pd.DataFrame({
+    'Metric': ['Click Through Rate', 'Conversion Rate', 'Bounce Rate', 'Scroll Depth'],
+    'T-Statistic': [t_stat_ctr, t_stat, t_stat_bounce, t_stat_scroll],
+    'P-Value': [p_value_ctr, p_value, p_value_bounce, p_value_scroll]
+})
+
+comparison_table</code></pre>
+<p>So, here’s a table comparing the performance of the Light Theme and Dark Theme across various metrics based on hypothesis testing:</p>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="Hypothesis Testing" class="wp-image-22998" data-attachment-id="22998" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image-10" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/image-10.png?fit=684%2C308&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/image-10.png?fit=300%2C135&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/image-10.png?fit=684%2C308&amp;ssl=1" data-orig-size="684,308" data-permalink="https://my-ai-portfolio.com/2024/03/25/hypothesis-testing-using-python/image-10-11/" data-recalc-dims="1" decoding="async" height="308" sizes="(max-width: 684px) 100vw, 684px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/image-10.png?resize=684%2C308&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/image-10.png?w=684&amp;ssl=1 684w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/image-10.png?resize=300%2C135&amp;ssl=1 300w" style="width:480px;height:auto" width="684"/></figure>
+<ul class="wp-block-list">
+<li><strong>Click Through Rate</strong>: The test reveals a statistically significant difference, with the Dark Theme likely performing better (P-Value = 0.048).</li>
+<li><strong>Conversion Rate</strong>: No statistically significant difference was found (P-Value = 0.635).</li>
+<li><strong>Bounce Rate</strong>: There’s no statistically significant difference in Bounce Rates between the themes (P-Value = 0.230).</li>
+<li><strong>Scroll Depth</strong>: Similarly, no statistically significant difference is observed in Scroll Depths (P-Value = 0.450).</li>
+</ul>
+<p>In summary, while the two themes perform similarly across most metrics, the Dark Theme has a slight edge in terms of engaging users to click through. For other key performance indicators like Conversion Rate, Bounce Rate, and Scroll Depth, the choice between a Light Theme and a Dark Theme does not significantly affect user behaviour according to the data provided.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, Hypothesis Testing is a statistical method used to make inferences or decisions about a population based on sample data. It starts with a null hypothesis (H0), which represents a default stance or no effect, and an alternative hypothesis (H1 or Ha), which represents what we aim to prove or expect to find. The process involves using sample data to determine whether to reject the null hypothesis in favor of the alternative hypothesis, based on the likelihood of observing the sample data under the null hypothesis.</p>
+<p>I hope you liked this article on Hypothesis Testing using Python. Feel free to ask valuable questions in the comments section below. You can follow me on <a href="https://www.instagram.com/amankharwal.official/" rel="noreferrer noopener" target="_blank"><strong>Instagram</strong></a> for many more resources.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="customer-satisfaction-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="sql-concepts-for-data-science-interviews.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

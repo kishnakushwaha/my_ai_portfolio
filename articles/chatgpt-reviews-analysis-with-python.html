@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>ChatGPT Reviews Analysis with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        ChatGPT Reviews Analysis with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 10, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="fitness-watch-data-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="cohort-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Analyzing reviews is one of the best data-driven strategies to improve your product or services. It helps in understanding what people think about your product, what they don’t like about it, and what more they expect from it. So, if you want to understand how to analyze reviews to understand what people think about your product, this article is for you. In this article, I’ll take you through the task of ChatGPT reviews analysis with <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">Python</a></strong>, which will help us understand how to analyze reviews to understand what people think about ChatGPT.</p>
+<h2 class="wp-block-heading">ChatGPT Reviews Analysis with Python</h2>
+<p>The dataset I am using to analyze the reviews of ChatGPT consists of user reviews of ChatGPT, including textual feedback, ratings, and review dates. You can download the dataset from <strong><a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">here</a></strong>.</p>
+<p>Let’s get started with this task by importing the necessary Python libraries and the <strong><a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+import plotly.graph_objects as go
+from sklearn.feature_extraction.text import CountVectorizer
+from collections import Counter
+import plotly.express as px
+import plotly.io as pio
+pio.templates.default = "plotly_white"
+
+# load the dataset
+df = pd.read_csv("chatgpt_reviews.csv")
+
+df.head()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="data for chatgpt reviews analysis" class="wp-image-24466" data-attachment-id="24466" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="1630,370" data-recalc-dims="1" decoding="async" height="232" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/image-7.png" width="1024"/></figure>
+<p>Let’s have a look at whether the dataset has any null values or not:</p>
+<pre><code class="language-python">df.isnull().sum()</code></pre>
+<figure class="wp-block-image size-full is-resized"><img alt="null values in the dataset" class="wp-image-24469" data-attachment-id="24469" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="260,310" data-recalc-dims="1" decoding="async" height="310" sizes="(max-width: 260px) 100vw, 260px" src="../assets/datasets/image-8.png" style="width:216px;height:auto" width="260"/></figure>
+<p>The dataset has some null values in the review column. I’ll replace all the null values with empty strings so that the null values don’t affect the analysis:</p>
+<pre><code class="language-python">df['Review'] = df['Review'].astype(str).fillna('')</code></pre>
+<p>Now, to proceed further, we will add sentiment labels based on the review content. We will use the textblob library in Python for this task:</p>
+<pre><code class="language-python">from textblob import TextBlob
+
+# function to determine sentiment polarity
+def get_sentiment(review):
+    sentiment = TextBlob(review).sentiment.polarity
+    if sentiment &gt; 0:
+        return 'Positive'
+    elif sentiment &lt; 0:
+        return 'Negative'
+    else:
+        return 'Neutral'
+
+# apply sentiment analysis
+df['Sentiment'] = df['Review'].apply(get_sentiment)
+
+sentiment_distribution = df['Sentiment'].value_counts()</code></pre>
+<p>Now, let’s have a look at the distribution of positive, neutral, and negative reviews:</p>
+<pre><code class="language-python">fig = go.Figure(data=[go.Bar(
+    x=sentiment_distribution.index,
+    y=sentiment_distribution.values,
+    marker_color=['green', 'gray', 'red'],
+)])
+
+fig.update_layout(
+    title='Sentiment Distribution of ChatGPT Reviews',
+    xaxis_title='Sentiment',
+    yaxis_title='Number of Reviews',
+    width=800,
+    height=600
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Sentiment Distribution of ChatGPT Reviews" class="wp-image-24472" data-attachment-id="24472" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="chatgpt reviews 1" data-orig-size="800,600" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 800px) 100vw, 800px" src="../assets/datasets/chatgpt-reviews-1.png" width="800"/></figure>
+<p>The majority of the reviews are positive, with a smaller proportion being neutral or negative. This suggests that most users have a favourable opinion of ChatGPT, though there is still a notable number of neutral and negative reviews.</p>
+<h4 class="wp-block-heading">Analyzing What Users Like About ChatGPT</h4>
+<p>To analyze what users like about ChatGPT, I will focus on extracting common phrases and keywords from the reviews with positive sentiments. This will help identify recurring themes or features that users appreciate.</p>
+<p>I’ll proceed with the following steps:</p>
+<ol class="wp-block-list">
+<li>Filter the reviews that have a positive sentiment.</li>
+<li>Extract and analyze the most common phrases and keywords from these positive reviews.</li>
+</ol>
+<pre><code class="language-python"># filter reviews with positive sentiment
+positive_reviews = df[df['Sentiment'] == 'Positive']['Review']
+
+# use CountVectorizer to extract common phrases (n-grams)
+vectorizer = CountVectorizer(ngram_range=(2, 3), stop_words='english', max_features=100)
+X = vectorizer.fit_transform(positive_reviews)
+
+# sum the counts of each phrase
+phrase_counts = X.sum(axis=0)
+phrases = vectorizer.get_feature_names_out()
+phrase_freq = [(phrases[i], phrase_counts[0, i]) for i in range(len(phrases))]
+
+# sort phrases by frequency
+phrase_freq = sorted(phrase_freq, key=lambda x: x[1], reverse=True)
+
+phrase_df = pd.DataFrame(phrase_freq, columns=['Phrase', 'Frequency'])
+
+fig = px.bar(phrase_df,
+             x='Frequency',
+             y='Phrase',
+             orientation='h',
+             title='Top Common Phrases in Positive Reviews',
+             labels={'Phrase': 'Phrase', 'Frequency': 'Frequency'},
+             width=1000,
+             height=600)
+
+fig.update_layout(
+    xaxis_title='Frequency',
+    yaxis_title='Phrase',
+    yaxis={'categoryorder':'total ascending'}
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Top Common Phrases in Positive Reviews" class="wp-image-24474" data-attachment-id="24474" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="chatgpt reviews 2" data-orig-size="1000,600" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 1000px) 100vw, 1000px" src="../assets/datasets/chatgpt-reviews-2.png" width="1000"/></figure>
+<p>The visualization highlights that users appreciate ChatGPT for being a “great app”, with phrases like “amazing app”, “AI app”, and “excellent app” frequently mentioned in positive reviews. Users find it “useful”, “user-friendly”, and helpful for students, with many praising its AI capabilities. Additionally, the app’s ability to answer questions effectively and its free version is also valued by users.</p>
+<p>These sentiments suggest that ChatGPT is highly regarded for its usability, educational benefits, and AI-powered features.</p>
+<h4 class="wp-block-heading">Analyzing What Users Don’t Like About ChatGPT</h4>
+<p>Similarly, to analyze what users don’t like about ChatGPT, I’ll focus on extracting common phrases and keywords from the reviews with negative sentiments. This will help identify recurring issues or features that users are dissatisfied with.</p>
+<p>I’ll proceed by:</p>
+<ol class="wp-block-list">
+<li>Filtering the reviews with negative sentiments.</li>
+<li>Extracting and analyzing the most common phrases and keywords from these negative reviews.</li>
+</ol>
+<pre><code class="language-python"># filter reviews with negative sentiment
+negative_reviews = df[df['Sentiment'] == 'Negative']['Review']
+
+# use CountVectorizer to extract common phrases (n-grams) for negative reviews
+X_neg = vectorizer.fit_transform(negative_reviews)
+
+# sum the counts of each phrase in negative reviews
+phrase_counts_neg = X_neg.sum(axis=0)
+phrases_neg = vectorizer.get_feature_names_out()
+phrase_freq_neg = [(phrases_neg[i], phrase_counts_neg[0, i]) for i in range(len(phrases_neg))]
+
+# sort phrases by frequency
+phrase_freq_neg = sorted(phrase_freq_neg, key=lambda x: x[1], reverse=True)
+
+phrase_neg_df = pd.DataFrame(phrase_freq_neg, columns=['Phrase', 'Frequency'])
+
+fig = px.bar(phrase_neg_df,
+             x='Frequency',
+             y='Phrase',
+             orientation='h',
+             title='Top Common Phrases in Negative Reviews',
+             labels={'Phrase': 'Phrase', 'Frequency': 'Frequency'},
+             width=1000,
+             height=600)
+
+fig.update_layout(
+    xaxis_title='Frequency',
+    yaxis_title='Phrase',
+    yaxis={'categoryorder':'total ascending'}
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Top Common Phrases in Negative Reviews" class="wp-image-24476" data-attachment-id="24476" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="chatgpt reviews 3" data-orig-size="1000,600" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 1000px) 100vw, 1000px" src="../assets/datasets/chatgpt-reviews-3.png" width="1000"/></figure>
+<p>The visualization shows that users’ main complaints about ChatGPT include it being labelled as a “bad app” or “useless app”, with issues such as “doesn’t work”, “error occurred”, and “network error” frequently mentioned in negative reviews. Users also express frustration with incorrect or misleading answers, technical problems like “error messages” and difficulty using specific features like “voice chat”.</p>
+<p>These issues suggest that users are dissatisfied with the app’s reliability, accuracy, and overall performance.</p>
+<h4 class="wp-block-heading">Common Problems Faced by Users in ChatGPT</h4>
+<p>To analyze common problems people face with ChatGPT, I’ll focus on the frequent phrases and keywords found in the negative reviews. I’ll categorize these phrases into broader problem areas, and then visualize the most common issues. Let’s proceed with it:</p>
+<pre><code class="language-python"># grouping similar phrases into broader problem categories
+problem_keywords = {
+    'Incorrect Answers': ['wrong answer', 'gives wrong', 'incorrect', 'inaccurate', 'wrong'],
+    'App Performance': ['slow', 'lag', 'crash', 'bug', 'freeze', 'loading', 'glitch', 'worst app', 'bad app', 'horrible', 'terrible'],
+    'User Interface': ['interface', 'UI', 'difficult to use', 'confusing', 'layout'],
+    'Features Missing/Not Working': ['feature missing', 'not working', 'missing', 'broken', 'not available'],
+    'Quality of Responses': ['bad response', 'useless', 'poor quality', 'irrelevant', 'nonsense']
+}
+
+# initialize a dictionary to count problems
+problem_counts = {key: 0 for key in problem_keywords.keys()}
+
+# count occurrences of problem-related phrases in negative reviews
+for phrase, count in phrase_freq_neg:
+    for problem, keywords in problem_keywords.items():
+        if any(keyword in phrase for keyword in keywords):
+            problem_counts[problem] += count
+            break
+
+problem_df = pd.DataFrame(list(problem_counts.items()), columns=['Problem', 'Frequency'])
+
+fig = px.bar(problem_df,
+             x='Frequency',
+             y='Problem',
+             orientation='h', 
+             title='Common Problems Faced by Users in ChatGPT',
+             labels={'Problem': 'Problem', 'Frequency': 'Frequency'},
+             width=1000,
+             height=600)
+
+fig.update_layout(
+    plot_bgcolor='white',  
+    paper_bgcolor='white', 
+    xaxis_title='Frequency',
+    yaxis_title='Problem',
+    yaxis={'categoryorder':'total ascending'}  
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Common Problems Faced by Users in ChatGPT" class="wp-image-24478" data-attachment-id="24478" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="chatgpt reviews 4" data-orig-size="1000,600" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 1000px) 100vw, 1000px" src="../assets/datasets/chatgpt-reviews-4.png" width="1000"/></figure>
+<p>The visualization indicates that the most common problem users face with ChatGPT is receiving “Incorrect Answers”, which is the most frequent issue by a significant margin. Other notable problems include “App Performance”, where users experience issues with the app’s functionality, and concerns about the “Quality of Responses”.</p>
+<p>These findings suggest areas where improvements could be made to enhance the user experience with ChatGPT.</p>
+<h4 class="wp-block-heading">Analyzing How Reviews Changed Over Time</h4>
+<p>Let’s analyze the trend of reviews now. To analyze how the reviews have changed over time, I will:</p>
+<ol class="wp-block-list">
+<li>Aggregate the reviews by their sentiment (Positive, Neutral, Negative) over time.</li>
+<li>Visualize the trends in the volume of each sentiment type over time.</li>
+</ol>
+<pre><code class="language-python"># convert 'Review Date' to datetime format
+df['Review Date'] = pd.to_datetime(df['Review Date'])
+
+# aggregate sentiment counts by date
+sentiment_over_time = df.groupby([df['Review Date'].dt.to_period('M'), 'Sentiment']).size().unstack(fill_value=0)
+
+# convert the period back to datetime for plotting
+sentiment_over_time.index = sentiment_over_time.index.to_timestamp()
+
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(x=sentiment_over_time.index, y=sentiment_over_time['Positive'],
+                         mode='lines', name='Positive', line=dict(color='green')))
+fig.add_trace(go.Scatter(x=sentiment_over_time.index, y=sentiment_over_time['Neutral'],
+                         mode='lines', name='Neutral', line=dict(color='gray')))
+fig.add_trace(go.Scatter(x=sentiment_over_time.index, y=sentiment_over_time['Negative'],
+                         mode='lines', name='Negative', line=dict(color='red')))
+
+fig.update_layout(
+    title='Sentiment Trends Over Time',
+    xaxis_title='Date',
+    yaxis_title='Number of Reviews',
+    plot_bgcolor='white',  
+    paper_bgcolor='white',  
+    legend_title_text='Sentiment',
+    xaxis=dict(showgrid=True, gridcolor='lightgray'), 
+    yaxis=dict(showgrid=True, gridcolor='lightgray')
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Sentiment Trends Over Time" class="wp-image-24481" data-attachment-id="24481" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="chatgpt reviews 5" data-orig-size="1156,525" data-recalc-dims="1" decoding="async" height="465" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="../assets/datasets/chatgpt-reviews-5.png" width="1024"/></figure>
+<p>The visualization shows that the number of positive reviews (green line) for ChatGPT has generally increased over time, with a significant rise beginning around March 2024, peaking in May 2024, and then slightly declining in July 2024.</p>
+<p>Neutral reviews (grey line) also show a gradual increase over time, with a noticeable peak around May 2024.</p>
+<p>Negative reviews (red line) have remained relatively stable and low throughout the period, indicating that while more users are sharing their experiences over time, the overall sentiment is largely positive with a steady but minimal increase in negative feedback.</p>
+<h4 class="wp-block-heading">Analyzing How Often Users Promote ChatGPT</h4>
+<p>Now, to finish this task on ChatGPT reviews analysis, we will analyze how often users promote ChatGPT. We will use the concept of Net Promoter Score here. Net Promoter Score (NPS) is a commonly used metric to gauge customer satisfaction and loyalty by asking users how likely they are to recommend a product or service. Typically, NPS is calculated based on responses to the question: “How likely are you to recommend our product to a friend or colleague?” on a scale from 0 to 10. Here’s how NPS is calculated:</p>
+<ul class="wp-block-list">
+<li><strong>Promoters:</strong> Respondents who provide a score of 9 or 10.</li>
+<li><strong>Passives:</strong> Respondents who provide a score of 7 or 8.</li>
+<li><strong>Detractors:</strong> Respondents who provide a score between 0 and 6.</li>
+</ul>
+<blockquote class="wp-block-quote is-style-plain is-layout-flow wp-block-quote-is-layout-flow">
+<p class="has-text-align-center"><strong>NPS= %Promoters − %Detractors</strong></p>
+</blockquote>
+<p>Given the available data, I’ll assume that users who rate the app 5 stars are Promoters, those who rate it 4 stars are Passives, and those who rate it 3 stars or below are Detractors. Let’s calculate the NPS based on this assumption:</p>
+<pre><code class="language-python"># define the categories based on the ratings
+df['NPS Category'] = df['Ratings'].apply(lambda x: 'Promoter' if x == 5 else ('Passive' if x == 4 else 'Detractor'))
+
+# calculate the percentage of each category
+nps_counts = df['NPS Category'].value_counts(normalize=True) * 100
+
+# calculate NPS
+nps_score = nps_counts.get('Promoter', 0) - nps_counts.get('Detractor', 0)
+
+# display the NPS Score
+nps_score</code></pre>
+<pre class="wp-block-preformatted"><strong>64.35313912172705</strong></pre>
+<p>The Net Promoter Score (NPS) for ChatGPT, based on the ratings provided in the dataset, is approximately <strong>64.35</strong>. It indicates a strong likelihood that users would recommend ChatGPT to others, as a score above 50 is generally considered excellent.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="fitness-watch-data-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="cohort-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

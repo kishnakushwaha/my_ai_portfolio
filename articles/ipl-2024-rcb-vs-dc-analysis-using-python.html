@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>IPL 2024 RCB vs DC Analysis using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        IPL 2024 RCB vs DC Analysis using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 04, 2025 • 5 min read</div>
+<p>If you are someone interested in learning about the use of <strong><a href="https://my-ai-portfolio.com/2022/03/09/data-science-projects/">Data Science</a></strong> in cricket analytics, this article is for you. The match between RCB and Delhi Capitals was one of my favourite matches in the IPL this year. So, in this article, I’ll take you through my analysis of the complete IPL match RCB vs DC 2024 using Python.</p>
+<h2 class="wp-block-heading">IPL 2024 RCB Vs DC Analysis: Dataset</h2>
+<p>The dataset we collected for this IPL match analysis contains the following columns:</p>
+<ol class="wp-block-list">
+<li>team: Indicates the batting team.</li>
+<li>over: Over number in the match.</li>
+<li>batter: The batsman facing the delivery.</li>
+<li>bowler: The bowler delivering the ball.</li>
+<li>non_striker: The batsman at the non-striker’s end.</li>
+<li>runs_batter: Runs scored by the batter off the delivery.</li>
+<li>runs_extras: Extra runs (like wides, no balls) were conceded during the delivery.</li>
+<li>runs_total: Total runs scored from the delivery.</li>
+<li>player_out: Name of the player out on the delivery (if any).</li>
+<li>wicket_kind: Type of dismissal (if any).</li>
+<li>fielders: Names of fielders involved in the dismissal (if any).</li>
+</ol>
+<p>You can download the dataset from <strong><a href="https://statso.io/ipl-2024-match-dataset/" rel="noreferrer noopener" target="_blank">here</a></strong>.</p>
+<h2 class="wp-block-heading">IPL 2024 RCB Vs DC Analysis using Python</h2>
+<p>Now, let’s get started with this task by importing the necessary Python libraries and the <strong><a href="https://statso.io/ipl-2024-match-dataset/" rel="noreferrer noopener" target="_blank">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+deliveries_df = pd.read_csv("innings_deliveries.csv")
+
+print(deliveries_df.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>                          team  over        batter    bowler   non_striker  \<br/>0  Royal Challengers Bengaluru     0       V Kohli  I Sharma  F du Plessis   <br/>1  Royal Challengers Bengaluru     0       V Kohli  I Sharma  F du Plessis   <br/>2  Royal Challengers Bengaluru     0  F du Plessis  I Sharma       V Kohli   <br/>3  Royal Challengers Bengaluru     0       V Kohli  I Sharma  F du Plessis   <br/>4  Royal Challengers Bengaluru     0       V Kohli  I Sharma  F du Plessis   <br/><br/>   runs_batter  runs_extras  runs_total player_out wicket_kind fielders  <br/>0            0            0           0        NaN         NaN       []  <br/>1            1            0           1        NaN         NaN       []  <br/>2            1            0           1        NaN         NaN       []  <br/>3            0            0           0        NaN         NaN       []  <br/>4            2            0           2        NaN         NaN       []  </strong></pre>
+<p>The dataset has several null values. But we don’t need to drop any row with null values in this case or fill any null value as it will affect the data. So, without wasting any time, let’s start by visualizing the run distribution per over for both teams to illustrate the scoring trends throughout the innings:</p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+import seaborn as sns
+sns.set_style("whitegrid")
+
+# data preparation for run distribution per over
+run_distribution = deliveries_df.groupby(['team', 'over']).agg({'runs_total': 'sum'}).reset_index()
+
+# plotting run distribution per over for both teams
+plt.figure(figsize=(14, 6))
+sns.lineplot(data=run_distribution, x='over', y='runs_total', hue='team', marker='o')
+plt.title('Run Distribution Per Over')
+plt.xlabel('Over Number')
+plt.ylabel('Runs Scored')
+plt.xticks(range(0, 21))  # over numbers from 0 to 20
+plt.legend(title='Team')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="IPL 2024 RCB vs DC Analysis: Run Distribution Per Over" class="wp-image-23525" data-attachment-id="23525" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ipl-1" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-1.png?fit=1024%2C483&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-1.png?fit=300%2C141&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-1.png?fit=1160%2C547&amp;ssl=1" data-orig-size="1160,547" data-permalink="https://my-ai-portfolio.com/2024/05/20/ipl-2024-rcb-vs-dc-analysis-using-python/ipl-1-2/" data-recalc-dims="1" decoding="async" height="483" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-1.png?resize=1024%2C483&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-1.png?resize=1024%2C483&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-1.png?resize=300%2C141&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-1.png?resize=768%2C362&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-1.png?w=1160&amp;ssl=1 1160w" width="1024"/></figure>
+<p>The plot above shows the run distribution per over for both teams. Here are some insights:</p>
+<ul class="wp-block-list">
+<li>The scoring rate for each team shows fluctuations throughout their innings, with spikes indicating overs with high scoring, likely due to boundaries or big hits.</li>
+<li>Royal Challengers Bangalore (RCB) appears to have a couple of overs with significantly higher runs, suggesting aggressive batting.</li>
+</ul>
+<p>Next, I’ll analyze the top scorers from each team to highlight individual performances. Let’s create a bar chart to visualize the top contributors in terms of runs:</p>
+<pre><code class="language-python"># calculating top scorers for each team
+top_scorers = deliveries_df.groupby(['team', 'batter']).agg({'runs_batter': 'sum'}).reset_index().sort_values(by='runs_batter', ascending=False)
+
+plt.figure(figsize=(14, 8))
+sns.barplot(data=top_scorers, x='runs_batter', y='batter', hue='team', dodge=False)
+plt.title('Top Scorers from Each Team')
+plt.xlabel('Total Runs')
+plt.ylabel('Batter')
+plt.legend(title='Team', loc='center right')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Top Scorers from Each Team" class="wp-image-23527" data-attachment-id="23527" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ipl-2" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-2.png?fit=1024%2C575&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-2.png?fit=300%2C169&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-2.png?fit=1248%2C701&amp;ssl=1" data-orig-size="1248,701" data-permalink="https://my-ai-portfolio.com/2024/05/20/ipl-2024-rcb-vs-dc-analysis-using-python/ipl-2-2/" data-recalc-dims="1" decoding="async" height="575" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-2.png?resize=1024%2C575&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-2.png?resize=1024%2C575&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-2.png?resize=300%2C169&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-2.png?resize=768%2C431&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-2.png?resize=1200%2C674&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-2.png?w=1248&amp;ssl=1 1248w" width="1024"/></figure>
+<p>Key observations from the graph include:</p>
+<ul class="wp-block-list">
+<li><strong>AR Patel</strong> from Delhi Capitals is the top scorer of the match, significantly outscoring others with a little over 50 runs.</li>
+<li><strong>RM Patidar</strong> is the top scorer for Royal Challengers Bangalore, closely approaching 50 runs.</li>
+<li>The graph displays a diverse contribution from both teams, with several players from both sides contributing notable scores.</li>
+</ul>
+<p>Now, let’s move on to a bowling analysis. We’ll look at which bowlers took the most wickets and their economy rates. It will involve calculating the number of wickets each bowler took and the number of runs they conceded per over bowled. We’ll present this data in a combined bar and line plot for a comprehensive view of bowling performance:</p>
+<pre><code class="language-python"># preparing data for bowling analysis
+deliveries_df['wickets_taken'] = deliveries_df['wicket_kind'].notna().astype(int)
+bowling_stats = deliveries_df.groupby(['team', 'bowler']).agg({'runs_total': 'sum', 'wickets_taken': 'sum', 'over': 'nunique'}).reset_index()
+
+# calculating economy rate (total runs conceded / number of overs bowled)
+bowling_stats['economy_rate'] = bowling_stats['runs_total'] / bowling_stats['over']
+
+# sorting the data for better visualization
+bowling_stats_sorted = bowling_stats.sort_values(by='wickets_taken', ascending=False)
+
+# prepare the DataFrame for plotting
+bowling_stats_sorted['wickets_taken'] = deliveries_df['wicket_kind'].notna().astype(int)
+bowling_stats = deliveries_df.groupby(['team', 'bowler']).agg({'runs_total': 'sum', 'wickets_taken': 'sum', 'over': 'nunique'}).reset_index()
+bowling_stats['economy_rate'] = bowling_stats['runs_total'] / bowling_stats['over']
+bowling_stats_sorted = bowling_stats.sort_values(by='wickets_taken', ascending=False)
+
+# create the plot
+fig, ax1 = plt.subplots(figsize=(14, 8))
+
+# Bar plot for wickets
+sns.barplot(data=bowling_stats_sorted, x='bowler', y='wickets_taken', hue='team', ax=ax1, alpha=0.6)
+ax1.set_ylabel('Wickets Taken')
+ax1.set_xlabel('Bowler')
+ax1.set_title('Bowling Analysis: Wickets and Economy Rate')
+ax1.legend(title='Team', bbox_to_anchor=(1.05, 1), loc='upper left')
+
+for item in ax1.get_xticklabels():
+    item.set_rotation(45)
+
+ax2 = ax1.twinx()
+sns.lineplot(data=bowling_stats_sorted, x='bowler', y='economy_rate', marker='o', sort=False, ax=ax2, color='black')
+ax2.set_ylabel('Economy Rate')
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="IPL 2024 RCB vs DC Analysis: Bowling Analysis: Wickets and Economy Rate" class="wp-image-23529" data-attachment-id="23529" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ipl-3" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-3.png?fit=1024%2C584&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-3.png?fit=300%2C171&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-3.png?fit=1386%2C790&amp;ssl=1" data-orig-size="1386,790" data-permalink="https://my-ai-portfolio.com/2024/05/20/ipl-2024-rcb-vs-dc-analysis-using-python/ipl-3-2/" data-recalc-dims="1" decoding="async" height="584" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-3.png?resize=1024%2C584&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-3.png?resize=1024%2C584&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-3.png?resize=300%2C171&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-3.png?resize=768%2C438&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-3.png?resize=1200%2C684&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-3.png?w=1386&amp;ssl=1 1386w" width="1024"/></figure>
+<p>The combined bar and line plot provides a comprehensive overview of the bowling performance of each team:</p>
+<ul class="wp-block-list">
+<li><strong>Wickets Taken</strong>: The bars indicate the number of wickets each bowler took during the match. The height of the bars reflects how successful the bowlers were in terms of taking wickets. Bowlers from both teams contributed to taking wickets, with some notable performances that stand out due to higher bars.</li>
+<li><strong>Economy Rate</strong>: The line graph overlaid on the bar graph shows the economy rate (number of runs conceded per over) of each bowler. The economy rate is crucial as it indicates how economically a bowler has bowled in terms of runs given away.</li>
+</ul>
+<p>Now, let’s analyze the types of dismissals that occurred during the match to understand how most wickets were taken (e.g., caught, bowled, run out). This can provide insights into the nature of the pitch and the playing conditions. We’ll visualize this using a pie chart:</p>
+<pre><code class="language-python"># counting dismissal types
+dismissal_types = deliveries_df['wicket_kind'].dropna().value_counts()
+
+plt.figure(figsize=(8, 8))
+plt.pie(dismissal_types, labels=dismissal_types.index, autopct='%1.1f%%', startangle=140, colors=sns.color_palette("Set2"))
+plt.title('Types of Dismissals')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Types of Dismissals" class="wp-image-23530" data-attachment-id="23530" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ipl-4" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-4.png?fit=636%2C658&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-4.png?fit=290%2C300&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-4.png?fit=636%2C658&amp;ssl=1" data-orig-size="636,658" data-permalink="https://my-ai-portfolio.com/2024/05/20/ipl-2024-rcb-vs-dc-analysis-using-python/ipl-4-2/" data-recalc-dims="1" decoding="async" height="658" loading="lazy" sizes="auto, (max-width: 636px) 100vw, 636px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-4.png?resize=636%2C658&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-4.png?w=636&amp;ssl=1 636w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-4.png?resize=290%2C300&amp;ssl=1 290w" width="636"/></figure>
+<p>Now, let’s perform Partnerships Analysis by calculating and visualizing the most productive batting partnerships in the match. We’ll look at runs scored per partnership and how long each partnership lasted in terms of balls faced:</p>
+<pre><code class="language-python"># function to calculate partnerships
+def calculate_partnerships(df):
+    partnerships = []
+    current_partnership = {}
+    for i, row in df.iterrows():
+        if i == 0 or (row['batter'] not in current_partnership.values()):
+            if current_partnership:
+                partnerships.append(current_partnership)
+            current_partnership = {
+                'team': row['team'],
+                'batter1': row['batter'],
+                'batter2': row['non_striker'],
+                'runs': 0,
+                'balls': 0
+            }
+        current_partnership['runs'] += row['runs_total']
+        current_partnership['balls'] += 1
+        if 'player_out' in row and pd.notna(row['player_out']):
+            if row['player_out'] == current_partnership['batter1'] or row['player_out'] == current_partnership['batter2']:
+                partnerships.append(current_partnership)
+                current_partnership = {}
+    # append the last partnership if not ended by a wicket
+    if current_partnership:
+        partnerships.append(current_partnership)
+    return partnerships
+
+# calculate partnerships
+partnerships_data = calculate_partnerships(deliveries_df)
+partnerships_df = pd.DataFrame(partnerships_data)
+
+# filter out significant partnerships (e.g., partnerships with more than 20 runs)
+significant_partnerships = partnerships_df[partnerships_df['runs'] &gt; 20]
+
+# sort by highest runs
+significant_partnerships = significant_partnerships.sort_values(by='runs', ascending=False)
+
+plt.figure(figsize=(12, 8))
+sns.barplot(data=significant_partnerships, x='runs', y='batter1', hue='team', dodge=False)
+plt.title('Significant Batting Partnerships')
+plt.xlabel('Runs Scored')
+plt.ylabel('Batter 1 (Partnership Initiated)')
+plt.legend(title='Team')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="IPL 2024 RCB vs DC Analysis: Significant Batting Partnerships" class="wp-image-23532" data-attachment-id="23532" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ipl-5" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-5.png?fit=1024%2C670&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-5.png?fit=300%2C196&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-5.png?fit=1072%2C701&amp;ssl=1" data-orig-size="1072,701" data-permalink="https://my-ai-portfolio.com/2024/05/20/ipl-2024-rcb-vs-dc-analysis-using-python/ipl-5-2/" data-recalc-dims="1" decoding="async" height="670" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-5.png?resize=1024%2C670&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-5.png?resize=1024%2C670&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-5.png?resize=300%2C196&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-5.png?resize=768%2C502&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-5.png?w=1072&amp;ssl=1 1072w" width="1024"/></figure>
+<p>The bar chart displays significant batting partnerships from the match, highlighting partnerships that scored more than 20 runs. Here’s how these insights contribute to our analysis:</p>
+<ul class="wp-block-list">
+<li>The chart identifies key partnerships that likely had a substantial impact on the match’s outcome, illustrating the effectiveness of batting pairs.</li>
+<li>It provides insights into which players were involved in pivotal stands, which can help in assessing player form and team strategy.</li>
+</ul>
+<p>Next, let’s perform a Phase Analysis to examine how teams performed during different stages of their innings; Powerplay (first 6 overs), Middle overs (7-15), and Death overs (16-20). We’ll look at scoring rates and wicket loss during these phases. This can offer insights into the team’s tactical approach and execution under varying conditions:</p>
+<pre><code class="language-python"># function to classify the phase of the game based on the over number
+def classify_phase(over):
+    if over &lt; 6:
+        return 'Powerplay'
+    elif over &lt; 16:
+        return 'Middle'
+    else:
+        return 'Death'
+
+# adding phase information to the dataframe
+deliveries_df['phase'] = deliveries_df['over'].apply(classify_phase)
+
+# grouping data by phase and team to calculate runs and wickets
+phase_analysis = deliveries_df.groupby(['team', 'phase']).agg({'runs_total': 'sum', 'wickets_taken': 'sum', 'over': 'count'}).rename(columns={'over': 'balls'}).reset_index()
+
+# calculating the run rate
+phase_analysis['run_rate'] = (phase_analysis['runs_total'] / phase_analysis['balls']) * 6
+
+# plotting the phase analysis
+fig, ax1 = plt.subplots(figsize=(12, 8))
+
+# bar plot for runs scored in each phase
+sns.barplot(data=phase_analysis, x='phase', y='runs_total', hue='team', ax=ax1)
+ax1.set_title('Phase Analysis: Runs and Wickets')
+ax1.set_ylabel('Total Runs')
+ax1.set_xlabel('Match Phase')
+
+# line plot for wickets lost
+ax2 = ax1.twinx()
+sns.lineplot(data=phase_analysis, x='phase', y='wickets_taken', hue='team', marker='o', ax=ax2, legend=False)
+ax2.set_ylabel('Wickets Lost')
+
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Phase Analysis: Runs and Wickets" class="wp-image-23534" data-attachment-id="23534" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ipl-6" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-6.png?fit=1024%2C685&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-6.png?fit=300%2C201&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-6.png?fit=1048%2C701&amp;ssl=1" data-orig-size="1048,701" data-permalink="https://my-ai-portfolio.com/2024/05/20/ipl-2024-rcb-vs-dc-analysis-using-python/ipl-6-2/" data-recalc-dims="1" decoding="async" height="685" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-6.png?resize=1024%2C685&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-6.png?resize=1024%2C685&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-6.png?resize=300%2C201&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-6.png?resize=768%2C514&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-6.png?w=1048&amp;ssl=1 1048w" width="1024"/></figure>
+<p>The plot above provides a clear breakdown of the match into different phases; Powerplay, Middle, and Death, and illustrates how each team performed during these segments:</p>
+<ul class="wp-block-list">
+<li><strong>Powerplay</strong>: Both teams have a relatively low total of runs, with RCB losing more wickets than DC in this phase, as indicated by the height of the orange line.</li>
+<li><strong>Middle</strong>: This phase shows the highest run-scoring for both teams, with DC scoring slightly more than RCB. The wickets lost remain controlled, suggesting stable innings from both teams.</li>
+<li><strong>Death</strong>: RCB has a sharp decrease in runs compared to the Middle phase, while DC maintains a high run rate. Wickets lost by RCB increased significantly in this phase, marked by the orange line peaking near 4.5, indicating a possible collapse or aggressive batting that did not pay off.</li>
+</ul>
+<p>Now, let’s calculate the strike rates for all batters in this match and then analyze the data to see which players were the most effective in terms of scoring quickly. After calculating the strike rates, we can look at correlations with other variables such as runs scored or the phase of play during which the runs were scored. This can give us insights into which players accelerate scoring at crucial times or against specific bowlers. First, I’ll calculate the strike rate for each batter:</p>
+<pre><code class="language-python"># calculate runs and balls faced for each batter
+batter_stats = deliveries_df.groupby('batter').agg({'runs_batter': 'sum', 'over': 'count'}).rename(columns={'over': 'balls_faced'}).reset_index()
+
+# calculate strike rate for each batter (runs per 100 balls)
+batter_stats['strike_rate'] = (batter_stats['runs_batter'] / batter_stats['balls_faced']) * 100
+
+# sorting batters by their strike rate
+batter_stats_sorted = batter_stats.sort_values(by='strike_rate', ascending=False)
+
+# displaying calculated strike rates along with runs scored and balls faced
+batter_stats_sorted.head(10)</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="" class="wp-image-23536" data-attachment-id="23536" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image-2" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image-2.png?fit=970%2C704&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image-2.png?fit=300%2C218&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image-2.png?fit=970%2C704&amp;ssl=1" data-orig-size="970,704" data-permalink="https://my-ai-portfolio.com/2024/05/20/ipl-2024-rcb-vs-dc-analysis-using-python/image-2-23/" data-recalc-dims="1" decoding="async" height="704" loading="lazy" sizes="auto, (max-width: 970px) 100vw, 970px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image-2.png?resize=970%2C704&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image-2.png?w=970&amp;ssl=1 970w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image-2.png?resize=300%2C218&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image-2.png?resize=768%2C557&amp;ssl=1 768w" style="width:642px;height:auto" width="970"/></figure>
+<p>Here are the top performers in terms of strike rate from the match:</p>
+<ol class="wp-block-list">
+<li>J Fraser-McGurk had the highest strike rate at 262.50, scoring 21 runs from just 8 balls.</li>
+<li>Virat Kohli also scored efficiently, with a strike rate of 192.86, making 27 runs from 14 balls.</li>
+<li>Rajat Patidar contributed significantly with a strike rate of 152.94, accumulating 52 runs from 34 balls.</li>
+</ol>
+<p>Now, let’s dive deeper by looking at how the strike rate varied with the phase of the game for these top performers. It could give insights into strategic scoring and game dynamics during different innings stages:</p>
+<pre><code class="language-python"># merging phase information with batter stats
+batter_phase_stats = deliveries_df.groupby(['batter', 'phase']).agg({'runs_batter': 'sum', 'over': 'count'}).rename(columns={'over': 'balls_faced'}).reset_index()
+
+# calculate strike rate for each batter-phase combination
+batter_phase_stats['strike_rate'] = (batter_phase_stats['runs_batter'] / batter_phase_stats['balls_faced']) * 100
+
+# filtering for top performers based on overall strike rate
+top_performers = batter_stats_sorted.head(5)['batter']
+batter_phase_stats_top = batter_phase_stats[batter_phase_stats['batter'].isin(top_performers)]
+
+# plotting strike rate across different phases for top performers
+plt.figure(figsize=(10, 6))
+sns.barplot(data=batter_phase_stats_top, x='batter', y='strike_rate', hue='phase')
+plt.title('Strike Rate Across Different Phases for Top Performers')
+plt.xlabel('Batter')
+plt.ylabel('Strike Rate')
+plt.legend(title='Match Phase')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Strike Rate Across Different Phases for Top Performers" class="wp-image-23538" data-attachment-id="23538" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ipl-7" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-7.png?fit=850%2C547&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-7.png?fit=300%2C193&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-7.png?fit=850%2C547&amp;ssl=1" data-orig-size="850,547" data-permalink="https://my-ai-portfolio.com/2024/05/20/ipl-2024-rcb-vs-dc-analysis-using-python/ipl-7-2/" data-recalc-dims="1" decoding="async" height="547" loading="lazy" sizes="auto, (max-width: 850px) 100vw, 850px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-7.png?resize=850%2C547&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-7.png?w=850&amp;ssl=1 850w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-7.png?resize=300%2C193&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-7.png?resize=768%2C494&amp;ssl=1 768w" width="850"/></figure>
+<p>The bar chart illustrates how the strike rates of the top performers varied across different phases of the match:</p>
+<ul class="wp-block-list">
+<li><strong>J Fraser-McGurk</strong> stands out with a particularly high strike rate in the Middle phase, significantly higher than any other phase or player, suggesting a highly aggressive and effective batting performance during this part of the innings.</li>
+<li><strong>V Kohli</strong> and <strong>RM Patidar</strong> both have high strike rates in the Death phase, indicating their ability to accelerate scoring towards the end of the innings, which is crucial for setting or chasing targets.</li>
+<li><strong>AR Patel</strong> shows consistency in the Powerplay and Middle phases with a slightly reduced but still competitive strike rate, indicating his role as a steady opener or middle-order batter.</li>
+<li><strong>KV Sharma</strong> exhibits a lower strike rate in the Middle phase compared to others, suggesting a more conservative approach during this phase or difficulty in accelerating.</li>
+</ul>
+<h4 class="wp-block-heading">Identifying Turning Points of the Match</h4>
+<p>To identify the turning point where Delhi Capitals (DC) might have lost the game and Royal Challengers Bangalore (RCB) gained the upper hand, we can analyze the cumulative run rate comparison throughout the innings and look at wicket fall events. Specifically, we can:</p>
+<ol class="wp-block-list">
+<li><strong>Compare Cumulative Run Rates:</strong> Plot the cumulative run rates of both teams throughout their innings to see where RCB started to outpace DC significantly.</li>
+<li><strong>Wicket Analysis:</strong> Examine the timings and impacts of wicket falls on the scoring rate and momentum for DC.</li>
+<li><strong>High-Impact Overs:</strong> Identify any overs where RCB took multiple wickets or DC had a significantly low scoring rate, which could indicate a loss of momentum.</li>
+</ol>
+<p>Let’s start by plotting the cumulative run rate for both teams and overlaying the wicket events to pinpoint critical moments in the match:</p>
+<pre><code class="language-python"># calculate cumulative runs and wickets for each ball for both teams
+deliveries_df['cumulative_runs'] = deliveries_df.groupby('team')['runs_total'].cumsum()
+deliveries_df['cumulative_wickets'] = deliveries_df.groupby('team')['wickets_taken'].cumsum()
+
+# separate data for both teams
+rcb_deliveries = deliveries_df[deliveries_df['team'] == 'Royal Challengers Bengaluru']
+dc_deliveries = deliveries_df[deliveries_df['team'] == 'Delhi Capitals']
+
+# calculating overs for cumulative analysis
+rcb_deliveries['over_ball'] = rcb_deliveries['over'] + (rcb_deliveries.groupby('over').cumcount() + 1) / 6
+dc_deliveries['over_ball'] = dc_deliveries['over'] + (dc_deliveries.groupby('over').cumcount() + 1) / 6
+
+# plotting cumulative run rates and wickets
+fig, ax = plt.subplots(figsize=(14, 8))
+
+# plot for RCB
+ax.plot(rcb_deliveries['over_ball'], rcb_deliveries['cumulative_runs'], color='blue', label='RCB Runs')
+ax.scatter(rcb_deliveries[rcb_deliveries['wickets_taken'] == 1]['over_ball'], rcb_deliveries[rcb_deliveries['wickets_taken'] == 1]['cumulative_runs'], color='blue', marker='X', s=100)
+
+# plot for DC
+ax.plot(dc_deliveries['over_ball'], dc_deliveries['cumulative_runs'], color='red', label='DC Runs')
+ax.scatter(dc_deliveries[dc_deliveries['wickets_taken'] == 1]['over_ball'], dc_deliveries[dc_deliveries['wickets_taken'] == 1]['cumulative_runs'], color='red', marker='X', s=100)
+
+ax.set_title('Cumulative Runs with Wickets for RCB and DC')
+ax.set_xlabel('Over')
+ax.set_ylabel('Cumulative Runs')
+ax.legend()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="IPL 2024 RCB vs DC analysis: Cumulative Runs with Wickets for RCB and DC" class="wp-image-23540" data-attachment-id="23540" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ipl-9" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-9.png?fit=1024%2C619&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-9.png?fit=300%2C181&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-9.png?fit=1160%2C701&amp;ssl=1" data-orig-size="1160,701" data-permalink="https://my-ai-portfolio.com/2024/05/20/ipl-2024-rcb-vs-dc-analysis-using-python/ipl-9/" data-recalc-dims="1" decoding="async" height="619" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-9.png?resize=1024%2C619&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-9.png?resize=1024%2C619&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-9.png?resize=300%2C181&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-9.png?resize=768%2C464&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-9.png?w=1160&amp;ssl=1 1160w" width="1024"/></figure>
+<p>The plot shows the cumulative runs scored by each team throughout their innings, with markers indicating wickets:</p>
+<ul class="wp-block-list">
+<li><strong>Momentum Shifts</strong>: The points where wickets are lost are crucial. Despite wickets, RCB’s run line does not show any drastic downturns, suggesting effective recovery by subsequent batters.</li>
+<li><strong>Performance Analysis</strong>: RCB’s ability to keep the run rate up despite losing wickets might indicate deeper batting strength or successful innings pacing strategies. In contrast, DC, while also increasing their score, does so at a less steep rate, possibly indicating fewer big overs.</li>
+</ul>
+<p>Now, let’s calculate the run rate for each over for both teams and see how the run rates changed throughout the innings, particularly focusing on the overs where wickets fell:</p>
+<pre><code class="language-python"># calculate runs and wickets per over for both teams
+per_over_stats = deliveries_df.groupby(['team', 'over']).agg({'runs_total': 'sum', 'wickets_taken': 'sum'}).reset_index()
+
+# calculate run rate for each over
+per_over_stats['run_rate'] = (per_over_stats['runs_total'] / 6)    # Runs per over to runs per ball (standard rate)
+
+# separate data for RCB and DC for plotting
+rcb_per_over_stats = per_over_stats[per_over_stats['team'] == 'Royal Challengers Bengaluru']
+dc_per_over_stats = per_over_stats[per_over_stats['team'] == 'Delhi Capitals']
+
+# plotting run rates and marking wickets for each team
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 8), sharex=True)
+
+# RCB
+ax1.plot(rcb_per_over_stats['over'], rcb_per_over_stats['run_rate'], marker='o', color='blue', label='RCB Run Rate')
+ax1.scatter(rcb_per_over_stats[rcb_per_over_stats['wickets_taken'] &gt; 0]['over'], rcb_per_over_stats[rcb_per_over_stats['wickets_taken'] &gt; 0]['run_rate'], color='red', s=100, label='Wickets')
+ax1.set_title('RCB Run Rate Per Over')
+ax1.set_ylabel('Run Rate (Runs per ball)')
+ax1.legend()
+
+# DC
+ax2.plot(dc_per_over_stats['over'], dc_per_over_stats['run_rate'], marker='o', color='red', label='DC Run Rate')
+ax2.scatter(dc_per_over_stats[dc_per_over_stats['wickets_taken'] &gt; 0]['over'], dc_per_over_stats[dc_per_over_stats['wickets_taken'] &gt; 0]['run_rate'], color='blue', s=100, label='Wickets')
+ax2.set_title('DC Run Rate Per Over')
+ax2.set_xlabel('Over')
+ax2.set_ylabel('Run Rate (Runs per ball)')
+ax2.legend()
+
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="IPL 2024 RCB vs DC Analysis" class="wp-image-23543" data-attachment-id="23543" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ipl-10" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-10.png?fit=1024%2C621&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-10.png?fit=300%2C182&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-10.png?fit=1156%2C701&amp;ssl=1" data-orig-size="1156,701" data-permalink="https://my-ai-portfolio.com/2024/05/20/ipl-2024-rcb-vs-dc-analysis-using-python/ipl-10/" data-recalc-dims="1" decoding="async" height="621" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-10.png?resize=1024%2C621&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-10.png?resize=1024%2C621&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-10.png?resize=300%2C182&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-10.png?resize=768%2C466&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/ipl-10.png?w=1156&amp;ssl=1 1156w" width="1024"/></figure>
+<p>The plotted run rates for each over, along with the moments when wickets were taken (marked with large dots), provide insights into how the match’s dynamics evolved:</p>
+<ul class="wp-block-list">
+<li><strong>RCB Run Rate Fluctuations</strong>: RCB’s run rate shows significant fluctuations, peaking at around 3.5 runs per ball towards the end of the innings. The presence of wicket markers (red circles) indicates that wickets were taken during overs where the run rate was generally lower, which is typical as wickets tend to disrupt batting flow.</li>
+<li><strong>DC Run Rate Patterns</strong>: DC’s run rate starts strong but sees a sharp decline after the initial overs, stabilizing somewhat in the middle before another peak and subsequent fall towards the end. Wickets (blue circles) are taken in overs where the run rate drops, suggesting effective bowling from RCB during these times.</li>
+</ul>
+<p>So this is how you can analyze a cricket match using Data Science.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>The match between RCB and DC showcased a blend of strategic batting, aggressive bowling, and critical partnerships. RCB’s ability to maintain a higher cumulative run rate and effective wicket-taking in crucial overs contributed significantly to their victory. The detailed phase-wise and player-specific analysis not only highlights the dynamics of T20 cricket but also assists in understanding how momentum shifts and strategic decisions impact the game’s outcome.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="inflation-impact-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="batting-intent-analysis-in-ipl-2025-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

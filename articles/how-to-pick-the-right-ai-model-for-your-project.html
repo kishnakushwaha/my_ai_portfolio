@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>How to Pick the Right AI Model for Your Project | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a class="active" href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        How to Pick the Right AI Model for Your Project</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 15, 2025 • 5 min read</div>
+<p>There is a specific kind of paralysis that hits every Data Scientist when they open Hugging Face or the OpenAI docs today. It used to be a choice between a Linear Regression and a Random Forest. Now? You have to choose between massive API-based LLMs, nimble local models, multimodal giants, and autonomous agents. So, let’s understand how to pick the right AI model for your project.</p>
+<h2 class="wp-block-heading">How to Pick the Right AI Model for Your Project</h2>
+<p><strong>The smartest model is rarely the right one.</strong> The best engineers don’t just chase benchmarks; they chase fit. Let’s cut through the noise and figure out exactly which tool belongs in your kit for the problem you are solving right now.</p>
+<h4 class="wp-block-heading">1. Traditional ML</h4>
+<p>Before you rush to use a Transformer for everything, stop. If your data fits into an Excel spreadsheet, rows and columns of numbers or categories, Generative AI is often overkill.</p>
+<p><strong>When to choose Traditional ML (XGBoost, LightGBM, Scikit-learn):</strong></p>
+<ol class="wp-block-list">
+<li><strong>Structured Data:</strong> You are predicting customer churn, housing prices, or credit risk based on tabular data.</li>
+<li><strong>Explainability:</strong> You need to tell a stakeholder exactly why a decision was made (Feature Importance).</li>
+<li><strong>Speed &amp; Cost:</strong> You need to process millions of rows per second with minimal compute cost.</li>
+</ol>
+<p>I once saw a team try to use GPT-4 to classify simple sentiment on a dataset of 10 million tweets. It would have cost them thousands of dollars. A simple Logistic Regression model did it for free in 5 minutes with 95% accuracy.</p>
+<h4 class="wp-block-heading">2. LLM APIs</h4>
+<p>Models like GPT-4o, Claude 3.5 Sonnet, or Gemini Pro are incredibly powerful generalists. They have world knowledge. However, they are leased, not owned. You send data out; you get answers back.</p>
+<p><strong>When to choose API-based LLMs:</strong></p>
+<ol class="wp-block-list">
+<li><strong>Complex Reasoning:</strong> You need the model to understand nuance, sarcasm, or complex logic (like legal summarisation).</li>
+<li><strong>The MVP Phase:</strong> You want to build a prototype in a weekend to prove an idea works.</li>
+<li><strong>Generalisation:</strong> The input data is highly variable and unstructured (emails, essays, messy PDFs).</li>
+</ol>
+<h4 class="wp-block-heading">3. Local LLMs</h4>
+<p>With the rise of Llama 3, Mistral, and Gemma, the gap between closed and open models is closing fast. Running a model locally (or on your own private cloud) is the ultimate power move for production engineering.</p>
+<p><strong>When to choose Local LLMs (Llama 3, Mistral, Phi-3):</strong></p>
+<ol class="wp-block-list">
+<li><strong>Data Privacy:</strong> You are dealing with HIPAA (medical), GDPR, or sensitive proprietary code. The data cannot leave your server.</li>
+<li><strong>Cost Control:</strong> You have high volume. Paying per token to an API adds up; running a GPU instance is a fixed cost.</li>
+<li><strong>Latency:</strong> You need instant responses and cannot depend on an API’s internet connection.</li>
+</ol>
+<h4 class="wp-block-heading">4. AI Agents</h4>
+<p>We are moving from Chatbots (who talk) to Agents (who do). An agent is an LLM wrapped in a loop that allows it to use tools, search the web, query a database, or run Python code.</p>
+<p><strong>When to choose Agents:</strong></p>
+<ol class="wp-block-list">
+<li><strong>Multi-step Workflows:</strong> The task requires planning. Example: <em>“Research this company, then find their stock price, then write a summary.”</em></li>
+<li><strong>External Actions:</strong> You need the AI to book a meeting, send an email, or update a Jira ticket.</li>
+<li><strong>Dynamic Context:</strong> The answer isn’t in the model’s training data, and it changes every minute (like checking weather or stock prices).</li>
+</ol>
+<h3 class="wp-block-heading">Final Words</h3>
+<p>As you continue your journey in Data Science, remember this: <strong>Your value isn’t defined by the complexity of the model you use, but by the problem you solve.</strong> Sometimes, the most advanced AI solution is a simple SQL query. Sometimes, it’s a massive Agentic workflow.</p>
+<p>Have the humility to start simple, and the courage to scale up only when the problem demands it. That is the difference between a hype-chaser and a true engineer.</p>
+<p>I hope you liked this article on how to pick the right AI model for your project. Follow me on <strong><a href="https://www.instagram.com/amankharwal.official/" rel="noreferrer noopener" target="_blank">Instagram</a></strong> for many more resources.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="why-your-2026-ai-roadmap-needs-more-than-just-llms.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="ai-ml-study-plan-for-2026.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

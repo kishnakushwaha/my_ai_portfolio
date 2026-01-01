@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>User Profiling and Segmentation using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        User Profiling and Segmentation using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 22, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="multivariate-time-series-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="topic-modelling-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>User profiling refers to creating detailed profiles that represent the behaviours and preferences of users, and segmentation divides the user base into distinct groups with common characteristics, making it easier to target specific segments with personalized marketing, products, or services. If you want to learn how to perform user profiling and segmentation for an advertisement campaign, this article is for you. In this article, I’ll take you through the task of User Profiling and Segmentation using <strong><a href="python-practice-questions-for-coding-interviews.html" target="">Python</a></strong>.</p>
+<h2 class="wp-block-heading">User Profiling and Segmentation: Process We Can Follow</h2>
+<p>User profiling and segmentation are powerful techniques that enable data professionals to understand their user base in-depth and tailor their strategies to meet diverse user needs. Below is the process we can follow for the task of User Profiling and Segmentation:</p>
+<ol class="wp-block-list">
+<li>Determine what you aim to achieve with user profiling and segmentation, such as improving customer service, personalized marketing, or product recommendation.</li>
+<li>Collect data from various sources, including user interactions on websites/apps, transaction histories, social media activity, and demographic information.</li>
+<li>Create new features that capture relevant user behaviours and preferences. It may involve aggregating transaction data, calculating the frequency of activities, or extracting patterns from usage logs.</li>
+<li>Select appropriate segmentation techniques.</li>
+<li>For each segment identified, create user profiles that summarize the key characteristics and behaviours of users in that segment.</li>
+</ol>
+<p>So, to get started with User Profiling and Segmentation, we need an appropriate dataset. I found an ideal dataset for this task. You can download the dataset from <a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;"><strong>here</strong></a>.</p>
+<h2 class="wp-block-heading">User Profiling and Segmentation using Python</h2>
+<p>Now, let’s get started with the task of User Profiling and Segmentation by importing the necessary Python libraries and the <a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;"><strong>dataset</strong></a>:</p>
+<pre><code class="language-python">import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+data = pd.read_csv("user_profiles_for_ads.csv")
+
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>   User ID    Age  Gender  Location Language Education Level  \<br/>0        1  25-34  Female  Suburban    Hindi       Technical   <br/>1        2    65+    Male     Urban    Hindi             PhD   <br/>2        3  45-54  Female  Suburban  Spanish       Technical   <br/>3        4  35-44  Female     Rural  Spanish             PhD   <br/>4        5  25-34  Female     Urban  English       Technical   <br/><br/>   Likes and Reactions  Followed Accounts  Device Usage  \<br/>0                 5640                190   Mobile Only   <br/>1                 9501                375        Tablet   <br/>2                 4775                187   Mobile Only   <br/>3                 9182                152  Desktop Only   <br/>4                 6848                371   Mobile Only   <br/><br/>   Time Spent Online (hrs/weekday)  Time Spent Online (hrs/weekend)  \<br/>0                              4.5                              1.7   <br/>1                              0.5                              7.7   <br/>2                              4.5                              5.6   <br/>3                              3.1                              4.2   <br/>4                              2.0                              3.8   <br/><br/>   Click-Through Rates (CTR)  Conversion Rates  Ad Interaction Time (sec)  \<br/>0                      0.193             0.067                         25   <br/>1                      0.114             0.044                         68   <br/>2                      0.153             0.095                         80   <br/>3                      0.093             0.061                         65   <br/>4                      0.175             0.022                         99   <br/><br/>  Income Level                                      Top Interests  <br/>0      20k-40k                                  Digital Marketing  <br/>1        0-20k                                       Data Science  <br/>2      60k-80k                               Fitness and Wellness  <br/>3        100k+                                 Gaming, DIY Crafts  <br/>4      20k-40k  Fitness and Wellness, Investing and Finance, G...  </strong></pre>
+<p>Here’s an overview of all the columns in the dataset:</p>
+<ul class="wp-block-list">
+<li><strong>User ID</strong>: Unique identifier for each user.</li>
+<li><strong>Age</strong>: Age range of the user.</li>
+<li><strong>Gender</strong>: Gender of the user.</li>
+<li><strong>Location</strong>: User’s location type (Urban, Suburban, Rural).</li>
+<li><strong>Language</strong>: Primary language of the user.</li>
+<li><strong>Education Level</strong>: Highest education level achieved.</li>
+<li><strong>Likes and Reactions</strong>: Number of likes and reactions a user has made.</li>
+<li><strong>Followed Accounts</strong>: Number of accounts a user follows.</li>
+<li><strong>Device Usage</strong>: Primary device used for accessing the platform (Mobile, Desktop, Tablet).</li>
+<li><strong>Time Spent Online (hrs/weekday)</strong>: Average hours spent online on weekdays.</li>
+<li><strong>Time Spent Online (hrs/weekend)</strong>: Average hours spent online on weekends.</li>
+<li><strong>Click-Through Rates (CTR)</strong>: The percentage of ad impressions that lead to clicks.</li>
+<li><strong>Conversion Rates</strong>: The percentage of clicks that lead to conversions/actions.</li>
+<li><strong>Ad Interaction Time (sec)</strong>: Average time spent interacting with ads in seconds.</li>
+<li><strong>Income Level</strong>: User’s income level.</li>
+<li><strong>Top Interests</strong>: Primary interests of the user.</li>
+</ul>
+<p>Let’s have a look at whether the data has any missing values or not:</p>
+<pre><code class="language-python">print(data.isnull().sum())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>User ID                            0<br/>Age                                0<br/>Gender                             0<br/>Location                           0<br/>Language                           0<br/>Education Level                    0<br/>Likes and Reactions                0<br/>Followed Accounts                  0<br/>Device Usage                       0<br/>Time Spent Online (hrs/weekday)    0<br/>Time Spent Online (hrs/weekend)    0<br/>Click-Through Rates (CTR)          0<br/>Conversion Rates                   0<br/>Ad Interaction Time (sec)          0<br/>Income Level                       0<br/>Top Interests                      0<br/>dtype: int64</strong></pre>
+<p>The dataset has no missing values, which is great for our analysis. Let’s move further with EDA.</p>
+<h4 class="wp-block-heading">Exploratory Data Analysis</h4>
+<p>We’ll begin EDA by visualizing the distribution of the key demographic variables (age, gender, education level, and income level):</p>
+<pre><code class="language-python"># setting the aesthetic style of the plots
+sns.set_style("whitegrid")
+
+# creating subplots for the demographic distributions
+fig, axes = plt.subplots(2, 2, figsize=(18, 12))
+fig.suptitle('Distribution of Key Demographic Variables')
+
+# age distribution
+sns.countplot(ax=axes[0, 0], x='Age', data=data, palette='coolwarm')
+axes[0, 0].set_title('Age Distribution')
+axes[0, 0].tick_params(axis='x', rotation=45)
+
+# gender distribution
+sns.countplot(ax=axes[0, 1], x='Gender', data=data, palette='coolwarm')
+axes[0, 1].set_title('Gender Distribution')
+
+# education level distribution
+sns.countplot(ax=axes[1, 0], x='Education Level', data=data, palette='coolwarm')
+axes[1, 0].set_title('Education Level Distribution')
+axes[1, 0].tick_params(axis='x', rotation=45)
+
+# income level distribution
+sns.countplot(ax=axes[1, 1], x='Income Level', data=data, palette='coolwarm')
+axes[1, 1].set_title('Income Level Distribution')
+axes[1, 1].tick_params(axis='x', rotation=45)
+
+plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="user profiling and segmentation: Distribution of Key Demographic Variables" class="wp-image-22746" data-attachment-id="22746" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="user-profiling-1" data-orig-size="1790,1145" data-recalc-dims="1" decoding="async" height="655" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/user-profiling-1.png" width="1024"/></figure>
+<p>We’ll now examine device usage patterns to understand the primary means by which users access the platform. This information is crucial for optimizing ad formats and delivery channels. Additionally, we’ll explore users’ online behaviour, including their engagement with content and ads, and identify the most common interests among users. Let’s proceed with analyzing device usage patterns:</p>
+<pre><code class="language-python"># device usage distribution
+plt.figure(figsize=(10, 6))
+sns.countplot(x='Device Usage', data=data, palette='coolwarm')
+plt.title('Device Usage Distribution')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="Device Usage Distribution" class="wp-image-22748" data-attachment-id="22748" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="user-profiling-2" data-orig-size="850,547" data-recalc-dims="1" decoding="async" height="547" sizes="(max-width: 850px) 100vw, 850px" src="../assets/datasets/user-profiling-2.png" style="width:617px;height:auto" width="850"/></figure>
+<p>We’ll now:</p>
+<ul class="wp-block-list">
+<li>Analyze the average time users spend online on weekdays versus weekends.</li>
+<li>Investigate user engagement metrics, such as likes and reactions.</li>
+<li>Delve into ad interaction metrics, including Click-Through Rates (CTR), Conversion Rates, and Ad Interaction Time.</li>
+</ul>
+<p>It will help us understand the users’ activity patterns and their interaction with ads, which is crucial for effective ad targeting and optimization:</p>
+<pre><code class="language-python"># creating subplots for user online behavior and ad interaction metrics
+fig, axes = plt.subplots(3, 2, figsize=(18, 15))
+fig.suptitle('User Online Behavior and Ad Interaction Metrics')
+
+# time spent online on weekdays
+sns.histplot(ax=axes[0, 0], x='Time Spent Online (hrs/weekday)', data=data, bins=20, kde=True, color='skyblue')
+axes[0, 0].set_title('Time Spent Online on Weekdays')
+
+# time spent online on weekends
+sns.histplot(ax=axes[0, 1], x='Time Spent Online (hrs/weekend)', data=data, bins=20, kde=True, color='orange')
+axes[0, 1].set_title('Time Spent Online on Weekends')
+
+# likes and reactions
+sns.histplot(ax=axes[1, 0], x='Likes and Reactions', data=data, bins=20, kde=True, color='green')
+axes[1, 0].set_title('Likes and Reactions')
+
+# click-through rates
+sns.histplot(ax=axes[1, 1], x='Click-Through Rates (CTR)', data=data, bins=20, kde=True, color='red')
+axes[1, 1].set_title('Click-Through Rates (CTR)')
+
+# conversion rates
+sns.histplot(ax=axes[2, 0], x='Conversion Rates', data=data, bins=20, kde=True, color='purple')
+axes[2, 0].set_title('Conversion Rates')
+
+# ad interaction time
+sns.histplot(ax=axes[2, 1], x='Ad Interaction Time (sec)', data=data, bins=20, kde=True, color='brown')
+axes[2, 1].set_title('Ad Interaction Time (sec)')
+
+plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="user profiling and segmentation: User Online Behavior and Ad Interaction Metrics" class="wp-image-22751" data-attachment-id="22751" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="user-profiling-3" data-orig-size="1790,1430" data-recalc-dims="1" decoding="async" height="818" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="../assets/datasets/user-profiling-3.png" width="1024"/></figure>
+<p>Now, let’s identify the most common interests among users, which is vital for segmenting the audience and tailoring ad campaigns to match user preferences:</p>
+<pre><code class="language-python">from collections import Counter
+
+# splitting the 'Top Interests' column and creating a list of all interests
+interests_list = data['Top Interests'].str.split(', ').sum()
+
+# counting the frequency of each interest
+interests_counter = Counter(interests_list)
+
+# converting the counter object to a DataFrame for easier plotting
+interests_df = pd.DataFrame(interests_counter.items(), columns=['Interest', 'Frequency']).sort_values(by='Frequency', ascending=False)
+
+# plotting the most common interests
+plt.figure(figsize=(12, 8))
+sns.barplot(x='Frequency', y='Interest', data=interests_df.head(10), palette='coolwarm')
+plt.title('Top 10 User Interests')
+plt.xlabel('Frequency')
+plt.ylabel('Interest')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Top Interests of users" class="wp-image-22753" data-attachment-id="22753" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="user-profiling-4" data-orig-size="1139,701" data-recalc-dims="1" decoding="async" height="630" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="../assets/datasets/user-profiling-4.png" style="width:662px;height:auto" width="1024"/></figure>
+<h4 class="wp-block-heading">User Profiling and Segmentation</h4>
+<p>We can now segment users into distinct groups for targeted ad campaigns. Segmentation can be based on various criteria, such as:</p>
+<ul class="wp-block-list">
+<li><strong>Demographics</strong>: Age, Gender, Income Level, Education Level</li>
+<li><strong>Behavioural</strong>: Time Spent Online, Likes and Reactions, CTR, Conversion Rates</li>
+<li><strong>Interests</strong>: Aligning ad content with the top interests identified</li>
+</ul>
+<p>To implement user profiling and segmentation, we can apply clustering techniques or develop personas based on the combination of these attributes. This approach enables the creation of more personalized and effective ad campaigns, ultimately enhancing user engagement and conversion rates.</p>
+<p>Let’s start by selecting a subset of features that could be most indicative of user preferences and behaviour for segmentation and apply a clustering algorithm to create user segments:</p>
+<pre><code class="language-python">from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.cluster import KMeans
+
+# selecting features for clustering
+features = ['Age', 'Gender', 'Income Level', 'Time Spent Online (hrs/weekday)', 'Time Spent Online (hrs/weekend)', 'Likes and Reactions', 'Click-Through Rates (CTR)']
+
+# separating the features we want to consider for clustering
+X = data[features]
+
+# defining preprocessing for numerical and categorical features
+numeric_features = ['Time Spent Online (hrs/weekday)', 'Time Spent Online (hrs/weekend)', 'Likes and Reactions', 'Click-Through Rates (CTR)']
+numeric_transformer = StandardScaler()
+
+categorical_features = ['Age', 'Gender', 'Income Level']
+categorical_transformer = OneHotEncoder()
+
+# combining preprocessing steps
+preprocessor = ColumnTransformer(
+    transformers=[
+        ('num', numeric_transformer, numeric_features),
+        ('cat', categorical_transformer, categorical_features)
+    ])
+
+# creating a preprocessing and clustering pipeline
+pipeline = Pipeline(steps=[('preprocessor', preprocessor),
+                           ('cluster', KMeans(n_clusters=5, random_state=42))])
+
+pipeline.fit(X)
+cluster_labels = pipeline.named_steps['cluster'].labels_
+data['Cluster'] = cluster_labels
+
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>   User ID    Age  Gender  Location Language Education Level  \<br/>0        1  25-34  Female  Suburban    Hindi       Technical   <br/>1        2    65+    Male     Urban    Hindi             PhD   <br/>2        3  45-54  Female  Suburban  Spanish       Technical   <br/>3        4  35-44  Female     Rural  Spanish             PhD   <br/>4        5  25-34  Female     Urban  English       Technical   <br/><br/>   Likes and Reactions  Followed Accounts  Device Usage  \<br/>0                 5640                190   Mobile Only   <br/>1                 9501                375        Tablet   <br/>2                 4775                187   Mobile Only   <br/>3                 9182                152  Desktop Only   <br/>4                 6848                371   Mobile Only   <br/><br/>   Time Spent Online (hrs/weekday)  Time Spent Online (hrs/weekend)  \<br/>0                              4.5                              1.7   <br/>1                              0.5                              7.7   <br/>2                              4.5                              5.6   <br/>3                              3.1                              4.2   <br/>4                              2.0                              3.8   <br/><br/>   Click-Through Rates (CTR)  Conversion Rates  Ad Interaction Time (sec)  \<br/>0                      0.193             0.067                         25   <br/>1                      0.114             0.044                         68   <br/>2                      0.153             0.095                         80   <br/>3                      0.093             0.061                         65   <br/>4                      0.175             0.022                         99   <br/><br/>  Income Level                                      Top Interests  Cluster  <br/>0      20k-40k                                  Digital Marketing        1  <br/>1        0-20k                                       Data Science        0  <br/>2      60k-80k                               Fitness and Wellness        3  <br/>3        100k+                                 Gaming, DIY Crafts        1  <br/>4      20k-40k  Fitness and Wellness, Investing and Finance, G...        1  </strong></pre>
+<p>The clustering process has successfully segmented our users into five distinct groups (Clusters 0 to 4). Each cluster represents a unique combination of the features we selected, including age, gender, income level, online behaviour, and engagement metrics. These clusters can serve as the basis for creating targeted ad campaigns tailored to the preferences and behaviours of each segment.</p>
+<p>We’ll compute the mean values of the numerical features and the mode for categorical features within each cluster to get a sense of their defining characteristics:</p>
+<pre><code class="language-python"># computing the mean values of numerical features for each cluster
+cluster_means = data.groupby('Cluster')[numeric_features].mean()
+
+for feature in categorical_features:
+    mode_series = data.groupby('Cluster')[feature].agg(lambda x: x.mode()[0])
+    cluster_means[feature] = mode_series
+
+print(cluster_means)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>         Time Spent Online (hrs/weekday)  Time Spent Online (hrs/weekend)  \<br/>Cluster                                                                     <br/>0                               1.632955                         6.135795   <br/>1                               2.937500                         2.735000   <br/>2                               3.364532                         6.151724   <br/>3                               3.872986                         4.624171   <br/>4                               1.558235                         3.769412   <br/><br/>         Likes and Reactions  Click-Through Rates (CTR)    Age  Gender  \<br/>Cluster                                                                  <br/>0                5480.022727                   0.173705  25-34    Male   <br/>1                7462.233333                   0.152983  25-34    Male   <br/>2                5997.108374                   0.058502  25-34    Male   <br/>3                2409.625592                   0.167123  25-34  Female   <br/>4                3034.235294                   0.064153  25-34  Female   <br/><br/>        Income Level  <br/>Cluster               <br/>0           80k-100k  <br/>1              100k+  <br/>2            60k-80k  <br/>3            60k-80k  <br/>4              0-20k  </strong></pre>
+<p>Now, we’ll assign each cluster a name that reflects its most defining characteristics based on the mean values of numerical features and the most frequent categories for categorical features. Based on the cluster analysis, we can summarize and name the segments as follows:</p>
+<ol class="wp-block-list">
+<li><strong>Cluster 0 – “Weekend Warriors”</strong>: High weekend online activity, moderate likes and reactions, predominantly male, age group 25-34, income level 80k-100k.</li>
+<li><strong>Cluster 1 – “Engaged Professionals”</strong>: Balanced online activity, high likes and reactions, predominantly male, age group 25-34, high income (100k+).</li>
+<li><strong>Cluster 2 – “Low-Key Users”</strong>: Moderate to high weekend online activity, moderate likes and reactions, predominantly male, age group 25-34, income level 60k-80k, lower CTR.</li>
+<li><strong>Cluster 3 – “Active Explorers”</strong>: High overall online activity, lower likes and reactions, predominantly female, age group 25-34, income level 60k-80k.</li>
+<li><strong>Cluster 4 – “Budget Browsers”</strong>: Moderate online activity, lowest likes and reactions, predominantly female, age group 25-34, lowest income level (0-20k), lower CTR.</li>
+</ol>
+<pre><code class="language-python">import numpy as np
+
+# preparing data for radar chart
+features_to_plot = ['Time Spent Online (hrs/weekday)', 'Time Spent Online (hrs/weekend)', 'Likes and Reactions', 'Click-Through Rates (CTR)']
+labels = np.array(features_to_plot)
+
+# creating a dataframe for the radar chart
+radar_df = cluster_means[features_to_plot].reset_index()
+
+# normalizing the data
+radar_df_normalized = radar_df.copy()
+for feature in features_to_plot:
+    radar_df_normalized[feature] = (radar_df[feature] - radar_df[feature].min()) / (radar_df[feature].max() - radar_df[feature].min())
+
+# adding a full circle for plotting
+radar_df_normalized = radar_df_normalized.append(radar_df_normalized.iloc[0])
+
+# assigning names to segments
+segment_names = ['Weekend Warriors', 'Engaged Professionals', 'Low-Key Users', 'Active Explorers', 'Budget Browsers']</code></pre>
+<p>Now, let’s create a visualization that reflects these segments, using the cluster means for numerical features and highlighting the distinctive characteristics of each segment. We’ll create a radar chart that compares the mean values of selected features across the clusters, providing a visual representation of each segment’s profile:</p>
+<pre><code class="language-python">import plotly.graph_objects as go
+fig = go.Figure()
+
+# loop through each segment to add to the radar chart
+for i, segment in enumerate(segment_names):
+    fig.add_trace(go.Scatterpolar(
+        r=radar_df_normalized.iloc[i][features_to_plot].values.tolist() + [radar_df_normalized.iloc[i][features_to_plot].values[0]],  # Add the first value at the end to close the radar chart
+        theta=labels.tolist() + [labels[0]],  # add the first label at the end to close the radar chart
+        fill='toself',
+        name=segment,
+        hoverinfo='text',
+        text=[f"{label}: {value:.2f}" for label, value in zip(features_to_plot, radar_df_normalized.iloc[i][features_to_plot])]+[f"{labels[0]}: {radar_df_normalized.iloc[i][features_to_plot][0]:.2f}"]  # Adding hover text for each feature
+    ))
+
+# update the layout to finalize the radar chart
+fig.update_layout(
+    polar=dict(
+        radialaxis=dict(
+            visible=True,
+            range=[0, 1]
+        )),
+    showlegend=True,
+    title='User Segments Profile'
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="User Segments Profile" class="wp-image-22758" data-attachment-id="22758" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="user-profiling-5" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/user-profiling-5.png" width="855"/></figure>
+<p>The chart above is useful for marketers to understand the behaviour of different user segments and tailor their advertising strategies accordingly. For example, ads targeting the “Weekend Warriors” could be scheduled for the weekend when they are most active, while “Engaged Professionals” might respond better to ads that are spread evenly throughout the week.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, this is how you can perform User Profiling and Segmentation using Python. User profiling refers to creating detailed profiles that represent the behaviours and preferences of users, and segmentation divides the user base into distinct groups with common characteristics, making it easier to target specific segments with personalized marketing, products, or services.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="multivariate-time-series-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="topic-modelling-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

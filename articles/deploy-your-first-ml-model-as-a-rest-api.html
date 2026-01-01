@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Deploy Your First ML Model as a REST API | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Deploy Your First ML Model as a REST API</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 23, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="deploy-a-machine-learning-model-with-docker.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="build-a-live-machine-learning-app-in-5-minutes.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>The gap between an ML model in your .ipynb file and a real, production-ready model is where your career starts as an ML Engineer. Deploying your ML model as a REST API is the standard way to make your model’s intelligence available to websites, apps, and other services. In this article, I will walk you through, step by step, how to take a trained model and deploy it as a powerful REST API using Python.</p>
+<h2 class="wp-block-heading">First, What Exactly is an API?</h2>
+<p>Forget the technical definitions for a second. Imagine you’re at a restaurant. You (the <strong>client</strong>) want to order a burger. You don’t go into the kitchen (the <strong>backend server</strong>) and cook it yourself. So, you talk to a waiter (the <strong>API</strong>):</p>
+<ol class="wp-block-list">
+<li>You give the waiter a clear, structured request: “I’d like the cheeseburger, medium-rare, with no onions.”</li>
+<li>The waiter takes your request to the kitchen, where all the complexity is handled, including grilling the patty, melting the cheese, and assembling the burger.</li>
+<li>The waiter then brings the finished burger (the <strong>response</strong>) back to you.</li>
+</ol>
+<p>An API (Application Programming Interface) works the same way. It’s a messenger that takes a request from a client application (like a website or mobile app), sends it to the server where your ML model lives, and returns the model’s prediction as a response.</p>
+<h2 class="wp-block-heading">Now, Let’s Get Started: From an ML Model to a REST API</h2>
+<p>We’ll build a simple API that predicts median house values in California. Here’s how we’ll do it:</p>
+<ol class="wp-block-list">
+<li>We’ll use the classic California Housing dataset to train a RandomForestRegressor model.</li>
+<li>We’ll save our trained model into a single file.</li>
+<li>We’ll use <strong>FastAPI </strong>to create a web server and an endpoint for our predictions.</li>
+<li>We’ll run the server and make live prediction requests.</li>
+</ol>
+<p>Let’s get our hands dirty.</p>
+<h4 class="wp-block-heading">Step 1: Training and Saving Our Model</h4>
+<p>The focus here isn’t on building the world’s best model, but on building a deployable one. We’ll keep it simple.</p>
+<p>First, create a new project folder and install the necessary libraries:</p>
+<pre class="wp-block-preformatted"><strong>pip install scikit-learn pandas joblib</strong></pre>
+<p>Now, create a Python file named train.py. This script will handle loading the data, training the model, and saving it:</p>
+<pre><code class="language-python">import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.datasets import fetch_california_housing
+import joblib
+
+print("Starting the training script...")
+
+housing = fetch_california_housing()
+X = pd.DataFrame(housing.data, columns=housing.feature_names)
+y = pd.Series(housing.target, name='MedHouseVal')
+
+print("Dataset loaded successfully.")
+
+features_to_use = ['MedInc', 'HouseAge', 'AveRooms', 'AveBedrms', 'Population']
+X = X[features_to_use]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+print("Data split into training and testing sets.")
+
+model = RandomForestRegressor(n_estimators=100, random_state=42)
+print("Training the RandomForestRegressor model...")
+model.fit(X_train, y_train)
+print("Model training complete.")
+
+model_filename = 'california_housing_model.joblib'
+joblib.dump(model, model_filename)
+
+print(f"Model saved as {model_filename}. Training script finished.")</code></pre>
+<p>Run this script from your terminal with this command:</p>
+<pre class="wp-block-preformatted"><strong>python train.py</strong></pre>
+<p>After it finishes, you’ll see a new file in your folder as <strong>a joblib file</strong>. That file is your trained model, serialized and ready to be used.</p>
+<h4 class="wp-block-heading">Step 2: Building the API with FastAPI</h4>
+<p>Now, we’re going to build the API. FastAPI is my go-to for this because it’s incredibly fast, easy to learn, and automatically generates interactive documentation for your API.</p>
+<p>First, install FastAPI and an ASGI server to run it, called uvicorn:</p>
+<pre class="wp-block-preformatted"><strong>pip install "fastapi[all]"</strong></pre>
+<p>Now, create a new file named main.py. This is where our API logic will be written:</p>
+<pre><code class="language-python">from fastapi import FastAPI
+from pydantic import BaseModel
+import joblib
+import pandas as pd
+
+app = FastAPI(title="California Housing Price Prediction API")
+
+model = joblib.load('california_housing_model.joblib')
+
+class HouseFeatures(BaseModel):
+    MedInc: float      # Median income in block group
+    HouseAge: float    # Median house age in block group
+    AveRooms: float    # Average number of rooms per household
+    AveBedrms: float   # Average number of bedrooms per household
+    Population: float  # Block group population
+    
+    class Config:
+        schema_extra = {
+            "example": {
+                "MedInc": 8.3252,
+                "HouseAge": 41.0,
+                "AveRooms": 6.9841,
+                "AveBedrms": 1.0238,
+                "Population": 322.0
+            }
+        }
+
+@app.post("/predict")
+def predict_price(features: HouseFeatures):
+    """
+    Predicts the median house value based on input features.
+    """
+    input_data = pd.DataFrame([features.dict()])
+    
+    prediction = model.predict(input_data)
+    
+    predicted_value = prediction[0]
+    
+    return {"predicted_median_house_value": predicted_value}
+
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the Housing Price Prediction API!"}</code></pre>
+<p>Let’s quickly break down what we did:</p>
+<ol class="wp-block-list">
+<li><strong>app = FastAPI()</strong>: We created our main application object.</li>
+<li><strong>model = joblib.load(…)</strong>: We loaded our pre-trained model into memory.</li>
+<li><strong>class HouseFeatures(BaseModel)</strong>: This is the genius of FastAPI and Pydantic. We define the exact shape and data types of our input.</li>
+<li><strong>@app.post</strong>: We defined our prediction endpoint. It listens for POST requests at the /predict URL.</li>
+</ol>
+<p>Inside predict_price, we convert the incoming data to a pandas DataFrame, feed it to our model’s .predict() method, and return the result as a JSON object.</p>
+<h4 class="wp-block-heading">Step 3: Running and Testing Your API</h4>
+<p>Now, open your terminal in the same directory and run the following command:</p>
+<pre class="wp-block-preformatted"><strong>uvicorn main:app --reload</strong></pre>
+<p>You should see an output like this:</p>
+<p>Now for the best part. Open your web browser and go to<strong>:</strong></p>
+<pre class="wp-block-preformatted"><strong>http://127.0.0.1:8000/docs</strong></pre>
+<p>You will see an interactive API documentation page (as shown below), generated for you automatically by FastAPI. No extra work required. It shows all your endpoints, their parameters, and expected responses.</p>
+<figure class="wp-block-image aligncenter size-large"><img alt="Running and Testing Your API" class="wp-image-28170" data-attachment-id="28170" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="2458,1234" data-recalc-dims="1" decoding="async" height="514" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/image-1.png" width="1024"/></figure>
+<p>Click on the /predict endpoint, then “Try it out.” You’ll see the example JSON we defined in our Pydantic model. You can change the values and click “Execute.”</p>
+<p>So, you just deployed a machine learning model as a fully functional, documented REST API. You can move ahead by deploying it using Docker. <strong>Here’s a <a href="deploy-a-machine-learning-model-with-docker.html" rel="noreferrer noopener" target="">complete guide</a>.</strong></p>
+<h3 class="wp-block-heading">Final Words</h3>
+<p>Now, you’re no longer just someone who trains models; you’re someone who can build<strong> AI-powered services</strong>. So, the next time you’ve built a model you’re proud of, don’t stop at the last cell of your notebook. Take that extra step. Wrap it in an API. Because a model that works on your machine is an experiment, but a model that works as an API is a solution.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="deploy-a-machine-learning-model-with-docker.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="build-a-live-machine-learning-app-in-5-minutes.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

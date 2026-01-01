@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Price Elasticity of Demand Analysis with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Price Elasticity of Demand Analysis with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 12, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="customer-lifetime-value-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="quantitative-analysis-of-stock-market-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Price Elasticity of Demand (PED) measures the responsiveness of the quantity demanded of a product to changes in its price. It is calculated as the percentage change in quantity demanded divided by the percentage change in price. If you want to understand how to calculate and analyze the price elasticity of demand and how to make pricing decisions, this article is for you. In this article, I’ll take you through the price elasticity of demand analysis with <strong><a href="python-practice-questions-for-coding-interviews.html" target="">Python</a></strong>.</p>
+<h2 class="wp-block-heading">Price Elasticity of Demand Analysis: Overview</h2>
+<p>Price Elasticity of Demand (PED) measures the responsiveness of the quantity demanded of a product to changes in its price. It is calculated as the percentage change in quantity demanded divided by the percentage change in price. It helps businesses understand how sensitive their customers are to price changes, which enables them to make informed pricing decisions.</p>
+<p>For instance, if demand is highly elastic (PED &gt; 1), a small price reduction can lead to a significant increase in sales, which will potentially boost revenue. Conversely, if demand is inelastic (PED &lt; 1), the business can increase prices with minimal impact on sales volume, thereby increasing profit margins.</p>
+<p>So, to analyze the price elasticity of demand, we need data about the price of a product and its sales over time. I found an ideal dataset for this task. You can download the dataset from <strong><a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">here</a></strong>.</p>
+<h2 class="wp-block-heading">Price Elasticity of Demand Analysis with Python</h2>
+<p>Now, let’s get started with price elasticity of demand analysis by importing the necessary Python libraries and the <strong><a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+
+data = pd.read_csv("Competition_Data.csv")
+
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>   Index Fiscal_Week_ID   Store_ID   Item_ID   Price  Item_Quantity  \<br/>0      0        2019-11  store_459  item_526  134.49            435   <br/>1      1        2019-11  store_459  item_526  134.49            435   <br/>2      2        2019-11  store_459  item_526  134.49            435   <br/>3      3        2019-11  store_459  item_526  134.49            435   <br/>4      4        2019-11  store_459  item_526  134.49            435   <br/><br/>   Sales_Amount_No_Discount  Sales_Amount  Competition_Price  <br/>0                   4716.74      11272.59             206.44  <br/>1                   4716.74      11272.59             158.01  <br/>2                   4716.74      11272.59             278.03  <br/>3                   4716.74      11272.59             222.66  <br/>4                   4716.74      11272.59             195.32  </strong></pre>
+<p>Now, let’s calculate the price elasticity of demand:</p>
+<pre><code class="language-python"># calculate the percentage change in price and quantity
+data['Price_Change'] = data.groupby(['Store_ID', 'Item_ID'])['Price'].pct_change()
+data['Quantity_Change'] = data.groupby(['Store_ID', 'Item_ID'])['Item_Quantity'].pct_change()
+
+# calculate the price elasticity of demand
+data['PED'] = data['Quantity_Change'] / data['Price_Change']
+
+data.replace([float('inf'), -float('inf')], float('nan'), inplace=True)
+data.dropna(subset=['PED'], inplace=True)
+
+# summary statistics for PED
+ped_summary = data['PED'].describe()
+
+ped_summary</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="price elasticity of demand summary statistics" class="wp-image-24406" data-attachment-id="24406" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="332,570" data-recalc-dims="1" decoding="async" height="570" sizes="(max-width: 332px) 100vw, 332px" src="../assets/datasets/image-5.png" style="width:305px;height:auto" width="332"/></figure>
+<p>In the above code, we first calculated the Price Elasticity of Demand (PED) for products in a dataset by first computing the percentage change in both the price (Price_Change) and quantity sold (Quantity_Change) for each product within each store. Then, we calculated the PED as the ratio of the percentage change in quantity to the percentage change in price.</p>
+<p>The mean PED is approximately -0.35, which indicates that on average, the demand is slightly inelastic, meaning a 1% increase in price results in a 0.35% decrease in quantity demanded.</p>
+<p>Now, let’s have a look at the relationship between the price changes and the change in the quantity demanded in the market:</p>
+<pre><code class="language-python">fig_scatter = px.scatter(data, x='Price_Change', y='Quantity_Change', title='Price Change vs Quantity Change',
+                         labels={'Price_Change': 'Price Change (%)', 'Quantity_Change': 'Quantity Change (%)'})
+fig_scatter.update_traces(marker=dict(color='green', opacity=0.5))
+fig_scatter.update_layout(xaxis_title='Price Change (%)', yaxis_title='Quantity Change (%)', 
+                          template='plotly_white')
+fig_scatter.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Price Change vs Quantity Change" class="wp-image-24408" data-attachment-id="24408" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="price elasticity" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 855px) 100vw, 855px" src="../assets/datasets/price-elasticity.png" width="855"/></figure>
+<p>The scatter plot reveals that most data points are concentrated around the origin, which indicates that many products experience minimal changes in quantity demanded despite price changes. It suggests that the demand for these products is generally inelastic. However, there are also some points scattered further away from the origin, particularly in areas with positive price changes, which indicate that certain products have more elastic demand, where quantity responds more noticeably to price changes. Overall, the graph highlights a wide range of demand sensitivities across different products, with a general trend of inelasticity.</p>
+<p>Now, let’s segment our market based on price elasticities:</p>
+<pre><code class="language-python"># define PED thresholds for segmentation
+elastic_threshold = 1
+inelastic_threshold = -1
+
+# segment the data based on PED
+data['Segment'] = 'Unitary Elastic'
+data.loc[data['PED'] &gt; elastic_threshold, 'Segment'] = 'Highly Elastic'
+data.loc[data['PED'] &lt; inelastic_threshold, 'Segment'] = 'Inelastic'
+data.loc[data['PED'] == 0, 'Segment'] = 'Zero Elasticity'
+data.loc[data['PED'] &lt; 0, 'Segment'] = 'Negative Elasticity'
+
+# count the number of items in each segment
+segment_counts = data['Segment'].value_counts()
+
+segment_counts</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Market Segments" class="wp-image-24410" data-attachment-id="24410" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="498,366" data-recalc-dims="1" decoding="async" height="366" loading="lazy" sizes="auto, (max-width: 498px) 100vw, 498px" src="../assets/datasets/image-6.png" width="498"/></figure>
+<p>Let’s visualize our segments to have a deep understanding:</p>
+<pre><code class="language-python">fig_segment = px.scatter(data, x='Price_Change', y='Quantity_Change', color='Segment', 
+                         title='Price Change vs Quantity Change Across Different Market Segments',
+                         labels={'Price_Change': 'Price Change (%)', 'Quantity_Change': 'Quantity Change (%)'},
+                         color_continuous_scale='Viridis', opacity=0.6)
+
+fig_segment.update_layout(xaxis_title='Price Change (%)', yaxis_title='Quantity Change (%)', 
+                          template='plotly_white')
+
+fig_segment.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Price Change vs Quantity Change Across Different Market Segments" class="wp-image-24413" data-attachment-id="24413" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="price elasticity 2" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/price-elasticity-2.png" width="855"/></figure>
+<p>The graph depicts the relationship between price change (%) and quantity change (%) across different market segments categorized by elasticity. The segments include:</p>
+<ol class="wp-block-list">
+<li>Negative Elasticity (where price increases lead to quantity decreases)</li>
+<li>Unitary Elastic (where price changes result in proportionate quantity changes)</li>
+<li>Highly Elastic (where small price changes lead to significant quantity changes)</li>
+<li>and Zero Elasticity (where quantity remains unchanged despite price changes)</li>
+</ol>
+<p>The scattered points show how each segment responds to price changes, with Negative Elasticity and Highly Elastic segments displaying more sensitivity, as seen in the wider spread of data points, while the Unitary Elastic and Zero Elasticity segments cluster more closely around the origin, indicating more stable or proportionate responses.</p>
+<p>Here are concise pricing strategies for each segment identified in the graph:</p>
+<ol class="wp-block-list">
+<li><strong>Negative Elasticity:</strong> Focus on reducing prices to stimulate demand, as consumers are sensitive to price increases. Price cuts can lead to significant increases in quantity sold, making up for lower margins.</li>
+<li><strong>Unitary Elastic:</strong> Maintain stable pricing while focusing on improving product value or differentiating offerings. Since price changes lead to proportional quantity changes, the emphasis should be on balancing price with perceived value to maintain sales volume.</li>
+<li><strong>Highly Elastic:</strong> Use dynamic pricing strategies, such as promotional discounts or price drops during peak demand periods, to capitalize on the high sensitivity of consumers to price changes. Small price reductions can lead to large increases in sales volume.</li>
+<li><strong>Zero Elasticity:</strong> Price adjustments are less effective in driving sales changes for this segment. Focus on non-price strategies, such as improving product features, quality, or customer service, to differentiate and capture market share without relying on price changes.</li>
+</ol>
+<p>So, this is how we can use the concept of price elasticity of demand for making pricing decisions.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>Price Elasticity of Demand (PED) measures the responsiveness of the quantity demanded of a product to changes in its price. It is calculated as the percentage change in quantity demanded divided by the percentage change in price. It helps businesses understand how sensitive their customers are to price changes, which enables them to make informed pricing decisions.</p>
+<p>I hope you liked this article on price elasticity of demand analysis with Python. Feel free to ask valuable questions in the comments section below. You can follow me on <strong><a href="https://www.instagram.com/amankharwal.official/" rel="noreferrer noopener" target="_blank">Instagram</a></strong> for many more resources.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="customer-lifetime-value-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="quantitative-analysis-of-stock-market-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

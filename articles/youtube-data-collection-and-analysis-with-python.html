@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>YouTube Data Collection and Analysis with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        YouTube Data Collection and Analysis with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 08, 2025 • 5 min read</div>
+<p>If you are learning <strong><a href="https://my-ai-portfolio.com/2022/03/09/data-science-projects/" rel="noreferrer noopener" target="_blank">Data Science</a></strong>, YouTube is an amazing data source for you. There are so many problems we can solve by collecting data from YouTube. So, if you want to learn how to collect data from YouTube and analyze that data to solve a problem, this article is for you. In this article, I’ll take you through the task of YouTube data collection and analysis using Python.</p>
+<h2 class="wp-block-heading">YouTube Data Collection and Analysis</h2>
+<p>To collect data from YouTube, we need to be clear about what data we need. Let’s collect data about the trending videos on YouTube to analyze and find what makes a video trend on YouTube.</p>
+<p>So, let’s start with data collection first. To collect data from YouTube, you need to set up an API. Here are the steps you can follow:</p>
+<ol class="wp-block-list">
+<li>Go to <strong><a href="https://console.cloud.google.com/welcome?project=precise-data-392110&amp;pli=1" rel="noreferrer noopener" target="_blank">Google Cloud Console</a></strong>.</li>
+<li>Click on the project drop-down at the top, then “New Project”.</li>
+<li>Enter a project name and click “Create”.</li>
+<li>In the Google Cloud Console, navigate to “APIs &amp; Services” &gt; “Library”.</li>
+<li>Search for “YouTube Data API v3” and click on it.</li>
+<li>Click “Enable”.</li>
+<li>Go to “APIs &amp; Services” &gt; “Credentials”.</li>
+<li>Click “+ CREATE CREDENTIALS” and select “API key”.</li>
+<li>Copy the generated API key.</li>
+</ol>
+<p>If you find any issues while generating the API, feel free to reach me on <strong><a href="https://www.instagram.com/amankharwal.official/" rel="noreferrer noopener" target="_blank">Instagram</a></strong> or <strong><a href="https://www.linkedin.com/in/aman-kharwal/" rel="noreferrer noopener" target="_blank">LinkedIn</a></strong>.</p>
+<h2 class="wp-block-heading">YouTube Data Collection and Analysis with Python</h2>
+<p>Now, let’s get started with YouTube data collection using Python. I’ll collect data about the top 200 trending videos on YouTube:</p>
+<pre><code class="language-python">import pandas as pd
+from googleapiclient.discovery import build
+
+# replace with your own API key
+API_KEY = 'Your API Key'
+
+def get_trending_videos(api_key, max_results=200):
+    # build the youtube service
+    youtube = build('youtube', 'v3', developerKey=api_key)
+
+    # initialize the list to hold video details
+    videos = []
+
+    # fetch the most popular videos
+    request = youtube.videos().list(
+        part='snippet,contentDetails,statistics',
+        chart='mostPopular',
+        regionCode='US',  
+        maxResults=50
+    )
+
+    # paginate through the results if max_results &gt; 50
+    while request and len(videos) &lt; max_results:
+        response = request.execute()
+        for item in response['items']:
+            video_details = {
+                'video_id': item['id'],
+                'title': item['snippet']['title'],
+                'description': item['snippet']['description'],
+                'published_at': item['snippet']['publishedAt'],
+                'channel_id': item['snippet']['channelId'],
+                'channel_title': item['snippet']['channelTitle'],
+                'category_id': item['snippet']['categoryId'],
+                'tags': item['snippet'].get('tags', []),
+                'duration': item['contentDetails']['duration'],
+                'definition': item['contentDetails']['definition'],
+                'caption': item['contentDetails'].get('caption', 'false'),
+                'view_count': item['statistics'].get('viewCount', 0),
+                'like_count': item['statistics'].get('likeCount', 0),
+                'dislike_count': item['statistics'].get('dislikeCount', 0),
+                'favorite_count': item['statistics'].get('favoriteCount', 0),
+                'comment_count': item['statistics'].get('commentCount', 0)
+            }
+            videos.append(video_details)
+
+        # get the next page token
+        request = youtube.videos().list_next(request, response)
+
+    return videos[:max_results]
+
+def save_to_csv(data, filename):
+    df = pd.DataFrame(data)
+    df.to_csv(filename, index=False)
+
+def main():
+    trending_videos = get_trending_videos(API_KEY)
+    filename = 'trending_videos.csv'
+    save_to_csv(trending_videos, filename)
+    print(f'Trending videos saved to {filename}')
+
+if __name__ == '__main__':
+    main()</code></pre>
+<p>In the above code, we are using the YouTube Data API to fetch details of the top 200 trending videos in the US, iterating through the API’s paginated responses to collect video details such as title, description, published date, channel information, tags, duration, definition, captions, and various engagement metrics like views, likes, and comments. The script compiles this information into a list, converts it into a pandas DataFrame, and saves the data to a CSV file named trending_videos.csv, allowing us to analyze trends and patterns in the collected video data.</p>
+<p>Now, let’s have a look at what the data looks like:</p>
+<pre><code class="language-python">import pandas as pd
+
+trending_videos = pd.read_csv('trending_videos.csv')
+print(trending_videos.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>      video_id                                     title  \<br/>0  22tVWwmTie8   Eminem - Houdini [Official Music Video]   <br/>1  Kf86x8F9M90  College Football 25 | Gameplay Deep Dive   <br/>2  mfz-Ztki88s                 ILLEGAL builds in LEGO...   <br/>3  VGnOpZhsPk4          ATEEZ(에이티즈) - 'WORK' Official MV   <br/>4  m-4ZM3jxhdE              State of Play | May 30, 2024   <br/><br/>                                         description          published_at  \<br/>0  Eminem - Houdini\nListen: https://eminem.lnk.t...  2024-05-31T04:00:02Z   <br/>1  Bring Glory Home. Pre-order EA SPORTS College ...  2024-05-31T14:55:06Z   <br/>2  50+ secret ways to build in Lego you probably ...  2024-05-31T15:30:38Z   <br/>3  [GOLDEN HOUR : Part.1]\nRelease Date: 2024. 5....  2024-05-31T04:00:01Z   <br/>4  State of Play is back! Tune in live for update...  2024-05-30T22:00:12Z   <br/><br/>                 channel_id      channel_title  category_id  \<br/>0  UC20vb-R_px4CguHzzBPhoyQ         EminemVEVO           10   <br/>1  UCT4wAMwETXqDf-U_DVuqabA  EA SPORTS College           20   <br/>2  UCUU3GdGuQshZFRGnxAPBf_w          TD BRICKS           24   <br/>3  UCQdq-lqPEq_yZ_wP_kuVB9Q   KQ ENTERTAINMENT           10   <br/>4  UC-2Y8dQb0S6DtpxNgAKoJKA        PlayStation           20   <br/><br/>                                                tags  duration definition  \<br/>0  ['Eminem', 'Houdini', 'Hip', 'Hop', 'エミネム', '에...   PT4M57S         hd   <br/>1  ['college football', 'college football 25', 'c...   PT4M52S         hd   <br/>2  ['lego', 'lego set', 'lego sets', 'lego movie'...    PT9M7S         hd   <br/>3                                      ['KQ', '케이큐']   PT3M15S         hd   <br/>4  ['PlayStation', 'PS5', 'video games', 'next ge...  PT35M32S         hd   <br/><br/>   caption  view_count  like_count  dislike_count  favorite_count  \<br/>0     True    14736971     1306831              0               0   <br/>1    False     1079642       50259              0               0   <br/>2     True     1064281       24723              0               0   <br/>3     True    11742765      338559              0               0   <br/>4     True     1672973       52456              0               0   <br/><br/>   comment_count  <br/>0         105793  <br/>1           6936  <br/>2           2690  <br/>3          28919  <br/>4           8292  </strong></pre>
+<p>Now, let’s have a quick look at the missing values and data types:</p>
+<pre><code class="language-python"># check for missing values
+missing_values = trending_videos.isnull().sum()
+
+# display data types
+data_types = trending_videos.dtypes
+
+missing_values, data_types</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>(video_id          0<br/> title             0<br/> description       4<br/> published_at      0<br/> channel_id        0<br/> channel_title     0<br/> category_id       0<br/> tags              0<br/> duration          0<br/> definition        0<br/> caption           0<br/> view_count        0<br/> like_count        0<br/> dislike_count     0<br/> favorite_count    0<br/> comment_count     0<br/> dtype: int64,<br/> video_id          object<br/> title             object<br/> description       object<br/> published_at      object<br/> channel_id        object<br/> channel_title     object<br/> category_id        int64<br/> tags              object<br/> duration          object<br/> definition        object<br/> caption             bool<br/> view_count         int64<br/> like_count         int64<br/> dislike_count      int64<br/> favorite_count     int64<br/> comment_count      int64<br/> dtype: object)</strong></pre>
+<p>The description column has 4 missing values. This is minor and can be handled as needed. The data types seem appropriate for most columns, but we may need to convert the published_at column to a datetime format and tags might need further processing. Let’s fix these changes:</p>
+<pre><code class="language-python"># fill missing descriptions with "No description"
+trending_videos['description'].fillna('No description', inplace=True)
+
+# convert `published_at` to datetime
+trending_videos['published_at'] = pd.to_datetime(trending_videos['published_at'])
+
+# convert tags from string representation of list to actual list
+trending_videos['tags'] = trending_videos['tags'].apply(lambda x: eval(x) if isinstance(x, str) else x)</code></pre>
+<p>Now, before moving forward with the analysis, let’s have a quick look at the descriptive statistics:</p>
+<pre><code class="language-python"># descriptive statistics
+descriptive_stats = trending_videos[['view_count', 'like_count', 'dislike_count', 'comment_count']].describe()
+
+descriptive_stats</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="YouTube Data Collection and Analysis: descriptive statistics" class="wp-image-23698" data-attachment-id="23698" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image.png?fit=1024%2C561&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image.png?fit=300%2C164&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image.png?fit=1052%2C576&amp;ssl=1" data-orig-size="1052,576" data-permalink="https://my-ai-portfolio.com/2024/06/03/youtube-data-collection-and-analysis-with-python/image-152/" data-recalc-dims="1" decoding="async" height="561" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image.png?resize=1024%2C561&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image.png?resize=1024%2C561&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image.png?resize=300%2C164&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image.png?resize=768%2C421&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image.png?w=1052&amp;ssl=1 1052w" style="width:663px;height:auto" width="1024"/></figure>
+<p>Now, let’s have a look at the distribution of views, likes and comments of all the videos in the data:</p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+import seaborn as sns
+sns.set(style="whitegrid")
+
+fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+
+# view count distribution
+sns.histplot(trending_videos['view_count'], bins=30, kde=True, ax=axes[0], color='blue')
+axes[0].set_title('View Count Distribution')
+axes[0].set_xlabel('View Count')
+axes[0].set_ylabel('Frequency')
+
+# like count distribution
+sns.histplot(trending_videos['like_count'], bins=30, kde=True, ax=axes[1], color='green')
+axes[1].set_title('Like Count Distribution')
+axes[1].set_xlabel('Like Count')
+axes[1].set_ylabel('Frequency')
+
+# comment count distribution
+sns.histplot(trending_videos['comment_count'], bins=30, kde=True, ax=axes[2], color='red')
+axes[2].set_title('Comment Count Distribution')
+axes[2].set_xlabel('Comment Count')
+axes[2].set_ylabel('Frequency')
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Likes, comments, and views histograms" class="wp-image-23700" data-attachment-id="23700" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="youtube-1" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-1.png?fit=1024%2C278&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-1.png?fit=300%2C81&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-1.png?fit=1783%2C484&amp;ssl=1" data-orig-size="1783,484" data-permalink="https://my-ai-portfolio.com/2024/06/03/youtube-data-collection-and-analysis-with-python/youtube-1/" data-recalc-dims="1" decoding="async" height="278" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-1.png?resize=1024%2C278&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-1.png?resize=1024%2C278&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-1.png?resize=300%2C81&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-1.png?resize=768%2C208&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-1.png?resize=1536%2C417&amp;ssl=1 1536w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-1.png?resize=1200%2C326&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-1.png?w=1783&amp;ssl=1 1783w" width="1024"/></figure>
+<p>The histograms show that the distributions of view counts, like counts, and comment counts are right-skewed, with most videos having lower counts and a few videos having very high counts. Now, let’s have a look at the correlation between likes, views, and comments:</p>
+<pre><code class="language-python"># correlation matrix
+correlation_matrix = trending_videos[['view_count', 'like_count', 'comment_count']].corr()
+
+plt.figure(figsize=(8, 6))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', linewidths=0.5, linecolor='black')
+plt.title('Correlation Matrix of Engagement Metrics')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="YouTube Data Collection and Analysis: correlation" class="wp-image-23702" data-attachment-id="23702" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="youtube-2" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-2.png?fit=646%2C533&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-2.png?fit=300%2C248&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-2.png?fit=646%2C533&amp;ssl=1" data-orig-size="646,533" data-permalink="https://my-ai-portfolio.com/2024/06/03/youtube-data-collection-and-analysis-with-python/youtube-2/" data-recalc-dims="1" decoding="async" height="533" loading="lazy" sizes="auto, (max-width: 646px) 100vw, 646px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-2.png?resize=646%2C533&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-2.png?w=646&amp;ssl=1 646w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-2.png?resize=300%2C248&amp;ssl=1 300w" style="width:573px;height:auto" width="646"/></figure>
+<p>The heatmap confirms strong positive correlations between views, likes, and comments.</p>
+<p>I noticed that I only collected the category ID of the video and not the category name. So, let’s collect the category names as well to analyze the categories of the trending videos:</p>
+<pre><code class="language-python">from googleapiclient.discovery import build
+
+API_KEY = 'Your API Key'
+youtube = build('youtube', 'v3', developerKey=API_KEY)
+
+def get_category_mapping():
+    request = youtube.videoCategories().list(
+        part='snippet',
+        regionCode='US'
+    )
+    response = request.execute()
+    category_mapping = {}
+    for item in response['items']:
+        category_id = int(item['id'])
+        category_name = item['snippet']['title']
+        category_mapping[category_id] = category_name
+    return category_mapping
+
+# get the category mapping
+category_mapping = get_category_mapping()
+print(category_mapping)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>{1: 'Film &amp; Animation', 2: 'Autos &amp; Vehicles', 10: 'Music', 15: 'Pets &amp; Animals', 17: 'Sports', 18: 'Short Movies', 19: 'Travel &amp; Events', 20: 'Gaming', 21: 'Videoblogging', 22: 'People &amp; Blogs', 23: 'Comedy', 24: 'Entertainment', 25: 'News &amp; Politics', 26: 'Howto &amp; Style', 27: 'Education', 28: 'Science &amp; Technology', 29: 'Nonprofits &amp; Activism', 30: 'Movies', 31: 'Anime/Animation', 32: 'Action/Adventure', 33: 'Classics', 34: 'Comedy', 35: 'Documentary', 36: 'Drama', 37: 'Family', 38: 'Foreign', 39: 'Horror', 40: 'Sci-Fi/Fantasy', 41: 'Thriller', 42: 'Shorts', 43: 'Shows', 44: 'Trailers'}</strong></pre>
+<p>Now, here’s how we can analyze the number of trending videos by category:</p>
+<pre><code class="language-python">trending_videos['category_name'] = trending_videos['category_id'].map(category_mapping)
+
+# Bar chart for category counts
+plt.figure(figsize=(12, 8))
+sns.countplot(y=trending_videos['category_name'], order=trending_videos['category_name'].value_counts().index, palette='viridis')
+plt.title('Number of Trending Videos by Category')
+plt.xlabel('Number of Videos')
+plt.ylabel('Category')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Number of Trending Videos by Category" class="wp-image-23705" data-attachment-id="23705" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="youtube-3" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-3.png?fit=1024%2C631&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-3.png?fit=300%2C185&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-3.png?fit=1153%2C710&amp;ssl=1" data-orig-size="1153,710" data-permalink="https://my-ai-portfolio.com/2024/06/03/youtube-data-collection-and-analysis-with-python/youtube-3/" data-recalc-dims="1" decoding="async" height="631" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-3.png?resize=1024%2C631&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-3.png?resize=1024%2C631&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-3.png?resize=300%2C185&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-3.png?resize=768%2C473&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-3.png?w=1153&amp;ssl=1 1153w" width="1024"/></figure>
+<p>The bar chart shows that the Gaming, Entertainment, Sports, and Music categories have the highest number of trending videos. Now, let’s have a look at the average engagement metrics by category:</p>
+<pre><code class="language-python"># average engagement metrics by category
+category_engagement = trending_videos.groupby('category_name')[['view_count', 'like_count', 'comment_count']].mean().sort_values(by='view_count', ascending=False)
+
+fig, axes = plt.subplots(1, 3, figsize=(18, 10))
+
+# view count by category
+sns.barplot(y=category_engagement.index, x=category_engagement['view_count'], ax=axes[0], palette='viridis')
+axes[0].set_title('Average View Count by Category')
+axes[0].set_xlabel('Average View Count')
+axes[0].set_ylabel('Category')
+
+# like count by category
+sns.barplot(y=category_engagement.index, x=category_engagement['like_count'], ax=axes[1], palette='viridis')
+axes[1].set_title('Average Like Count by Category')
+axes[1].set_xlabel('Average Like Count')
+axes[1].set_ylabel('')
+
+# comment count by category
+sns.barplot(y=category_engagement.index, x=category_engagement['comment_count'], ax=axes[2], palette='viridis')
+axes[2].set_title('Average Comment Count by Category')
+axes[2].set_xlabel('Average Comment Count')
+axes[2].set_ylabel('')
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="YouTube Data Collection and Analysis: Engagement Metrics by Category" class="wp-image-23707" data-attachment-id="23707" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="youtube-4" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-4.png?fit=1024%2C564&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-4.png?fit=300%2C165&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-4.png?fit=1784%2C983&amp;ssl=1" data-orig-size="1784,983" data-permalink="https://my-ai-portfolio.com/2024/06/03/youtube-data-collection-and-analysis-with-python/youtube-4/" data-recalc-dims="1" decoding="async" height="564" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-4.png?resize=1024%2C564&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-4.png?resize=1024%2C564&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-4.png?resize=300%2C165&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-4.png?resize=768%2C423&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-4.png?resize=1536%2C846&amp;ssl=1 1536w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-4.png?resize=1200%2C661&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-4.png?w=1784&amp;ssl=1 1784w" width="1024"/></figure>
+<p>Music and People &amp; Blogs categories have the highest average view counts, likes, and comments. Film &amp; Animation also shows high engagement, especially in view counts and like counts.</p>
+<p>Now, let’s analyze the content and duration of the videos. But first, we need to convert the duration from ISO 8601 format to seconds:</p>
+<pre><code class="language-python">!pip install isodate
+import isodate
+
+# convert ISO 8601 duration to seconds
+trending_videos['duration_seconds'] = trending_videos['duration'].apply(lambda x: isodate.parse_duration(x).total_seconds())
+
+trending_videos['duration_range'] = pd.cut(trending_videos['duration_seconds'], bins=[0, 300, 600, 1200, 3600, 7200], labels=['0-5 min', '5-10 min', '10-20 min', '20-60 min', '60-120 min'])</code></pre>
+<p>In the above code, we are using the isodate library to convert the duration of each video from the ISO 8601 format to seconds, which allows for numerical analysis. After converting the durations, we are categorizing the videos into different duration ranges (0-5 minutes, 5-10 minutes, 10-20 minutes, 20-60 minutes, and 60-120 minutes) by creating a new column called duration_range. This categorization enables us to analyze and compare the engagement metrics of videos within specific length intervals, providing insights into how video length influences viewer behaviour and video performance.</p>
+<p>Now, let’s analyze the content and the duration of videos:</p>
+<pre><code class="language-python"># scatter plot for video length vs view count
+plt.figure(figsize=(10, 6))
+sns.scatterplot(x='duration_seconds', y='view_count', data=trending_videos, alpha=0.6, color='purple')
+plt.title('Video Length vs View Count')
+plt.xlabel('Video Length (seconds)')
+plt.ylabel('View Count')
+plt.show()
+
+# bar chart for engagement metrics by duration range
+length_engagement = trending_videos.groupby('duration_range')[['view_count', 'like_count', 'comment_count']].mean()
+
+fig, axes = plt.subplots(1, 3, figsize=(18, 8))
+
+# view count by duration range
+sns.barplot(y=length_engagement.index, x=length_engagement['view_count'], ax=axes[0], palette='magma')
+axes[0].set_title('Average View Count by Duration Range')
+axes[0].set_xlabel('Average View Count')
+axes[0].set_ylabel('Duration Range')
+
+# like count by duration range
+sns.barplot(y=length_engagement.index, x=length_engagement['like_count'], ax=axes[1], palette='magma')
+axes[1].set_title('Average Like Count by Duration Range')
+axes[1].set_xlabel('Average Like Count')
+axes[1].set_ylabel('')
+
+# comment count by duration range
+sns.barplot(y=length_engagement.index, x=length_engagement['comment_count'], ax=axes[2], palette='magma')
+axes[2].set_title('Average Comment Count by Duration Range')
+axes[2].set_xlabel('Average Comment Count')
+axes[2].set_ylabel('')
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Video Length vs View Count " class="wp-image-23711" data-attachment-id="23711" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="youtube-5" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-5.png?fit=844%2C556&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-5.png?fit=300%2C198&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-5.png?fit=844%2C556&amp;ssl=1" data-orig-size="844,556" data-permalink="https://my-ai-portfolio.com/2024/06/03/youtube-data-collection-and-analysis-with-python/youtube-5/" data-recalc-dims="1" decoding="async" height="556" loading="lazy" sizes="auto, (max-width: 844px) 100vw, 844px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-5.png?resize=844%2C556&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-5.png?w=844&amp;ssl=1 844w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-5.png?resize=300%2C198&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-5.png?resize=768%2C506&amp;ssl=1 768w" width="844"/></figure>
+<figure class="wp-block-image aligncenter size-large"><img alt="Engagement Metrics based on video length" class="wp-image-23712" data-attachment-id="23712" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="youtube-6" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-6.png?fit=1024%2C450&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-6.png?fit=300%2C132&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-6.png?fit=1784%2C784&amp;ssl=1" data-orig-size="1784,784" data-permalink="https://my-ai-portfolio.com/2024/06/03/youtube-data-collection-and-analysis-with-python/youtube-6/" data-recalc-dims="1" decoding="async" height="450" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-6.png?resize=1024%2C450&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-6.png?resize=1024%2C450&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-6.png?resize=300%2C132&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-6.png?resize=768%2C338&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-6.png?resize=1536%2C675&amp;ssl=1 1536w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-6.png?resize=1200%2C527&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-6.png?w=1784&amp;ssl=1 1784w" width="1024"/></figure>
+<p>The scatter plot shows a slight negative correlation between video length and view count, indicating shorter videos tend to have higher view counts. Videos in the 0-5 minute range have the highest average view counts, likes, and comments. Engagement decreases as video length increases.</p>
+<p>Now, let’s analyze the relationship between views and number of tags used in the video:</p>
+<pre><code class="language-python"># calculate the number of tags for each video
+trending_videos['tag_count'] = trending_videos['tags'].apply(len)
+
+# scatter plot for number of tags vs view count
+plt.figure(figsize=(10, 6))
+sns.scatterplot(x='tag_count', y='view_count', data=trending_videos, alpha=0.6, color='orange')
+plt.title('Number of Tags vs View Count')
+plt.xlabel('Number of Tags')
+plt.ylabel('View Count')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="YouTube Data Collection and Analysis: Tags vs Views" class="wp-image-23715" data-attachment-id="23715" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="youtube-7" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-7.png?fit=841%2C556&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-7.png?fit=300%2C198&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-7.png?fit=841%2C556&amp;ssl=1" data-orig-size="841,556" data-permalink="https://my-ai-portfolio.com/2024/06/03/youtube-data-collection-and-analysis-with-python/youtube-7/" data-recalc-dims="1" decoding="async" height="556" loading="lazy" sizes="auto, (max-width: 841px) 100vw, 841px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-7.png?resize=841%2C556&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-7.png?w=841&amp;ssl=1 841w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-7.png?resize=300%2C198&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-7.png?resize=768%2C508&amp;ssl=1 768w" width="841"/></figure>
+<p>The scatter plot shows a very weak relationship between the number of tags and view count, suggesting that the number of tags has minimal impact on a video’s view count.</p>
+<p>Now, let’s see if there’s an impact of the time a video is posted on its views:</p>
+<pre><code class="language-python"># extract hour of publication
+trending_videos['publish_hour'] = trending_videos['published_at'].dt.hour
+
+# bar chart for publish hour distribution
+plt.figure(figsize=(12, 6))
+sns.countplot(x='publish_hour', data=trending_videos, palette='coolwarm')
+plt.title('Distribution of Videos by Publish Hour')
+plt.xlabel('Publish Hour')
+plt.ylabel('Number of Videos')
+plt.show()
+
+# scatter plot for publish hour vs view count
+plt.figure(figsize=(10, 6))
+sns.scatterplot(x='publish_hour', y='view_count', data=trending_videos, alpha=0.6, color='teal')
+plt.title('Publish Hour vs View Count')
+plt.xlabel('Publish Hour')
+plt.ylabel('View Count')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Duration of Videos by publish hour" class="wp-image-23717" data-attachment-id="23717" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="youtube-8" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-8.png?fit=1006%2C556&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-8.png?fit=300%2C166&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-8.png?fit=1006%2C556&amp;ssl=1" data-orig-size="1006,556" data-permalink="https://my-ai-portfolio.com/2024/06/03/youtube-data-collection-and-analysis-with-python/youtube-8/" data-recalc-dims="1" decoding="async" height="556" loading="lazy" sizes="auto, (max-width: 1006px) 100vw, 1006px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-8.png?resize=1006%2C556&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-8.png?w=1006&amp;ssl=1 1006w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-8.png?resize=300%2C166&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-8.png?resize=768%2C424&amp;ssl=1 768w" width="1006"/></figure>
+<figure class="wp-block-image aligncenter size-full"><img alt="publish hour vs view count" class="wp-image-23719" data-attachment-id="23719" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="youtube-9" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-9.png?fit=841%2C556&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-9.png?fit=300%2C198&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-9.png?fit=841%2C556&amp;ssl=1" data-orig-size="841,556" data-permalink="https://my-ai-portfolio.com/2024/06/03/youtube-data-collection-and-analysis-with-python/youtube-9/" data-recalc-dims="1" decoding="async" height="556" loading="lazy" sizes="auto, (max-width: 841px) 100vw, 841px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-9.png?resize=841%2C556&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-9.png?w=841&amp;ssl=1 841w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-9.png?resize=300%2C198&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/youtube-9.png?resize=768%2C508&amp;ssl=1 768w" width="841"/></figure>
+<p>The distribution shows that most videos are published between 14:00 and 20:00 hours (2 PM – 8 PM), indicating this may be an optimal time for uploading videos. There is a very weak negative relationship between publish hour and view count, suggesting that the hour of publication has minimal impact on engagement metrics.</p>
+<h3 class="wp-block-heading">Conclusion</h3>
+<p>So, here’s my conclusion on what makes a video trend on YouTube:</p>
+<ol class="wp-block-list">
+<li>Encourage viewers to like and comment on videos to boost engagement metrics.</li>
+<li>Aim to create shorter videos (under 5 minutes) for higher engagement, especially for categories like Music and Entertainment.</li>
+<li>Schedule video uploads around peak times (2 PM – 8 PM) to maximize initial views and engagement.</li>
+</ol>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="instagram-content-strategy-optimization-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="carbon-emissions-impact-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

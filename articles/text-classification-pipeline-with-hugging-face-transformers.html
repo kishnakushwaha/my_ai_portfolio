@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Text Classification Pipeline with Hugging Face Transformers | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Text Classification Pipeline with Hugging Face Transformers</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Jan 01, 2026 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="fine-tuning-llms-on-your-own-data.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="building-a-predictive-keyboard-model.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Text classification is one of the most practical tasks in <strong><a href="deep-learning-nlp-project-ideas.html" target="">NLP</a></strong>. If you’re starting out and want to build your first real-world text classification pipeline, this article will guide you through every step. Here, I’ll show you how to create a complete pipeline using Hugging Face Transformers, from data preparation to final predictions.</p>
+<h2 class="wp-block-heading">Building a Text Classification Pipeline with Hugging Face Transformers</h2>
+<h4 class="wp-block-heading">Dataset: 20 Newsgroups</h4>
+<p>We’ll use the <strong>20 Newsgroups dataset,</strong> a well-known text classification dataset containing ~18,000 newsgroup documents categorized into 20 topics. Let’s get started:</p>
+<pre><code class="language-python">from sklearn.datasets import fetch_20newsgroups
+from sklearn.model_selection import train_test_split
+
+# load dataset
+newsgroups = fetch_20newsgroups(subset='all', remove=('headers', 'footers', 'quotes'))
+
+texts = newsgroups.data
+labels = newsgroups.target
+label_names = newsgroups.target_names
+
+# split into train and test
+train_texts, test_texts, train_labels, test_labels = train_test_split(
+    texts, labels, test_size=0.2, random_state=42)</code></pre>
+<h4 class="wp-block-heading">Tokenization with Hugging Face</h4>
+<p>Before we can feed our text data into a transformer model like DistilBERT, we need to convert the raw text into a numerical format that the model understands (known as <strong>tokenization</strong>). Unlike traditional NLP methods that rely on word-level features, transformer models use subword tokenization to break text into smaller, more meaningful units. Hugging Face provides pre-trained tokenizers designed to work with their models. In our case, we’ll use the distilbert-base-uncased tokenizer to process the news articles:</p>
+<pre><code class="language-python">from transformers import AutoTokenizer
+
+# load tokenizer
+tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
+
+# tokenize text data
+train_encodings = tokenizer(train_texts, truncation=True, padding=True, max_length=512)
+test_encodings = tokenizer(test_texts, truncation=True, padding=True, max_length=512)</code></pre>
+<p>This tokenizer handles lowercasing, padding, and truncating, converting each input text into input_ids and attention_mask.</p>
+<h4 class="wp-block-heading">Create a PyTorch Dataset</h4>
+<p>Now that we’ve tokenized our text data, the next step is to structure it in a format suitable for training with PyTorch and Hugging Face’s Trainer API. Transformer models expect inputs like input_ids, attention_mask, and labels to be provided as tensors. To streamline this process and allow efficient data loading during training, we’ll create a custom Dataset class by subclassing torch.utils.data.Dataset:</p>
+<pre><code class="language-python">import torch
+
+class NewsGroupDataset(torch.utils.data.Dataset):
+    def __init__(self, encodings, labels):
+        self.encodings = encodings
+        self.labels = labels
+        
+    def __len__(self):
+        return len(self.labels)
+    
+    def __getitem__(self, idx):
+        return {
+            key: torch.tensor(val[idx]) for key, val in self.encodings.items()
+        } | {"labels": torch.tensor(self.labels[idx])}
+
+train_dataset = NewsGroupDataset(train_encodings, train_labels)
+test_dataset = NewsGroupDataset(test_encodings, test_labels)</code></pre>
+<p>This class will take the tokenized encodings and corresponding labels and return them in the format the model expects.</p>
+<h4 class="wp-block-heading">Load Pretrained Transformer Model</h4>
+<p>With our dataset now properly tokenized and formatted, it’s time to select and load a <strong>pre-trained transformer model</strong> for our classification task. Instead of training a model from scratch, which requires massive data and compute, we leverage <strong>AutoModelForSequenceClassification</strong>, which wraps pre-trained models like BERT, DistilBERT, and RoBERTa specifically for classification problems. In this case, we’ll use <strong>distilbert-base-uncased</strong>, a lightweight version of BERT that’s faster and still highly effective:</p>
+<pre><code class="language-python">from transformers import AutoModelForSequenceClassification
+
+model = AutoModelForSequenceClassification.from_pretrained(
+    "distilbert-base-uncased", num_labels=20)</code></pre>
+<p>Since our dataset has 20 unique categories, we set num_labels=20 to adapt the model’s final classification layer accordingly.</p>
+<h4 class="wp-block-heading">Define Training Configuration</h4>
+<p>Before we can train our model, we need to define the training configuration, which includes how the model should learn, how often to evaluate, when to save checkpoints, and other essential hyperparameters.</p>
+<p>Hugging Face provides a convenient TrainingArguments class that lets us configure all of this in one place. We’ll specify parameters such as the learning rate, batch sizes, number of training epochs, weight decay for regularization, and logging frequency. Additionally, we will define a compute_metrics function to evaluate our model using accuracy during training:</p>
+<pre><code class="language-python">from transformers import TrainingArguments, Trainer
+import numpy as np
+from sklearn.metrics import accuracy_score
+
+def compute_metrics(p):
+    preds = np.argmax(p.predictions, axis=1)
+    return {"accuracy": accuracy_score(p.label_ids, preds)}
+
+training_args = TrainingArguments(
+    output_dir="./results",
+    do_train=True,
+    do_eval=True,
+    learning_rate=2e-5,
+    per_device_train_batch_size=8,
+    per_device_eval_batch_size=8,
+    num_train_epochs=3,
+    weight_decay=0.01,
+    logging_dir="./logs",
+    logging_steps=100,
+    save_strategy="epoch",  
+    eval_steps=500          
+)</code></pre>
+<p>This setup ensures our model is trained efficiently and consistently assessed throughout the process.</p>
+<h4 class="wp-block-heading">Train the Model</h4>
+<p>With our model, datasets, training arguments, and evaluation metrics all defined, we’re ready to bring everything together using Hugging Face’s Trainer API.</p>
+<p>The Trainer class abstracts away much of the boilerplate involved in training a transformer model, handling batching, optimization, evaluation, logging, and checkpointing behind the scenes. By passing in our model, training configuration, datasets, and metric function, we can initiate the fine-tuning process in a single line of code:</p>
+<pre><code class="language-python">trainer = Trainer(
+    model=model,
+    args=training_args,
+    train_dataset=train_dataset,
+    eval_dataset=test_dataset,
+    compute_metrics=compute_metrics
+)</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Process of Execution: Text Classification Pipeline" class="wp-image-27320" data-attachment-id="27320" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="1284,268" data-recalc-dims="1" decoding="async" height="214" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/image-1.png" width="1024"/><figcaption class="wp-element-caption"><strong>Process of Execution</strong></figcaption></figure>
+<p>It enables experimentation to be faster, cleaner, and easier to scale.</p>
+<h4 class="wp-block-heading">Make Predictions</h4>
+<p>Now that our model is trained, the final step is to use it for making predictions on new, unseen text. This process is called <strong>inference</strong>. In a real-world scenario, you might receive raw text data, like an email, a news headline, or a customer message, and you want the model to classify it into one of the predefined categories.</p>
+<p>To do this, we first tokenize the input text using the same tokenizer used during training, convert it into tensors, and pass it through the model:</p>
+<pre><code class="language-python">text = "The government passed a new law affecting international trade."
+
+inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True, max_length=512)
+outputs = model(**inputs)
+predicted_class = outputs.logits.argmax().item()
+
+print(f"Predicted Topic: {label_names[predicted_class]}")</code></pre>
+<pre class="wp-block-preformatted"><strong>Predicted Topic: talk.politics.misc</strong></pre>
+<p>The model outputs a set of logits (unnormalized predictions), and we select the index with the highest score as the predicted class.</p>
+<h3 class="wp-block-heading">Final Words</h3>
+<p>Text classification with Hugging Face Transformers offers a powerful and efficient approach for transforming raw text into actionable insights by leveraging state-of-the-art NLP models. By following this pipeline, from loading data and tokenization to model training and inference, you now have a solid foundation for building, fine-tuning, and deploying real-world NLP solutions. Whether you’re classifying emails, reviews, or news articles, this approach scales effortlessly and sets you up for production-ready applications.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="fine-tuning-llms-on-your-own-data.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="building-a-predictive-keyboard-model.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

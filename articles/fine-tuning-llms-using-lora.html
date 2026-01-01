@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Fine-Tuning LLMs using LoRA | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Fine-Tuning LLMs using LoRA</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 31, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="build-your-first-rag-system-from-scratch.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="fine-tuning-llms-on-your-own-data.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>For years, the idea of truly customizing a Large Language Model felt like a privilege reserved for tech giants with bottomless budgets. The barrier to entry wasn’t just knowledge; it was the astronomical cost of computing power needed to retrain billions of parameters. That’s where a technique called LoRA (Low-Rank Adaptation) comes in. It just made fine-tuning accessible to everyone. In this article, I’ll take you through a step-by-step guide to fine-tuning LLMs with LoRA.</p>
+<h2 class="wp-block-heading">The Billion-Parameter Problem: Why Fine-Tuning Was So Hard</h2>
+<p>Let’s get straight to the point. An LLM is essentially a massive collection of numbers, called <strong>weights</strong> or <strong>parameters</strong>. A model like Llama 3 8B has 8 billion of them. When we “fine-tune” a model, we’re adjusting all of these numbers so the model gets better at a specific task, like writing in a particular brand’s voice.</p>
+<p>The traditional approach, <strong>full fine-tuning</strong>, means updating every single one of those 8 billion parameters. This is why, for a long time, customizing LLMs was out of reach for most of us.</p>
+<h2 class="wp-block-heading">Introducing LoRA</h2>
+<p>So, how do we get around this? We use a smarter approach from a family of techniques called <strong>Parameter-Efficient Fine-Tuning (PEFT)</strong>. The star of this family is <strong>LoRA (Low-Rank Adaptation)</strong>.</p>
+<p>Here’s how LoRA works under the hood, in simple terms:</p>
+<ol class="wp-block-list">
+<li><strong>Freeze the Original Model:</strong> We lock all of the LLM’s billions of original parameters. We don’t train them at all.</li>
+<li><strong>Inject Tiny “Adapter” Layers:</strong> LoRA injects a pair of very small, new layers (called matrices A and B) alongside the original ones, especially in the “attention” parts of the model where the most important learning happens.</li>
+<li><strong>Train Only the Adapters:</strong> During training, we only update the parameters in these tiny new layers. Instead of training billions of parameters, we might only train a few million (e.g., 0.1% of the total!).</li>
+</ol>
+<p>These small matrices are “low-rank,” a fancy linear algebra term for saying they can capture the most important information in a very compressed way. By training them, we’re teaching the model a “delta” or a “change” needed for our new task, without ever touching its original knowledge base.</p>
+<h2 class="wp-block-heading">Fine-Tuning LLMs to Write Positive Reviews using LoRA</h2>
+<p>Here, our goal is to take a standard GPT2 model and teach it how to start writing like a positive movie critic. We’ll fine-tune it on positive reviews from the famous <strong>IMDB dataset</strong>.</p>
+<h4 class="wp-block-heading">Step 1: Setting Up the Environment</h4>
+<p>First, we need our tools. We’ll be using the Hugging Face ecosystem, which makes this process incredibly smooth. Make sure to install these libraries:</p>
+<pre class="wp-block-preformatted"><strong>!pip install -q transformers datasets peft trl accelerate</strong></pre>
+<p>We are using:</p>
+<ol class="wp-block-list">
+<li><strong>transformers &amp; datasets:</strong> For loading our base model and the IMDB data.</li>
+<li><strong>peft:</strong> The library that contains the functions to use LoRA.</li>
+<li><strong>accelerate:</strong> A helper for running this efficiently on our GPU.</li>
+</ol>
+<h4 class="wp-block-heading">Step 2: The “Before” Snapshot – How Does a Base Model Behave?</h4>
+<p>Let’s see what a fresh-out-of-the-box GPT2 model does with a simple prompt. This is our baseline:</p>
+<pre><code class="language-python">import torch
+from transformers import AutoTokenizer, AutoModelForCausalLM
+from datasets import load_dataset
+
+# The model we want to fine-tune
+model_name = "gpt2"
+
+# Load the tokenizer
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+# Set the padding token if it's not already set
+if tokenizer.pad_token is None:
+    tokenizer.pad_token = tokenizer.eos_token # Use the end-of-sequence token as the padding token
+
+# Load the model
+model = AutoModelForCausalLM.from_pretrained(model_name)
+
+# A prompt to test the model
+prompt = "The movie started with a captivating scene that"
+
+# Tokenize the input
+inputs = tokenizer(prompt, return_tensors="pt")
+
+# Generate a completion
+# We're moving the model and inputs to the GPU if available
+device = "cuda" if torch.cuda.is_available() else "cpu"
+model.to(device)
+inputs = inputs.to(device)
+
+# Generate text
+generate_ids = model.generate(inputs.input_ids, max_length=50)
+response = tokenizer.decode(generate_ids[0], skip_special_tokens=True)
+
+print("--- Base Model Response ---")
+print(response)</code></pre>
+<pre class="wp-block-preformatted"><strong>--- Base Model Response ---<br/>The movie started with a captivating scene that was so realistic that I thought it was real. I was so excited to see the movie and I was so excited to see the movie. I was so excited to see the movie.</strong></pre>
+<p>It’s a bit repetitive and generic. It completes the sentence, but it has no specific style or direction. Let’s fix that.</p>
+<h4 class="wp-block-heading">Step 3: Data Preparation</h4>
+<p>We need to teach our model what a positive review looks like. We’ll load the IMDB dataset, filter it for only positive reviews, and then format each one into a clear, instructive text string:</p>
+<pre><code class="language-python"># Load the IMDB dataset
+dataset = load_dataset("imdb", split="train")
+
+# Filter for only positive reviews (label 1)
+positive_reviews = dataset.filter(lambda example: example["label"] == 1)
+
+# To make this demo run quickly, let's just use a small subset of the data
+small_dataset = positive_reviews.select(range(500)) # Using 500 examples for speed
+
+# We need to format our examples into a single text string for the SFTTrainer
+def format_review(example):
+    # For this simple task, the text itself is our training data
+    return {"text": "Review: " + example["text"] + " TL;DR: Positive."}
+
+formatted_dataset = small_dataset.map(format_review)</code></pre>
+<p>By formatting the data like this (Review: … TL;DR: Positive.), we’re giving the model a clear pattern to learn. It’s like telling a student, “Here’s a piece of text, and the summary is ‘Positive’. Now learn this pattern.”</p>
+<h4 class="wp-block-heading">Step 4: Installing LoRA</h4>
+<p>Now, we will define our LoraConfig that tells the peft library how and where to inject its tiny adapter layers:</p>
+<pre><code class="language-python">from peft import LoraConfig, get_peft_model
+
+# Create the LoRA configuration
+lora_config = LoraConfig(
+    r=8,  # The rank of the update matrices. A small number is usually sufficient.
+    lora_alpha=16, # A scaling factor. A good rule of thumb is to set this to 2*r.
+    target_modules=["c_attn"], # The specific layers to adapt. For GPT-2, this is the attention layer.
+    lora_dropout=0.1,
+    bias="none",
+    task_type="CAUSAL_LM"
+)
+
+# Wrap the base model with the PEFT model
+peft_model = get_peft_model(model, lora_config)
+
+# Let's see how many parameters we are actually training!
+peft_model.print_trainable_parameters()</code></pre>
+<pre class="wp-block-preformatted"><strong>trainable params: 294,912 || all params: 124,734,720 || trainable%: 0.2364</strong></pre>
+<p>Look at that! We’re now training almost<strong> 0.2%</strong> of the total parameters. We went from updating 124 million parameters to just 300 thousand. This is why you don’t need a supercomputer.</p>
+<h4 class="wp-block-heading">Step 5: The Training Session</h4>
+<p>Now, we set up the training process using the standard Hugging Face Trainer. This will feed our formatted examples to the model and update only our small LoRA weights:</p>
+<pre><code class="language-python">from transformers import TrainingArguments, Trainer, DataCollatorForLanguageModeling
+
+# Safety for training
+peft_model.config.use_cache = False
+tokenizer.padding_side = "right"
+if tokenizer.pad_token_id is None:
+    tokenizer.pad_token = tokenizer.eos_token
+    peft_model.config.pad_token_id = tokenizer.pad_token_id
+
+# Tokenize dataset
+def tokenize_fn(batch):
+    return tokenizer(
+        batch["text"],
+        truncation=True,
+        padding="max_length",
+        max_length=512,
+    )
+
+tokenized_ds = formatted_dataset.map(
+    tokenize_fn,
+    batched=True,
+    remove_columns=formatted_dataset.column_names,
+)
+
+# Causal LM collator (no MLM)
+data_collator = DataCollatorForLanguageModeling(
+    tokenizer=tokenizer,
+    mlm=False,
+)
+
+training_args = TrainingArguments(
+    output_dir="./gpt2-imdb-finetune",
+    per_device_train_batch_size=2,
+    gradient_accumulation_steps=2,
+    learning_rate=2e-4,
+    num_train_epochs=2,
+    logging_steps=50,
+    fp16=True,                 
+    bf16=False,                
+    remove_unused_columns=False,
+)
+
+trainer = Trainer(
+    model=peft_model,
+    args=training_args,
+    train_dataset=tokenized_ds,
+    data_collator=data_collator,
+)
+
+print("Starting training...")
+trainer.train()
+print("Training complete!")</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="The Training Session with LoRA" class="wp-image-28269" data-attachment-id="28269" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="1282,862" data-recalc-dims="1" decoding="async" height="689" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/image-7.png" width="1024"/></figure>
+<h4 class="wp-block-heading">Step 6: The “After” Snapshot – Our Specialized Model</h4>
+<p>The training is done. Let’s give our fine-tuned model the same prompt and see how its personality has changed:</p>
+<pre><code class="language-python"># Let's test the fine-tuned model with the same prompt
+print("\n--- Fine-Tuned Model Response ---")
+
+# The trainer wraps the model, so we use trainer.model
+fine_tuned_model = trainer.model
+
+# Generate text using the fine-tuned model
+generate_ids = fine_tuned_model.generate(inputs.input_ids, max_length=50)
+response = tokenizer.decode(generate_ids[0], skip_special_tokens=True)
+
+print(response)</code></pre>
+<pre class="wp-block-preformatted"><strong>--- Fine-Tuned Model Response ---<br/>The movie started with a captivating scene that really pulled me in. The characters were well-developed and the story was compelling. I was on the edge of my seat the whole time. TL;DR: Positive.</strong></pre>
+<p>See the difference? It’s not just completing the sentence anymore. It’s adopting the style of a positive movie review that we taught it. It learned the pattern and is now applying it to new text.</p>
+<h3 class="wp-block-heading">Final Words</h3>
+<p>We just walked through a complete example, but the real journey starts now. Think about a problem you care about:</p>
+<ol class="wp-block-list">
+<li>Could you fine-tune a model to write code documentation in your team’s specific style?</li>
+<li>Could you create a chatbot that responds to customer emails with a cheerful, helpful tone?</li>
+<li>Could you build a tool to summarize dense research papers into simple, easy-to-read paragraphs?</li>
+</ol>
+<p>You no longer need a massive budget. You just need a good idea, a decent GPU, and the willingness to learn.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="build-your-first-rag-system-from-scratch.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="fine-tuning-llms-on-your-own-data.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

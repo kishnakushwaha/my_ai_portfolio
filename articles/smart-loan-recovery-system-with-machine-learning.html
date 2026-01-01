@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Smart Loan Recovery System with Machine Learning | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Smart Loan Recovery System with Machine Learning</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 02, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="music-popularity-prediction-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="generative-ai-projects-that-will-get-you-hired.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Loan defaults pose a significant challenge for financial institutions by affecting profitability and cash flow. Using historical loan repayment data, borrower profiles, and payment behaviours, many financial companies now use a smart loan recovery system to optimize collection efforts, minimize recovery costs, and maximize loan repayments. In this article, I’ll take you through how to build a smart loan recovery system with <strong><a href="https://play.google.com/store/books/details?id=LCAqEQAAQBAJ">Machine Learning</a></strong>.</p>
+<h2 class="wp-block-heading">Smart Loan Recovery System: Dataset Overview</h2>
+<p>To build a loan recovery system with Machine Learning, we will use a dataset containing borrower profiles, loan details, and repayment histories. This dataset includes critical attributes such as:</p>
+<ol class="wp-block-list">
+<li><strong>Demographic Information</strong>: Age, employment type, income level, and number of dependents.</li>
+<li><strong>Loan Details</strong>: Loan amount, tenure, interest rate, and collateral value.</li>
+<li><strong>Repayment History</strong>: Number of missed payments, days past due, and monthly EMI payments.</li>
+<li><strong>Collection Efforts</strong>: Collection methods used, number of recovery attempts, and legal actions taken.</li>
+<li><strong>Loan Recovery Status</strong>: Whether the loan was fully recovered, partially recovered, or remains outstanding.</li>
+</ol>
+<p>You can download the dataset from <strong><a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">here</a></strong>.</p>
+<h2 class="wp-block-heading">Building a Smart Loan Recovery System with Machine Learning</h2>
+<p>Now, let’s start building a smart loan recovery system with Machine Learning by importing the <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+df = pd.read_csv("/content/loan recovery.csv")
+print(df.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>  Borrower_ID  Age  Gender Employment_Type  Monthly_Income  Num_Dependents  \<br/>0       BRW_1   59    Male        Salaried          215422               0   <br/>1       BRW_2   49  Female        Salaried           60893               0   <br/>2       BRW_3   35    Male        Salaried          116520               1   <br/>3       BRW_4   63  Female        Salaried          140818               2   <br/>4       BRW_5   28    Male        Salaried           76272               1   <br/><br/>  Loan_ID  Loan_Amount  Loan_Tenure  Interest_Rate  ... Collateral_Value  \<br/>0    LN_1      1445796           60          12.39  ...     1.727997e+06   <br/>1    LN_2      1044620           12          13.47  ...     1.180032e+06   <br/>2    LN_3      1923410           72           7.74  ...     2.622540e+06   <br/>3    LN_4      1811663           36          12.23  ...     1.145493e+06   <br/>4    LN_5        88578           48          16.13  ...     0.000000e+00   <br/><br/>   Outstanding_Loan_Amount  Monthly_EMI  Payment_History Num_Missed_Payments  \<br/>0             2.914130e+05      4856.88          On-Time                   0   <br/>1             6.652042e+05     55433.68          On-Time                   0   <br/>2             1.031372e+06     14324.61          Delayed                   2   <br/>3             2.249739e+05      6249.28          On-Time                   1   <br/>4             3.918989e+04       816.46          On-Time                   1   <br/><br/>   Days_Past_Due      Recovery_Status Collection_Attempts  Collection_Method  \<br/>0              0  Partially Recovered                   1   Settlement Offer   <br/>1              0      Fully Recovered                   2   Settlement Offer   <br/>2            124      Fully Recovered                   2       Legal Notice   <br/>3             56      Fully Recovered                   2              Calls   <br/>4             69      Fully Recovered                   0    Debt Collectors   <br/><br/>  Legal_Action_Taken  <br/>0                 No  <br/>1                 No  <br/>2                 No  <br/>3                 No  <br/>4                 No  <br/><br/>[5 rows x 21 columns]</strong></pre>
+<p>Now, let’s have a look at the summary statistics of the data before moving forward:</p>
+<pre><code class="language-python">df.describe()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Summary Statistics" class="wp-image-25932" data-attachment-id="25932" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="1600,684" data-recalc-dims="1" decoding="async" height="438" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/image.png" width="1024"/><figcaption class="wp-element-caption">Contains more columns</figcaption></figure>
+<h4 class="wp-block-heading">Analyzing Data Distribution and Relationships</h4>
+<p>Now, let’s move to analyzing this data in detail. I’ll first have a look at the distribution of the loan amount and its relationship with the monthly income:</p>
+<pre><code class="language-python">import plotly.graph_objects as go
+import plotly.express as px
+import pandas as pd
+
+
+fig = px.histogram(df, x='Loan_Amount', nbins=30, marginal="violin", opacity=0.7,
+                   title="Loan Amount Distribution &amp; Relationship with Monthly Income",
+                   labels={'Loan_Amount': "Loan Amount (in $)", 'Monthly_Income': "Monthly Income"},
+                   color_discrete_sequence=["royalblue"])
+
+fig.add_trace(go.Scatter(
+    x=sorted(df['Loan_Amount']),
+    y=px.histogram(df, x='Loan_Amount', nbins=30, histnorm='probability density').data[0]['y'],
+    mode='lines',
+    name='Density Curve',
+    line=dict(color='red', width=2)
+))
+
+scatter = px.scatter(df, x='Loan_Amount', y='Monthly_Income',
+                     color='Loan_Amount', color_continuous_scale='Viridis',
+                     size=df['Loan_Amount'], hover_name=df.index)
+
+for trace in scatter.data:
+    fig.add_trace(trace)
+
+fig.update_layout(
+    annotations=[
+        dict(
+            x=max(df['Loan_Amount']) * 0.8, y=max(df['Monthly_Income']),
+            text="Higher Loan Amounts are linked to Higher Income Levels",
+            showarrow=True,
+            arrowhead=2,
+            font=dict(size=12, color="red")
+        )
+    ],
+    xaxis_title="Loan Amount (in $)",
+    yaxis_title="Monthly Income (in $)",
+    template="plotly_white",
+    showlegend=True
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Smart Loan Recovery System: Loan Amount Distribution &amp; Relationship with Monthly Income" class="wp-image-25935" data-attachment-id="25935" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Loan Amount Distribution &amp;#038; Relationship with Monthly Income" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 855px) 100vw, 855px" src="../assets/datasets/Loan-Amount-Distribution-Relationship-with-Monthly-Income.png" width="855"/></figure>
+<p>The graph demonstrates a positive relationship between loan amounts and monthly income, indicating that individuals with higher income levels tend to secure larger loans. The density curve at the top shows the distribution of loan amounts, emphasizing that higher loan amounts are more frequent among higher income brackets.</p>
+<p>It highlights the proportionality between income and loan size, which shows an income-based approach in loan approvals or customer profiling.</p>
+<h4 class="wp-block-heading">Analyzing Payment History</h4>
+<p>Now, let’s have a look at the payment history. I’ll first analyze how payment history affects loan recovery amount:</p>
+<pre><code class="language-python">fig = px.histogram(df, x="Payment_History", color="Recovery_Status", barmode="group",
+                   title="How Payment History Affects Loan Recovery Status",
+                   labels={"Payment_History": "Payment History", "count": "Number of Loans"},
+                   color_discrete_map={"Recovered": "green", "Not Recovered": "red"})
+
+fig.update_layout(
+    xaxis_title="Payment History",
+    yaxis_title="Number of Loans",
+    legend_title="Recovery Status",
+    template="plotly_white",
+        )
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="How Payment History Affects Loan Recovery Status" class="wp-image-25937" data-attachment-id="25937" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="How Payment History Affects Loan Recovery Status" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/How-Payment-History-Affects-Loan-Recovery-Status.png" width="855"/></figure>
+<p>Loans with on-time payments are mostly fully recovered. Delayed payments result in a mix of partial and full recoveries, with some written off. Missed payments have a significantly lower recovery rate, with most loans ending up either partially recovered or written off.</p>
+<p>Let’s dive into missed payments in detail by analyzing how missed payments affect loan recovery:</p>
+<pre><code class="language-python">fig = px.box(df, x="Recovery_Status", y="Num_Missed_Payments",
+             title="How Missed Payments Affect Loan Recovery Status",
+             labels={"Recovery_Status": "Recovery Status", "Num_Missed_Payments": "Number of Missed Payments"},
+             color="Recovery_Status",
+             color_discrete_map={"Recovered": "green", "Not Recovered": "red"},
+             points="all")
+
+fig.update_layout(
+    xaxis_title="Recovery Status",
+    yaxis_title="Number of Missed Payments",
+    template="plotly_white"
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Smart Loan Recovery System: How Missed Payments Affect Loan Recovery Status" class="wp-image-25939" data-attachment-id="25939" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="How Missed Payments Affect Loan Recovery Status" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/How-Missed-Payments-Affect-Loan-Recovery-Status.png" width="855"/></figure>
+<p>Loans with partial recovery typically have up to 4 missed payments. Fully recovered loans tend to have fewer missed payments, mostly between 0 and 2. Written-off loans show a higher range of missed payments, with several exceeding 6. A higher number of missed payments significantly reduces the likelihood of full recovery and increases the chances of loans being written off.</p>
+<h4 class="wp-block-heading">Analyzing Loan Recovery Based on Monthly Income</h4>
+<p>Now, let’s dive deep into the relationship between monthly income and loan amount recovery. I’ll first analyze how monthly income and loan amount affect the loan recovery:</p>
+<pre><code class="language-python">fig = px.scatter(df, x='Monthly_Income', y='Loan_Amount',
+                 color='Recovery_Status', size='Loan_Amount',
+                 hover_data={'Monthly_Income': True, 'Loan_Amount': True, 'Recovery_Status': True},
+                 title="How Monthly Income and Loan Amount Affect Loan Recovery",
+                 labels={"Monthly_Income": "Monthly Income ($)", "Loan_Amount": "Loan Amount ($)"},
+                 color_discrete_map={"Recovered": "green", "Not Recovered": "red"})
+
+fig.add_annotation(
+    x=max(df['Monthly_Income']), y=max(df['Loan_Amount']),
+    text="Higher loans may still get recovered if income is high",
+    showarrow=True,
+    arrowhead=2,
+    font=dict(size=12, color="red")
+)
+
+fig.update_layout(
+    xaxis_title="Monthly Income ($)",
+    yaxis_title="Loan Amount ($)",
+    template="plotly_white"
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="How Monthly Income and Loan Amount Affect Loan Recovery" class="wp-image-25941" data-attachment-id="25941" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="How Monthly Income and Loan Amount Affect Loan Recovery" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/How-Monthly-Income-and-Loan-Amount-Affect-Loan-Recovery.png" width="855"/></figure>
+<p>Higher-income individuals are more likely to fully recover their loans, even for larger amounts. Borrowers in lower income brackets face a higher likelihood of loan write-offs or partial recovery. This trend highlights the impact of income on loan recovery, as higher earnings lead to better repayment outcomes and fewer write-offs, even for substantial loans.</p>
+<p>Now, using K-Means clustering, I’ll create borrower segments based on monthly income and loan amount:</p>
+<pre><code class="language-python">from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+
+features = ['Age', 'Monthly_Income', 'Loan_Amount', 'Loan_Tenure', 'Interest_Rate',
+            'Collateral_Value', 'Outstanding_Loan_Amount', 'Monthly_EMI', 'Num_Missed_Payments', 'Days_Past_Due']
+
+scaler = StandardScaler()
+df_scaled = scaler.fit_transform(df[features])</code></pre>
+<p>Let’s visualize the segments to understand them in detail:</p>
+<pre><code class="language-python">optimal_k = 4
+kmeans = KMeans(n_clusters=optimal_k, random_state=42, n_init=10)
+df['Borrower_Segment'] = kmeans.fit_predict(df_scaled)
+
+fig = px.scatter(df, x='Monthly_Income', y='Loan_Amount',
+                 color=df['Borrower_Segment'].astype(str), size='Loan_Amount',
+                 hover_data={'Monthly_Income': True, 'Loan_Amount': True, 'Borrower_Segment': True},
+                 title="Borrower Segments Based on Monthly Income and Loan Amount",
+                 labels={"Monthly_Income": "Monthly Income ($)", "Loan_Amount": "Loan Amount ($)", "Borrower_Segment": "Segment"},
+                 color_discrete_sequence=px.colors.qualitative.Vivid)
+
+fig.add_annotation(
+    x=df['Monthly_Income'].mean(), y=df['Loan_Amount'].max(),
+    text="Higher loans are clustered in specific income groups",
+    showarrow=True,
+    arrowhead=2,
+    font=dict(size=12, color="red")
+)
+
+fig.update_layout(
+    xaxis_title="Monthly Income ($)",
+    yaxis_title="Loan Amount ($)",
+    template="plotly_white",
+    legend_title="Borrower Segment"
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Borrower Segments" class="wp-image-25943" data-attachment-id="25943" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Borrower Segments" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/Borrower-Segments.png" width="855"/></figure>
+<p>Segment 1 borrowers take on moderate to high loan amounts, indicating financial stability. The Segment 0 clusters around lower income levels and moderate loan sizes, reflecting potential financial strain. Segment 2 borrowers distribute evenly across the graph, representing a balanced but cautious group. Meanwhile, Segment 3 borrowers concentrate in high-loan areas, especially within specific high-income ranges, highlighting their susceptibility to default despite higher incomes.</p>
+<p>Let’s name these segments according to the clusters they represent:</p>
+<pre><code class="language-python"># updating segment names
+df['Segment_Name'] = df['Borrower_Segment'].map({
+    0: 'Moderate Income, High Loan Burden',
+    1: 'High Income, Low Default Risk',
+    2: 'Moderate Income, Medium Risk',
+    3: 'High Loan, Higher Default Risk'
+})</code></pre>
+<h4 class="wp-block-heading">Building an Early Detection System for Loan Defaults based on the Risk Scores</h4>
+<p>Now, we will use our segments to build a classification model to flag the borrowers with high default risk. Once the model finds the borrowers with a high default risk, we will assign a loan recovery strategy based on the level of the risk of the borrower. Let’s train the model first:</p>
+<pre><code class="language-python">from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+
+df['High_Risk_Flag'] = df['Segment_Name'].apply(lambda x: 1 if x in ['High Loan, Higher Default Risk', 'Moderate Income, High Loan Burden'] else 0)
+
+# selecting features for the model
+features = ['Age', 'Monthly_Income', 'Loan_Amount', 'Loan_Tenure', 'Interest_Rate',
+            'Collateral_Value', 'Outstanding_Loan_Amount', 'Monthly_EMI', 'Num_Missed_Payments', 'Days_Past_Due']
+X = df[features]
+y = df['High_Risk_Flag']
+
+# splitting the data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+
+
+# training the model
+rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
+rf_model.fit(X_train, y_train)
+
+# get risk scores (probability of being high risk)
+risk_scores = rf_model.predict_proba(X_test)[:, 1]  # probability of high risk
+
+# add risk scores and flags to test data
+df_test = X_test.copy()
+df_test['Risk_Score'] = risk_scores
+df_test['Predicted_High_Risk'] = (df_test['Risk_Score'] &gt; 0.5).astype(int)  # Threshold at 50% probability
+
+# merging with borrower details
+df_test = df_test.merge(df[['Borrower_ID', 'Segment_Name', 'Recovery_Status', 'Collection_Method', 'Collection_Attempts', 'Legal_Action_Taken']],
+                        left_index=True, right_index=True)</code></pre>
+<p>Here, we first labelled borrowers as <strong>high-risk</strong> based on their segment classification. Then, we selected key financial and behavioural features to train a <strong>Random Forest Classifier</strong>. After splitting the data into training and testing sets, we trained the model to predict the probability of a borrower defaulting. We then applied this model to the test data to generate <strong>risk scores</strong> and classify borrowers as high-risk or low-risk based on a probability threshold. Finally, we merged these predictions with borrower details to enable <strong>data-driven recovery strategies</strong>.</p>
+<p>Now, we will create a new column for the dynamic recovery strategy based on risk scores:</p>
+<pre><code class="language-python"># creating a new column for the dynamic recovery strategy based on risk scores
+def assign_recovery_strategy(risk_score):
+    if risk_score &gt; 0.75:
+        return "Immediate legal notices &amp; aggressive recovery attempts"
+    elif 0.50 &lt;= risk_score &lt;= 0.75:
+        return "Settlement offers &amp; repayment plans"
+    else:
+        return "Automated reminders &amp; monitoring"
+
+df_test['Recovery_Strategy'] = df_test['Risk_Score'].apply(assign_recovery_strategy)
+
+df_test.head()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Smart Loan Recovery System" class="wp-image-25946" data-attachment-id="25946" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="1612,740" data-recalc-dims="1" decoding="async" height="470" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="../assets/datasets/image-1.png" width="1024"/><figcaption class="wp-element-caption">Contains more columns</figcaption></figure>
+<p>Here, we defined a function that categorizes borrowers into three recovery approaches:</p>
+<ol class="wp-block-list">
+<li><strong>immediate legal action for high-risk borrowers (risk score &gt; 0.75)</strong>,</li>
+<li><strong>settlement offers and repayment plans for moderate-risk borrowers (0.50 – 0.75)</strong>,</li>
+<li>and <strong>automated reminders for low-risk borrowers (&lt;0.50)</strong>.</li>
+</ol>
+<p>This function was applied to the test dataset to assign a <strong>personalized recovery strategy</strong> to each borrower to ensure <strong>cost-effective and targeted loan recovery efforts</strong>.</p>
+<p>So, this is how you can build a smart loan recovery system with Machine Learning.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="music-popularity-prediction-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="generative-ai-projects-that-will-get-you-hired.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

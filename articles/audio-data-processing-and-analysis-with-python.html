@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Audio Data Processing and Analysis with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Audio Data Processing and Analysis with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 02, 2025 • 5 min read</div>
+<p>Audio data is ubiquitous today, from music streaming platforms to virtual assistants. Analyzing and processing audio requires a solid understanding of data manipulation and visualization techniques. So, if you want to know about audio data processing and analysis, this article is for you. In this article, I’ll take you through the task of audio data processing and analysis with Python.</p>
+<h2 class="wp-block-heading">Audio Data Processing and Analysis with Python</h2>
+<p>The audio data I will use for this task is the NSynth (Neural Synthesizer) dataset, created by Google, which is a large-scale dataset for audio synthesis research. It consists of over 300,000 musical notes, each with a unique combination of instrument, pitch, and timbre. The dataset includes recordings from a diverse range of instruments, categorized into families like strings, brass, and mallets. Each audio sample is labelled with metadata, such as pitch, velocity, and instrument family.</p>
+<p>So, let’s get started with the task of audio data processing and analysis by importing the dataset:</p>
+<pre><code class="language-python">import tensorflow as tf
+import tensorflow_datasets as tfds
+
+# load the NSynth dataset
+dataset, info = tfds.load('nsynth', split='train', with_info=True)
+print(info)</code></pre>
+<p>Before diving into analysis, it’s crucial to understand the structure of the dataset. So, let’s have a quick look at the keys in the dataset:</p>
+<pre><code class="language-python"># inspect the keys of one sample
+for sample in dataset.take(1):
+    print("Available keys:")
+    for key in sample.keys():
+        print(key)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Available keys:<br/>audio<br/>id<br/>instrument<br/>pitch<br/>qualities<br/>velocity</strong></pre>
+<h4 class="wp-block-heading">Preprocessing Audio Data</h4>
+<p>To analyze the dataset, we’ll extract the audio and use the pitch as an alternate label:</p>
+<pre><code class="language-python"># Extract audio and an alternate label (e.g., pitch)
+def preprocess_nsynth(sample):
+    audio = sample['audio']
+    label = sample['pitch']  # Use pitch as the label
+    return audio, label
+
+# Apply preprocessing
+processed_dataset = dataset.map(preprocess_nsynth)
+
+# Take a single sample
+for audio, label in processed_dataset.take(1):
+    print(f"Audio Shape: {audio.shape}")
+    print(f"Label (Pitch): {label.numpy()}")</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Audio Shape: (64000,)<br/>Label (Pitch): 106</strong></pre>
+<p>After <strong><a href="data-preprocessing-techniques-you-should-know.html" rel="noreferrer noopener" target="">preprocessing</a></strong>, you can convert the audio tensor to a NumPy array and play it using the IPython Audio display:</p>
+<pre><code class="language-python">from IPython.display import Audio
+
+audio_np = audio.numpy()
+Audio(audio_np, rate=16000)  # Assuming a sample rate of 16kHz</code></pre>
+<figure class="wp-block-audio aligncenter"><audio controls="" src="https://my-ai-portfolio.com/wp-content/uploads/2024/12/download.wav"></audio></figure>
+<h4 class="wp-block-heading">Analyzing Audio Data</h4>
+<p>Now, let’s move to audio data analysis. I’ll start with <strong>visualizing the waveform</strong> to better understand the audio structure:</p>
+<pre><code class="language-python">import plotly.graph_objects as go
+
+fig = go.Figure()
+fig.add_trace(go.Scatter(
+    y=audio_np,
+    mode='lines',
+    line=dict(color='black'),
+    name="Waveform"
+))
+
+fig.update_layout(
+    title="Waveform",
+    xaxis_title="Time (samples)",
+    yaxis_title="Amplitude",
+    template="plotly_white",
+    width=800,
+    height=400
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Waveform" class="wp-image-25523" data-attachment-id="25523" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Waveform" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Waveform.png?fit=800%2C400&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Waveform.png?fit=300%2C150&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Waveform.png?fit=800%2C400&amp;ssl=1" data-orig-size="800,400" data-permalink="https://my-ai-portfolio.com/2024/12/16/audio-data-processing-and-analysis-with-python/waveform/" data-recalc-dims="1" decoding="async" height="400" sizes="(max-width: 800px) 100vw, 800px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Waveform.png?resize=800%2C400&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Waveform.png?w=800&amp;ssl=1 800w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Waveform.png?resize=300%2C150&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Waveform.png?resize=768%2C384&amp;ssl=1 768w" width="800"/></figure>
+<p>The waveform graph displays a decaying amplitude over time, starting with a high magnitude and gradually tapering off to zero. This indicates that the audio signal begins with a strong onset, followed by a rapid decay in energy. Such behaviour is typical in audio signals like percussive notes or short instrumental sounds, where the initial strike produces high energy that dissipates quickly.</p>
+<h5 class="wp-block-heading">Analyzing the Spectrogram</h5>
+<p>Now, let’s analyze the spectrogram, which provides a time-frequency representation of audio:</p>
+<pre><code class="language-python">import librosa
+import numpy as np
+
+# compute the STFT
+spectrogram = librosa.stft(audio_np, n_fft=512, hop_length=256)
+spectrogram_db = librosa.amplitude_to_db(abs(spectrogram))
+
+time = np.linspace(0, len(audio_np) / 16000, spectrogram_db.shape[1])
+frequencies = np.linspace(0, 16000 / 2, spectrogram_db.shape[0])
+
+fig = go.Figure(data=go.Heatmap(
+    z=spectrogram_db,
+    x=time,
+    y=frequencies,
+    colorscale='Viridis',
+    colorbar=dict(title='Amplitude (dB)'),
+))
+
+fig.update_layout(
+    title="Spectrogram",
+    xaxis_title="Time (seconds)",
+    yaxis_title="Frequency (Hz)",
+    yaxis=dict(type="log"),
+    template="plotly"
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Audio Data Processing and Analysis:spectrogram" class="wp-image-25525" data-attachment-id="25525" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="spectrogram" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/spectrogram.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/spectrogram.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/spectrogram.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/12/16/audio-data-processing-and-analysis-with-python/spectrogram/" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/spectrogram.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/spectrogram.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/spectrogram.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/spectrogram.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The spectrogram reveals that the audio signal primarily contains a single prominent frequency component around <strong>400 Hz</strong>, which remains consistent throughout its duration. The amplitude of this frequency is high, as indicated by the bright colour, while other frequencies show minimal or no energy. Additionally, there are faint low-frequency components near the start of the signal, which suggests a brief presence of lower-pitched content. This pattern suggests a sustained note, likely from a single instrument, with little harmonic variation or timbral complexity.</p>
+<h5 class="wp-block-heading">Analyzing Instrument Distribution</h5>
+<p>Now, let’s understand the distribution of instrument families in the dataset:</p>
+<pre><code class="language-python">from collections import Counter
+
+# count instrument occurrences
+instrument_counts = Counter()
+for sample in dataset.take(1000):
+    instrument = sample['instrument']['family'].numpy()
+    instrument_counts[instrument] += 1
+
+# map numeric IDs to instrument family names
+instrument_families = ["Bass", "Brass", "Flute", "Guitar", "Keyboard", "Mallet", "Organ", "Reed", "String", "Synth Lead", "Synth Pad", "Vocal"]
+mapped_family_counts = {instrument_families[family_id]: count for family_id, count in instrument_counts.items()}
+
+import plotly.express as px
+fig = px.bar(
+    x=list(mapped_family_counts.keys()),
+    y=list(mapped_family_counts.values()),
+    labels={'x': 'Instrument Family', 'y': 'Count'},
+    title="Distribution of Instrument Families",
+    template="plotly"
+)
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Analyzing Instrument Distribution" class="wp-image-25528" data-attachment-id="25528" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Analyzing Instrument Distribution" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Analyzing-Instrument-Distribution.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Analyzing-Instrument-Distribution.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Analyzing-Instrument-Distribution.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/12/16/audio-data-processing-and-analysis-with-python/analyzing-instrument-distribution/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Analyzing-Instrument-Distribution.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Analyzing-Instrument-Distribution.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Analyzing-Instrument-Distribution.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Analyzing-Instrument-Distribution.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The <strong>Bass</strong> family has the highest count, standing out significantly with around 250 occurrences, followed by <strong>the Keyboard</strong> and <strong>Mallet</strong> families, which have moderate representation. In contrast, instrument families like <strong>Synth Lead</strong>, <strong>Flute</strong>, and <strong>Brass</strong> have the lowest counts, which indicates a smaller presence in the dataset. This distribution suggests that the dataset emphasizes bass and keyboard instruments, while certain families are underrepresented, which could impact tasks like classification or model training.</p>
+<h5 class="wp-block-heading">Mel Spectrogram Analysis</h5>
+<p>Now, let’s analyze the Mel spectrogram, which translates audio frequencies into the Mel scale, to simulate human perception of sound:</p>
+<pre><code class="language-python">mel_spectrogram = librosa.feature.melspectrogram(y=audio_np, sr=16000, n_mels=128)
+mel_spectrogram_db = librosa.power_to_db(mel_spectrogram, ref=np.max)
+
+fig = go.Figure(data=go.Heatmap(
+    z=mel_spectrogram_db,
+    x=time,
+    y=np.linspace(0, 16000 / 2, mel_spectrogram_db.shape[0]),
+    colorscale='Viridis',
+    colorbar=dict(title="Amplitude (dB)")
+))
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Audio Data Processing and Analysis: Mel Spectrogram Analysis" class="wp-image-25530" data-attachment-id="25530" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Mel Spectrogram Analysis" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Mel-Spectrogram-Analysis.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Mel-Spectrogram-Analysis.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Mel-Spectrogram-Analysis.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/12/16/audio-data-processing-and-analysis-with-python/mel-spectrogram-analysis/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Mel-Spectrogram-Analysis.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Mel-Spectrogram-Analysis.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Mel-Spectrogram-Analysis.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Mel-Spectrogram-Analysis.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The Mel spectrogram highlights that the audio signal has a prominent frequency component at <strong>6,000 Hz</strong>, which remains sustained throughout the clip. This strong frequency presence, represented by the yellow-green band, indicates a stable tone with high energy concentrated at this frequency. Lower frequencies below <strong>1,000 Hz</strong> display much weaker energy, which suggests minimal low-pitched content.</p>
+<h5 class="wp-block-heading">MFCC Analysis</h5>
+<p>Now, let’s analyze the MFCCs (Mel-Frequency Cepstral Coefficients), which are commonly used in audio feature extraction:</p>
+<pre><code class="language-python">mfccs = librosa.feature.mfcc(y=audio_np, sr=16000, n_mfcc=13)
+
+fig = go.Figure(data=go.Heatmap(
+    z=mfccs,
+    x=time,
+    y=np.arange(1, mfccs.shape[0] + 1),
+    colorscale='Viridis',
+    colorbar=dict(title="MFCC Value")
+))
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="MFCC Analysis" class="wp-image-25533" data-attachment-id="25533" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="MFCC Analysis" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/MFCC-Analysis.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/MFCC-Analysis.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/MFCC-Analysis.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/12/16/audio-data-processing-and-analysis-with-python/mfcc-analysis/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/MFCC-Analysis.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/MFCC-Analysis.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/MFCC-Analysis.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/MFCC-Analysis.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The MFCC graph highlights the spectral features of the audio signal over time. The <strong>first MFCC coefficient (bottom row)</strong> shows a significantly lower magnitude compared to the others, indicating it captures the signal’s overall energy. The remaining coefficients exhibit relatively uniform values across time, which suggests the audio signal has a stable frequency content without major timbral variations.</p>
+<h4 class="wp-block-heading">Transforming Audio Data</h4>
+<p>Now, let’s see how to apply audio transformations like pitch shifting and time stretching:</p>
+<pre><code class="language-python"># apply pitch shift (+2 semitones)
+audio_pitch_shifted = librosa.effects.pitch_shift(audio_np, sr=16000, n_steps=2)
+
+# apply time-stretching (speed up by 1.5x)
+audio_time_stretched = librosa.effects.time_stretch(audio_np, rate=1.5)
+
+# plot waveforms
+fig = go.Figure()
+fig.add_trace(go.Scatter(y=audio_np, mode='lines', name='Original'))
+fig.add_trace(go.Scatter(y=audio_pitch_shifted, mode='lines', name='Pitch Shifted'))
+fig.add_trace(go.Scatter(y=audio_time_stretched, mode='lines', name='Time Stretched'))
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Transforming Audio Data" class="wp-image-25535" data-attachment-id="25535" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Transforming Audio Data" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Transforming-Audio-Data.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Transforming-Audio-Data.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Transforming-Audio-Data.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/12/16/audio-data-processing-and-analysis-with-python/transforming-audio-data/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Transforming-Audio-Data.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Transforming-Audio-Data.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Transforming-Audio-Data.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/12/Transforming-Audio-Data.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The original waveform (blue) maintains its natural decay, while the pitch-shifted version (red) closely follows the same shape but with slight variations due to the pitch adjustment. The time-stretched version (green) has a broader waveform, indicating a slower playback speed. These transformations highlight the ability to manipulate audio for pitch and duration while preserving its overall structure, which is essential for tasks like audio augmentation and synthesis.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>In this article, we explored the fundamentals of audio data processing and analysis using the NSynth dataset. From visualizing waveforms and spectrograms to understanding instrument distributions and extracting features like MFCCs, we uncovered valuable insights into audio structures and frequencies. Additionally, we applied transformations like pitch shifting and time stretching to demonstrate audio augmentation techniques.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="food-delivery-cost-and-profitability-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="car-insurance-modelling-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

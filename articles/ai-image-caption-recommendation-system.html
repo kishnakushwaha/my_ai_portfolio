@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>AI Image Caption Recommendation System | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        AI Image Caption Recommendation System</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 08, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="ai-ml-projects-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="building-a-rag-pipeline-for-llms.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Applications like Instagram still lack a caption-generation tool because most LLMs don’t write captions; they describe the image instead. This is where a caption recommendation system can help, using a library of captions to find the caption that goes well with the image. So, in this article, I’ll take you through how to build an AI Image caption recommendation system, where we will use LLMs and <strong><a href="50-projects-to-master-ai-ml-with-python.html" target="">Machine Learning</a></strong> using Python.</p>
+<h2 class="wp-block-heading">AI Image Caption Recommendation System: An Overview</h2>
+<p>I will build an AI Image Caption Recommendation System using a retrieval-based approach, leveraging CLIP (Contrastive Language–Image Pre-training) for both image and text understanding.</p>
+<p>First, the input image will be preprocessed and fed into the CLIP image encoder to generate a high-dimensional feature vector representing the image’s visual content. A similar process will be applied to a set of candidate captions, using the CLIP text encoder to generate text embeddings for each caption. Next, the cosine similarity between the image embedding and each caption embedding will be calculated. This similarity score will quantify how well each caption aligns with the visual content of the image.</p>
+<p>Finally, the system ranks the candidate captions based on their similarity scores and presents the top-ranked captions as recommendations.</p>
+<h2 class="wp-block-heading">Building an AI Image Caption Recommendation System using Python</h2>
+<p>Now, let’s get started with building an AI Image Caption Recommendation System by importing the necessary Python libraries:</p>
+<pre><code class="language-python">import torch
+from PIL import Image
+from transformers import CLIPProcessor, CLIPModel, AutoProcessor, AutoModelForCausalLM</code></pre>
+<p>Now, let’s write a Python function for handling the loading and preprocessing of an image:</p>
+<pre><code class="language-python"># image loading and preprocessing
+def load_and_preprocess_image(image_path):
+    image = Image.open(image_path).convert("RGB")
+    processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+    inputs = processor(images=image, return_tensors="pt")
+    return inputs, processor</code></pre>
+<p>This function opens the image using PIL, converts it to RGB format (important for consistency), and then uses the CLIPProcessor to transform the image into a format suitable for the CLIP model. The processor handles resizing, normalization, and other necessary transformations. The output will be a PyTorch tensor ready for CLIP.</p>
+<h4 class="wp-block-heading">Generating Image Embeddings</h4>
+<p>Now, we will write a function to generate image embeddings using <strong>CLIP</strong>. CLIP is a multi-modal model which leverages the power of LLMs, which can understand the content of images and match them to their relevant textual descriptions. Let’s write the function to generate image embeddings:</p>
+<pre><code class="language-python"># image understanding with CLIP
+def generate_image_embeddings(inputs):
+    model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+    with torch.no_grad():
+        image_features = model.get_image_features(**inputs)
+
+    return image_features, model</code></pre>
+<p>This function loads the pre-trained CLIP model. The crucial step here is <strong>model.get_image_features(**inputs)</strong>, which passes the preprocessed image tensor to the CLIP model and extracts a high-dimensional feature vector representing the image’s visual content.<strong> torch.no_grad()</strong> is used to prevent gradient calculations during inference, saving memory and speeding up the process.</p>
+<h4 class="wp-block-heading">Matching Image with Text Embeddings</h4>
+<p>Now, we will write a function to match captions:</p>
+<pre><code class="language-python"># caption matching (using CLIP text embeddings)
+def match_captions(image_features, captions, clip_model, processor):
+    # 1. get text embeddings for the captions:
+    text_inputs = processor(text=captions, return_tensors="pt", padding=True)
+    with torch.no_grad():
+        text_features = clip_model.get_text_features(**text_inputs)
+
+    # 2. calculate cosine similarity between image and text features:
+    image_features = image_features.detach().cpu().numpy()
+    text_features = text_features.detach().cpu().numpy()
+
+    similarities = cosine_similarity(image_features, text_features)
+
+    # 3. find the best matching captions:
+    best_indices = similarities.argsort(axis=1)[0][::-1]  
+    best_captions = [captions[i] for i in best_indices]
+
+    return best_captions, similarities[0][best_indices].tolist()</code></pre>
+<p>This function takes the image features and a list of candidate captions as input. It processes the captions using the same <strong>CLIPProcessor</strong> (now for text) to get text embeddings. It then calculates the cosine similarity between the image embedding and each text embedding. Cosine similarity measures the angle between two vectors; a value closer to 1 indicates higher similarity. The function will return the captions ranked by similarity and their corresponding similarity scores.</p>
+<p>Now, let’s write the driver function:</p>
+<pre><code class="language-python"># main function
+def image_captioning(image_path, candidate_captions):  
+    inputs, processor = load_and_preprocess_image(image_path)
+    image_features, clip_model = generate_image_embeddings(inputs)
+
+    best_captions, similarities = match_captions(image_features, candidate_captions, clip_model, processor)
+    return best_captions, similarities</code></pre>
+<p>This function ties together the preprocessing, feature extraction, and matching processes. It takes an image path and a list of candidate captions, processes the image, gets its features, and then matches these features against the captions. The result will be a list of best-fit captions with their similarity scores.</p>
+<p>Now, let’s write a list of captions that we can use to match with the image:</p>
+<pre><code class="language-python">candidate_captions = [
+    "Trees, Travel and Tea!",
+    "A refreshing beverage.",
+    "A moment of indulgence.",
+    "The perfect thirst quencher.",
+    "Your daily dose of delight.",
+    "Taste the tradition.",
+    "Savor the flavor.",
+    "Refresh and rejuvenate.",
+    "Unwind and enjoy.",
+    "The taste of home.",
+    "A treat for your senses.",
+    "A taste of adventure.",
+    "A moment of bliss.",
+    "Your travel companion.",
+    "Fuel for your journey.",
+    "The essence of nature.",
+    "The warmth of comfort.",
+    "A sip of happiness.",
+    "Pure indulgence.",
+    "Quench your thirst, ignite your spirit.",
+    "Awaken your senses, embrace the moment.",
+    "The taste of faraway lands.",
+    "A taste of home, wherever you are.",
+    "Your daily dose of delight.",
+    "Your moment of serenity.",
+    "The perfect pick-me-up.",
+    "The perfect way to unwind.",
+    "Taste the difference.",
+    "Experience the difference.",
+    "A refreshing escape.",
+    "A delightful escape.",
+    "The taste of tradition, the spirit of adventure.",
+    "The warmth of home, the joy of discovery.",
+    "Your passport to flavor.",
+    "Your ticket to tranquility.",
+    "Sip, savor, and explore.",
+    "Indulge, relax, and rejuvenate.",
+    "The taste of wanderlust.",
+    "The comfort of home.",
+    "A journey for your taste buds.",
+    "A haven for your senses.",
+    "Your refreshing companion.",
+    "Your delightful escape.",
+    "Taste the world, one sip at a time.",
+    "Embrace the moment, one cup at a time.",
+    "The essence of exploration.",
+    "The comfort of connection.",
+    "Quench your thirst for adventure.",
+    "Savor the moment of peace.",
+    "The taste of discovery.",
+    "The warmth of belonging.",
+    "Your travel companion, your daily delight.",
+    "Your moment of peace, your daily indulgence.",
+    "The spirit of exploration, the comfort of home.",
+    "The joy of discovery, the warmth of connection.",
+    "Sip, savor, and set off on an adventure.",
+    "Indulge, relax, and find your peace.",
+    "A delightful beverage.",
+    "A moment of relaxation.",
+    "The perfect way to start your day.",
+    "The perfect way to end your day.",
+    "A treat for yourself.",
+    "Something to savor.",
+    "A moment of calm.",
+    "A taste of something special.",
+    "A refreshing pick-me-up.",
+    "A comforting drink.",
+    "A taste of adventure.",
+    "A moment of peace.",
+    "A small indulgence.",
+    "A daily ritual.",
+    "A way to connect with others.",
+    "A way to connect with yourself.",
+    "A taste of home.",
+    "A taste of something new.",
+    "A moment to enjoy.",
+    "A moment to remember."
+]</code></pre>
+<p>The quality and diversity of these captions will significantly impact the system’s performance.</p>
+<h4 class="wp-block-heading">Let’s Test by Finding Captions</h4>
+<p>Now, I will take an image as input and use our AI Image Recommendation System to find the best captions for the image. Below is the image I am using:</p>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Aman Kharwal: AI Image Caption Recommendation System" class="wp-image-26001" data-attachment-id="26001" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="aman" data-orig-size="1080,1350" data-recalc-dims="1" decoding="async" height="1024" sizes="(max-width: 819px) 100vw, 819px" src="../assets/datasets/aman.png" style="width:352px;height:auto" width="819"/><figcaption class="wp-element-caption"><strong>aman.png</strong></figcaption></figure>
+<p>Now, let’s find the most relevant captions for the image:</p>
+<pre><code class="language-python">from sklearn.metrics.pairwise import cosine_similarity 
+
+best_captions, similarities = image_captioning("/content/aman.png", candidate_captions)
+
+# get the top 5 results
+top_n = min(5, len(best_captions))
+top_best_captions = best_captions[:top_n]
+top_similarities = similarities[:top_n]
+
+print("Top 5 Best Captions:")
+for i, (caption, similarity) in enumerate(zip(top_best_captions, top_similarities)):
+    print(f"{i+1}. {caption} (Similarity: {similarity:.4f})")</code></pre>
+<pre class="wp-block-preformatted"><strong>Top 5 Best Captions:<br/>1. Your moment of peace, your daily indulgence. (Similarity: 0.2538)<br/>2. Embrace the moment, one cup at a time. (Similarity: 0.2515)<br/>3. Taste the world, one sip at a time. (Similarity: 0.2495)<br/>4. Unwind and enjoy. (Similarity: 0.2487)<br/>5. Savor the moment of peace. (Similarity: 0.2486)</strong></pre>
+<p>This is how to use the <strong>image_captioning</strong> function with an image path and the list of candidate captions. As you can see, it then prints the top 5 best captions along with their similarity scores. This caption recommendation system doesn’t describe the image that an LLM will do. It recommends a relevant caption from a list of captions that you can use on social media platforms.</p>
+<p><strong><em>If you want to learn more about ML Algorithms, Generative AI and LLMs, my book will help you in your journey. Here are links to find the ebook and paperback versions:</em></strong></p>
+<ol class="wp-block-list">
+<li><strong><em><a href="https://amzn.in/d/8UT9B4Y" rel="noreferrer noopener" target="_blank">Paperback on Amazon</a></em></strong></li>
+<li><strong><em><a href="https://play.google.com/store/books/details?id=LCAqEQAAQBAJ" rel="noreferrer noopener" target="_blank">Affordable Ebook on Google Play</a></em></strong></li>
+</ol>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, by leveraging CLIP’s ability to create joint image-text embeddings, the system efficiently matches an image to the most similar captions from a pre-defined list, which offers a practical solution for quickly finding relevant captions for platforms like social media. I hope you liked this article on building an AI Image Caption Recommendation System using LLMs and Machine Learning with Python.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="ai-ml-projects-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="building-a-rag-pipeline-for-llms.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

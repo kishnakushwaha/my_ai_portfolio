@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Packaging Machine Learning Models with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Packaging Machine Learning Models with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 03, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="why-your-2026-ai-roadmap-needs-more-than-just-llms.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="end-to-end-chatbot-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Model packaging is an essential step in the <strong><a href="https://amzn.in/d/gxb0iv9">Machine Learning</a></strong> deployment process, where the trained model is prepared in a format that can be easily deployed and integrated into production environments. So, if you want to learn about packaging Machine Learning models, this article is for you. In this article, I’ll take you through the task of packaging Machine Learning models with Python.</p>
+<h2 class="wp-block-heading">Packaging Machine Learning Models with Python</h2>
+<p>Packaging <strong><a href="machine-learning-guided-projects-with-python.html" target="">Machine Learning</a></strong> models involves saving it and wrapping it with an API. Here’s the process of packaging a Machine Learning model:</p>
+<ol class="wp-block-list">
+<li>Step 1: Export/Save the Trained Model</li>
+<li>Step 2: Writing a Wrapper Function to Load the Model</li>
+<li>Step 3: Setting Up an API to Serve the Model</li>
+</ol>
+<p>Let’s go through all these steps one by one.</p>
+<h4 class="wp-block-heading">Step 1: Export/Save the Trained Model</h4>
+<p>Once you have trained a model, the first step is to save it in a format that can be loaded during deployment. Different libraries have different ways of saving models.</p>
+<p>Let’s train an example model on the iris dataset and save it using the pickle method:</p>
+<pre><code class="language-python">from sklearn.ensemble import RandomForestClassifier
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+import joblib
+
+# load dataset
+iris = load_iris()
+X_train, X_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.3)
+
+# train model
+model = RandomForestClassifier()
+model.fit(X_train, y_train)
+
+# save the model using joblib
+joblib.dump(model, 'rf_model.pkl')</code></pre>
+<h4 class="wp-block-heading">Step 2: Writing a Wrapper Function to Load the Model</h4>
+<p>For deployment, you’ll need a function that loads the model and makes predictions. This wrapper function will be exposed through an API or used in the production environment. Here’s how to write the wrapper function:</p>
+<pre><code class="language-python"># function to load the saved model
+def load_model():
+    model = joblib.load('rf_model.pkl')
+    return model
+
+# function to make predictions
+def predict(input_data):
+    model = load_model()
+    prediction = model.predict(input_data)
+    return prediction</code></pre>
+<h4 class="wp-block-heading">Step 3: Setting Up an API to Serve the Model</h4>
+<p>To serve your model in production, you can expose it via an API. Flask or FastAPI is often used to create REST APIs for this purpose.</p>
+<p>Here’s how to set up an API to serve your model <strong>(please make sure to write this piece of code in a separate Python file)</strong>:</p>
+<pre><code class="language-python">from flask import Flask, request, jsonify
+import joblib
+import numpy as np
+
+app = Flask(__name__)
+
+# load the model
+model = joblib.load('rf_model.pkl')
+
+# define a route for making predictions
+@app.route('/predict', methods=['POST'])
+def predict():
+    data = request.get_json()  # Get input data from POST request
+    input_data = np.array(data['input']).reshape(1, -1)  # Reshape input
+    prediction = model.predict(input_data)
+    return jsonify({'prediction': int(prediction[0])})
+
+if __name__ == '__main__':
+    app.run(debug=True)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong> * Serving Flask app '__main__'<br/> * Debug mode: on<br/>INFO:werkzeug:WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.<br/> * Running on http://127.0.0.1:5000<br/>INFO:werkzeug:Press CTRL+C to quit<br/>INFO:werkzeug: * Restarting with stat</strong></pre>
+<p>Now, run this file. Once you run this file, you can test the API using tools like <strong><a href="https://www.postman.com/" rel="noreferrer noopener" target="_blank">Postman</a>.</strong> Postman is a popular API development and testing tool that simplifies the process of sending requests to APIs and inspecting the responses. It is widely used by developers for testing, building, and documenting APIs.</p>
+<p>Please download the desktop version of Postman on your system. And follow these steps to test your API:</p>
+<ol class="wp-block-list">
+<li>Open <strong>Postman</strong> and create a new <strong>POST</strong> request.</li>
+<li>Set the URL to <a href="http://127.0.0.1:5000/predict" rel="nofollow">http://127.0.0.1:5000/predict</a> (Replace the URL with your URL).</li>
+<li>In the <strong>Body</strong> tab, choose <strong>raw</strong> and set the data type to <strong>JSON</strong>.</li>
+</ol>
+<p>Now, enter the following example JSON data in the body (adjust according to your model’s input size):</p>
+<pre><code class="language-javascript">{
+    "input": [0.5, 0.3, 0.7, 0.1]
+}
+
+// This is an example input for the Machine Learning model.</code></pre>
+<p>The image below shows the complete Postman setup and the final output.</p>
+<figure class="wp-block-image aligncenter size-large"><img alt="" class="wp-image-24588" data-attachment-id="24588" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="1680,946" data-recalc-dims="1" decoding="async" height="577" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/image.png" width="1024"/></figure>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, this is how we can package Machine Learning models in the form of APIs. Model packaging is an essential step in the machine learning deployment process, where the trained model is prepared in a format that can be easily deployed and integrated into production environments.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="why-your-2026-ai-roadmap-needs-more-than-just-llms.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="end-to-end-chatbot-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

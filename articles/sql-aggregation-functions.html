@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>SQL Aggregation Functions | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        SQL Aggregation Functions</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 19, 2025 • 5 min read</div>
+<p>SQL aggregation functions allow you to perform calculations on data to summarise it in various ways. Data Analysts spend a lot of time using SQL aggregation functions while working with databases. So, if you want to learn about SQL aggregations, this article is for you. In this article, I’ll take you through a detailed practical guide on SQL aggregation functions you should know for Data Science.</p>
+<h2 class="wp-block-heading">SQL Aggregation Functions</h2>
+<p>Below are the essential SQL aggregation methods you should know for Data Science:</p>
+<ol class="wp-block-list">
+<li>COUNT()</li>
+<li>SUM()</li>
+<li>AVG()</li>
+<li>MIN()</li>
+<li>MAX()</li>
+<li>GROUP BY</li>
+<li>HAVING</li>
+</ol>
+<p>Let’s understand all these practically one by one. I’ll be using the table shown below for the implementation of all these aggregation functions.</p>
+<figure class="wp-block-table is-style-stripes has-small-font-size"><table class="has-fixed-layout"><thead><tr><th>OrderID</th><th>CustomerID</th><th>OrderDate</th><th>Amount</th></tr></thead><tbody><tr><td>1</td><td>101</td><td>2024-08-01</td><td>250</td></tr><tr><td>2</td><td>102</td><td>2024-08-02</td><td>450</td></tr><tr><td>3</td><td>101</td><td>2024-08-03</td><td>300</td></tr><tr><td>4</td><td>103</td><td>2024-08-04</td><td>500</td></tr><tr><td>5</td><td>102</td><td>2024-08-05</td><td>150</td></tr></tbody></table></figure>
+<h4 class="wp-block-heading">COUNT() – Counting Rows</h4>
+<p>The COUNT() function returns the number of rows that match a specified condition. Here’s an example:</p>
+<pre><code class="language-sql">SELECT COUNT(*) AS TotalOrders
+FROM Orders;</code></pre>
+<pre class="wp-block-preformatted"><strong>Output: 5</strong></pre>
+<p>Here, the <strong>COUNT(*)</strong> function counts all rows in the Orders table.</p>
+<h4 class="wp-block-heading">SUM() – Summing Values</h4>
+<p>The SUM() function returns the total sum of a numeric column. Here’s an example:</p>
+<pre><code class="language-sql">SELECT SUM(Amount) AS TotalAmount
+FROM Orders;</code></pre>
+<pre class="wp-block-preformatted"><strong>Output: 1650</strong></pre>
+<p>Here, the <strong>SUM(Amount)</strong> function calculates the total amount of all orders.</p>
+<h4 class="wp-block-heading">AVG() – Calculating the Average</h4>
+<p>The AVG() function returns the average value of a numeric column. Here’s an example:</p>
+<pre><code class="language-sql">SELECT AVG(Amount) AS AverageAmount
+FROM Orders;</code></pre>
+<pre class="wp-block-preformatted"><strong>Output: 330</strong></pre>
+<p>Here, the <strong>AVG(Amount)</strong> function calculates the average order amount.</p>
+<h4 class="wp-block-heading">MIN() – Finding the Minimum Value</h4>
+<p>The MIN() function returns the smallest value in a column. Here’s an example:</p>
+<pre><code class="language-sql">SELECT MIN(Amount) AS MinAmount
+FROM Orders;</code></pre>
+<pre class="wp-block-preformatted"><strong>Output: 150</strong></pre>
+<p>Here, the <strong>MIN(Amount)</strong> function returns the smallest order amount.</p>
+<h4 class="wp-block-heading">MAX() – Finding the Maximum Value</h4>
+<p>The MAX() function returns the largest value in a column. Here’s an example:</p>
+<pre><code class="language-sql">SELECT MAX(Amount) AS MaxAmount
+FROM Orders;</code></pre>
+<pre class="wp-block-preformatted"><strong>Output: 500</strong></pre>
+<p>Here, the <strong>MAX(Amount)</strong> function returns the largest order amount.</p>
+<h4 class="wp-block-heading">GROUP BY – Grouping Data</h4>
+<p>The GROUP BY clause is used in conjunction with aggregation functions to group the result set by one or more columns. Here’s an example:</p>
+<pre><code class="language-sql">SELECT CustomerID, SUM(Amount) AS TotalAmountPerCustomer
+FROM Orders
+GROUP BY CustomerID;</code></pre>
+<figure class="wp-block-table is-style-stripes has-small-font-size"><table class="has-fixed-layout"><thead><tr><th>CustomerID</th><th>TotalAmountPerCustomer</th></tr></thead><tbody><tr><td>101</td><td>550</td></tr><tr><td>102</td><td>600</td></tr><tr><td>103</td><td>500</td></tr></tbody></table></figure>
+<p>Here, the <strong>GROUP BY CustomerID</strong> groups the orders by each customer, and the <strong>SUM(Amount)</strong> calculates the total amount for each customer.</p>
+<h4 class="wp-block-heading">HAVING – Filtering Groups</h4>
+<p>The HAVING clause is used to filter groups based on a condition, typically used with GROUP BY. Here’s an example:</p>
+<pre><code class="language-sql">SELECT CustomerID, SUM(Amount) AS TotalAmountPerCustomer
+FROM Orders
+GROUP BY CustomerID
+HAVING SUM(Amount) &gt; 500;</code></pre>
+<figure class="wp-block-table is-style-stripes has-small-font-size"><table class="has-fixed-layout"><thead><tr><th>CustomerID</th><th>TotalAmountPerCustomer</th></tr></thead><tbody><tr><td>101</td><td>550</td></tr><tr><td>102</td><td>600</td></tr></tbody></table></figure>
+<p>Here, the <strong>HAVING</strong> clause filters customers whose total order amount is greater than 500.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, below are the essential SQL aggregation methods you should know for Data Science:</p>
+<ol class="wp-block-list">
+<li><strong>COUNT()</strong>: Counts the number of rows in a result set.</li>
+<li><strong>SUM()</strong>: Calculates the total sum of a numeric column.</li>
+<li><strong>AVG()</strong>: Computes the average value of a numeric column.</li>
+<li><strong>MIN()</strong>: Finds the smallest value in a column.</li>
+<li><strong>MAX()</strong>: Finds the largest value in a column.</li>
+<li><strong>GROUP BY</strong>: Groups rows that have the same values in specified columns.</li>
+<li><strong>HAVING</strong>: Filters groups after aggregation based on a specified condition.</li>
+</ol>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="sql-joins-guide.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="sql-subqueries-guide.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

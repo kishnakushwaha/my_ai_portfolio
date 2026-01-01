@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Cohort Analysis using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Cohort Analysis using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 10, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="chatgpt-reviews-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="rfm-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Cohort Analysis is a <a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;"><strong>data analysis</strong></a> technique used to gain insights into the behaviour and characteristics of specific groups of users or customers over time. If you want to learn how to perform Cohort Analysis, this article is for you. In this article, I’ll take you through the task of Cohort Analysis using Python.</p>
+<h2 class="wp-block-heading">Cohort Analysis: Process We Can Follow</h2>
+<p>Cohort analysis is valuable for businesses as it allows them to understand user behaviour in a more granular and actionable way. Below is the process we can follow for the task of Cohort Analysis:</p>
+<ol class="wp-block-list">
+<li>The first step is to define the cohorts based on a specific characteristic or event. For example, in an e-commerce platform, cohorts could be defined based on the month of a user’s first purchase.</li>
+<li>Gather relevant data for analysis.</li>
+<li>Determine the time intervals you want to analyze.</li>
+<li> Group users into cohorts based on the defined characteristic or event.</li>
+<li>Choose the key performance metrics you want to analyze.</li>
+<li>Calculate the chosen metrics for each cohort over the specified time periods.</li>
+<li>Create visualizations to present your findings effectively.</li>
+</ol>
+<p>A dataset for Cohort Analysis typically includes user or customer data, such as registration date, purchase history, engagement metrics, or any other data points relevant to the analysis. I found an ideal dataset for this task. You can find the dataset <a href="https://statso.io/cohort-analysis-case-study/" rel="noreferrer noopener" target="_blank"><strong>here</strong></a>.</p>
+<h2 class="wp-block-heading">Cohort Analysis using Python</h2>
+<p>Now, let’s get started with the task of Cohort Analysis by importing the necessary Python libraries and the <a href="https://statso.io/cohort-analysis-case-study/" rel="noreferrer noopener" target="_blank"><strong>dataset</strong></a>:</p>
+<pre><code class="language-python">import pandas as pd
+
+data = pd.read_csv("cohorts.csv")
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>         Date  New users  Returning users  Duration Day 1  Duration Day 7
+0  25/10/2023       3461             1437      202.156977      162.523809
+1  26/10/2023       3777             1554      228.631944      258.147059
+2  27/10/2023       3100             1288      227.185841      233.550000
+3  28/10/2023       2293              978      261.079545      167.357143
+4  29/10/2023       2678             1082      182.567568      304.350000</strong></pre>
+<p>Now, let’s have a look at whether the dataset has any null values or not:</p>
+<pre><code class="language-python">missing_values = data.isnull().sum()
+print(missing_values)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Date               0
+New users          0
+Returning users    0
+Duration Day 1     0
+Duration Day 7     0
+dtype: int64</strong></pre>
+<p>Now, let’s have a look at the datatypes of all the columns in the data:</p>
+<pre><code class="language-python">data_types = data.dtypes
+print(data_types)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>New users            int64
+Returning users      int64
+Duration Day 1     float64
+Duration Day 7     float64
+dtype: object</strong></pre>
+<p>The Date column is in object (string) format. For effective analysis, especially in cohort analysis, we should convert this to a datetime format:</p>
+<pre><code class="language-python"># Convert 'Date' column to datetime format
+data['Date'] = pd.to_datetime(data['Date'], format='%d/%m/%Y')</code></pre>
+<p>Now, let’s have a look at the descriptive statistics of the dataset:</p>
+<pre><code class="language-python"># Display the descriptive statistics of the dataset
+descriptive_stats = data.describe()
+print(descriptive_stats)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>         New users  Returning users  Duration Day 1  Duration Day 7
+count    30.000000        30.000000       30.000000       30.000000
+mean   3418.166667      1352.866667      208.259594      136.037157
+std     677.407486       246.793189       64.730830       96.624319
+min    1929.000000       784.000000       59.047619        0.000000
+25%    3069.000000      1131.500000      182.974287       68.488971
+50%    3514.500000      1388.000000      206.356554      146.381667
+75%    3829.500000      1543.750000      230.671046      220.021875
+max    4790.000000      1766.000000      445.872340      304.350000</strong></pre>
+<p>The descriptive statistics provide the following insights:</p>
+<ul class="wp-block-list">
+<li><strong>New Users</strong>: The average number of new users is around 3,418 with a standard deviation of approximately 677. The minimum and maximum new users recorded are 1,929 and 4,790, respectively.</li>
+<li><strong>Returning Users</strong>: On average, there are about 1,353 returning users, with a standard deviation of around 247. The minimum and maximum are 784 and 1,766, respectively.</li>
+<li><strong>Duration Day 1</strong>: The average duration on the first day is about 208 seconds with a considerable spread (standard deviation is around 65).</li>
+<li><strong>Duration Day 7</strong>: The average 7-day duration is lower, around 136 seconds, with a larger standard deviation of about 97. The range is from 0 to 304.</li>
+</ul>
+<p>Now, let’s have a look at the trend of the new and returning users over time:</p>
+<pre><code class="language-python">import plotly.graph_objects as go
+import plotly.express as px
+
+import plotly.io as pio
+pio.templates.default = "plotly_white"
+
+# Trend analysis for New and Returning Users
+fig = go.Figure()
+
+# New Users
+fig.add_trace(go.Scatter(x=data['Date'], y=data['New users'], mode='lines+markers', name='New Users'))
+
+# Returning Users
+fig.add_trace(go.Scatter(x=data['Date'], y=data['Returning users'], mode='lines+markers', name='Returning Users'))
+
+# Update layout
+fig.update_layout(title='Trend of New and Returning Users Over Time',
+                  xaxis_title='Date',
+                  yaxis_title='Number of Users')
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Cohort Analysis: Trend of New and Returning Users Over Time" class="wp-image-21937" data-attachment-id="21937" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Cohort-1" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="../assets/datasets/Cohort-1.png" width="857"/></figure>
+<p>Now, let’s have a look at the trend of duration over time:</p>
+<pre><code class="language-python">fig = px.line(data_frame=data, x='Date', y=['Duration Day 1', 'Duration Day 7'], markers=True, labels={'value': 'Duration'})
+fig.update_layout(title='Trend of Duration (Day 1 and Day 7) Over Time', xaxis_title='Date', yaxis_title='Duration', xaxis=dict(tickangle=-45))
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Trend of Duration (Day 1 and Day 7) Over Time" class="wp-image-21938" data-attachment-id="21938" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Cohort-2" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="../assets/datasets/Cohort-2.png" width="857"/></figure>
+<p>Now, let’s have a look at the correlation between the variables:</p>
+<pre><code class="language-python">import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Correlation matrix
+correlation_matrix = data.corr()
+
+# Plotting the correlation matrix
+plt.figure(figsize=(10, 8))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")
+plt.title('Correlation Matrix of Variables')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Cohort Analysis: Correlation Matrix of Variables" class="wp-image-21940" data-attachment-id="21940" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Cohort-3" data-orig-size="764,682" data-recalc-dims="1" decoding="async" height="682" loading="lazy" sizes="auto, (max-width: 764px) 100vw, 764px" src="../assets/datasets/Cohort-3.png" width="764"/></figure>
+<p>Here, the strongest correlation is between the number of new and returning users, indicating a potential trend of new users converting to returning users.</p>
+<h2 class="wp-block-heading">Now Here’s How to Perform Cohort Analysis using Python</h2>
+<p>For the task of Cohort Analysis, we’ll group the data by the week of the year to create cohorts. Then, for each cohort (week), we’ll calculate the average number of new and returning users, as well as the average of Duration Day 1 and Duration Day 7. Let’s start by grouping the data by week and calculating the necessary averages:</p>
+<pre><code class="language-python"># Grouping data by week
+data['Week'] = data['Date'].dt.isocalendar().week
+
+# Calculating weekly averages
+weekly_averages = data.groupby('Week').agg({
+    'New users': 'mean',
+    'Returning users': 'mean',
+    'Duration Day 1': 'mean',
+    'Duration Day 7': 'mean'
+}).reset_index()
+
+print(weekly_averages.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>   Week    New users  Returning users  Duration Day 1  Duration Day 7
+0    43  3061.800000      1267.800000      220.324375      225.185602
+1    44  3503.571429      1433.142857      189.088881      168.723200
+2    45  3297.571429      1285.714286      198.426524      143.246721
+3    46  3222.428571      1250.000000      248.123542      110.199609
+4    47  4267.750000      1616.250000      174.173330        0.000000</strong></pre>
+<p>Now, let’s have a look at the weekly average of the new and returning users and the duration:</p>
+<pre><code class="language-python">fig1 = px.line(weekly_averages, x='Week', y=['New users', 'Returning users'], markers=True,
+               labels={'value': 'Average Number of Users'}, title='Weekly Average of New vs. Returning Users')
+fig1.update_xaxes(title='Week of the Year')
+fig1.update_yaxes(title='Average Number of Users')
+
+fig2 = px.line(weekly_averages, x='Week', y=['Duration Day 1', 'Duration Day 7'], markers=True,
+               labels={'value': 'Average Duration'}, title='Weekly Average of Duration (Day 1 vs. Day 7)')
+fig2.update_xaxes(title='Week of the Year')
+fig2.update_yaxes(title='Average Duration')
+
+fig1.show()
+fig2.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Weekly Average of New vs. Returning Users" class="wp-image-21944" data-attachment-id="21944" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Cohort-4-a" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/Cohort-4-a.png" width="857"/></figure>
+<figure class="wp-block-image aligncenter size-full"><img alt="Weekly Average of Duration (Day 1 vs. Day 7)" class="wp-image-21945" data-attachment-id="21945" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Cohort-4-b" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/Cohort-4-b.png" width="857"/></figure>
+<p>Now, let’s create a cohort chart to understand the cohort matrix of weekly averages. In the cohort chart, each row will correspond to a week of the year, and each column will represent a different metric:</p>
+<ul class="wp-block-list">
+<li>Average number of new users.</li>
+<li>Average number of returning users.</li>
+<li>Average duration on Day 1.</li>
+<li>Average duration on Day 7.</li>
+</ul>
+<pre><code class="language-python"># Creating a cohort matrix
+cohort_matrix = weekly_averages.set_index('Week')
+
+# Plotting the cohort matrix
+plt.figure(figsize=(12, 8))
+
+sns.heatmap(cohort_matrix, annot=True, cmap='coolwarm', fmt=".1f")
+plt.title('Cohort Matrix of Weekly Averages')
+plt.ylabel('Week of the Year')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Cohort Analysis: Cohort Matrix of Weekly Averages" class="wp-image-21947" data-attachment-id="21947" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Cohort-5" data-orig-size="929,682" data-recalc-dims="1" decoding="async" height="682" loading="lazy" sizes="auto, (max-width: 929px) 100vw, 929px" src="../assets/datasets/Cohort-5.png" width="929"/></figure>
+<p>We can see that the number of new users and returning users fluctuates from week to week. Notably, there was a significant increase in both new and returning users in Week 47. The average duration of user engagement on Day 1 and Day 7 varies across the weeks. The durations do not follow a consistent pattern about the number of new or returning users, suggesting that other factors might be influencing user engagement.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>Cohort Analysis is a data analysis technique used to gain insights into the behaviour and characteristics of specific groups of users or customers over time. It is valuable for businesses as it allows them to understand user behaviour in a more granular and actionable way. I hope you liked this article on Cohort Analysis using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="chatgpt-reviews-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="rfm-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

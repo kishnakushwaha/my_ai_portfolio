@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>How I Decide Whether a Dataset Is Worth Using | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        How I Decide Whether a Dataset Is Worth Using</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 14, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="remote-ai-ml-internships-this-week.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="the-data-analyst-to-ai-engineer-roadmap.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>The saying ‘Garbage In, Garbage Out’ is common in <strong><a href="75-data-science-projects-for-every-level.html" target="">Data Science</a></strong>, and for good reason. From my experience, picking the right dataset matters more than picking the right algorithm. You can spend hours tuning a Random Forest, but if your data is flawed, no amount of tweaking will help. In this article, I’ll share the approach I use to decide if a dataset is worth working with.</p>
+<h2 class="wp-block-heading">How I Decide Whether a Dataset Is Worth Using</h2>
+<p>Here is the mental framework and practical strategy I use to decide if a dataset is gold or just fool’s gold.</p>
+<h4 class="wp-block-heading">The Context Check</h4>
+<p>Before I even start working with the data, I pause and ask myself: Does this data really reflect the situation I <span style="margin: 0px; padding: 0px;">want to<strong> model</strong></span><strong>?</strong></p>
+<p>This is a common place where students struggle. We tend to pick the cleanest dataset we can find, but real-world problems are rarely neat. Usually, the data we have is just a stand-in for what we actually want.</p>
+<p>For example, imagine you want to predict Customer Satisfaction, and you have a dataset that includes ‘Call Duration’ from customer support logs.</p>
+<p>The issue is that a short call could mean the problem was solved quickly and the customer is happy, or it could mean the customer got frustrated and hung up. If you use ‘Call Duration’ as a direct stand-in for satisfaction without considering the context, your model won’t be reliable.</p>
+<p><strong>Set a rule for yourself:</strong> If you can’t clearly explain how the data was collected and what it means, don’t use it.</p>
+<h4 class="wp-block-heading">The Health Inspection</h4>
+<p>After a dataset passes the context check, I load it, but I don’t jump into modeling right away. Instead, I look closely to see if the data is solid and reliable.</p>
+<p><strong>Check for missing values. </strong>It’s unusual to find a real-world dataset without any missing data. What’s more important than the amount of missing data is the reason why it’s missing:</p>
+<ol class="wp-block-list">
+<li><strong>MCAR (Missing Completely at Random):</strong> This is usually okay; you can fill in these values.</li>
+<li><strong>MNAR (Missing Not at Random):</strong> This is risky. For example, in a salary survey, high earners might not report their income. If you fill in those missing values with the average, your model will be biased and underestimate salaries.</li>
+</ol>
+<p><strong>Next, check the distribution of your main variables. </strong>I always plot histograms right away and look for a few key things:</p>
+<ol class="wp-block-list">
+<li><strong>Zero Variance:</strong> If a column has the same value in every row, remove it.</li>
+<li><strong>Impossible Values:</strong> A person’s age listed as 200, or a house price of $0.</li>
+<li><strong>Severe Skew:</strong> If I’m predicting fraud, and only 0.01% of my rows are fraud, I need to know that immediately. A 99.9% accuracy score is meaningless here.</li>
+</ol>
+<p>I once spent a week trying to predict server outages, but later found out the dataset had removed all the outage logs as errors. I was trying to predict something that wasn’t even in the data. Always check your data’s distribution.</p>
+<h4 class="wp-block-heading">The Leakage Audit</h4>
+<p>This is the most technical and important step. <strong>Data leakage </strong>happens when your training data includes information that wouldn’t be available when you actually make predictions.</p>
+<p>If you’re predicting the future, like stock prices or sales, you can’t use data from the future to train your model.</p>
+<figure class="wp-block-image aligncenter size-full"><img alt="Data leakage" class="wp-image-31054" data-attachment-id="31054" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="data leakage example" data-orig-size="761,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 761px) 100vw, 761px" src="../assets/datasets/data-leakage-example.png" width="761"/></figure>
+<p>For example, using ‘Total Sales 2024’ to predict ‘Sales Q1 2024’ is a mistake. If your data is based on time, always split your validation sets by time instead of randomly.</p>
+<p>If I get a model with 99% accuracy on the first try, I don’t celebrate. It usually means I’ve accidentally included information that gives away the answer.</p>
+<h3 class="wp-block-heading">Closing Thoughts</h3>
+<p>Rejecting a dataset is tough. It often means starting over, collecting your own data, or working hard to get access to better internal databases.</p>
+<p><strong>A data scientist isn’t a magician who creates truth from numbers. </strong>We’re more like translators who find truth in what we observe. If the data is flawed, the results will be misleading.</p>
+<p>So, don’t hesitate to say that the data isn’t good enough.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="remote-ai-ml-internships-this-week.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="the-data-analyst-to-ai-engineer-roadmap.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

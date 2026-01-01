@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Building Synthetic Medical Records using GANs | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Building Synthetic Medical Records using GANs</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 28, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="build-an-ai-agent-to-master-a-game.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="building-a-diffusion-model-from-scratch.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>If you’ve been following the Generative AI wave, you’ve probably seen AI generate images, text, and even code. You can use the same technology to <strong>create realistic synthetic datasets</strong> for healthcare, finance, and more. So, in this article, I’ll walk you through building GANs (Generative Adversarial Networks) from scratch to generate synthetic medical records using Python.</p>
+<h2 class="wp-block-heading">Building Synthetic Medical Records Using GANs</h2>
+<p>For building synthetic medical records using GANs, we’ll break it down into the following steps:</p>
+<ol class="wp-block-list">
+<li><strong>Data Preprocessing</strong></li>
+<li><strong>GAN Architecture</strong></li>
+<li><strong>Training Loop</strong></li>
+<li><strong>Evaluating Model Performance</strong></li>
+<li><strong>Generating Synthetic Medical Records</strong></li>
+</ol>
+<p><strong>Make sure to download the dataset from <a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">here</a>.</strong></p>
+<h4 class="wp-block-heading">Data Preprocessing: Where most GAN projects fail before they start</h4>
+<p>GANs understand <strong>numbers,</strong> not text, not categorical labels. So our first job is to:</p>
+<ol class="wp-block-list">
+<li>Convert <strong>categorical features</strong> into one-hot encoded vectors</li>
+<li>Scale numerical values between <strong>-1 and 1</strong> (because our Generator uses Tanh activation)</li>
+</ol>
+<pre><code class="language-python">import pandas as pd
+
+df = pd.read_csv("/content/Follow-up_Records.csv")
+
+print(df.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>   patient_id  visit_date  age_years  weight_kg   bmi  systolic_bp_mmHg  \<br/>0  P-2025-001  2024-02-15         52       83.7  28.3               138   <br/>1  P-2025-001  2024-03-15         52       83.4  28.2               147   <br/>2  P-2025-001  2024-04-15         52       83.1  28.1               140   <br/>3  P-2025-001  2024-05-15         52       83.0  28.1               136   <br/>4  P-2025-001  2024-06-15         52       82.6  27.9               133   <br/><br/>   diastolic_bp_mmHg  heart_rate_bpm  body_temp_C  fasting_glucose_mg_dL  ...  \<br/>0                 86              80         36.8                    137  ...   <br/>1                 89              80         37.0                    140  ...   <br/>2                 84              76         36.8                    122  ...   <br/>3                 88              77         36.8                    112  ...   <br/>4                 88              78         36.8                    101  ...   <br/><br/>   diet_quality_score_0_100  sleep_hours  exercise_sessions_per_week  \<br/>0                        62          6.6                           3   <br/>1                        61          6.8                           2   <br/>2                        65          7.0                           3   <br/>3                        66          7.8                           1   <br/>4                        54          7.0                           2   <br/><br/>   alcohol_units_per_week  smoking_cigs_per_day  \<br/>0                       0                     0   <br/>1                       1                     0   <br/>2                       3                     0   <br/>3                       0                     0   <br/>4                       3                     0   <br/><br/>                                      clinical_notes  neuropathy  retinopathy  \<br/>0  Baseline visit: poor glycemic control; lifesty...           0            0   <br/>1                                 Routine follow-up.           0            0   <br/>2  Reports tingling in feet at night; B12 checked...           0            0   <br/>3                                 Routine follow-up.           0            0   <br/>4  SGLT2 inhibitor added due to persistent hyperg...           0            0   <br/><br/>   hypoglycemia  uti  <br/>0             0    0  <br/>1             0    0  <br/>2             0    1  <br/>3             0    0  <br/>4             0    0  <br/><br/>[5 rows x 34 columns]</strong></pre>
+<pre><code class="language-python">from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
+import numpy as np
+
+num_cols = df.select_dtypes(include=['int64', 'float64']).columns
+cat_cols = df.select_dtypes(include=['object']).columns
+
+encoder = OneHotEncoder(sparse_output=False)
+cat_encoded = encoder.fit_transform(df[cat_cols])
+
+scaler = MinMaxScaler(feature_range=(-1, 1))
+num_scaled = scaler.fit_transform(df[num_cols])
+
+# combine processed data
+data_processed = np.hstack((num_scaled, cat_encoded))</code></pre>
+<p>If you skip proper preprocessing, your GAN will either:</p>
+<ul class="wp-block-list">
+<li>Fail to learn patterns (mode collapse)</li>
+<li>Generate nonsensical outputs</li>
+<li>Scaling is significant because Tanh outputs range from <strong>-1 to 1</strong>.</li>
+</ul>
+<h4 class="wp-block-heading">GAN Architecture: Two networks playing a game</h4>
+<p>A GAN has a:</p>
+<ol class="wp-block-list">
+<li><strong>Generator</strong>: Starts with random noise, learns to produce realistic samples</li>
+<li><strong>Discriminator</strong>: Tries to tell real from fake data</li>
+</ol>
+<p>Here’s how to build the architecture of GANs:</p>
+<pre><code class="language-python">import torch
+import torch.nn as nn
+
+data_dim = data_processed.shape[1]  # total features
+latent_dim = 64  # size of random noise input
+
+# generator
+class Generator(nn.Module):
+    def __init__(self):
+        super(Generator, self).__init__()
+        self.model = nn.Sequential(
+            nn.Linear(latent_dim, 128),
+            nn.LeakyReLU(0.2),
+            nn.Linear(128, 256),
+            nn.LeakyReLU(0.2),
+            nn.Linear(256, data_dim),
+            nn.Tanh()  # output in range [-1, 1]
+        )
+    def forward(self, z):
+        return self.model(z)
+
+# discriminator
+class Discriminator(nn.Module):
+    def __init__(self):
+        super(Discriminator, self).__init__()
+        self.model = nn.Sequential(
+            nn.Linear(data_dim, 256),
+            nn.LeakyReLU(0.2),
+            nn.Linear(256, 128),
+            nn.LeakyReLU(0.2),
+            nn.Linear(128, 1),
+            nn.Sigmoid()  # probability of real/fake
+        )
+    def forward(self, x):
+        return self.model(x)</code></pre>
+<p>While building GANs, always make sure to:</p>
+<ol class="wp-block-list">
+<li>Use <strong>LeakyReLU</strong> in hidden layers to avoid “dead” neurons.</li>
+<li>Match Generator’s output range (Tanh) with your data scaling.</li>
+<li>Keep the architecture small at first; big models overfit small datasets quickly.</li>
+</ol>
+<h4 class="wp-block-heading">Training Loop: Where the Model Learns</h4>
+<p>Now, we will train both networks in turns:</p>
+<ol class="wp-block-list">
+<li><strong>Discriminator</strong>: Learns to classify real vs fake correctly</li>
+<li><strong>Generator</strong>: Learns to fool the Discriminator</li>
+</ol>
+<pre><code class="language-python">from torch.utils.data import DataLoader, TensorDataset
+
+# convert data to PyTorch tensors
+real_data = torch.tensor(data_processed, dtype=torch.float32)
+dataset = TensorDataset(real_data)
+loader = DataLoader(dataset, batch_size=16, shuffle=True)
+
+# initialize models
+generator = Generator()
+discriminator = Discriminator()
+
+# optimizers
+lr = 0.0002
+optim_G = torch.optim.Adam(generator.parameters(), lr=lr)
+optim_D = torch.optim.Adam(discriminator.parameters(), lr=lr)
+
+# loss
+criterion = nn.BCELoss()
+
+epochs = 2000
+for epoch in range(epochs):
+    for real_batch, in loader:
+        batch_size = real_batch.size(0)
+
+        # labels for real and fake data
+        real_labels = torch.ones((batch_size, 1))
+        fake_labels = torch.zeros((batch_size, 1))
+
+        # train discriminator
+        z = torch.randn(batch_size, latent_dim)
+        fake_data = generator(z)
+
+        real_loss = criterion(discriminator(real_batch), real_labels)
+        fake_loss = criterion(discriminator(fake_data.detach()), fake_labels)
+        d_loss = (real_loss + fake_loss) / 2
+
+        optim_D.zero_grad()
+        d_loss.backward()
+        optim_D.step()
+
+        # train generator
+        z = torch.randn(batch_size, latent_dim)
+        fake_data = generator(z)
+        g_loss = criterion(discriminator(fake_data), real_labels)  # want fake to be real
+
+        optim_G.zero_grad()
+        g_loss.backward()
+        optim_G.step()
+
+    if epoch % 200 == 0:
+        print(f"Epoch [{epoch}/{epochs}]  D_loss: {d_loss.item():.4f}  G_loss: {g_loss.item():.4f}")</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Epoch [0/2000]  D_loss: 0.6956  G_loss: 0.6612<br/>Epoch [200/2000]  D_loss: 0.1672  G_loss: 2.9219<br/>Epoch [400/2000]  D_loss: 0.6135  G_loss: 1.5207<br/>Epoch [600/2000]  D_loss: 0.3837  G_loss: 2.6847<br/>Epoch [800/2000]  D_loss: 0.8646  G_loss: 1.4029<br/>Epoch [1000/2000]  D_loss: 0.3813  G_loss: 1.6410<br/>Epoch [1200/2000]  D_loss: 0.3263  G_loss: 2.6179<br/>Epoch [1400/2000]  D_loss: 0.0688  G_loss: 3.0163<br/>Epoch [1600/2000]  D_loss: 0.2220  G_loss: 1.4931<br/>Epoch [1800/2000]  D_loss: 0.0581  G_loss: 3.5975</strong></pre>
+<p>Here are some common mistakes that beginners make in this step:</p>
+<ol class="wp-block-list">
+<li><strong>Training the Generator more than the Discriminator</strong> (can destabilize training)</li>
+<li><strong>Using the wrong activation</strong> (e.g., ReLU in the last Generator layer without scaling data)</li>
+<li><strong>Batch size too large</strong> (small datasets train better with small batches)</li>
+</ol>
+<h4 class="wp-block-heading">Generating Synthetic Medical Records</h4>
+<p>Once trained, we can sample new patient records from random noise:</p>
+<pre><code class="language-python"># generate new synthetic data
+z = torch.randn(10, latent_dim)  # 10 synthetic samples
+synthetic_data_scaled = generator(z).detach().numpy()
+
+# inverse transform
+num_synthetic = scaler.inverse_transform(synthetic_data_scaled[:, :len(num_cols)])
+cat_synthetic = encoder.inverse_transform(synthetic_data_scaled[:, len(num_cols):])
+
+# combine into dataframe
+synthetic_df = pd.DataFrame(num_synthetic, columns=num_cols)
+synthetic_df[cat_cols] = cat_synthetic
+
+print(synthetic_df)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>   age_years  weight_kg        bmi  systolic_bp_mmHg  diastolic_bp_mmHg  \<br/>0  52.017231  81.608612  27.656334        128.573212          83.058716   <br/>1  52.049911  81.312317  27.621420        127.594505          82.952423   <br/>2  52.004284  82.087952  27.929657        132.905823          86.329712   <br/>3  52.999413  81.105415  27.438124        130.629898          73.565216   <br/>4  52.921329  81.529053  27.588375        131.838181          75.753464   <br/>5  52.000004  81.658142  27.952627        126.800835          90.225380   <br/>6  52.001060  81.389557  27.754536        126.812881          86.642319   <br/>7  52.949970  81.282715  27.489239        130.044556          75.864662   <br/>8  52.994469  81.226418  27.434101        128.948669          74.581017   <br/>9  52.999737  80.793098  27.320147        122.675903          73.543121   <br/><br/>   heart_rate_bpm  body_temp_C  fasting_glucose_mg_dL  \<br/>0       76.080704    36.872677              89.162071   <br/>1       76.967606    36.932449              90.351837   <br/>2       76.076080    36.841934              86.890717   <br/>3       74.126099    36.732826             105.403008   <br/>4       74.325439    36.778103              96.714897   <br/>5       79.380981    36.918476              85.431534   <br/>6       78.033195    36.897865              85.991028   <br/>7       74.698959    36.814651             102.886810   <br/>8       74.389000    36.800858             102.727158   <br/>9       74.411812    36.774315             107.315430   <br/><br/>   postprandial_glucose_mg_dL  hba1c_percent  ...  alcohol_units_per_week  \<br/>0                  129.606934       7.381011  ...                1.700157   <br/>1                  136.598312       7.326695  ...                1.963187   <br/>2                  124.384651       7.747846  ...                1.313976   <br/>3                  171.038132       6.749748  ...                0.067310   <br/>4                  142.759796       6.931028  ...                0.275825   <br/>5                  122.884781       7.793033  ...                1.902780   <br/>6                  124.722404       7.453174  ...                2.455485   <br/>7                  158.861588       6.892792  ...                0.434503   <br/>8                  164.242416       6.800313  ...                0.281971   <br/>9                  180.745453       6.673672  ...                0.202333   <br/><br/>   smoking_cigs_per_day  neuropathy  retinopathy  hypoglycemia       uti  \<br/>0              0.001285    0.000759     0.001573      0.100375  0.017240   <br/>1              0.005959    0.004435     0.005770      0.477865  0.020934   <br/>2              0.000674    0.000674     0.001165      0.017366  0.011973   <br/>3              0.000537    0.000106     0.000128      0.001489  0.000276   <br/>4              0.001492    0.000539     0.000662      0.005973  0.003403   <br/>5              0.000028    0.000010     0.000051      0.146468  0.001701   <br/>6              0.000439    0.000241     0.000527      0.302272  0.009886   <br/>7              0.005161    0.001687     0.001972      0.061553  0.005250   <br/>8              0.002669    0.000815     0.001331      0.019851  0.003891   <br/>9              0.000336    0.000034     0.000046      0.151734  0.000156   <br/><br/>   patient_id  visit_date                                        medications  \<br/>0  P-2025-001  2024-06-15  Metformin 1000 mg BID, Ramipril 5 mg QD, Atorv...   <br/>1  P-2025-001  2024-06-15  Metformin 1000 mg BID, Ramipril 5 mg QD, Atorv...   <br/>2  P-2025-001  2024-10-15  Metformin 1000 mg BID, Ramipril 5 mg QD, Atorv...   <br/>3  P-2025-001  2025-02-15  Metformin 1000 mg BID, Ramipril 5 mg QD, Atorv...   <br/>4  P-2025-001  2025-02-15  Metformin 1000 mg BID, Ramipril 5 mg QD, Atorv...   <br/>5  P-2025-001  2024-08-15  Metformin 1000 mg BID, Ramipril 5 mg QD, Atorv...   <br/>6  P-2025-001  2024-06-15  Metformin 1000 mg BID, Ramipril 5 mg QD, Atorv...   <br/>7  P-2025-001  2025-02-15  Metformin 1000 mg BID, Ramipril 5 mg QD, Atorv...   <br/>8  P-2025-001  2025-02-15  Metformin 1000 mg BID, Ramipril 5 mg QD, Atorv...   <br/>9  P-2025-001  2025-02-15  Metformin 1000 mg BID, Ramipril 5 mg QD, Atorv...   <br/><br/>                                      clinical_notes  <br/>0                                 Routine follow-up.  <br/>1                                 Routine follow-up.  <br/>2                                 Routine follow-up.  <br/>3                                 Routine follow-up.  <br/>4                                 Routine follow-up.  <br/>5                                 Routine follow-up.  <br/>6                                 Routine follow-up.  <br/>7                                 Routine follow-up.  <br/>8                                 Routine follow-up.  <br/>9  Mild symptomatic hypoglycemia post-exercise; s...  <br/><br/>[10 rows x 34 columns]</strong></pre>
+<p>You now have privacy-safe, realistic-looking data for experiments. It can also be used to <strong>augment training datasets</strong> for better ML model performance.</p>
+<h3 class="wp-block-heading">Final Words</h3>
+<p>Building GANs for real-world datasets like medical records is more about:</p>
+<ol class="wp-block-list">
+<li>Data preprocessing discipline</li>
+<li>Matching architecture to data</li>
+<li>Careful training to avoid collapse</li>
+<li>Post-processing to make data usable</li>
+</ol>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="build-an-ai-agent-to-master-a-game.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="building-a-diffusion-model-from-scratch.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Building an AI Agent using OpenAI API | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Building an AI Agent using OpenAI API</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 09, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="document-analysis-using-llms-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="building-a-large-language-model-from-scratch.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>With the rise of large language models like GPT-4o, building intelligent <strong><a href="ai-agents-projects-for-resume.html" target="">AI agents</a></strong> has never been more accessible. Using the OpenAI API, we can create agents that understand context, reason through information, and respond naturally to user queries. In this article, we’ll focus on building an AI Agent using the OpenAI API to intelligently process structured data and deliver accurate, conversational answers.</p>
+<h2 class="wp-block-heading">Building an AI Agent using OpenAI API: Getting Started</h2>
+<p>Here, we will be building an AI Agent that will:</p>
+<ol class="wp-block-list">
+<li>Understand the data context</li>
+<li>Accept user queries in natural language</li>
+<li>Use OpenAI GPT models to analyze and respond intelligently.</li>
+</ol>
+<p>But, to get started with this task, make sure you sign up for the OpenAI API. Here are the steps you can follow:</p>
+<ol class="wp-block-list">
+<li>Go to <strong><a href="https://platform.openai.com/signup" rel="noreferrer noopener" target="_blank">OpenAI’s API platform</a></strong> and sign up or log in.</li>
+<li>Navigate to the<strong> API Keys</strong> section.</li>
+<li>Click on <strong>Create New Secret Key</strong> and <strong>copy</strong> it.</li>
+<li>Use it safely inside your Python code.</li>
+</ol>
+<p>Once you get your API, you can use it like this:</p>
+<pre><code class="language-python">from openai import OpenAI
+
+client = OpenAI(api_key='YOUR_OPENAI_API_KEY')</code></pre>
+<h4 class="wp-block-heading">Importing the Data</h4>
+<p>Now, we will import a dataset based on loan applications. We will use this data to build an AI Agent that can answer questions based on loan approvals. <strong>You can download the dataset from <a href="https://www.kaggle.com/datasets/ninzaami/loan-predication">here</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+
+df = pd.read_csv('loan_prediction.csv')</code></pre>
+<p>Now, we will create a function to summarize the data:</p>
+<pre><code class="language-python">def create_data_summary(df):
+    summary = f"The dataset has {df.shape[0]} rows and {df.shape[1]} columns.\n"
+    summary += "Columns:\n"
+    for col in df.columns:
+        summary += f"- {col} (type: {df[col].dtype})\n"
+    return summary</code></pre>
+<p>This summary will help the agent understand the structure without actually loading the entire data into the prompt (which would exceed token limits).</p>
+<h4 class="wp-block-heading">Building the AI Agent Function</h4>
+<p>Now, let’s define the AI Agent that will handle user queries based on the data summary:</p>
+<pre><code class="language-python">def ai_agent(user_query, df):
+    data_context = create_data_summary(df)
+
+    prompt = f"""
+You are a data expert AI agent.
+
+You have been provided with this dataset summary:
+{data_context}
+
+Now, based on the user's question:
+'{user_query}'
+
+Think step-by-step. Assume you can access and analyze the dataset like a Data Scientist would using Pandas.
+
+Give a clear, final answer.
+    """
+
+    response = client.chat.completions.create(
+        model="gpt-4o",
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0.2,
+        max_tokens=500
+    )
+
+    answer = response.choices[0].message.content
+    return answer</code></pre>
+<p>Here, we defined a function <strong>ai_agent</strong> that takes a user query and the dataset, summarizes the dataset structure, and creates a prompt combining both the context and the question. This prompt is then sent to OpenAI’s GPT-4o model using the <strong>client.chat.completions.create()</strong> method, and the model’s step-by-step, natural-language response is returned to the user.</p>
+<p>Now, we will create an interactive loop where users can ask questions to the AI Agent:</p>
+<pre><code class="language-python">print("Welcome to Loan Review AI Agent!")
+print("You can ask anything about the loan applicants data.")
+print("Type 'exit' to quit.")
+
+while True:
+    user_input = input("\nYour question: ")
+    if user_input.lower() == "exit":
+        break
+    response = ai_agent(user_input, df)
+    print("\nAI Agent Response:")
+    print(response)</code></pre>
+<p>In this part, we have created a simple interactive loop that continuously prompts the user to ask questions. When the user inputs a query, it is passed to the ai_agent function, which processes it and returns a natural language answer based on the dataset. If the user types “exit,” the loop breaks and the program ends.</p>
+<h4 class="wp-block-heading">Testing the Agent</h4>
+<p>Now, let’s ask some queries to test the agent:</p>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Your question: What is the average loan amount applied for by all applicants?<br/><br/>Step 1: Analyze the 'LoanAmount' column in the dataset.<br/>Step 2: Calculate the mean value.<br/><br/>Result:<br/>The average loan amount applied for by all applicants is ₹146.41 thousand.<br/><br/>Your question: Who has the highest applicant income?<br/><br/>Step 1: Find the maximum value in the 'ApplicantIncome' column.<br/><br/>Result:<br/>The highest applicant income is ₹81,000.<br/><br/>Your question: How many applicants are self-employed?<br/><br/>Step 1: Filter the dataset where 'Self_Employed' is 'Yes'.<br/><br/>Result:<br/>There are 82 self-employed applicants.</strong></pre>
+<h3 class="wp-block-heading">Summary</h3>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="document-analysis-using-llms-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="building-a-large-language-model-from-scratch.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

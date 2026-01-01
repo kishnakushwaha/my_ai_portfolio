@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Building an AI Agent using Agentic AI | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Building an AI Agent using Agentic AI</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 04, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="end-to-end-chatbot-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="next-word-prediction-model-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Agentic AI refers to <strong><a href="50-ai-ml-projects-with-python.html" target="">artificial intelligence</a></strong> systems that can perceive their environment, make decisions, and act autonomously to achieve a goal. These agents typically use reinforcement learning (RL) methods to optimize their behaviour over time through interactions with an environment. In this article, I’ll explain how to build an AI Agent for trading using Agentic AI with Python.</p>
+<h2 class="wp-block-heading">Understanding the Components of Agentic AI</h2>
+<p>Agentic AI involves several key components. In this article, I’ll be building an AI Agent for trading. So, let’s understand the key components of Agentic AI with our example:</p>
+<ol class="wp-block-list">
+<li><strong>The Agent: </strong>The agent is the decision-making entity in the AI system. In our case, the DQN trading agent will be responsible for making trading decisions based on market data.</li>
+<li><strong>The Environment: </strong>The environment is the external system in which the agent operates. Our trading environment will consist of stock market data, where the agent will interact with price movements and execute trades.</li>
+<li><strong>The State: </strong>The state represents the information available to the agent at any given time. Our trading agent’s state includes the stock’s closing price, moving averages, and daily returns.</li>
+<li><strong>The Action Space: </strong>The action space defines what actions the agent can take. Our trading agent has three possible actions: Buy, Sell, and Hold.</li>
+<li><strong>The Reward Function: </strong>The reward function determines the agent’s performance by assigning a numerical value to its actions. The goal of our trading agent will be to maximize total profit by the end of the trading session.</li>
+</ol>
+<p>Having this knowledge will help you understand all the steps we will take further to build an AI Agent using Agentic AI.</p>
+<h2 class="wp-block-heading">Building an AI Agent using Agentic AI: Getting Started</h2>
+<p>Now, let’s get started with building an AI Agent for trading using Agentic AI. I’ll first import all the necessary Python libraries and collect Apple’s stock market data from Yahoo Finance:</p>
+<pre><code class="language-python">import yfinance as yf
+import pandas as pd
+import numpy as np
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import random
+from collections import deque
+
+# define stock symbol and time period
+symbol = "AAPL"
+start_date = "2020-01-01"
+end_date = "2025-02-14"
+
+# download historical data
+data = yf.download(symbol, start=start_date, end=end_date)</code></pre>
+<p>Now, we will calculate technical indicators that help the AI agent make better trading decisions:</p>
+<pre><code class="language-python"># feature engineering
+data['SMA_5'] = data['Close'].rolling(window=5).mean()
+data['SMA_20'] = data['Close'].rolling(window=20).mean()
+data['Returns'] = data['Close'].pct_change()</code></pre>
+<p>Now, let’s drop missing values and reset the index:</p>
+<pre><code class="language-python"># drop NaN values and reset index
+data.dropna(inplace=True)
+data.reset_index(drop=True, inplace=True)</code></pre>
+<p>Next, we will define the action space. The AI agent has <strong>three possible actions</strong>:</p>
+<ul class="wp-block-list">
+<li>HOLD: Do nothing.</li>
+<li>BUY: Purchase stocks.</li>
+<li>SELL: Sell held stocks.</li>
+</ul>
+<pre><code class="language-python"># define action space
+ACTIONS = {0: "HOLD", 1: "BUY", 2: "SELL"}</code></pre>
+<p>This action space is used to <strong>train the reinforcement learning model</strong>.</p>
+<p>Now, we will extract the State from the data:</p>
+<pre><code class="language-python"># get state function
+def get_state(data, index):
+    return np.array([
+        float(data.loc[index, 'Close']),
+        float(data.loc[index, 'SMA_5']),
+        float(data.loc[index, 'SMA_20']),
+        float(data.loc[index, 'Returns'])
+    ])</code></pre>
+<p>This function extracts the <strong>state representation</strong> from the dataset at a given time index. The<strong> state</strong> is an array containing:</p>
+<ul class="wp-block-list">
+<li><strong>Closing price</strong></li>
+<li><strong>5-day SMA</strong></li>
+<li><strong>20-day SMA</strong></li>
+<li><strong>Daily return percentage</strong></li>
+</ul>
+<p>This numerical representation of the stock market is fed into the AI model to make trading decisions.</p>
+<h4 class="wp-block-heading">Building The Trading Environment for our AI Agent</h4>
+<p>We will now define a trading environment to interact with the Deep Q-Network (DQN) AI agent, which will allow it to learn how to trade stocks profitably:</p>
+<pre><code class="language-python"># trading environment
+class TradingEnvironment:
+    def __init__(self, data):
+        self.data = data
+        self.initial_balance = 10000
+        self.balance = self.initial_balance
+        self.holdings = 0
+        self.index = 0
+
+    def reset(self):
+        self.balance = self.initial_balance
+        self.holdings = 0
+        self.index = 0
+        return get_state(self.data, self.index)
+
+    def step(self, action):
+        price = float(self.data.loc[self.index, 'Close'])
+        reward = 0
+
+        if action == 1 and self.balance &gt;= price:  # BUY
+            self.holdings = self.balance // price
+            self.balance -= self.holdings * price
+        elif action == 2 and self.holdings &gt; 0:  # SELL
+            self.balance += self.holdings * price
+            self.holdings = 0
+
+        self.index += 1
+        done = self.index &gt;= len(self.data) - 1
+
+        if done:
+            reward = self.balance - self.initial_balance
+
+        next_state = get_state(self.data, self.index) if not done else None
+        return next_state, reward, done, {}</code></pre>
+<p>The environment is implemented as a class that simulates the stock market. It tracks the agent’s balance, holdings, and current market index, and it provides new states and rewards in response to the agent’s actions.</p>
+<h4 class="wp-block-heading">The Deep Q-Network (DQN)</h4>
+<p>DQN is a neural network that approximates the Q-values for each state-action pair. We will now define the neural network architecture for our Deep Q-Network. It will be responsible for predicting the best trading actions based on the stock market state:</p>
+<pre><code class="language-python"># deep q-network
+class DQN(nn.Module):
+    def __init__(self, state_size, action_size):
+        super(DQN, self).__init__()
+        self.fc1 = nn.Linear(state_size, 64)
+        self.fc2 = nn.Linear(64, 64)
+        self.fc3 = nn.Linear(64, action_size)
+
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = torch.relu(self.fc2(x))
+        return self.fc3(x)</code></pre>
+<p>Here we built a <strong>Deep Q-Network</strong> using <strong>PyTorch</strong> to optimize stock trading decisions. The model features a <strong>three-layer neural network</strong> to predict trading actions, leveraging <strong>ReLU activation</strong> to enhance learning efficiency.</p>
+<p>It outputs <strong>Q-values</strong>, which the agent utilizes to determine the best action:<strong> buy, sell, or hold, </strong>based on market conditions.</p>
+<h4 class="wp-block-heading">The DQN Agent</h4>
+<p>Now, we will implement the AI agent that learns how to trade stocks using Deep Q-Learning. The DQN Agent will interact with the trading environment, make trading decisions (BUY, SELL, HOLD), store experiences, and learn from past experiences to improve future decisions:</p>
+<pre><code class="language-python"># DQN agent
+class DQNAgent:
+    def __init__(self, state_size, action_size):
+        self.state_size = state_size
+        self.action_size = action_size
+        self.memory = deque(maxlen=2000)
+        self.gamma = 0.95  # Discount factor
+        self.epsilon = 1.0  # Exploration rate
+        self.epsilon_min = 0.01
+        self.epsilon_decay = 0.995
+        self.learning_rate = 0.001
+        self.model = DQN(state_size, action_size)
+        self.optimizer = optim.Adam(self.model.parameters(), lr=self.learning_rate)
+        self.criterion = nn.MSELoss()
+
+    def remember(self, state, action, reward, next_state, done):
+        self.memory.append((state, action, reward, next_state, done))
+
+    def act(self, state):
+        if random.uniform(0, 1) &lt; self.epsilon:
+            return random.choice(list(ACTIONS.keys()))
+        state = torch.FloatTensor(state).unsqueeze(0)
+        with torch.no_grad():
+            q_values = self.model(state)
+        return torch.argmax(q_values).item()
+
+    def replay(self, batch_size):
+        if len(self.memory) &lt; batch_size:
+            return
+        minibatch = random.sample(self.memory, batch_size)
+
+        for state, action, reward, next_state, done in minibatch:
+            target = reward
+            if not done:
+                next_state_tensor = torch.FloatTensor(next_state).unsqueeze(0)
+                target += self.gamma * torch.max(self.model(next_state_tensor)).item()
+
+            state_tensor = torch.FloatTensor(state).unsqueeze(0)
+            target_tensor = self.model(state_tensor).clone().detach()
+            target_tensor[0][action] = target
+
+            self.optimizer.zero_grad()
+            output = self.model(state_tensor)
+            loss = self.criterion(output, target_tensor)
+            loss.backward()
+            self.optimizer.step()
+
+        if self.epsilon &gt; self.epsilon_min:
+            self.epsilon *= self.epsilon_decay</code></pre>
+<p>So, we developed a Deep Q-Learning Agent to interact with the stock market environment to enhance its decision-making through Experience Replay, which stores and reuses past experiences for training. The agent effectively balances Exploration vs. Exploitation, taking random actions initially and making smarter decisions as learning progresses.</p>
+<p>Training is performed using batches of past experiences to refine the neural network’s performance. Additionally, a discount factor (gamma) is applied to weigh immediate and future rewards, to ensure long-term profitability.</p>
+<h4 class="wp-block-heading">Training the AI Agent</h4>
+<p>Training involves running multiple episodes where the agent interacts with the environment, learns from experience, and updates its model. Let’s train the agent:</p>
+<pre><code class="language-python"># train the agent
+env = TradingEnvironment(data)
+agent = DQNAgent(state_size=4, action_size=3)
+batch_size = 32
+episodes = 500
+total_rewards = []
+
+for episode in range(episodes):
+    state = env.reset()
+    done = False
+    total_reward = 0
+
+    while not done:
+        action = agent.act(state)
+        next_state, reward, done, _ = env.step(action)
+        agent.remember(state, action, reward, next_state, done)
+        state = next_state
+        total_reward += reward
+
+    agent.replay(batch_size)
+    total_rewards.append(total_reward)
+    print(f"Episode {episode+1}/{episodes}, Total Reward: {total_reward}")
+
+print("Training Complete!")</code></pre>
+<pre class="wp-block-preformatted">Episode 1/500, Total Reward: -9930.183032989502<br/>Episode 2/500, Total Reward: -9784.975547790527<br/>Episode 3/500, Total Reward: -9967.558223724365<br/>...<br/>Episode 498/500, Total Reward: 2196.496597290039<br/>Episode 499/500, Total Reward: 4178.121425628662<br/>Episode 500/500, Total Reward: 410.2142562866211<br/>Training Complete!</pre>
+<p>Here, we trained the AI Trading Agent using Deep Q-Learning, simulating 500 trading sessions where the agent learned from experience. It leveraged Exploration &amp; Exploitation, initially taking random actions before making more informed decisions as training progressed.</p>
+<p>Experience Replay is used to store past experiences, allowing the neural network to learn through batch training. Throughout the process, we tracked rewards to measure the agent’s performance improvements over time.</p>
+<p>After training, we can test the agent on new market data by allowing it to make decisions without random exploration:</p>
+<pre><code class="language-python"># create a fresh environment instance for testing
+test_env = TradingEnvironment(data)
+state = test_env.reset()
+done = False
+
+# simulate a trading session using the trained agent
+while not done:
+    # always choose the best action (exploitation)
+    action = agent.act(state)
+    next_state, reward, done, _ = test_env.step(action)
+    state = next_state if next_state is not None else state
+
+final_balance = test_env.balance
+profit = final_balance - test_env.initial_balance
+print(f"Final Balance after testing: ${final_balance:.2f}")
+print(f"Total Profit: ${profit:.2f}")</code></pre>
+<pre class="wp-block-preformatted"><strong>Final Balance after testing: $10178.89<br/>Total Profit: $178.89</strong></pre>
+<p>The <strong>agent started with $10,000</strong> and ended with <strong>$10,178.89</strong>. <strong>Profit = $178.89</strong>, meaning the agent made <strong>a small but positive return</strong>.</p>
+<p>So, this is how you can build an AI Agent using Agentic AI.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="end-to-end-chatbot-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="next-word-prediction-model-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

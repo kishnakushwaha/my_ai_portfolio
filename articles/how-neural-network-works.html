@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>How Neural Network Works | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        How Neural Network Works</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 20, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="process-of-nlp-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="stress-detection-with-machine-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>A neural network is a computational structure that connects an input layer to an output layer. This computational structure is used in training deep learning models that can easily outperform any classical <strong><a href="https://medium.com/coders-camp/all-machine-learning-algorithms-models-explained-adcd95d5fb3c">machine learning algorithm</a></strong>. As a data science beginner, you must have heard about neural networks before, but do you know how a neural network works? If you want to know, then this article is for you. In this article, I will explain how a neural network works.</p>
+<h2 class="wp-block-heading" id="here-s-how-a-neural-network-works">Here’s How a Neural Network Works</h2>
+<p>A Neural Network consists of three types of layers:</p>
+<ol class="wp-block-list"><li>one input layer</li><li>one or more hidden layers</li><li>one output layer</li></ol>
+<div class="wp-block-image"><figure class="aligncenter size-full is-resized"><img alt="Layers of a neural network" class="wp-image-16545" data-attachment-id="16545" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="input-hidden-and-output-layer" data-orig-size="857,627" data-recalc-dims="1" decoding="async" height="457" sizes="(max-width: 626px) 100vw, 626px" src="../assets/datasets/input-hidden-and-output-layer.png" width="626"/><figcaption><strong>Types of layers in a Neural Network</strong></figcaption></figure></div>
+<p>Let’s understand how a neural network works with an example of Image Classification. To classify images using a neural network, we will first feed the neural network with the pixel values of images. <strong>The first layer of a neural network is the input layer that receives the data as input.</strong></p>
+<p><strong>The second layer of a neural network is the hidden layer, responsible for all the calculations to learn from the features of the input data.</strong> There are only three layers in a neural network, but the number of hidden layers can be increased. The more complex your problem, the more hidden layers are preferred. Typically, a neural network with 1-2 hidden layers will work in most deep learning problems, but if the data has a lot of features to learn from, you can choose 3-5 hidden layers.</p>
+<p><strong>The last layer of a neural network is the output layer which classifies the data and provides the final output.</strong> The result given by an output layer is controlled by an <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">activation function</a></strong>. The activation function is placed after the hidden layer and used to calculate the weighted sum of inputs and biases, used to determine whether a neuron should be activated or not.</p>
+<p><strong>So the first layer or the input layer of a neural network receives the input, the second layer or the hidden layers learn from the features of the input data, and the third layer or the output layer provides the output controlled by an activation function.</strong></p>
+<h3 class="wp-block-heading" id="summary">Summary</h3>
+<p>So a neural network is a computational structure used to train deep learning models that can easily outperform any classical machine learning algorithm. A neural network consists of three types of layers:</p>
+<ol class="wp-block-list"><li>one input layer that receives the data</li><li>one or more hidden layers that perform all the calculations to learn from the features</li><li>one output layer that provides the final output</li></ol>
+<p>I hope you liked this article on how a neural network works. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="process-of-nlp-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="stress-detection-with-machine-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Code Generation Model using LLMs | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Code Generation Model using LLMs</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 06, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="text-generation-model-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="text-summarization-model-using-llms.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>A code generation model is a type of artificial intelligence that can automatically generate source code based on a given input, which can be natural language instructions, existing code snippets, or structured data. So, if you want to learn how to build a code generation model using <strong><a href="roadmap-to-learn-nlp-and-llms.html" target="">LLMs</a></strong>, this article is for you. In this article, I’ll take you through the task of building a code generation model with LLMs using Python.</p>
+<h2 class="wp-block-heading">How to Build a Code Generation Model using LLMs?</h2>
+<p>To build a code generation model using Large Language Models (LLMs), we can start by collecting a large, diverse dataset of code examples and related documentation from various programming languages. Then, preprocess this data to ensure quality and consistency. In the end, fine-tune a pre-trained LLM, such as GPT-4 or any appropriate LLM, on the dataset to specialize it in understanding and generating code.</p>
+<p>So, to build a code generation model using LLMs, we need a lot of data on code snippets. We can collect code snippets from GitHub by using the <strong>GitHub API</strong>. So, before proceeding with the task of building a code generation model, I recommend you sign up for the GitHub API and get your access token. Here’s the process you can follow:</p>
+<ul class="wp-block-list">
+<li><strong>Go to <a href="https://github.com/settings/tokens" rel="noreferrer noopener" target="_blank">GitHub Settings</a>.</strong></li>
+<li><strong>Click on “Generate new token”.</strong></li>
+<li><strong>Select the necessary scopes (at least repo scope to access repositories).</strong></li>
+<li><strong>Generate the token and copy it.</strong></li>
+</ul>
+<p>Please feel free to reach me on <strong><a href="https://www.instagram.com/amankharwal.official/" rel="noreferrer noopener" target="_blank">Instagram</a></strong> or <strong><a href="https://www.linkedin.com/in/aman-kharwal/" rel="noreferrer noopener" target="_blank">LinkedIn</a></strong> if you find any issues while generating a token.</p>
+<h2 class="wp-block-heading">Code Generation Model using LLMs</h2>
+<p>Now, let’s get started with the task of building a Code Generation model using LLMs. Before proceeding, here are the commands to install some of the libraries you will be using for the first time if it’s your first time using LLMs:</p>
+<ul class="wp-block-list">
+<li>pip install transformers datasets</li>
+<li>pip install transformers[torch] accelerate -U</li>
+</ul>
+<p>And, as we are using GitHub in this task to collect code snippets, run this command as well in your command prompt before getting started:</p>
+<ul class="wp-block-list">
+<li>pip install PyGithub datasets</li>
+</ul>
+<p>Now, let’s get started by collecting Python code snippets from GitHub to build a code generation model:</p>
+<pre><code class="language-python">from github import Github
+import re
+from datasets import Dataset
+
+# initialize PyGithub with the GitHub token
+g = Github("Your Github Token")
+
+# specify the repository
+repo = g.get_repo("openai/gym")
+
+# function to extract Python functions from a script
+def extract_functions_from_code(code):
+    pattern = re.compile(r"def\s+(\w+)\s*\(.*\):")
+    functions = pattern.findall(code)
+    return functions
+
+# fetch Python files from the repository
+python_files = []
+contents = repo.get_contents("")
+while contents:
+    file_content = contents.pop(0)
+    if file_content.type == "dir":
+        contents.extend(repo.get_contents(file_content.path))
+    elif file_content.path.endswith(".py"):
+        python_files.append(file_content)
+
+# extract functions and create dataset
+data = {"code": [], "function_name": []}
+for file in python_files:
+    code = file.decoded_content.decode("utf-8")
+    functions = extract_functions_from_code(code)
+    for function in functions:
+        data["code"].append(code)
+        data["function_name"].append(function)
+
+# create a Hugging Face dataset
+dataset = Dataset.from_dict(data)
+
+# save the dataset to disk
+dataset.save_to_disk("code_generation_dataset")
+
+print("Dataset created and saved to disk.")</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Code Generation Model using LLMs: data files" class="wp-image-23622" data-attachment-id="23622" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image-7" data-orig-size="1376,534" data-recalc-dims="1" decoding="async" height="397" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/image-7.png" width="1024"/><figcaption class="wp-element-caption">The type of files you will receive</figcaption></figure>
+<p>In the above code, we are initializing a GitHub client with a personal access token, specifying the “<strong>openai/gym</strong>” repository, and defining a function to extract Python function definitions from the code. We are then iterating over the contents of the repository to collect Python files, extracting function definitions from each file, and storing them in a dataset. In the end, we are creating a Hugging Face dataset from the extracted data and saving it to disk, which will allow us to use this dataset for tasks such as training or fine-tuning a code generation model.</p>
+<p>Now, we will use a pre-trained LLM model from Salesforce to fine-tune the model on our dataset for the task of code generation:</p>
+<pre><code class="language-python">from datasets import load_from_disk
+from transformers import AutoTokenizer, AutoModelForCausalLM, Trainer, TrainingArguments
+
+# load the tokenizer and model
+tokenizer = AutoTokenizer.from_pretrained("Salesforce/codegen-350M-mono")
+model = AutoModelForCausalLM.from_pretrained("Salesforce/codegen-350M-mono")
+
+# set the pad_token to eos_token or add a new pad token
+tokenizer.pad_token = tokenizer.eos_token
+
+# load the dataset
+dataset = load_from_disk("code_generation_dataset")
+
+# split the dataset into training and test sets
+dataset = dataset.train_test_split(test_size=0.1)
+
+# preprocess the dataset
+def preprocess_function(examples):
+    return tokenizer(examples['code'], truncation=True, padding='max_length')</code></pre>
+<p>In the above code, we are initializing the tokenizer and model for code generation using a pre-trained model from Salesforce, and setting the pad token to ensure proper input formatting. We are then loading our previously saved dataset of code snippets from disk, splitting it into training and test sets to create a validation framework, and defining a preprocessing function to tokenize the code examples to ensure they are appropriately truncated and padded to a consistent length for model training.</p>
+<p>The above step prepares the data for efficient fine-tuning of the code generation model. And now, here’s how to fine-tune the model:</p>
+<pre><code class="language-python">tokenized_datasets = dataset.map(preprocess_function, batched=True)
+
+# fine-tune the model
+training_args = TrainingArguments(
+    output_dir="./results",
+    per_device_train_batch_size=2,
+    num_train_epochs=1,
+    save_steps=10_000,
+    save_total_limit=2,
+)
+
+trainer = Trainer(
+    model=model,
+    args=training_args,
+    train_dataset=tokenized_datasets['train'],
+    eval_dataset=tokenized_datasets['test']
+)
+
+trainer.train()</code></pre>
+<p>In the above code, we are tokenizing the dataset by applying the preprocessing function in batches, which prepares the data for training. We then defined the training arguments, specifying parameters such as the output directory, batch size, number of training epochs, and checkpoint saving strategy. With these settings, we initialized a Trainer object with the model, training arguments, and the tokenized training and evaluation datasets. Finally, we started the fine-tuning process by calling the <strong>train</strong> method on the Trainer object, which begins training the model on the prepared dataset to improve its performance for code generation tasks.</p>
+<p>This step will take time, depending on the computing power of your system. After this step, here’s how we can test our code generation model:</p>
+<pre><code class="language-python"># define a function to generate code using the fine-tuned model
+def generate_code(prompt, max_length=100):
+    inputs = tokenizer(prompt, return_tensors="pt")
+    outputs = model.generate(inputs['input_ids'], max_length=max_length)
+    generated_code = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    return generated_code
+
+# test the model with a code generation prompt
+prompt = "def merge_sort(arr):"
+generated_code = generate_code(prompt)
+
+print("Generated Code:")
+print(generated_code)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Generated Code:<br/>def merge_sort(arr):<br/>    if len(arr) &lt;= 1:<br/>        return arr<br/>    mid = len(arr) // 2<br/>    left = merge_sort(arr[:mid])<br/>    right = merge_sort(arr[mid:])<br/>    return merge(left, right)<br/><br/>def merge(left, right):<br/>    result = []<br/>    while left and right:<br/>        if left[0] &lt; right[0]:</strong></pre>
+<p>In the above code, we are defining a function <strong>generate_code</strong> that takes a code prompt and uses the fine-tuned model to generate a continuation of the code. By tokenizing the input prompt and passing it to the model, we are generating a sequence of tokens up to a specified maximum length. These tokens are then decoded back into a readable string of code.</p>
+<p>So, this is how we can build a code generation model using LLMs.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="text-generation-model-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="text-summarization-model-using-llms.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

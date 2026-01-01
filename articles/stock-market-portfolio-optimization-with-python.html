@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Stock Market Portfolio Optimization with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Stock Market Portfolio Optimization with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 18, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="arima-and-sarima-for-time-series-forecasting.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="exploratory-data-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Stock market portfolio optimization is the process of selecting the best combination of stocks to maximize returns while minimizing the risk, based on historical performance data and financial metrics. If you want to learn how to optimize a stock market portfolio by analyzing the stock market performance, this article is for you. In this article, I’ll take you through the task of stock market portfolio optimization with Python.</p>
+<h2 class="wp-block-heading">Stock Market Portfolio Optimization: Getting Started</h2>
+<p>Stock market portfolio optimization involves analyzing price trends, calculating expected returns and volatilities, and determining the correlations between different stocks to achieve diversification. Using techniques such as Modern Portfolio Theory (<strong><a href="https://en.wikipedia.org/wiki/Modern_portfolio_theory" rel="noreferrer noopener" target="_blank">MPT</a></strong>), we can construct an efficient portfolio that relies on the efficient frontier to represent the optimal trade-off between risk and return.</p>
+<p>The expected results from stock market portfolio optimization include identifying the portfolio with the highest Sharpe ratio, which indicates the best risk-adjusted return and provides a clear allocation strategy for the selected stocks to achieve long-term investment goals.</p>
+<p>To get started with stock market portfolio optimization, we need to collect data about the stock market performance over time. I will collect real-time stock market data using the yfinance API. <strong>If you need historical data, you can download it from <a href="../assets/datasets/stock_data-1.zip">here</a>.</strong></p>
+<h2 class="wp-block-heading">Stock Market Portfolio Optimization with Python</h2>
+<p>Now, let’s get started with the task of stock market portfolio optimization by importing the necessary Python libraries and collecting the stock market data using the yfinance API. If you are about to use this API for the first time, you can install it on your Python environment by executing the command below on your terminal or command prompt:</p>
+<ul class="wp-block-list">
+<li>pip install yfinance</li>
+</ul>
+<p>Now, let’s collect the stock market data of some popular Indian companies:</p>
+<pre><code class="language-python">import pandas as pd
+import yfinance as yf
+from datetime import date, timedelta
+
+# define the time period for the data
+end_date = date.today().strftime("%Y-%m-%d")
+start_date = (date.today() - timedelta(days=365)).strftime("%Y-%m-%d")
+
+# list of stock tickers to download
+tickers = ['RELIANCE.NS', 'TCS.NS', 'INFY.NS', 'HDFCBANK.NS']
+
+data = yf.download(tickers, start=start_date, end=end_date, progress=False)
+
+# reset index to bring Date into the columns for the melt function
+data = data.reset_index()
+
+# melt the DataFrame to make it long format where each row is a unique combination of Date, Ticker, and attributes
+data_melted = data.melt(id_vars=['Date'], var_name=['Attribute', 'Ticker'])
+
+# pivot the melted DataFrame to have the attributes (Open, High, Low, etc.) as columns
+data_pivoted = data_melted.pivot_table(index=['Date', 'Ticker'], columns='Attribute', values='value', aggfunc='first')
+
+# reset index to turn multi-index into columns
+stock_data = data_pivoted.reset_index()
+
+print(stock_data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Attribute       Date       Ticker    Adj Close        Close         High  \<br/>0         2023-07-03  HDFCBANK.NS  1696.631836  1719.800049  1757.500000   <br/>1         2023-07-03      INFY.NS  1309.278687  1333.699951  1346.000000   <br/>2         2023-07-03  RELIANCE.NS  2405.791992  2414.290283  2420.105225   <br/>3         2023-07-03       TCS.NS  3216.993164  3272.300049  3318.800049   <br/>4         2023-07-04  HDFCBANK.NS  1704.918579  1728.199951  1747.000000   <br/><br/>Attribute          Low         Open      Volume  <br/>0          1710.000000  1712.500000  22052058.0  <br/>1          1328.449951  1330.000000   7732412.0  <br/>2          2358.587158  2361.079346   6077193.0  <br/>3          3268.750000  3314.300049   1687264.0  <br/>4          1713.800049  1723.449951  19397594.0  </strong></pre>
+<p>Now, let’s have a look at the stock market performance of these companies in the stock market over time:</p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+import seaborn as sns
+
+stock_data['Date'] = pd.to_datetime(stock_data['Date'])
+
+stock_data.set_index('Date', inplace=True)
+stock_data.reset_index(inplace=True)
+plt.figure(figsize=(14, 7))
+sns.set(style='whitegrid')
+
+sns.lineplot(data=stock_data, x='Date', y='Adj Close', hue='Ticker', marker='o')
+
+plt.title('Adjusted Close Price Over Time', fontsize=16)
+plt.xlabel('Date', fontsize=14)
+plt.ylabel('Adjusted Close Price', fontsize=14)
+plt.legend(title='Ticker', title_fontsize='13', fontsize='11')
+plt.grid(True)
+
+plt.xticks(rotation=45)
+
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Stock Market Portfolio Optimization: Adjusted Close Price Over Time" class="wp-image-23995" data-attachment-id="23995" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="portfolio-1" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-1.png?fit=1024%2C586&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-1.png?fit=300%2C172&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-1.png?fit=1181%2C676&amp;ssl=1" data-orig-size="1181,676" data-permalink="https://my-ai-portfolio.com/2024/07/01/stock-market-portfolio-optimization-with-python/portfolio-1/" data-recalc-dims="1" decoding="async" height="586" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-1.png?resize=1024%2C586&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-1.png?resize=1024%2C586&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-1.png?resize=300%2C172&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-1.png?resize=768%2C440&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-1.png?w=1181&amp;ssl=1 1181w" width="1024"/></figure>
+<p>The graph displays the adjusted close prices of four stocks (HDFCBANK.NS, INFY.NS, RELIANCE.NS, TCS.NS) over time from July 2023 to July 2024. It highlights that TCS has the highest adjusted close prices, followed by RELIANCE, INFY (Infosys), and HDFCBANK. The prices for RELIANCE and TCS show noticeable upward trends, which indicates strong performance, while HDFCBANK and INFY exhibit more stability with relatively lower price fluctuations.</p>
+<p>Now, let’s compute the 50-day and 200-day moving averages and plot these along with the Adjusted Close price for each stock:</p>
+<pre><code class="language-python">short_window = 50
+long_window = 200
+
+stock_data.set_index('Date', inplace=True)
+unique_tickers = stock_data['Ticker'].unique()
+
+for ticker in unique_tickers:
+    ticker_data = stock_data[stock_data['Ticker'] == ticker].copy()
+    ticker_data['50_MA'] = ticker_data['Adj Close'].rolling(window=short_window).mean()
+    ticker_data['200_MA'] = ticker_data['Adj Close'].rolling(window=long_window).mean()
+
+    plt.figure(figsize=(14, 7))
+    plt.plot(ticker_data.index, ticker_data['Adj Close'], label='Adj Close')
+    plt.plot(ticker_data.index, ticker_data['50_MA'], label='50-Day MA')
+    plt.plot(ticker_data.index, ticker_data['200_MA'], label='200-Day MA')
+    plt.title(f'{ticker} - Adjusted Close and Moving Averages')
+    plt.xlabel('Date')
+    plt.ylabel('Price')
+    plt.legend()
+    plt.grid(True)
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
+
+    plt.figure(figsize=(14, 7))
+    plt.bar(ticker_data.index, ticker_data['Volume'], label='Volume', color='orange')
+    plt.title(f'{ticker} - Volume Traded')
+    plt.xlabel('Date')
+    plt.ylabel('Volume')
+    plt.legend()
+    plt.grid(True)
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="HDFC bank moving averages" class="wp-image-23998" data-attachment-id="23998" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="portfolio-2" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-2.png?fit=1024%2C506&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-2.png?fit=300%2C148&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-2.png?fit=1384%2C684&amp;ssl=1" data-orig-size="1384,684" data-permalink="https://my-ai-portfolio.com/2024/07/01/stock-market-portfolio-optimization-with-python/portfolio-2/" data-recalc-dims="1" decoding="async" height="506" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-2.png?resize=1024%2C506&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-2.png?resize=1024%2C506&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-2.png?resize=300%2C148&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-2.png?resize=768%2C380&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-2.png?resize=1200%2C593&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-2.png?w=1384&amp;ssl=1 1384w" width="1024"/></figure>
+<figure class="wp-block-image aligncenter size-large"><img alt="Stock Market Portfolio Optimization: HDFC bank moving averages" class="wp-image-23999" data-attachment-id="23999" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="portfolio-3" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-3.png?fit=1024%2C506&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-3.png?fit=300%2C148&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-3.png?fit=1384%2C684&amp;ssl=1" data-orig-size="1384,684" data-permalink="https://my-ai-portfolio.com/2024/07/01/stock-market-portfolio-optimization-with-python/portfolio-3/" data-recalc-dims="1" decoding="async" height="506" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-3.png?resize=1024%2C506&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-3.png?resize=1024%2C506&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-3.png?resize=300%2C148&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-3.png?resize=768%2C380&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-3.png?resize=1200%2C593&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-3.png?w=1384&amp;ssl=1 1384w" width="1024"/></figure>
+<figure class="wp-block-image aligncenter size-large"><img alt="Infosys Moving Averages" class="wp-image-24000" data-attachment-id="24000" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="portfolio-4" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-4.png?fit=1024%2C506&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-4.png?fit=300%2C148&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-4.png?fit=1384%2C684&amp;ssl=1" data-orig-size="1384,684" data-permalink="https://my-ai-portfolio.com/2024/07/01/stock-market-portfolio-optimization-with-python/portfolio-4/" data-recalc-dims="1" decoding="async" height="506" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-4.png?resize=1024%2C506&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-4.png?resize=1024%2C506&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-4.png?resize=300%2C148&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-4.png?resize=768%2C380&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-4.png?resize=1200%2C593&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-4.png?w=1384&amp;ssl=1 1384w" width="1024"/></figure>
+<figure class="wp-block-image aligncenter size-large"><img alt="Stock Market Portfolio Optimization: Infosys Moving Averages" class="wp-image-24002" data-attachment-id="24002" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="portfolio-5" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-5.png?fit=1024%2C506&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-5.png?fit=300%2C148&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-5.png?fit=1384%2C684&amp;ssl=1" data-orig-size="1384,684" data-permalink="https://my-ai-portfolio.com/2024/07/01/stock-market-portfolio-optimization-with-python/portfolio-5/" data-recalc-dims="1" decoding="async" height="506" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-5.png?resize=1024%2C506&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-5.png?resize=1024%2C506&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-5.png?resize=300%2C148&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-5.png?resize=768%2C380&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-5.png?resize=1200%2C593&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-5.png?w=1384&amp;ssl=1 1384w" width="1024"/></figure>
+<figure class="wp-block-image aligncenter size-large"><img alt="Reliance Moving Averages" class="wp-image-24003" data-attachment-id="24003" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="portfolio-6" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-6.png?fit=1024%2C506&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-6.png?fit=300%2C148&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-6.png?fit=1384%2C684&amp;ssl=1" data-orig-size="1384,684" data-permalink="https://my-ai-portfolio.com/2024/07/01/stock-market-portfolio-optimization-with-python/portfolio-6/" data-recalc-dims="1" decoding="async" height="506" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-6.png?resize=1024%2C506&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-6.png?resize=1024%2C506&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-6.png?resize=300%2C148&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-6.png?resize=768%2C380&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-6.png?resize=1200%2C593&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-6.png?w=1384&amp;ssl=1 1384w" width="1024"/></figure>
+<figure class="wp-block-image aligncenter size-large"><img alt="Stock Market Portfolio Optimization: Reliance Moving Averages" class="wp-image-24004" data-attachment-id="24004" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="portfolio-7" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-7.png?fit=1024%2C506&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-7.png?fit=300%2C148&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-7.png?fit=1384%2C684&amp;ssl=1" data-orig-size="1384,684" data-permalink="https://my-ai-portfolio.com/2024/07/01/stock-market-portfolio-optimization-with-python/portfolio-7/" data-recalc-dims="1" decoding="async" height="506" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-7.png?resize=1024%2C506&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-7.png?resize=1024%2C506&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-7.png?resize=300%2C148&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-7.png?resize=768%2C380&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-7.png?resize=1200%2C593&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-7.png?w=1384&amp;ssl=1 1384w" width="1024"/></figure>
+<figure class="wp-block-image aligncenter size-large"><img alt="TCS moving averages" class="wp-image-24005" data-attachment-id="24005" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="portfolio-8" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-8.png?fit=1024%2C506&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-8.png?fit=300%2C148&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-8.png?fit=1384%2C684&amp;ssl=1" data-orig-size="1384,684" data-permalink="https://my-ai-portfolio.com/2024/07/01/stock-market-portfolio-optimization-with-python/portfolio-8/" data-recalc-dims="1" decoding="async" height="506" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-8.png?resize=1024%2C506&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-8.png?resize=1024%2C506&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-8.png?resize=300%2C148&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-8.png?resize=768%2C380&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-8.png?resize=1200%2C593&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-8.png?w=1384&amp;ssl=1 1384w" width="1024"/></figure>
+<figure class="wp-block-image aligncenter size-large"><img alt="Stock Market Portfolio Optimization: TCS moving averages" class="wp-image-24006" data-attachment-id="24006" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="portfolio-9" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-9.png?fit=1024%2C506&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-9.png?fit=300%2C148&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-9.png?fit=1384%2C684&amp;ssl=1" data-orig-size="1384,684" data-permalink="https://my-ai-portfolio.com/2024/07/01/stock-market-portfolio-optimization-with-python/portfolio-9/" data-recalc-dims="1" decoding="async" height="506" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-9.png?resize=1024%2C506&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-9.png?resize=1024%2C506&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-9.png?resize=300%2C148&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-9.png?resize=768%2C380&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-9.png?resize=1200%2C593&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-9.png?w=1384&amp;ssl=1 1384w" width="1024"/></figure>
+<p>For HDFCBANK and INFY, the prices initially decline but later show signs of recovery, as indicated by the moving averages. RELIANCE and TCS display a more consistent upward trend in their adjusted close prices. The volume traded graphs highlight significant trading activity at various points, with spikes indicating high trading volumes, particularly noticeable in HDFCBANK and RELIANCE around early 2024. These insights are crucial for understanding price movements and trading behaviours, which assist in making informed investment decisions.</p>
+<p>Now, let’s have a look at the distribution of daily returns of these stocks:</p>
+<pre><code class="language-python">stock_data['Daily Return'] = stock_data.groupby('Ticker')['Adj Close'].pct_change()
+
+plt.figure(figsize=(14, 7))
+sns.set(style='whitegrid')
+
+for ticker in unique_tickers:
+    ticker_data = stock_data[stock_data['Ticker'] == ticker]
+    sns.histplot(ticker_data['Daily Return'].dropna(), bins=50, kde=True, label=ticker, alpha=0.5)
+
+plt.title('Distribution of Daily Returns', fontsize=16)
+plt.xlabel('Daily Return', fontsize=14)
+plt.ylabel('Frequency', fontsize=14)
+plt.legend(title='Ticker', title_fontsize='13', fontsize='11')
+plt.grid(True)
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Distribution of Daily Returns" class="wp-image-24008" data-attachment-id="24008" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="portfolio-10" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-10.png?fit=1024%2C506&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-10.png?fit=300%2C148&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-10.png?fit=1384%2C684&amp;ssl=1" data-orig-size="1384,684" data-permalink="https://my-ai-portfolio.com/2024/07/01/stock-market-portfolio-optimization-with-python/portfolio-10/" data-recalc-dims="1" decoding="async" height="506" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-10.png?resize=1024%2C506&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-10.png?resize=1024%2C506&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-10.png?resize=300%2C148&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-10.png?resize=768%2C380&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-10.png?resize=1200%2C593&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-10.png?w=1384&amp;ssl=1 1384w" width="1024"/></figure>
+<p>The distributions are approximately normal, centred around zero, which indicates that most daily returns are close to the average return. However, there are tails on both sides, which reflect occasional significant gains or losses. INFY and RELIANCE appear to have slightly wider distributions, which suggests higher volatility compared to HDFCBANK and TCS.</p>
+<p>Now, let’s see if there’s any correlation between all these stocks:</p>
+<pre><code class="language-python">daily_returns = stock_data.pivot_table(index='Date', columns='Ticker', values='Daily Return')
+correlation_matrix = daily_returns.corr()
+
+plt.figure(figsize=(12, 10))
+sns.set(style='whitegrid')
+
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', linewidths=.5, fmt='.2f', annot_kws={"size": 10})
+plt.title('Correlation Matrix of Daily Returns', fontsize=16)
+plt.xticks(rotation=90)
+plt.yticks(rotation=0)
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Stock Market Portfolio Optimization: Correlation Matrix of Daily Returns" class="wp-image-24011" data-attachment-id="24011" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="portfolio-11" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-11.png?fit=1024%2C909&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-11.png?fit=300%2C266&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-11.png?fit=1108%2C984&amp;ssl=1" data-orig-size="1108,984" data-permalink="https://my-ai-portfolio.com/2024/07/01/stock-market-portfolio-optimization-with-python/portfolio-11/" data-recalc-dims="1" decoding="async" height="909" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-11.png?resize=1024%2C909&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-11.png?resize=1024%2C909&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-11.png?resize=300%2C266&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-11.png?resize=768%2C682&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-11.png?w=1108&amp;ssl=1 1108w" width="1024"/></figure>
+<p>INFY and TCS have a high positive correlation (0.71), which indicates that they tend to move in the same direction. HDFCBANK has a moderate positive correlation with RELIANCE (0.37) and a low correlation with INFY (0.17) and TCS (0.10). RELIANCE shows a low correlation with INFY (0.19) and TCS (0.13). These varying correlations suggest potential diversification benefits; combining stocks with lower correlations can reduce overall portfolio risk.</p>
+<h4 class="wp-block-heading">Portfolio Optimization</h4>
+<p>Now, using Modern Portfolio Theory, we can construct an efficient portfolio by balancing risk and return. We will:</p>
+<ol class="wp-block-list">
+<li>Calculate the expected returns and volatility for each stock.</li>
+<li>Generate a series of random portfolios to identify the efficient frontier.</li>
+<li>Optimize the portfolio to maximize the Sharpe ratio, which is a measure of risk-adjusted return.</li>
+</ol>
+<p>Let’s calculate the expected returns and volatility for each stock:</p>
+<pre><code class="language-python">import numpy as np
+
+expected_returns = daily_returns.mean() * 252  # annualize the returns
+volatility = daily_returns.std() * np.sqrt(252)  # annualize the volatility
+
+stock_stats = pd.DataFrame({
+    'Expected Return': expected_returns,
+    'Volatility': volatility
+})
+
+stock_stats</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="Expected return and volatility" class="wp-image-24013" data-attachment-id="24013" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/image.png?fit=712%2C364&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/image.png?fit=300%2C153&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/image.png?fit=712%2C364&amp;ssl=1" data-orig-size="712,364" data-permalink="https://my-ai-portfolio.com/2024/07/01/stock-market-portfolio-optimization-with-python/image-153/" data-recalc-dims="1" decoding="async" height="364" loading="lazy" sizes="auto, (max-width: 712px) 100vw, 712px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/image.png?resize=712%2C364&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/image.png?w=712&amp;ssl=1 712w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/image.png?resize=300%2C153&amp;ssl=1 300w" style="width:618px;height:auto" width="712"/></figure>
+<p>RELIANCE has the highest expected return (29.73%) and moderate volatility (21.47%), which indicates a potentially high-reward investment with relatively higher risk. INFY and TCS also have high expected returns (21.38% and 22.09% respectively) with moderate volatility (23.23% and 19.69%). HDFCBANK has the lowest expected return (1.37%) and moderate volatility (20.69%), which makes it the least attractive in terms of risk-adjusted returns.</p>
+<p>Next, we will:</p>
+<ol class="wp-block-list">
+<li>Generate a large number of random portfolio weights.</li>
+<li>Calculate the expected return and volatility for each portfolio.</li>
+<li>Plot these portfolios to visualize the efficient frontier.</li>
+</ol>
+<p>Let’s generate the random portfolios and plot the efficient frontier:</p>
+<pre><code class="language-python"># function to calculate portfolio performance
+def portfolio_performance(weights, returns, cov_matrix):
+    portfolio_return = np.dot(weights, returns)
+    portfolio_volatility = np.sqrt(np.dot(weights.T, np.dot(cov_matrix, weights)))
+    return portfolio_return, portfolio_volatility
+
+# number of portfolios to simulate
+num_portfolios = 10000
+
+# arrays to store the results
+results = np.zeros((3, num_portfolios))
+
+# annualized covariance matrix
+cov_matrix = daily_returns.cov() * 252
+
+np.random.seed(42)
+
+for i in range(num_portfolios):
+    weights = np.random.random(len(unique_tickers))
+    weights /= np.sum(weights)
+
+    portfolio_return, portfolio_volatility = portfolio_performance(weights, expected_returns, cov_matrix)
+
+    results[0,i] = portfolio_return
+    results[1,i] = portfolio_volatility
+    results[2,i] = portfolio_return / portfolio_volatility  # Sharpe Ratio
+
+plt.figure(figsize=(10, 7))
+plt.scatter(results[1,:], results[0,:], c=results[2,:], cmap='YlGnBu', marker='o')
+plt.title('Efficient Frontier')
+plt.xlabel('Volatility (Standard Deviation)')
+plt.ylabel('Expected Return')
+plt.colorbar(label='Sharpe Ratio')
+plt.grid(True)
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Stock Market Portfolio Optimization: Efficient Frontier" class="wp-image-24015" data-attachment-id="24015" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="portfolio-12" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-12.png?fit=837%2C633&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-12.png?fit=300%2C227&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-12.png?fit=837%2C633&amp;ssl=1" data-orig-size="837,633" data-permalink="https://my-ai-portfolio.com/2024/07/01/stock-market-portfolio-optimization-with-python/portfolio-12/" data-recalc-dims="1" decoding="async" height="633" loading="lazy" sizes="auto, (max-width: 837px) 100vw, 837px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-12.png?resize=837%2C633&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-12.png?w=837&amp;ssl=1 837w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-12.png?resize=300%2C227&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-12.png?resize=768%2C581&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/portfolio-12.png?resize=200%2C150&amp;ssl=1 200w" width="837"/></figure>
+<p>Each dot represents a portfolio, with the colour indicating the Sharpe ratio, a measure of risk-adjusted return. Portfolios on the leftmost edge of the frontier (closer to the y-axis) offer the highest expected returns for a given level of volatility, which represent optimal portfolios. The gradient shows that portfolios with higher Sharpe ratios (darker blue) provide better risk-adjusted returns.</p>
+<p>Here’s how to identify the portfolio with the maximum Sharpe ratio:</p>
+<pre><code class="language-python">max_sharpe_idx = np.argmax(results[2])
+max_sharpe_return = results[0, max_sharpe_idx]
+max_sharpe_volatility = results[1, max_sharpe_idx]
+max_sharpe_ratio = results[2, max_sharpe_idx]
+
+max_sharpe_return, max_sharpe_volatility, max_sharpe_ratio</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>(0.26076539650212494, 0.15535420436111175, 1.6785216568454822)</strong></pre>
+<p>The portfolio with the maximum Sharpe ratio has the following characteristics:</p>
+<ul class="wp-block-list">
+<li><strong>Expected Return</strong>: ~26.08%</li>
+<li><strong>Volatility</strong>: ~15.54%</li>
+<li><strong>Sharpe Ratio</strong>: ~1.68</li>
+</ul>
+<p>Next, let’s identify the weights of the stocks in the portfolio that yield the maximum Sharpe ratio:</p>
+<pre><code class="language-python">max_sharpe_weights = np.zeros(len(unique_tickers))
+
+for i in range(num_portfolios):
+    weights = np.random.random(len(unique_tickers))
+    weights /= np.sum(weights)
+
+    portfolio_return, portfolio_volatility = portfolio_performance(weights, expected_returns, cov_matrix)
+
+    if results[2, i] == max_sharpe_ratio:
+        max_sharpe_weights = weights
+        break
+
+portfolio_weights_df = pd.DataFrame({
+    'Ticker': unique_tickers,
+    'Weight': max_sharpe_weights
+})
+
+portfolio_weights_df</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Stock Market Portfolio Optimization" class="wp-image-24018" data-attachment-id="24018" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image-1" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/image-1.png?fit=424%2C308&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/image-1.png?fit=300%2C218&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/image-1.png?fit=424%2C308&amp;ssl=1" data-orig-size="424,308" data-permalink="https://my-ai-portfolio.com/2024/07/01/stock-market-portfolio-optimization-with-python/image-1-29/" data-recalc-dims="1" decoding="async" height="308" loading="lazy" sizes="auto, (max-width: 424px) 100vw, 424px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/image-1.png?resize=424%2C308&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/image-1.png?w=424&amp;ssl=1 424w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/image-1.png?resize=300%2C218&amp;ssl=1 300w" width="424"/></figure>
+<p>The output shows a diversified portfolio with the following allocations:</p>
+<ol class="wp-block-list">
+<li>HDFCBANK (30.85%)</li>
+<li>INFY (10.59%)</li>
+<li>RELIANCE (18.02%)</li>
+<li>and TCS (40.53%).</li>
+</ol>
+<p>TCS has the highest allocation, which indicates its significant contribution to the portfolio’s performance, while INFY has the smallest allocation. This balanced allocation aims to maximize returns while minimizing risk by leveraging individual stock performances and their correlations.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, this is how stock market portfolio optimization works. Stock market portfolio optimization involves analyzing price trends, calculating expected returns and volatilities, and determining the correlations between different stocks to achieve diversification.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="arima-and-sarima-for-time-series-forecasting.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="exploratory-data-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

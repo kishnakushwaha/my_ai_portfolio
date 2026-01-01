@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Run a Powerful LLM Locally on Your Laptop | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Run a Powerful LLM Locally on Your Laptop</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 17, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="machine-learning-projects-to-stand-out.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="the-best-resources-to-learn-llms-and-ai-agents-in-2026.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Did you know that you can run powerful, multi-billion-parameter large language models like Llama 3.1 and Mistral on your own laptop? Not long ago, this seemed impossible. Accessing these models meant relying on a cloud service, paying for an API, and sending your data to a server you didn’t control. But that’s changing, fast. A new wave of tools has emerged, and for me, one stands out for its sheer simplicity and power: <strong>Ollama</strong>. In this article, I’ll guide you through how to run a powerful LLM locally on your laptop using Ollama.</p>
+<h2 class="wp-block-heading">What is Ollama?</h2>
+<p>Think of Ollama as a <strong>personal, local workshop for LLMs</strong>.</p>
+<p>In a typical workshop, you have your tools, workbench, and raw materials. Ollama is the software that bundles everything you need into one tidy package:</p>
+<ul class="wp-block-list">
+<li><strong>The Model Weights:</strong> The brain of the LLM (e.g., Llama 3.1).</li>
+<li><strong>The Configuration:</strong> All the settings that tell the model how to behave.</li>
+<li><strong>The Engine:</strong> The code needed to actually run the model efficiently on your specific hardware (your Mac, Windows, or Linux machine).</li>
+</ul>
+<p>Ollama is an open-source tool that manages all this complexity for you. It hides the difficult setup and gives you a simple command-line interface (and an API) to download, manage, and interact with a huge library of open-source models.</p>
+<h2 class="wp-block-heading">Your 3-Step Guide to Run a Powerful LLM Locally on Your Laptop using Ollama</h2>
+<p>This is the best part, it’s incredibly easy. You don’t need to be a systems expert.</p>
+<h4 class="wp-block-heading">Step 1: Install Ollama</h4>
+<p>First, you need to get the Ollama application. The process is slightly different for each operating system, but it’s simple for all:</p>
+<ol class="wp-block-list">
+<li><strong>On macOS:</strong> Go to the <strong><a href="https://ollama.com" rel="noreferrer noopener" target="_blank">ollama.com</a></strong> website and download the .zip file. Unzip it, and move the Ollama.app into your Applications folder. That’s it!</li>
+<li><strong>On Windows:</strong> Go to the same website and download the .exe installer. Run the installer, and it will set everything up for you.</li>
+</ol>
+<p>Once installed, open your terminal (or Command Prompt on Windows) and type <strong>ollama -v</strong> to verify it’s working.</p>
+<h4 class="wp-block-heading">Step 2: Pull Your First Model</h4>
+<p>Now, let’s download a model. We’ll use <strong>Mistral</strong>, which is a fantastic, high-performing model that’s a great size for most laptops. In your terminal of your VS Code (or anywhere you are working), just type:</p>
+<pre class="wp-block-preformatted"><strong>ollama pull mistral</strong></pre>
+<p>It will show you something like this:</p>
+<pre class="wp-block-preformatted has-small-font-size"><strong>(venv) (base) amankharwal@Amans-MacBook-Pro multiagents % ollama pull mistral<br/>pulling manifest <br/>pulling f5074b1221da: 100% ▕████████████████████████████████████████▏ 4.4 GB                         <br/>pulling 43070e2d4e53: 100% ▕████████████████████████████████████████▏  11 KB                         <br/>pulling 1ff5b64b61b9: 100% ▕████████████████████████████████████████▏  799 B                         <br/>pulling ed11eda7790d: 100% ▕████████████████████████████████████████▏   30 B                         <br/>pulling 1064e17101bd: 100% ▕████████████████████████████████████████▏  487 B                         <br/>verifying sha256 digest <br/>writing manifest <br/>success <br/>(venv) (base) amankharwal@Amans-MacBook-Pro multiagents % </strong></pre>
+<p>Ollama will find the model in its library, download it (it might take a few minutes), and store it locally on your machine.</p>
+<h4 class="wp-block-heading">Step 3: Bring Your Model Into Your Code</h4>
+<p>When you run Ollama, it starts a lightweight server in the background on your machine. All we need to do is have our code talk to that server. The Ollama team has made this incredibly simple with an official Python library.</p>
+<p>First, you’ll need to install the client library using pip. Open your terminal (not the Ollama chat, just a regular terminal on your VS Code) and run:</p>
+<pre class="wp-block-preformatted"><strong>pip install ollama</strong></pre>
+<p>Now, let’s write a simple Python script (you can save this as app.py). This script will connect to your local Ollama server, send a prompt to the Mistral model, and print the response (make sure your Ollama application is running in the background!):</p>
+<pre><code class="language-python">import ollama
+
+# Let's connect to the model and ask a question
+try:
+    # Make sure 'mistral' is downloaded (ollama pull mistral)
+    response = ollama.chat(
+        model='mistral',
+        messages=[
+            {'role': 'user', 'content': 'How can I write a simple Python function to add two numbers?'}
+        ]
+    )
+
+    # Print out the assistant's response
+    print("\n--- AI Assistant Response ---")
+    print(response['message']['content'])
+    print("-----------------------------\n")
+
+except Exception as e:
+    print(f"\n[Error] Could not connect to Ollama.")
+    print(f"Details: {e}")
+    print("Please make sure Ollama is running and you have pulled the 'mistral' model.\n")</code></pre>
+<p>Save the file and run it from your terminal:</p>
+<pre class="wp-block-preformatted"><strong>python app.py</strong></pre>
+<p>You should see the output:</p>
+<pre class="wp-block-preformatted">--- AI Assistant Response ---<br/> Here is a simple Python function that adds two numbers:<br/><br/>```python<br/>def add_two_numbers(num1, num2):<br/>    return num1 + num2<br/><br/># Test the function<br/>result = add_two_numbers(3, 4)<br/>print(result)  # Outputs: 7<br/>```<br/><br/>You can call this function by passing two numbers as arguments. The function adds these numbers and returns their sum. In the example above, I have tested the function with the numbers 3 and 4, and it correctly outputs 7.<br/>-----------------------------</pre>
+<h3 class="wp-block-heading">Final Words</h3>
+<p>As students and builders, this is more than just a cool tool. It’s a fundamental shift in our relationship with AI. Now, you can experiment with LLMs using your own sensitive data, your personal notes, your company’s proprietary code, and your private journal with <strong>zero risk</strong>.</p>
+<p>You can also use this method to build any project based on <strong><a href="generative-ai-projects-that-will-get-you-hired.html" target="">Generative AI</a></strong> and AI Agents.</p>
+<p>I hope you liked this article on how to run a powerful LLM locally on your laptop using Ollama. Follow me on <strong><a href="https://www.instagram.com/amankharwal.official/" rel="noreferrer noopener" target="_blank">Instagram</a></strong> for many more resources.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="machine-learning-projects-to-stand-out.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="the-best-resources-to-learn-llms-and-ai-agents-in-2026.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

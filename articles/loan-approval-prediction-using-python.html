@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Loan Approval Prediction using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Loan Approval Prediction using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 01, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="credit-score-classification-with-machine-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="music-popularity-prediction-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Loan Approval Prediction is one of the problems that <strong><a href="machine-learning-roadmap.html" target="">Machine Learning</a></strong> has solved in fintech businesses like banks and financial institutions. Loan approval prediction means using credit history data of the loan applicants and algorithms to build an intelligent system that can determine loan approvals. So, if you want to learn how to use Machine Learning for Loan Approval Prediction, this article is for you. In this article, I’ll take you through the task of Loan Approval Prediction with Machine Learning using Python.</p>
+<h2 class="wp-block-heading">Loan Approval Prediction: Overview and Dataset</h2>
+<p>Loan approval prediction involves the analysis of various factors, such as the applicant’s financial history, income, credit rating, employment status, and other relevant attributes. By leveraging historical loan data and applying machine learning algorithms, businesses can build models to determine loan approvals for new applicants.</p>
+<p>I found an ideal dataset for the task of Loan Approval Prediction. You can download the dataset from <strong><a href="https://statso.io/loan-approval-prediction-case-study/">here</a></strong>.</p>
+<p>In the section below, I’ll take you through the task of Loan Approval Prediction with Machine Learning using Python.</p>
+<h2 class="wp-block-heading">Loan Approval Prediction using Python</h2>
+<p>Let’s start this task by importing the necessary Python libraries and the <strong><a href="https://statso.io/loan-approval-prediction-case-study/">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestClassifier
+
+df = pd.read_csv('loan_prediction.csv')
+print(df.head())</code></pre>
+<pre class="wp-block-preformatted"><strong>    Loan_ID Gender Married Dependents     Education Self_Employed  \
+0  LP001002   Male      No          0      Graduate            No   
+1  LP001003   Male     Yes          1      Graduate            No   
+2  LP001005   Male     Yes          0      Graduate           Yes   
+3  LP001006   Male     Yes          0  Not Graduate            No   
+4  LP001008   Male      No          0      Graduate            No   
+
+   ApplicantIncome  CoapplicantIncome  LoanAmount  Loan_Amount_Term  \
+0             5849                0.0         NaN             360.0   
+1             4583             1508.0       128.0             360.0   
+2             3000                0.0        66.0             360.0   
+3             2583             2358.0       120.0             360.0   
+4             6000                0.0       141.0             360.0   
+
+   Credit_History Property_Area Loan_Status  
+0             1.0         Urban           Y  
+1             1.0         Rural           N  
+2             1.0         Urban           Y  
+3             1.0         Urban           Y  
+4             1.0         Urban           Y  </strong></pre>
+<p>I’ll drop the loan id column and move further:</p>
+<pre><code class="language-python">df = df.drop('Loan_ID', axis=1)</code></pre>
+<p>Now let’s have a look if the data has missing values or not:</p>
+<pre><code class="language-python">df.isnull().sum()</code></pre>
+<pre class="wp-block-preformatted"><strong>Gender               13
+Married               3
+Dependents           15
+Education             0
+Self_Employed        32
+ApplicantIncome       0
+CoapplicantIncome     0
+LoanAmount           22
+Loan_Amount_Term     14
+Credit_History       50
+Property_Area         0
+Loan_Status           0
+dtype: int64</strong></pre>
+<p>The data has missing values in some of the categorical columns and some numerical columns. Let’s have a look at the descriptive statistics of the dataset before filling in the missing values:</p>
+<pre><code class="language-python">print(df.describe())</code></pre>
+<pre class="wp-block-preformatted"><strong>       ApplicantIncome  CoapplicantIncome  LoanAmount  Loan_Amount_Term  \
+count       614.000000         614.000000  592.000000         600.00000   
+mean       5403.459283        1621.245798  146.412162         342.00000   
+std        6109.041673        2926.248369   85.587325          65.12041   
+min         150.000000           0.000000    9.000000          12.00000   
+25%        2877.500000           0.000000  100.000000         360.00000   
+50%        3812.500000        1188.500000  128.000000         360.00000   
+75%        5795.000000        2297.250000  168.000000         360.00000   
+max       81000.000000       41667.000000  700.000000         480.00000   
+
+       Credit_History  
+count      564.000000  
+mean         0.842199  
+std          0.364878  
+min          0.000000  
+25%          1.000000  
+50%          1.000000  
+75%          1.000000  
+max          1.000000  </strong></pre>
+<p>Now let’s fill in the missing values. In categorical columns, we can fill in missing values with the mode of each column. The mode represents the value that appears most often in the column and is an appropriate choice when dealing with categorical data:</p>
+<pre><code class="language-python"># Fill missing values in categorical columns with mode
+df['Gender'].fillna(df['Gender'].mode()[0], inplace=True)
+df['Married'].fillna(df['Married'].mode()[0], inplace=True)
+df['Dependents'].fillna(df['Dependents'].mode()[0], inplace=True)
+df['Self_Employed'].fillna(df['Self_Employed'].mode()[0], inplace=True)</code></pre>
+<p>To fill in the missing values of numerical columns, we have to choose appropriate measures:</p>
+<ol class="wp-block-list">
+<li>We can fill in the missing values of the loan amount column with the median value. The median is an appropriate measure to fill in missing values when dealing with skewed distributions or when outliers are present in the data;</li>
+<li>We can fill in the missing values of the loan amount term column with the mode value of the column. Since the term of the loan amount is a discrete value, the mode is an appropriate metric to use;</li>
+<li>We can fill in the missing values of the credit history column with the mode value. Since credit history is a binary variable (0 or 1), the mode represents the most common value and is an appropriate choice for filling in missing values.</li>
+</ol>
+<pre><code class="language-python"># Fill missing values in LoanAmount with the median
+df['LoanAmount'].fillna(df['LoanAmount'].median(), inplace=True)
+
+# Fill missing values in Loan_Amount_Term with the mode
+df['Loan_Amount_Term'].fillna(df['Loan_Amount_Term'].mode()[0], inplace=True)
+
+# Fill missing values in Credit_History with the mode
+df['Credit_History'].fillna(df['Credit_History'].mode()[0], inplace=True)</code></pre>
+<h3 class="wp-block-heading">Exploratory Data Analysis</h3>
+<p>Now let’s have a look at the distribution of the loan status column:</p>
+<pre><code class="language-python">import plotly.express as px
+
+loan_status_count = df['Loan_Status'].value_counts()
+fig_loan_status = px.pie(loan_status_count, 
+                         names=loan_status_count.index, 
+                         title='Loan Approval Status')
+fig_loan_status.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Loan Approval Status Distribution" class="wp-image-20322" data-attachment-id="20322" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-8" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="../assets/datasets/newplot-8.png" width="857"/></figure>
+<p>Now let’s have a look at the distribution of the gender column:</p>
+<pre><code class="language-python">gender_count = df['Gender'].value_counts()
+fig_gender = px.bar(gender_count, 
+                    x=gender_count.index, 
+                    y=gender_count.values, 
+                    title='Gender Distribution')
+fig_gender.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Gender Distribution" class="wp-image-20324" data-attachment-id="20324" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-1-1" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="../assets/datasets/newplot-1-1.png" width="857"/></figure>
+<p>Now let’s have a look at the distribution of the martial status column:</p>
+<pre><code class="language-python">married_count = df['Married'].value_counts()
+fig_married = px.bar(married_count, 
+                     x=married_count.index, 
+                     y=married_count.values, 
+                     title='Marital Status Distribution')
+fig_married.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Loan Approval Prediction: Marital Status Distribution" class="wp-image-20326" data-attachment-id="20326" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-2-1" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/newplot-2-1.png" width="857"/></figure>
+<p>Now let’s have a look at the distribution of the education column:</p>
+<pre><code class="language-python">education_count = df['Education'].value_counts()
+fig_education = px.bar(education_count, 
+                       x=education_count.index, 
+                       y=education_count.values, 
+                       title='Education Distribution')
+fig_education.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Education Distribution" class="wp-image-20328" data-attachment-id="20328" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-3-1" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/newplot-3-1.png" width="857"/></figure>
+<p>Now let’s have a look at the distribution of the self-employment column:</p>
+<pre><code class="language-python">self_employed_count = df['Self_Employed'].value_counts()
+fig_self_employed = px.bar(self_employed_count, 
+                           x=self_employed_count.index, 
+                           y=self_employed_count.values, 
+                           title='Self-Employment Distribution')
+fig_self_employed.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Loan Approval Prediction: Self-Employment Distribution" class="wp-image-20329" data-attachment-id="20329" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-4-1" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/newplot-4-1.png" width="857"/></figure>
+<p>Now let’s have a look at the distribution of the Applicant Income column:</p>
+<pre><code class="language-python">fig_applicant_income = px.histogram(df, x='ApplicantIncome', 
+                                    title='Applicant Income Distribution')
+fig_applicant_income.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Applicant Income Distribution" class="wp-image-20331" data-attachment-id="20331" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-5-1" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/newplot-5-1.png" width="857"/></figure>
+<p>Now let’s have a look at the relationship between the income of the loan applicant and the loan status:</p>
+<pre><code class="language-python">fig_income = px.box(df, x='Loan_Status', 
+                    y='ApplicantIncome',
+                    color="Loan_Status", 
+                    title='Loan_Status vs ApplicantIncome')
+fig_income.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Loan Approval Prediction: Loan_Status vs ApplicantIncome" class="wp-image-20333" data-attachment-id="20333" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-6-1" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/newplot-6-1.png" width="857"/></figure>
+<p>The “ApplicantIncome” column contains outliers which need to be removed before moving further. Here’s how to remove the outliers:</p>
+<pre><code class="language-python"># Calculate the IQR
+Q1 = df['ApplicantIncome'].quantile(0.25)
+Q3 = df['ApplicantIncome'].quantile(0.75)
+IQR = Q3 - Q1
+
+# Define the lower and upper bounds for outliers
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+
+# Remove outliers
+df = df[(df['ApplicantIncome'] &gt;= lower_bound) &amp; (df['ApplicantIncome'] &lt;= upper_bound)]</code></pre>
+<p>Now let’s have a look at the relationship between the income of the loan co-applicant and the loan status:</p>
+<pre><code class="language-python">fig_coapplicant_income = px.box(df, 
+                                x='Loan_Status', 
+                                y='CoapplicantIncome',
+                                color="Loan_Status", 
+                                title='Loan_Status vs CoapplicantIncome')
+fig_coapplicant_income.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Loan_Status vs CoapplicantIncome" class="wp-image-20335" data-attachment-id="20335" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-7-1" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/newplot-7-1.png" width="857"/></figure>
+<p>The income of the loan co-applicant also contains outliers. Let’s remove the outliers from this column as well:</p>
+<pre><code class="language-python"># Calculate the IQR
+Q1 = df['CoapplicantIncome'].quantile(0.25)
+Q3 = df['CoapplicantIncome'].quantile(0.75)
+IQR = Q3 - Q1
+
+# Define the lower and upper bounds for outliers
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+
+# Remove outliers
+df = df[(df['CoapplicantIncome'] &gt;= lower_bound) &amp; (df['CoapplicantIncome'] &lt;= upper_bound)]</code></pre>
+<p>Now let’s have a look at the relationship between the loan amount and the loan status:</p>
+<pre><code class="language-python">fig_loan_amount = px.box(df, x='Loan_Status', 
+                         y='LoanAmount', 
+                         color="Loan_Status",
+                         title='Loan_Status vs LoanAmount')
+fig_loan_amount.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Loan_Status vs LoanAmount" class="wp-image-20337" data-attachment-id="20337" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-8-1" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/newplot-8-1.png" width="857"/></figure>
+<p>Now let’s have a look at the relationship between credit history and loan status:</p>
+<pre><code class="language-python">fig_credit_history = px.histogram(df, x='Credit_History', color='Loan_Status', 
+                                  barmode='group',
+                                  title='Loan_Status vs Credit_His')
+fig_credit_history.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Loan_Status vs Credit_His" class="wp-image-20339" data-attachment-id="20339" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-9" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/newplot-9.png" width="857"/></figure>
+<p>Now let’s have a look at the relationship between the property area and the loan status:</p>
+<pre><code class="language-python">fig_property_area = px.histogram(df, x='Property_Area', color='Loan_Status', 
+                                 barmode='group',
+                                title='Loan_Status vs Property_Area')
+fig_property_area.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Loan_Status vs Property_Area" class="wp-image-20341" data-attachment-id="20341" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-10" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/newplot-10.png" width="857"/></figure>
+<h3 class="wp-block-heading">Data Preparation and Training Loan Approval Prediction Model</h3>
+<p>In this step, we will:</p>
+<ol class="wp-block-list">
+<li>convert categorical columns into numerical ones;</li>
+<li>split the data into training and test sets;</li>
+<li>scale the numerical features;</li>
+<li>train the loan approval prediction model.</li>
+</ol>
+<pre><code class="language-python"># Convert categorical columns to numerical using one-hot encoding
+cat_cols = ['Gender', 'Married', 'Dependents', 'Education', 'Self_Employed', 'Property_Area']
+df = pd.get_dummies(df, columns=cat_cols)
+
+# Split the dataset into features (X) and target (y)
+X = df.drop('Loan_Status', axis=1)
+y = df['Loan_Status']
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Scale the numerical columns using StandardScaler
+scaler = StandardScaler()
+numerical_cols = ['ApplicantIncome', 'CoapplicantIncome', 'LoanAmount', 'Loan_Amount_Term', 'Credit_History']
+X_train[numerical_cols] = scaler.fit_transform(X_train[numerical_cols])
+X_test[numerical_cols] = scaler.transform(X_test[numerical_cols])
+
+from sklearn.svm import SVC
+model = SVC(random_state=42)
+model.fit(X_train, y_train)</code></pre>
+<p>Now let’s make predictions on the test set:</p>
+<pre><code class="language-python">y_pred = model.predict(X_test)
+print(y_pred)</code></pre>
+<pre class="wp-block-preformatted"><strong>['Y' 'Y' 'Y' 'Y' 'Y' 'Y' 'Y' 'Y' 'Y' 'Y' 'Y' 'Y' 'Y' 'Y' 'N' 'Y' 'Y' 'Y'
+ 'Y' 'N' 'Y' 'Y' 'Y' 'Y' 'Y' 'N' 'Y' 'Y' 'Y' 'Y' 'Y' 'Y' 'N' 'Y' 'Y' 'Y'
+ 'Y' 'Y' 'Y' 'N' 'Y' 'Y' 'Y' 'Y' 'Y' 'Y' 'N' 'N' 'Y' 'Y' 'Y' 'Y' 'Y' 'Y'
+ 'Y' 'N' 'Y' 'Y' 'Y' 'N' 'Y' 'Y' 'Y' 'Y' 'Y' 'Y' 'Y' 'Y' 'Y' 'Y' 'Y' 'Y'
+ 'Y' 'Y' 'Y' 'N' 'Y' 'N' 'Y' 'Y' 'Y' 'N' 'Y' 'Y' 'Y' 'Y' 'N' 'Y' 'Y' 'Y'
+ 'Y' 'N' 'Y' 'Y' 'N' 'Y' 'Y' 'N' 'Y' 'Y' 'Y' 'Y' 'N' 'Y' 'Y' 'N' 'Y' 'Y'
+ 'Y' 'Y']</strong></pre>
+<p>Now let’s add the predicted loan approval values to the testing set as a new column in a DataFrame called X_test_df and show the predicted loan approval values alongside the original features:</p>
+<pre><code class="language-python"># Convert X_test to a DataFrame
+X_test_df = pd.DataFrame(X_test, columns=X_test.columns)
+
+# Add the predicted values to X_test_df
+X_test_df['Loan_Status_Predicted'] = y_pred
+print(X_test_df.head())</code></pre>
+<pre class="wp-block-preformatted"><strong>     ApplicantIncome  CoapplicantIncome  LoanAmount  Loan_Amount_Term  \
+277        -0.544528          -0.037922   -0.983772          0.305159   
+84         -0.067325          -0.931554   -1.571353         -1.430680   
+275        -0.734870           0.334654   -0.298262          0.305159   
+392        -0.824919           0.522317   -0.200332          0.305159   
+537        -0.267373          -0.931554   -0.454950          0.305159   
+
+     Credit_History  Gender_Female  Gender_Male  Married_No  Married_Yes  \
+277        0.402248              0            1           0            1   
+84         0.402248              0            1           0            1   
+275        0.402248              0            1           0            1   
+392        0.402248              0            1           0            1   
+537        0.402248              0            1           1            0   
+
+     Dependents_0  ...  Dependents_2  Dependents_3+  Education_Graduate  \
+277             1  ...             0              0                   1   
+84              0  ...             0              0                   1   
+275             0  ...             0              0                   1   
+392             1  ...             0              0                   1   
+537             0  ...             1              0                   1   
+
+     Education_Not Graduate  Self_Employed_No  Self_Employed_Yes  \
+277                       0                 1                  0   
+84                        0                 1                  0   
+275                       0                 1                  0   
+392                       0                 1                  0   
+537                       0                 1                  0   
+
+     Property_Area_Rural  Property_Area_Semiurban  Property_Area_Urban  \
+277                    0                        0                    1   
+84                     0                        0                    1   
+275                    0                        1                    0   
+392                    0                        0                    1   
+537                    0                        1                    0   
+
+     Loan_Status_Predicted  
+277                      Y  
+84                       Y  
+275                      Y  
+392                      Y  
+537                      Y  
+
+[5 rows x 21 columns]</strong></pre>
+<p>So this is how you can train a Machine Learning model to predict loan approval using Python.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>Loan approval prediction involves the analysis of various factors, such as the applicant’s financial history, income, credit rating, employment status, and other relevant attributes. By leveraging historical loan data and applying machine learning algorithms, businesses can build models to determine loan approvals for new applicants. I hope you liked this article on Loan Approval Prediction with Machine Learning using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="credit-score-classification-with-machine-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="music-popularity-prediction-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

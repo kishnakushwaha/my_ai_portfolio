@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Classification on Imbalanced Data using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Classification on Imbalanced Data using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 25, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="classification-with-neural-networks-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="food-delivery-time-prediction-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>In <strong><a href="https://amzn.eu/d/3Bgb8IK">Machine Learning</a></strong>, imbalanced data refers to a situation in classification problems where the number of observations in each class significantly differs. In such datasets, one class (the majority class) vastly outnumbers the other class (the minority class). This imbalance can lead to biased models that favour the majority class, resulting in poor predictive performance on the minority class, which is often the class of greater interest. So, if you want to learn how to perform classification on imbalanced data, this article is for you. In this article, I’ll take you through the task of performing classification on imbalanced data using Python.</p>
+<h2 class="wp-block-heading">Classification on Imbalanced Data: Process We Can Follow</h2>
+<p><strong><a href="data-resampling-using-python.html" target="">Handling imbalanced data</a></strong> in classification tasks is a challenge that requires careful consideration of data preprocessing, resampling strategies, model choice, and evaluation metrics. Below is the process you can follow while performing classification on imbalanced datasets:</p>
+<ol class="wp-block-list">
+<li>Begin by analyzing the distribution of classes within your dataset to understand the extent of the imbalance.</li>
+<li>Determine the importance of each class in the context of your specific problem.</li>
+<li>Increase the number of instances in the minority class by replicating them to balance the class distribution.</li>
+<li>Some algorithms, like tree-based methods, are less sensitive to class imbalance. Consider using these or ensemble methods like Random Forest or Gradient Boosted Trees.</li>
+<li>Besides accuracy, use metrics that are informative for imbalanced datasets, such as Precision, Recall, F1 Score, or the Area Under the Receiver Operating Characteristic (AUROC) curve.</li>
+</ol>
+<p>So, we need an imbalanced data for this task. I found an ideal dataset, which you can download from <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">here</a></strong>.</p>
+<h2 class="wp-block-heading">Classification on Imbalanced Data using Python</h2>
+<p>Let’s get started with the task of performing classification on imbalanced data by importing the necessary Python libraries and the <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+
+# load the dataset
+data = pd.read_csv("Insurance claims data.csv")
+
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>   policy_id  subscription_length  vehicle_age  customer_age region_code  \<br/>0  POL045360                  9.3          1.2            41          C8   <br/>1  POL016745                  8.2          1.8            35          C2   <br/>2  POL007194                  9.5          0.2            44          C8   <br/>3  POL018146                  5.2          0.4            44         C10   <br/>4  POL049011                 10.1          1.0            56         C13   <br/><br/>   region_density segment model fuel_type     max_torque  ... is_brake_assist  \<br/>0            8794      C2    M4    Diesel  250Nm@2750rpm  ...             Yes   <br/>1           27003      C1    M9    Diesel  200Nm@1750rpm  ...              No   <br/>2            8794      C2    M4    Diesel  250Nm@2750rpm  ...             Yes   <br/>3           73430       A    M1       CNG   60Nm@3500rpm  ...              No   <br/>4            5410      B2    M5    Diesel  200Nm@3000rpm  ...              No   <br/><br/>  is_power_door_locks  is_central_locking is_power_steering  \<br/>0                 Yes                 Yes               Yes   <br/>1                 Yes                 Yes               Yes   <br/>2                 Yes                 Yes               Yes   <br/>3                  No                  No               Yes   <br/>4                 Yes                 Yes               Yes   <br/><br/>  is_driver_seat_height_adjustable is_day_night_rear_view_mirror is_ecw  \<br/>0                              Yes                            No    Yes   <br/>1                              Yes                           Yes    Yes   <br/>2                              Yes                            No    Yes   <br/>3                               No                            No     No   <br/>4                               No                            No    Yes   <br/><br/>  is_speed_alert ncap_rating  claim_status  <br/>0            Yes           3             0  <br/>1            Yes           4             0  <br/>2            Yes           3             0  <br/>3            Yes           0             0  <br/>4            Yes           5             0  <br/><br/>[5 rows x 41 columns]</strong></pre>
+<p>Let’s have a quick look at the column information and whether the data contains any null values or not:</p>
+<pre><code class="language-python">data.info()</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>&lt;class 'pandas.core.frame.DataFrame'&gt;<br/>RangeIndex: 58592 entries, 0 to 58591<br/>Data columns (total 41 columns):<br/> #   Column                            Non-Null Count  Dtype  <br/>---  ------                            --------------  -----  <br/> 0   policy_id                         58592 non-null  object <br/> 1   subscription_length               58592 non-null  float64<br/> 2   vehicle_age                       58592 non-null  float64<br/> 3   customer_age                      58592 non-null  int64  <br/> 4   region_code                       58592 non-null  object <br/> 5   region_density                    58592 non-null  int64  <br/> 6   segment                           58592 non-null  object <br/> 7   model                             58592 non-null  object <br/> 8   fuel_type                         58592 non-null  object <br/> 9   max_torque                        58592 non-null  object <br/> 10  max_power                         58592 non-null  object <br/> 11  engine_type                       58592 non-null  object <br/> 12  airbags                           58592 non-null  int64  <br/> 13  is_esc                            58592 non-null  object <br/> 14  is_adjustable_steering            58592 non-null  object <br/> 15  is_tpms                           58592 non-null  object <br/> 16  is_parking_sensors                58592 non-null  object <br/> 17  is_parking_camera                 58592 non-null  object <br/> 18  rear_brakes_type                  58592 non-null  object <br/> 19  displacement                      58592 non-null  int64  <br/> 20  cylinder                          58592 non-null  int64  <br/> 21  transmission_type                 58592 non-null  object <br/> 22  steering_type                     58592 non-null  object <br/> 23  turning_radius                    58592 non-null  float64<br/> 24  length                            58592 non-null  int64  <br/> 25  width                             58592 non-null  int64  <br/> 26  gross_weight                      58592 non-null  int64  <br/> 27  is_front_fog_lights               58592 non-null  object <br/> 28  is_rear_window_wiper              58592 non-null  object <br/> 29  is_rear_window_washer             58592 non-null  object <br/> 30  is_rear_window_defogger           58592 non-null  object <br/> 31  is_brake_assist                   58592 non-null  object <br/> 32  is_power_door_locks               58592 non-null  object <br/> 33  is_central_locking                58592 non-null  object <br/> 34  is_power_steering                 58592 non-null  object <br/> 35  is_driver_seat_height_adjustable  58592 non-null  object <br/> 36  is_day_night_rear_view_mirror     58592 non-null  object <br/> 37  is_ecw                            58592 non-null  object <br/> 38  is_speed_alert                    58592 non-null  object <br/> 39  ncap_rating                       58592 non-null  int64  <br/> 40  claim_status                      58592 non-null  int64  <br/>dtypes: float64(3), int64(10), object(28)<br/>memory usage: 18.3+ MB</strong></pre>
+<pre><code class="language-python">data.isnull().sum()</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>policy_id                           0<br/>subscription_length                 0<br/>vehicle_age                         0<br/>customer_age                        0<br/>region_code                         0<br/>region_density                      0<br/>segment                             0<br/>model                               0<br/>fuel_type                           0<br/>max_torque                          0<br/>max_power                           0<br/>engine_type                         0<br/>airbags                             0<br/>is_esc                              0<br/>is_adjustable_steering              0<br/>is_tpms                             0<br/>is_parking_sensors                  0<br/>is_parking_camera                   0<br/>rear_brakes_type                    0<br/>displacement                        0<br/>cylinder                            0<br/>transmission_type                   0<br/>steering_type                       0<br/>turning_radius                      0<br/>length                              0<br/>width                               0<br/>gross_weight                        0<br/>is_front_fog_lights                 0<br/>is_rear_window_wiper                0<br/>is_rear_window_washer               0<br/>is_rear_window_defogger             0<br/>is_brake_assist                     0<br/>is_power_door_locks                 0<br/>is_central_locking                  0<br/>is_power_steering                   0<br/>is_driver_seat_height_adjustable    0<br/>is_day_night_rear_view_mirror       0<br/>is_ecw                              0<br/>is_speed_alert                      0<br/>ncap_rating                         0<br/>claim_status                        0<br/>dtype: int64</strong></pre>
+<p>The dataset contains 58,592 entries and 41 columns, including the target variable claim_status. It is based on the problem of insurance claim frequency prediction. Here’s a brief overview of some of the features:</p>
+<ul class="wp-block-list">
+<li>policy_id: Unique identifier for the insurance policy</li>
+<li>subscription_length, vehicle_age, customer_age: Numeric attributes related to the policy, vehicle, and customer</li>
+<li>region_code, segment, model, fuel_type: Categorical attributes representing the region, vehicle segment, model, and fuel type</li>
+<li>max_torque, max_power, engine_type: Specifications of the vehicle’s engine</li>
+<li>airbags, is_esc, is_adjustable_steering: Features related to the vehicle’s safety and convenience</li>
+<li>claim_status: Target variable indicating whether a claim was made (1) or not (0)</li>
+</ul>
+<p>Next, I will perform exploratory data analysis to visualize and understand the distributions, relationships, and patterns in the data. It will include examining the distribution of the target variable and key features. Let’s start with visualizing the distribution of the claim_status to understand the class balance:</p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+import seaborn as sns
+sns.set_style("whitegrid")
+
+# plot the distribution of the target variable 'claim_status'
+plt.figure(figsize=(8, 5))
+sns.countplot(x='claim_status', data=data)
+plt.title('Distribution of Claim Status')
+plt.xlabel('Claim Status')
+plt.ylabel('Count')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="Distribution of Claim Status: Classification on Imbalanced Data" class="wp-image-23042" data-attachment-id="23042" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="classification-on-imbalanced-data-1" data-orig-size="713,470" data-recalc-dims="1" decoding="async" height="470" sizes="(max-width: 713px) 100vw, 713px" src="../assets/datasets/classification-on-imbalanced-data-1.png" style="width:619px;height:auto" width="713"/></figure>
+<p>The distribution of the claim_status shows a significant imbalance between the classes, with much fewer claims (1) compared to no claims (0). This imbalance will be a challenge to address during the model training phase to ensure our model does not become biased toward predicting the majority class.</p>
+<p>Next, I will perform an analysis of both numerical and categorical features to understand their distributions and relationships with the claim_status. Let’s start by examining the distributions of some key numerical features such as subscription_length, vehicle_age, and customer_age:</p>
+<pre><code class="language-python"># selecting numerical columns for analysis
+numerical_columns = ['subscription_length', 'vehicle_age', 'customer_age']
+
+# plotting distributions of numerical features
+plt.figure(figsize=(15, 5))
+for i, column in enumerate(numerical_columns, 1):
+    plt.subplot(1, 3, i)
+    sns.histplot(data[column], bins=30, kde=True)
+    plt.title(f'Distribution of {column}')
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Numerical Columns Distribution in the data" class="wp-image-23044" data-attachment-id="23044" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="classification-on-imbalanced-data-2" data-orig-size="1489,490" data-recalc-dims="1" decoding="async" height="337" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/classification-on-imbalanced-data-2.png" style="width:690px;height:auto" width="1024"/></figure>
+<p>The distributions of the numerical features subscription_length, vehicle_age, and customer_age show the following characteristics:</p>
+<ul class="wp-block-list">
+<li>subscription_length: Most values are clustered around lower numbers, indicating that many policies have shorter subscription lengths.</li>
+<li>vehicle_age: This distribution is somewhat uniform but with spikes at specific ages, possibly representing common vehicle age intervals in the dataset.</li>
+<li>customer_age: This shows a fairly normal distribution, with the majority of customers falling within a middle-age range.</li>
+</ul>
+<p>Next, we will analyze relevant categorical features to understand their variation and relationship with the claim_status. I’ll focus on features like region_code, segment, and fuel_type:</p>
+<pre><code class="language-python"># selecting some relevant categorical columns for analysis
+categorical_columns = ['region_code', 'segment', 'fuel_type']
+
+# plotting distributions of categorical features
+plt.figure(figsize=(15, 10))
+for i, column in enumerate(categorical_columns, 1):
+    plt.subplot(3, 1, i)
+    sns.countplot(y=column, data=data, order = data[column].value_counts().index)
+    plt.title(f'Distribution of {column}')
+    plt.xlabel('Count')
+    plt.ylabel(column)
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Distribution of categorical variables: classification on imbalanced data" class="wp-image-23047" data-attachment-id="23047" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="classification-on-imbalanced-data-3-1" data-orig-size="1490,989" data-recalc-dims="1" decoding="async" height="680" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="../assets/datasets/classification-on-imbalanced-data-3-1.png" style="width:666px;height:auto" width="1024"/></figure>
+<p>For ‘region_code,’ there is a wide variety of codes, each with varying counts, but a few specific codes dominate with much higher counts than others. In the ‘segment’ distribution, there are fewer categories, with the ‘B2’ segment being the most common, followed by ‘A’ and ‘C2,’ and the ‘Utility’ segment being the least common. Lastly, ‘fuel_type’ shows three categories: ‘Petrol’ has the highest count than CNG and Diesel.</p>
+<h4 class="wp-block-heading">Handling Class Imbalance</h4>
+<p>The next step is to balance the dataset using oversampling to handle the class imbalance observed in the claim_status. Let’s proceed with balancing the classes:</p>
+<pre><code class="language-python">from sklearn.utils import resample
+
+# separate majority and minority classes
+majority = data[data.claim_status == 0]
+minority = data[data.claim_status == 1]
+
+# oversample the minority class
+minority_oversampled = resample(minority,
+                                replace=True,
+                                n_samples=len(majority),
+                                random_state=42)
+
+# combine majority class with oversampled minority class
+oversampled_data = pd.concat([majority, minority_oversampled])
+
+# check the distribution of undersampled and oversampled datasets
+oversampled_distribution = oversampled_data.claim_status.value_counts()
+
+oversampled_distribution</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>0    54844<br/>1    54844<br/>Name: claim_status, dtype: int64</strong></pre>
+<p>After performing oversampling on the minority class, both classes are balanced with 54,844 entries each. Now, let’s have a look at some key variables to see what the balanced data looks like:</p>
+<pre><code class="language-python"># plotting the distribution of 'customer_age', 'vehicle_age', and 'subscription_length' with respect to 'claim_status'
+plt.figure(figsize=(15, 5))
+
+# 'customer_age' distribution
+plt.subplot(1, 3, 1)
+sns.histplot(data=oversampled_data, x='customer_age', hue='claim_status', element='step', bins=30)
+plt.title('Customer Age Distribution')
+
+# 'vehicle_age' distribution
+plt.subplot(1, 3, 2)
+sns.histplot(data=oversampled_data, x='vehicle_age', hue='claim_status', element='step', bins=30)
+plt.title('Vehicle Age Distribution')
+
+# 'subscription_length' distribution
+plt.subplot(1, 3, 3)
+sns.histplot(data=oversampled_data, x='subscription_length', hue='claim_status', element='step', bins=30)
+plt.title('Subscription Length Distribution')
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Class distribution after oversampling" class="wp-image-23050" data-attachment-id="23050" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="classification-on-imbalanced-data-4" data-orig-size="1489,490" data-recalc-dims="1" decoding="async" height="337" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="../assets/datasets/classification-on-imbalanced-data-4.png" style="width:750px;height:auto" width="1024"/></figure>
+<p>The oversampled data does look like the original data. So, let’s move forward.</p>
+<h4 class="wp-block-heading">Feature Selection</h4>
+<p>Now, we will identify the most important variables for predicting insurance frequency claims. It involves analyzing both categorical and numerical features to determine their impact on the target variable. We will use feature importance techniques suitable for both types of variables. Let’s start with feature selection to identify the most important variables:</p>
+<pre><code class="language-python">from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import LabelEncoder
+
+# encode categorical variables
+le = LabelEncoder()
+encoded_data = data.apply(lambda col: le.fit_transform(col) if col.dtype == 'object' else col)
+
+# separate features and target variable
+X = encoded_data.drop('claim_status', axis=1)
+y = encoded_data['claim_status']
+
+# create a random forest classifier model
+rf_model = RandomForestClassifier(random_state=42)
+rf_model.fit(X, y)
+
+# get feature importance
+feature_importance = rf_model.feature_importances_
+
+# create a dataframe for visualization of feature importance
+features_df = pd.DataFrame({'Feature': X.columns, 'Importance': feature_importance})
+features_df = features_df.sort_values(by='Importance', ascending=False)
+
+print(features_df.head(10))  # displaying the top 10 important features</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>                Feature  Importance<br/>0             policy_id    0.321072<br/>1   subscription_length    0.248309<br/>3          customer_age    0.176639<br/>2           vehicle_age    0.135190<br/>5        region_density    0.053838<br/>4           region_code    0.052649<br/>7                 model    0.000957<br/>24               length    0.000846<br/>26         gross_weight    0.000834<br/>11          engine_type    0.000791</strong></pre>
+<p>The top 10 most important variables for predicting insurance frequency claims, according to the Random Forest model, are:</p>
+<ol class="wp-block-list">
+<li>policy_id: Unique identifier for the insurance policy</li>
+<li>subscription_length: Length of the insurance subscription</li>
+<li>customer_age: Age of the customer</li>
+<li>vehicle_age: Age of the vehicle</li>
+<li>region_density: Population density of the region</li>
+<li>region_code: Code representing the region</li>
+<li>model: Model of the vehicle</li>
+<li>engine_type: Type of engine in the vehicle</li>
+<li>gross_weight: Gross weight of the vehicle</li>
+<li>length: Length of the vehicle</li>
+</ol>
+<p>These variables appear to have the most influence on the likelihood of an insurance claim being made. However, it’s notable that policy_id has a very high importance, which might not be intuitively relevant for prediction. So, we need to make sure to drop the policy_id column while model training.</p>
+<h4 class="wp-block-heading">Model Training</h4>
+<p>The next step is to build a predictive model using the oversampled data. Given the nature of the task (binary classification), a suitable algorithm could be logistic regression, random forest, or gradient boosting. Considering the effectiveness of random forests in handling both numerical and categorical data and their ability to model complex interactions, we’ll proceed with a Random Forest classifier:</p>
+<pre><code class="language-python">from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report, accuracy_score
+from sklearn.ensemble import RandomForestClassifier
+
+# drop 'Policy_id' column from the data
+oversampled_data = oversampled_data.drop('policy_id', axis=1)
+
+# prepare the oversampled data
+X_oversampled = oversampled_data.drop('claim_status', axis=1)
+y_oversampled = oversampled_data['claim_status']
+
+# encoding categorical columns
+X_oversampled_encoded = X_oversampled.apply(lambda col: LabelEncoder().fit_transform(col) if col.dtype == 'object' else col)
+
+# splitting the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(
+    X_oversampled_encoded, y_oversampled, test_size=0.3, random_state=42)
+
+# create and train the Random Forest model
+rf_model_oversampled = RandomForestClassifier(random_state=42)
+rf_model_oversampled.fit(X_train, y_train)
+
+# predictions
+y_pred = rf_model_oversampled.predict(X_test)
+
+print(classification_report(y_test, y_pred))</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>              precision    recall  f1-score   support<br/><br/>           0       1.00      0.98      0.99     16574<br/>           1       0.98      1.00      0.99     16333<br/><br/>    accuracy                           0.99     32907<br/>   macro avg       0.99      0.99      0.99     32907<br/>weighted avg       0.99      0.99      0.99     32907</strong></pre>
+<p>The classification report above provides various metrics to evaluate the performance of the predictive model on the test data. Here’s an interpretation of the results:</p>
+<ol class="wp-block-list">
+<li>For class 0 (no claim), precision is 1.00, meaning that when the model predicts no claim, it is correct 100% of the time. For class 1 (claim), precision is 0.98, indicating that when the model predicts a claim, it is correct 98% of the time.</li>
+<li>For class 0, recall is 0.98, signifying that the model correctly identifies 98% of all actual no-claim instances. For class 1, recall is 1.00, showing that the model correctly identifies 100% of all actual claim instances.</li>
+<li>The F1-score for both classes is 0.99, indicating a high balance between precision and recall. It means the model is both accurate and reliable in its predictions across both classes.</li>
+<li>The overall accuracy of the model is 99%, which means that it correctly predicts the claim status for 99% of the cases in the test dataset.</li>
+<li>The macro average for precision, recall and F1-score is 0.99, reflecting the average performance of the model across both classes without considering the imbalance in class distribution. This high value suggests that the model performs well across both classes. The weighted average for precision, recall, and F1-score is also 0.99, taking into account the imbalance in class distribution. It indicates that, on average, the model performs consistently well across the different classes when considering their distribution in the dataset.</li>
+</ol>
+<p>These results indicate a highly effective model for predicting insurance claims, with strong performance metrics across both classes of outcomes. The high recall for claims (class 1) is particularly notable as it implies that the model is very effective at identifying the instances where claims occur, which is often the primary concern in imbalanced datasets.</p>
+<p>Now, let’s label the original imbalanced data using our model to see how many instances are correctly classified from our model:</p>
+<pre><code class="language-python">original_encoded = data.drop('policy_id', axis=1).copy()
+encoders = {col: LabelEncoder().fit(X_oversampled[col]) for col in X_oversampled.select_dtypes(include=['object']).columns}
+
+for col in original_encoded.select_dtypes(include=['object']).columns:
+    if col in encoders:
+        original_encoded[col] = encoders[col].transform(original_encoded[col])
+
+original_encoded_predictions = rf_model_oversampled.predict(original_encoded.drop('claim_status', axis=1))
+
+comparison_df = pd.DataFrame({
+    'Actual': original_encoded['claim_status'],
+    'Predicted': original_encoded_predictions
+})
+
+print(comparison_df.head(10))</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>   Actual  Predicted<br/>0       0          0<br/>1       0          0<br/>2       0          0<br/>3       0          0<br/>4       0          0<br/>5       0          0<br/>6       0          0<br/>7       0          0<br/>8       0          0<br/>9       0          0</strong></pre>
+<p>Let’s visualize the percentage of correctly classified and misclassified samples:</p>
+<pre><code class="language-python">correctly_classified = (comparison_df['Actual'] == comparison_df['Predicted']).sum()
+incorrectly_classified = (comparison_df['Actual'] != comparison_df['Predicted']).sum()
+
+classification_counts = [correctly_classified, incorrectly_classified]
+labels = ['Correctly Classified', 'Misclassified']
+
+# create a pie chart
+plt.figure(figsize=(8, 8))
+plt.pie(classification_counts, labels=labels, autopct='%1.1f%%', startangle=140, colors=['#4CAF50', '#FF5733'])
+plt.title('Classification Accuracy')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="Classification on Imbalanced Data" class="wp-image-23060" data-attachment-id="23060" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="classification-on-imbalanced-data-5-1" data-orig-size="660,658" data-recalc-dims="1" decoding="async" height="658" loading="lazy" sizes="auto, (max-width: 660px) 100vw, 660px" src="../assets/datasets/classification-on-imbalanced-data-5-1.png" style="width:620px;height:auto" width="660"/></figure>
+<p>So, we can see that our model performs well on the original imbalanced data as well.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, this is how to handle class imbalance and perform classification on imbalanced data. Imbalanced data refers to a situation in classification problems where the number of observations in each class significantly differs. In such datasets, one class (the majority class) vastly outnumbers the other class (the minority class). This imbalance can lead to biased models that favour the majority class, resulting in poor predictive performance on the minority class, which is often the class of greater interest.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="classification-with-neural-networks-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="food-delivery-time-prediction-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

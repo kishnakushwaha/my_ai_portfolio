@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Neural Networks in Machine Learning | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Neural Networks in Machine Learning</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 07, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="deep-learning-projects-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="build-a-visual-question-answering-app.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>The way birds inspired humans to create an aeroplane the same way a human’s brain inspired humans to build intelligent machines. Neural networks were inspired by biological neurons found in the brain of a human. In this article, I will introduce you to the implementation of neural networks using Python.</p>
+<h2 class="wp-block-heading">Neural Networks</h2>
+<p>The neural network is the most important concept in deep learning, which is a subset of machine learning. Neural networks were inspired by biological neurons found in the brain of a human. You can think of a neural network as a machine learning algorithm that works the same way as a human brain.</p>
+<p>You must be thinking about why we use neural networks when we already have so many <strong><em><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">machine learning algorithms</a></em></strong>. The reason is that a neural network needs a huge amount of data. As every business has now understood the importance of data, we have enough data to train a neural network. A neural network can easily outperform any machine learning algorithm while working on a very large data set.</p>
+<h2 class="wp-block-heading">Neural Networks using Python</h2>
+<p>Hope you now know what a neural network is and why we prefer to use it over other machine learning algorithms while working with huge datasets. To understand how the neural network works, let’s train one using Python. When training neural networks on a huge dataset, you should have a GPU compatible system, otherwise, it will take hours to run your code. If you don’t have a GPU compatible machine, you can use <em><a href="https://colab.research.google.com/">Google Colab</a></em>.</p>
+<p>Now let’s see how to train a classification model with neural networks using Python. I will start by importing the necessary Python libraries and the dataset:</p>
+<pre><code class="language-python">import tensorflow as tf
+from tensorflow import keras
+fashion_mnist = keras.datasets.fashion_mnist
+(x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()</code></pre>
+<p>Here I am using the Fashion MNIST dataset which is not a very huge dataset but good enough to train a neural network. Now let’s split the data:</p>
+<pre><code class="language-python">x_valid, x_train = x_train[:5000]/255.0, x_train[5000:]/255.0
+y_valid, y_train = y_train[:5000], y_train[5000:]</code></pre>
+<p>The Fashion MNIST dataset is just like the MNIST digits dataset but to understand what we are dealing with we need to create a Python list of names of the classes in the dataset:</p>
+<pre><code class="language-python">classes = ["T-shirt/top", "Trouser", "Pullover", 
+           "Dress", "Coat", "Sandal", "Shirt", 
+           "Sneaker", "Bag", "Ankle boot"]</code></pre>
+<p>Now let’s create a neural network model:</p>
+<pre><code class="language-python">model = keras.models.Sequential([
+    keras.layers.Flatten(input_shape=[28, 28]),
+    keras.layers.Dense(300, activation="relu"),
+    keras.layers.Dense(100, activation="relu"),
+    keras.layers.Dense(10, activation="softmax")
+])</code></pre>
+<p>Now let’s have a look at the summary of the model which simply means to display each layer of the model:</p>
+<pre><code class="language-python">print(model.summary())</code></pre>
+<pre class="wp-block-preformatted">Model: "sequential"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #
+=================================================================
+flatten (Flatten)            (None, 784)               0
+_________________________________________________________________
+dense (Dense)                (None, 300)               235500
+_________________________________________________________________
+dense_1 (Dense)              (None, 100)               30100
+_________________________________________________________________
+dense_2 (Dense)              (None, 10)                1010
+=================================================================
+Total params: 266,610
+Trainable params: 266,610
+Non-trainable params: 0</pre>
+<p>After creating the model, the next step is to compile the model. Here is how to compile your model:</p>
+<pre><code class="language-python">model.compile(loss="sparse_categorical_crossentropy", 
+              optimizer="sgd", metrics=["accuracy"])</code></pre>
+<p>Now, the final step is to train the model which means to fit the data into the neural network:</p>
+<pre><code class="language-python">history = model.fit(x_train, y_train, 
+                    epochs=30, validation_data=(x_valid, y_valid))</code></pre>
+<p>Now let’s have a loot at the performance of the model and test the model on the test set:</p>
+<pre><code class="language-python">import pandas as pd
+import matplotlib.pyplot as plt
+pd.DataFrame(history.history).plot(figsize=(12, 8))
+plt.grid(True)
+plt.gca().set_ylim(0, 1)
+plt.legend()
+plt.show()</code></pre>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img alt="neural networks using Python" class="wp-image-12992" data-attachment-id="12992" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="neural" data-orig-size="960,426" data-recalc-dims="1" decoding="async" height="332" sizes="(max-width: 750px) 100vw, 750px" src="../assets/datasets/neural.png" width="750"/></figure></div>
+<pre><code class="language-python">import numpy as np
+x_new = x_test[:3]
+y_pred = model.predict_classes(x_new)
+print(y_pred)
+print(np.array(classes)[y_pred])</code></pre>
+<pre class="wp-block-preformatted">[9 2 1]
+['Ankle boot' 'Pullover' 'Trouser']</pre>
+<h3 class="wp-block-heading">Summary</h3>
+<p>This is how to train a neural network using Python. In this article, I trained a neural network model for the task of classification on the fashion MNIST dataset. I hope you liked this article on the implementation of Neural networks using Python. Feel free to ask your valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="deep-learning-projects-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="build-a-visual-question-answering-app.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

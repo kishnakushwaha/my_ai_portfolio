@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Customer Satisfaction Analysis with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Customer Satisfaction Analysis with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 27, 2025 • 5 min read</div>
+<p>Customer Satisfaction Analysis is the process of collecting, analyzing, and interpreting data regarding how satisfied customers are with a company’s products, services, and overall experience. If you want to learn how to analyze the satisfaction of customers with a business and how to make further decisions based on satisfaction levels, this article is for you. In this article, I’ll take you through the task of Customer Satisfaction Analysis with Python.</p>
+<h2 class="wp-block-heading">Customer Satisfaction Analysis: Overview</h2>
+<p>Customer Satisfaction Analysis involves collecting, analyzing, and interpreting data on customer experiences and perceptions through surveys, feedback forms, ratings, and reviews. By identifying key drivers of satisfaction and dissatisfaction, businesses can make informed decisions to improve products, services, and customer interactions.</p>
+<p>It helps retain customers, boost loyalty and advocacy, drive sales growth, and gain a competitive edge, which ultimately enhances overall business performance and customer experience.</p>
+<p>To get started with the task of Customer Satisfaction Analysis, we need a dataset based on customer satisfaction and feedback. I found an ideal dataset for this task, which contains features like:</p>
+<ul class="wp-block-list">
+<li><strong>CustomerID</strong>: Unique identifier for each customer.</li>
+<li><strong>Age</strong>: Age of the customer.</li>
+<li><strong>Gender</strong>: Gender of the customer (Male/Female).</li>
+<li><strong>PurchaseAmount</strong>: Total amount spent by the customer.</li>
+<li><strong>PurchaseFrequency</strong>: Number of purchases made by the customer.</li>
+<li><strong>ProductQualityRating</strong>: Customer rating for product quality (1-5).</li>
+<li><strong>DeliveryTimeRating</strong>: Customer rating for delivery time (1-5).</li>
+<li><strong>CustomerServiceRating</strong>: Customer rating for customer service (1-5).</li>
+<li><strong>WebsiteEaseOfUseRating</strong>: Customer rating for website ease of use (1-5).</li>
+<li><strong>ReturnRate</strong>: Proportion of products returned by the customer.</li>
+<li><strong>DiscountUsage</strong>: Amount of discount used by the customer.</li>
+<li><strong>LoyaltyProgramMember</strong>: Whether the customer is a loyalty program member (Yes/No).</li>
+</ul>
+<p>You can download the dataset from <strong><a href="https://statso.io/customer-satisfaction-case-study/" rel="noreferrer noopener" target="_blank">here</a></strong>.</p>
+<h2 class="wp-block-heading">Customer Satisfaction Analysis with Python</h2>
+<p>Now, let’s get started with the task of Customer Satisfaction Analysis by importing the necessary Python libraries and the <strong><a href="https://statso.io/customer-satisfaction-case-study/" rel="noreferrer noopener" target="_blank">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+
+data = pd.read_csv("/content/E-commerce_NPA_Dataset.csv")
+
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>   CustomerID  Age  Gender  PurchaseAmount  PurchaseFrequency  \<br/>0           1   38  Female      749.097626                 24   <br/>1           2   30    Male      735.224916                 18   <br/>2           3   55    Male     1145.520305                 22   <br/>3           4   39  Female      925.460535                 14   <br/>4           5   51    Male      108.359916                  9   <br/><br/>   ProductQualityRating  DeliveryTimeRating  CustomerServiceRating  \<br/>0                     2                   1                      3   <br/>1                     5                   4                      4   <br/>2                     3                   5                      4   <br/>3                     4                   3                      2   <br/>4                     3                   3                      2   <br/><br/>   WebsiteEaseOfUseRating  ReturnRate  DiscountUsage LoyaltyProgramMember  <br/>0                       5        0.12     135.392573                   No  <br/>1                       5        0.37     193.450663                  Yes  <br/>2                       1        0.10     147.246263                  Yes  <br/>3                       4        0.38      56.362894                  Yes  <br/>4                       5        0.42     338.731055                   No  </strong></pre>
+<p>Let’s have a look at the summary statistics of the data:</p>
+<pre><code class="language-python">print(data.describe())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>       CustomerID         Age  PurchaseAmount  PurchaseFrequency  \<br/>count  500.000000  500.000000      500.000000         500.000000   <br/>mean   250.500000   44.170000     1065.050731          14.308000   <br/>std    144.481833   14.813777      583.199658           8.151197   <br/>min      1.000000   18.000000       51.799790           1.000000   <br/>25%    125.750000   32.000000      535.083407           7.000000   <br/>50%    250.500000   44.000000     1100.884065          14.000000   <br/>75%    375.250000   58.000000     1584.348124          22.000000   <br/>max    500.000000   69.000000     1999.655968          29.000000   <br/><br/>       ProductQualityRating  DeliveryTimeRating  CustomerServiceRating  \<br/>count             500.00000          500.000000               500.0000   <br/>mean                2.93400            3.008000                 3.0780   <br/>std                 1.41054            1.372481                 1.4156   <br/>min                 1.00000            1.000000                 1.0000   <br/>25%                 2.00000            2.000000                 2.0000   <br/>50%                 3.00000            3.000000                 3.0000   <br/>75%                 4.00000            4.000000                 4.0000   <br/>max                 5.00000            5.000000                 5.0000   <br/><br/>       WebsiteEaseOfUseRating  ReturnRate  DiscountUsage  <br/>count              500.000000  500.000000     500.000000  <br/>mean                 3.082000    0.252280     251.181010  <br/>std                  1.415374    0.149674     141.531993  <br/>min                  1.000000    0.000000       0.772696  <br/>25%                  2.000000    0.110000     133.672231  <br/>50%                  3.000000    0.260000     251.940355  <br/>75%                  4.000000    0.380000     371.692341  <br/>max                  5.000000    0.500000     499.813315  </strong></pre>
+<p>The summary statistics provide insights into the central tendency, dispersion, and range of the numeric data. Here are some key observations:</p>
+<ul class="wp-block-list">
+<li><strong>Age</strong>: The average customer age is around 44 years, with a range from 18 to 69 years.</li>
+<li><strong>Purchase Amount</strong>: The average purchase amount is $1065, with a significant standard deviation indicating variability in spending.</li>
+<li><strong>Purchase Frequency</strong>: Customers purchase on average about 14 times, with some making up to 29 purchases.</li>
+<li><strong>Ratings</strong>: The average ratings for product quality, delivery time, customer service, and website ease of use are around 3, indicating moderate satisfaction levels. These ratings range from 1 (poor) to 5 (excellent).</li>
+<li><strong>Return Rate</strong>: The average return rate is 25%, with some customers having a return rate as high as 50%.</li>
+<li><strong>Discount Usage</strong>: The average discount usage is around $251, with high variability.</li>
+</ul>
+<p>Now, let’s visualize the distributions of these variables:</p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+
+numeric_cols = ['Age', 'PurchaseAmount', 'PurchaseFrequency', 'ProductQualityRating', 'DeliveryTimeRating', 'CustomerServiceRating', 'WebsiteEaseOfUseRating', 'ReturnRate', 'DiscountUsage']
+
+plt.figure(figsize=(15, 20))
+
+for i, col in enumerate(numeric_cols, 1):
+    plt.subplot(5, 2, i)
+    plt.hist(data[col], bins=20, edgecolor='k', alpha=0.7)
+    plt.title(f'Distribution of {col}')
+    plt.xlabel(col)
+    plt.ylabel('Frequency')
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="customer satisfaction analysis: data distribution" class="wp-image-24237" data-attachment-id="24237" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="customer satisfaction 1" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/customer-satisfaction-1.png?fit=766%2C1024&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/customer-satisfaction-1.png?fit=224%2C300&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/customer-satisfaction-1.png?fit=1489%2C1990&amp;ssl=1" data-orig-size="1489,1990" data-permalink="https://my-ai-portfolio.com/2024/07/29/customer-satisfaction-analysis-with-python/customer-satisfaction-1/" data-recalc-dims="1" decoding="async" height="1024" sizes="(max-width: 766px) 100vw, 766px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/customer-satisfaction-1.png?resize=766%2C1024&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/customer-satisfaction-1.png?resize=766%2C1024&amp;ssl=1 766w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/customer-satisfaction-1.png?resize=224%2C300&amp;ssl=1 224w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/customer-satisfaction-1.png?resize=768%2C1026&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/customer-satisfaction-1.png?resize=1149%2C1536&amp;ssl=1 1149w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/customer-satisfaction-1.png?resize=300%2C400&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/customer-satisfaction-1.png?resize=150%2C200&amp;ssl=1 150w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/customer-satisfaction-1.png?resize=1200%2C1604&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/customer-satisfaction-1.png?w=1489&amp;ssl=1 1489w" width="766"/></figure>
+<p>The histograms reveal several insights into customer <strong><a href="demographics-analysis-with-python.html" target="">demographics</a></strong> and satisfaction metrics:</p>
+<ul class="wp-block-list">
+<li>the age distribution is relatively even with slight peaks in the 30s and 60s;</li>
+<li>purchase amounts are right-skewed, indicating most customers spend less than $1000;</li>
+<li>purchase frequency is varied, with notable peaks around 10 and 20 purchases;</li>
+<li>satisfaction ratings for product quality, delivery time, customer service, and website ease of use show a wide distribution, with most ratings clustering around the middle values;</li>
+<li>return rates are varied with peaks around 0.1 and 0.4;</li>
+<li>and discount usage is evenly spread, showing no significant trend.</li>
+</ul>
+<p>These findings suggest that customer experiences and behaviours are diverse, with varying levels of satisfaction across different service aspects.</p>
+<p>Now, let’s segment the customers based on demographic and behavioral factors, and analyze their satisfaction ratings. We’ll create segments based on age, gender, and loyalty program membership. First, let’s analyze satisfaction ratings across different age groups and genders:</p>
+<pre><code class="language-python"># create age groups
+bins = [18, 30, 40, 50, 60, 70]
+labels = ['18-29', '30-39', '40-49', '50-59', '60-69']
+data['AgeGroup'] = pd.cut(data['Age'], bins=bins, labels=labels, right=False)
+
+# select only the numeric columns for calculation
+numeric_columns = ['ProductQualityRating', 'DeliveryTimeRating', 'CustomerServiceRating', 'WebsiteEaseOfUseRating']
+
+# calculate mean ratings by age group and gender
+mean_ratings_age_gender = data.groupby(['AgeGroup', 'Gender'])[numeric_columns].mean()
+
+# reset the index to display the dataframe
+mean_ratings_age_gender.reset_index(inplace=True)
+print(mean_ratings_age_gender)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>  AgeGroup  Gender  ProductQualityRating  DeliveryTimeRating  \<br/>0    18-29  Female              3.052632            3.210526   <br/>1    18-29    Male              2.933333            3.000000   <br/>2    30-39  Female              2.929825            2.859649   <br/>3    30-39    Male              3.080000            2.820000   <br/>4    40-49  Female              3.090909            2.890909   <br/>5    40-49    Male              2.857143            3.166667   <br/>6    50-59  Female              2.945946            2.945946   <br/>7    50-59    Male              2.833333            2.895833   <br/>8    60-69  Female              2.900000            3.300000   <br/>9    60-69    Male              2.673469            2.938776   <br/><br/>   CustomerServiceRating  WebsiteEaseOfUseRating  <br/>0               3.175439                2.912281  <br/>1               3.333333                3.355556  <br/>2               2.912281                3.070175  <br/>3               2.980000                2.880000  <br/>4               3.036364                3.109091  <br/>5               3.142857                3.142857  <br/>6               3.027027                3.162162  <br/>7               3.312500                3.062500  <br/>8               3.066667                2.950000  <br/>9               2.836735                3.285714  </strong></pre>
+<p>The data shows mean satisfaction ratings by age group and gender for different aspects of service. Here are some insights:</p>
+<ol class="wp-block-list">
+<li>Younger customers (18-29) generally rate product quality slightly higher.</li>
+<li>Females in the 40-49 age group give the highest ratings, while males in the 60-69 age group give the lowest.</li>
+<li>Delivery time satisfaction is relatively consistent across age groups, with minor variations.</li>
+<li>The highest ratings for delivery time satisfaction are from females aged 60-69, while the lowest are from males aged 30-39.</li>
+<li>Customer service ratings are fairly consistent, with a slight peak among younger males (18-29).</li>
+<li>Males in the 60-69 age group rate customer service the lowest.</li>
+</ol>
+<p>Next, let’s analyze the impact of loyalty program membership on customer satisfaction:</p>
+<pre><code class="language-python"># select only the numeric columns for calculation
+numeric_columns = ['ProductQualityRating', 'DeliveryTimeRating', 'CustomerServiceRating', 'WebsiteEaseOfUseRating', 'ReturnRate', 'DiscountUsage']
+
+# calculate mean ratings by loyalty program membership
+mean_ratings_loyalty = data.groupby('LoyaltyProgramMember')[numeric_columns].mean()
+
+# reset the index to display the dataframe
+mean_ratings_loyalty.reset_index(inplace=True)
+print(mean_ratings_loyalty)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>  LoyaltyProgramMember  ProductQualityRating  DeliveryTimeRating  \<br/>0                   No              2.920502            2.916318   <br/>1                  Yes              2.946360            3.091954   <br/><br/>   CustomerServiceRating  WebsiteEaseOfUseRating  ReturnRate  DiscountUsage  <br/>0               2.987448                3.108787    0.251883     241.426710  <br/>1               3.160920                3.057471    0.252644     260.113108  </strong></pre>
+<p>The data shows mean satisfaction ratings, return rates, and discount usage for loyalty program members versus non-members. Here are the insights:</p>
+<ul class="wp-block-list">
+<li><strong>Product Quality Rating</strong>: Loyalty program members rate product quality slightly higher (2.95) compared to non-members (2.92).</li>
+<li><strong>Delivery Time Rating</strong>: Loyalty program members are more satisfied with delivery time (3.09) than non-members (2.92).</li>
+<li><strong>Customer Service Rating</strong>: Members rate customer service higher (3.16) compared to non-members (2.99).</li>
+<li><strong>Website Ease of Use Rating</strong>: Non-members rate the website slightly higher (3.11) than members (3.06).</li>
+<li><strong>Return Rate</strong>: The return rates are almost identical between members (0.25) and non-members (0.25).</li>
+<li><strong>Discount Usage</strong>: Members use slightly more discounts ($260) compared to non-members ($241).</li>
+</ul>
+<h4 class="wp-block-heading">Net Promoter Score</h4>
+<p>Now, let’s calculate the Net Promoter Score. NPS is a metric used to gauge customer loyalty and satisfaction by asking customers how likely they are to recommend a company’s product or service to others on a scale of 0 to 10. Respondents are classified into three categories:</p>
+<ol class="wp-block-list">
+<li>Promoters (9-10)</li>
+<li>Passives (7-8)</li>
+<li>Detractors (0-6)</li>
+</ol>
+<p>The NPS is calculated by subtracting the percentage of Detractors from the percentage of Promoters. A higher NPS indicates more customer loyalty and positive word-of-mouth, which are critical for business growth.</p>
+<p>To calculate the NPS, we will use customer service ratings as a proxy for overall satisfaction. Here’s how to calculate NPS:</p>
+<pre><code class="language-python"># define NPS categories based on customer service rating
+data['NPS_Category'] = pd.cut(data['CustomerServiceRating'], bins=[0, 6, 8, 10], labels=['Detractors', 'Passives', 'Promoters'], right=False)
+
+# calculate NPS
+nps_counts = data['NPS_Category'].value_counts(normalize=True) * 100
+nps_score = nps_counts['Promoters'] - nps_counts['Detractors']
+
+nps_counts</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>NPS_Category<br/>Detractors    100.0<br/>Passives        0.0<br/>Promoters       0.0<br/>Name: proportion, dtype: float64</strong></pre>
+<pre><code class="language-python">nps_score</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>-100.0</strong></pre>
+<p>The NPS calculation shows:</p>
+<ul class="wp-block-list">
+<li><strong>Detractors</strong>: 100% of customers fall into the Detractors category.</li>
+<li><strong>Passives</strong>: 0%</li>
+<li><strong>Promoters</strong>: 0%</li>
+</ul>
+<p>This results in an NPS score of -100, which indicates extremely low customer satisfaction. This score is a critical indicator that significant improvements are needed in customer service to convert detractors into promoters.</p>
+<h4 class="wp-block-heading">Root Cause Analysis for Low Satisfaction</h4>
+<p>Now, we will perform a root cause analysis on customer dissatisfaction by identifying the key factors contributing to low ratings in specific areas such as product quality, delivery time, customer service, and website ease of use. We’ll analyze the characteristics of customers who provide low ratings and look for patterns that can help us understand the root causes of dissatisfaction.</p>
+<p>We can perform root cause analysis for low ratings by identifying the customers with low ratings and analyzing the characteristics of these customers. We’ll create subsets of the data where ratings are low (1 or 2) for product quality, delivery time, customer service, and website ease of use:</p>
+<pre><code class="language-python"># define low rating threshold
+low_rating_threshold = 2
+
+# create subsets for low ratings in different aspects
+low_product_quality = data[data['ProductQualityRating'] &lt;= low_rating_threshold]
+low_delivery_time = data[data['DeliveryTimeRating'] &lt;= low_rating_threshold]
+low_customer_service = data[data['CustomerServiceRating'] &lt;= low_rating_threshold]
+low_website_ease_of_use = data[data['WebsiteEaseOfUseRating'] &lt;= low_rating_threshold]
+
+# plot the characteristics for each low rating subset
+plt.figure(figsize=(20, 15))
+
+# age distribution for low ratings
+plt.subplot(2, 2, 1)
+plt.hist([low_product_quality['Age'], low_delivery_time['Age'], low_customer_service['Age'], low_website_ease_of_use['Age']], bins=10, label=['Product Quality', 'Delivery Time', 'Customer Service', 'Website Ease of Use'])
+plt.title('Age Distribution for Low Ratings')
+plt.xlabel('Age')
+plt.ylabel('Frequency')
+plt.legend()
+
+# purchase amount distribution for low ratings
+plt.subplot(2, 2, 2)
+plt.hist([low_product_quality['PurchaseAmount'], low_delivery_time['PurchaseAmount'], low_customer_service['PurchaseAmount'], low_website_ease_of_use['PurchaseAmount']], bins=10, label=['Product Quality', 'Delivery Time', 'Customer Service', 'Website Ease of Use'])
+plt.title('Purchase Amount Distribution for Low Ratings')
+plt.xlabel('Purchase Amount')
+plt.ylabel('Frequency')
+plt.legend()
+
+# purchase frequency distribution for low ratings
+plt.subplot(2, 2, 3)
+plt.hist([low_product_quality['PurchaseFrequency'], low_delivery_time['PurchaseFrequency'], low_customer_service['PurchaseFrequency'], low_website_ease_of_use['PurchaseFrequency']], bins=10, label=['Product Quality', 'Delivery Time', 'Customer Service', 'Website Ease of Use'])
+plt.title('Purchase Frequency Distribution for Low Ratings')
+plt.xlabel('Purchase Frequency')
+plt.ylabel('Frequency')
+plt.legend()
+
+# return rate distribution for low ratings
+plt.subplot(2, 2, 4)
+plt.hist([low_product_quality['ReturnRate'], low_delivery_time['ReturnRate'], low_customer_service['ReturnRate'], low_website_ease_of_use['ReturnRate']], bins=10, label=['Product Quality', 'Delivery Time', 'Customer Service', 'Website Ease of Use'])
+plt.title('Return Rate Distribution for Low Ratings')
+plt.xlabel('Return Rate')
+plt.ylabel('Frequency')
+plt.legend()
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="root cause analysis" class="wp-image-24243" data-attachment-id="24243" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="root cause analysis" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/root-cause-analysis.png?fit=1024%2C767&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/root-cause-analysis.png?fit=300%2C225&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/root-cause-analysis.png?fit=1990%2C1490&amp;ssl=1" data-orig-size="1990,1490" data-permalink="https://my-ai-portfolio.com/2024/07/29/customer-satisfaction-analysis-with-python/root-cause-analysis/" data-recalc-dims="1" decoding="async" height="767" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/root-cause-analysis.png?resize=1024%2C767&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/root-cause-analysis.png?resize=1024%2C767&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/root-cause-analysis.png?resize=300%2C225&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/root-cause-analysis.png?resize=768%2C575&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/root-cause-analysis.png?resize=1536%2C1150&amp;ssl=1 1536w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/root-cause-analysis.png?resize=1200%2C898&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/root-cause-analysis.png?resize=800%2C600&amp;ssl=1 800w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/root-cause-analysis.png?resize=600%2C450&amp;ssl=1 600w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/root-cause-analysis.png?resize=400%2C300&amp;ssl=1 400w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/root-cause-analysis.png?resize=200%2C150&amp;ssl=1 200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/07/root-cause-analysis.png?w=1990&amp;ssl=1 1990w" width="1024"/></figure>
+<p>The histograms indicate several key insights for root cause analysis of low ratings across different aspects of customer satisfaction. Customers giving low ratings span a wide age range, with notable peaks around ages 30-40 and 50-60, which suggests age-related dissatisfaction trends. Purchase amount and frequency distributions reveal that low ratings are not limited to low spenders or infrequent buyers; even high spenders and frequent buyers express dissatisfaction, which shows service quality issues. The return rate distribution shows that higher return rates correlate with low ratings, particularly for product quality and website ease of use, which indicates dissatisfaction with product and website experiences.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, this is how we can perform Customer Satisfaction Analysis with Python. Customer Satisfaction Analysis is the process of collecting, analyzing, and interpreting data regarding how satisfied customers are with a company’s products, services, and overall experience.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="t20-world-cup-2024-match-analysis.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="hypothesis-testing-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

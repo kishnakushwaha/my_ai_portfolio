@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Hypothesis Testing for Data Scientists with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Hypothesis Testing for Data Scientists with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 31, 2025 • 5 min read</div>
+<p>As a Data Scientist, you’re often tasked with determining whether a difference in outcomes or a trend in the data is significant, or simply the result of random variation. This is where hypothesis testing becomes essential. It provides a structured, statistical framework to validate assumptions, compare groups, and make confident, data-driven decisions. So, in this article, I’ll take you through a practical guide to Hypothesis Testing for Data Scientists with Python.</p>
+<h2 class="wp-block-heading">Hypothesis Testing for Data Scientists with Python: Getting Started</h2>
+<p>We’ve been given a dataset of 1000 employees, with information on:</p>
+<ol class="wp-block-list">
+<li>Age, Department, Education, Experience</li>
+<li>Whether they attended a <strong>training program</strong></li>
+<li>Their <strong>performance scores</strong> (scaled from 0 to 100)</li>
+</ol>
+<p>We want to evaluate whether the training program improved performance, on average, compared to employees who didn’t attend the training. You can find the dataset <strong><a href="../assets/datasets/Employee_Training_and_Performance_Dataset.csv">here</a></strong>.</p>
+<h4 class="wp-block-heading">Step 1: Define the Hypotheses</h4>
+<p>In hypothesis testing, we start by stating two opposing claims:</p>
+<ol class="wp-block-list">
+<li><strong>Null Hypothesis (H₀):</strong> There is <strong>no difference</strong> in average performance scores between trained and untrained employees.</li>
+<li><strong>Alternative Hypothesis (H₁):</strong> Trained employees have a <strong>higher average performance score</strong> than untrained employees.</li>
+</ol>
+<p>This is a <strong>one-tailed</strong> test, as we’re specifically interested in improvement.</p>
+<p>Now, before the second step, we will import the <strong><a href="../assets/datasets/Employee_Training_and_Performance_Dataset.csv">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+df = pd.read_csv('/content/Employee_Training_and_Performance_Dataset.csv')
+df.head()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="" class="wp-image-26774" data-attachment-id="26774" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/05/image.png?fit=1024%2C253&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/05/image.png?fit=300%2C74&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/05/image.png?fit=1596%2C394&amp;ssl=1" data-orig-size="1596,394" data-permalink="https://my-ai-portfolio.com/2025/05/20/hypothesis-testing-for-data-scientists-with-python/image-219/" data-recalc-dims="1" decoding="async" height="253" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/05/image.png?resize=1024%2C253&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/05/image.png?resize=1024%2C253&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/05/image.png?resize=300%2C74&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/05/image.png?resize=768%2C190&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/05/image.png?resize=1536%2C379&amp;ssl=1 1536w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/05/image.png?resize=1200%2C296&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/05/image.png?w=1596&amp;ssl=1 1596w" width="1024"/></figure>
+<h4 class="wp-block-heading">Step 2: Prepare the Groups</h4>
+<p>Next, we will split the dataset into two groups based on whether employees attended the training:</p>
+<pre><code class="language-python">group_yes = df[df['TrainingAttended'] == 'Yes']['PerformanceScore']
+group_no = df[df['TrainingAttended'] == 'No']['PerformanceScore']</code></pre>
+<h4 class="wp-block-heading">Step 3: Check for Normality</h4>
+<p>Most parametric tests, including the t-test, assume that the data is normally distributed. So, we will use the Shapiro-Wilk Test to verify this for both groups. If the <strong>p-value &gt; 0.05</strong>, we <strong>fail to reject</strong> the assumption of normality:</p>
+<pre><code class="language-python">from scipy import stats
+
+sample_size = min(len(group_yes), len(group_no), 300)
+
+shapiro_yes = stats.shapiro(group_yes.sample(sample_size, random_state=1))
+shapiro_no = stats.shapiro(group_no.sample(sample_size, random_state=1))
+
+print("Shapiro Test (Training = Yes):", shapiro_yes)
+print("Shapiro Test (Training = No):", shapiro_no)</code></pre>
+<pre class="wp-block-preformatted"><strong>Shapiro Test (Training = Yes): ShapiroResult(statistic=np.float64(0.9947190464566062), pvalue=np.float64(0.3910129582664982))<br/>Shapiro Test (Training = No): ShapiroResult(statistic=np.float64(0.99501435026432), pvalue=np.float64(0.44369527154076494))</strong></pre>
+<p>Both groups are approximately normal, so we can proceed with the t-test.</p>
+<h4 class="wp-block-heading">Step 4: Check for Equal Variance</h4>
+<p>Before running a t-test, we need to determine whether the two groups have equal variances. We use Levene’s Test for this:</p>
+<pre><code class="language-python">levene = stats.levene(group_yes, group_no)
+print("Levene’s Test:", levene)</code></pre>
+<pre class="wp-block-preformatted"><strong>Levene’s Test: LeveneResult(statistic=np.float64(3.6987757209752585), pvalue=np.float64(0.05473666933558896))</strong></pre>
+<p>While this p-value is just above 0.05, it’s borderline. To be cautious, we assume unequal variances and use Welch’s t-test, which is more robust.</p>
+<h4 class="wp-block-heading">Step 5: Perform Welch’s T-Test</h4>
+<p>Now, we will perform the actual hypothesis test:</p>
+<pre><code class="language-python">t_stat, p_val = stats.ttest_ind(group_yes, group_no, equal_var=False)
+print("T-test statistic:", t_stat)
+print("T-test p-value:", p_val)</code></pre>
+<pre class="wp-block-preformatted"><strong>T-test statistic: 9.187893626181372<br/>T-test p-value: 2.8582551803382495e-19</strong></pre>
+<p>A p-value this small means there’s an <strong>extremely low probability</strong> that the observed difference happened by chance.</p>
+<p>Since p-value &lt; 0.05, we will reject the null hypothesis. We now have strong statistical evidence that employees who attended training perform significantly better than those who did not.</p>
+<p>Here’s a visual comparison of both groups:</p>
+<pre><code class="language-python">import plotly.express as px
+
+fig = px.box(
+    df,
+    x='TrainingAttended',
+    y='PerformanceScore',
+    title='Performance Score by Training Attendance',
+    labels={
+        'TrainingAttended': 'Training Attended',
+        'PerformanceScore': 'Performance Score'
+    },
+    color='TrainingAttended',  
+    points='all',  
+)
+
+fig.update_layout(
+    plot_bgcolor='rgba(0,0,0,0)',
+    paper_bgcolor='white',
+    margin=dict(l=40, r=40, t=80, b=60),
+    showlegend=False
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Performance Score by Training Attendance" class="wp-image-26779" data-attachment-id="26779" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Performance Score by Training Attendance" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/05/Performance-Score-by-Training-Attendance.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/05/Performance-Score-by-Training-Attendance.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/05/Performance-Score-by-Training-Attendance.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2025/05/20/hypothesis-testing-for-data-scientists-with-python/performance-score-by-training-attendance/" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/05/Performance-Score-by-Training-Attendance.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/05/Performance-Score-by-Training-Attendance.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/05/Performance-Score-by-Training-Attendance.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2025/05/Performance-Score-by-Training-Attendance.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<h3 class="wp-block-heading">Summary</h3>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="stock-market-anomaly-detection-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="llm-project-ideas-for-resume.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

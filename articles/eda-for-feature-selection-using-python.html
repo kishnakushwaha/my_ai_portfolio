@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>EDA for Feature Selection using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        EDA for Feature Selection using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 21, 2025 • 5 min read</div>
+<p>Exploratory Data Analysis (EDA) is an approach in <a href="https://my-ai-portfolio.com/2023/07/22/data-analysis-projects-using-python/" rel="noreferrer noopener" target="_blank"><strong>data analysis</strong></a> that uses various techniques to maximize insight into a dataset, uncover underlying structure, analyze relationships between variables, detect outliers and anomalies, test underlying assumptions, and feature selection for training <a href="https://amzn.eu/d/3Bgb8IK" rel="noreferrer noopener" target="_blank"><strong>Machine Learning</strong></a> models. So, if you want to learn how to choose the best features for training Machine Learning models using EDA, this article is for you. In this article, I’ll take you through the task of EDA for Feature Selection using Python.</p>
+<h2 class="wp-block-heading">EDA for Feature Selection: Process We Can Follow</h2>
+<p>EDA is a valuable step in a data science workflow, particularly for feature selection. It helps you know about the best candidates for features based on their relationship with the target variable and each other, their relevance, and their predictive power.</p>
+<p>Below is the process you can follow while performing EDA for Feature Selection:</p>
+<ol class="wp-block-list">
+<li>Begin by getting familiar with the dataset. It includes understanding the size, scope, and nature of the data (structured vs. unstructured), identifying each feature and its type (numerical, categorical), and recognizing the target variable.</li>
+<li>Identify and handle missing values by imputation, deletion, or estimation, depending on their nature and the proportion of missing data.</li>
+<li>Analyze the distribution of each feature using histograms, density plots, or bar charts for categorical variables.</li>
+<li>Conduct correlation analysis using Pearson, Spearman, or Kendall correlation coefficients to assess the relationship between numeric features and the target variable.</li>
+<li>Utilize scatter plots, pair plots, and heat maps to explore relationships between features.</li>
+<li>Based on insights gained through EDA, manually remove redundant features, features with very little variance, or features highly correlated with others.</li>
+</ol>
+<p>To get started with EDA for feature selection, we need a dataset. I found an ideal dataset for this task. You can download it from <a href="../assets/datasets/dynamic_pricing-1.zip" rel="noreferrer noopener" target="_blank"><strong>here</strong></a>.</p>
+<h2 class="wp-block-heading">EDA for Feature Selection using Python</h2>
+<p>Now, let’s get started with EDA for Feature Selection by importing the necessary Python libraries and the <a href="../assets/datasets/dynamic_pricing-1.zip" rel="noreferrer noopener" target="_blank"><strong>dataset</strong></a>:</p>
+<pre><code class="language-python">import pandas as pd
+
+data = pd.read_csv("dynamic_pricing.csv")
+
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>   Number_of_Riders  Number_of_Drivers Location_Category  \<br/>0                90                 45             Urban   <br/>1                58                 39          Suburban   <br/>2                42                 31             Rural   <br/>3                89                 28             Rural   <br/>4                78                 22             Rural   <br/><br/>  Customer_Loyalty_Status  Number_of_Past_Rides  Average_Ratings  \<br/>0                  Silver                    13             4.47   <br/>1                  Silver                    72             4.06   <br/>2                  Silver                     0             3.99   <br/>3                 Regular                    67             4.31   <br/>4                 Regular                    74             3.77   <br/><br/>  Time_of_Booking Vehicle_Type  Expected_Ride_Duration  \<br/>0           Night      Premium                      90   <br/>1         Evening      Economy                      43   <br/>2       Afternoon      Premium                      76   <br/>3       Afternoon      Premium                     134   <br/>4       Afternoon      Economy                     149   <br/><br/>   Historical_Cost_of_Ride  <br/>0               284.257273  <br/>1               173.874753  <br/>2               329.795469  <br/>3               470.201232  <br/>4               579.681422  </strong></pre>
+<p>Our goal is to identify the most important features for predicting the Historical_Cost_of_Ride. Let’s start with the data quality check to identify any missing values or incorrect data types:</p>
+<pre><code class="language-python"># check for missing values and data types
+missing_values = data.isnull().sum()
+data_types = data.dtypes
+
+missing_values_report = pd.DataFrame({'Missing Values': missing_values, 'Data Type': data_types})
+print(missing_values_report)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>                         Missing Values Data Type<br/>Number_of_Riders                      0     int64<br/>Number_of_Drivers                     0     int64<br/>Location_Category                     0    object<br/>Customer_Loyalty_Status               0    object<br/>Number_of_Past_Rides                  0     int64<br/>Average_Ratings                       0   float64<br/>Time_of_Booking                       0    object<br/>Vehicle_Type                          0    object<br/>Expected_Ride_Duration                0     int64<br/>Historical_Cost_of_Ride               0   float64</strong></pre>
+<p>The dataset does not contain any missing values, and the data types appear appropriate for each feature.</p>
+<h4 class="wp-block-heading">Univariate Analysis</h4>
+<p>With data quality checks completed and no immediate data cleaning required, we can move on to Univariate Analysis. It will help us understand the distribution of each variable individually. I’ll start by analyzing the distribution of numerical features to understand their distribution:</p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+import seaborn as sns
+
+# set the aesthetics for the plots
+sns.set_style("whitegrid")
+
+# define the numerical and categorical columns
+numerical_cols = ['Number_of_Riders', 'Number_of_Drivers', 'Number_of_Past_Rides',
+                  'Average_Ratings', 'Expected_Ride_Duration', 'Historical_Cost_of_Ride']
+categorical_cols = ['Location_Category', 'Customer_Loyalty_Status', 'Time_of_Booking', 'Vehicle_Type']
+
+# descriptive statistics for numerical features
+descriptive_stats = data[numerical_cols].describe()
+
+# plotting distributions for numerical features
+fig, axes = plt.subplots(nrows=3, ncols=2, figsize=(14, 12))
+fig.subplots_adjust(hspace=0.4, wspace=0.4)
+
+for i, col in enumerate(numerical_cols):
+    sns.histplot(data[col], kde=True, ax=axes[i//2, i%2])
+    axes[i//2, i%2].set_title(f'Distribution of {col}', fontsize=10)
+    axes[i//2, i%2].set_xlabel('')
+    axes[i//2, i%2].set_ylabel('')
+
+print(descriptive_stats)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>       Number_of_Riders  Number_of_Drivers  Number_of_Past_Rides  \<br/>count       1000.000000        1000.000000           1000.000000   <br/>mean          60.372000          27.076000             50.031000   <br/>std           23.701506          19.068346             29.313774   <br/>min           20.000000           5.000000              0.000000   <br/>25%           40.000000          11.000000             25.000000   <br/>50%           60.000000          22.000000             51.000000   <br/>75%           81.000000          38.000000             75.000000   <br/>max          100.000000          89.000000            100.000000   <br/><br/>       Average_Ratings  Expected_Ride_Duration  Historical_Cost_of_Ride  <br/>count      1000.000000              1000.00000              1000.000000  <br/>mean          4.257220                99.58800               372.502623  <br/>std           0.435781                49.16545               187.158756  <br/>min           3.500000                10.00000                25.993449  <br/>25%           3.870000                59.75000               221.365202  <br/>50%           4.270000               102.00000               362.019426  <br/>75%           4.632500               143.00000               510.497504  <br/>max           5.000000               180.00000               836.116419 </strong></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="EDA for feature selection: Univariate Analysis of numerical variables" class="wp-image-22817" data-attachment-id="22817" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="EDA-for-Feature-Selection-1" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-Feature-Selection-1.png?fit=1024%2C886&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-Feature-Selection-1.png?fit=300%2C260&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-Feature-Selection-1.png?fit=1141%2C987&amp;ssl=1" data-orig-size="1141,987" data-permalink="https://my-ai-portfolio.com/2024/03/04/eda-for-feature-selection-using-python/eda-for-feature-selection-1/" data-recalc-dims="1" decoding="async" height="886" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-Feature-Selection-1.png?resize=1024%2C886&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-Feature-Selection-1.png?resize=1024%2C886&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-Feature-Selection-1.png?resize=300%2C260&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-Feature-Selection-1.png?resize=768%2C664&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-Feature-Selection-1.png?w=1141&amp;ssl=1 1141w" style="width:653px;height:auto" width="1024"/></figure>
+<p>The descriptive statistics and distributions for the numerical features provide the following insights:</p>
+<ol class="wp-block-list">
+<li><strong>Number_of_Riders</strong>: The distribution is fairly uniform, with values ranging from 20 to 100 riders. It suggests a wide variation in the number of riders per ride.</li>
+<li><strong>Number_of_Drivers</strong>: This feature also shows a wide range, but it is skewed towards lower numbers, indicating that there are often fewer drivers available compared to riders.</li>
+<li><strong>Number_of_Past_Rides</strong>: The distribution of past rides is fairly even, though slightly skewed towards lower values. It indicates variability in customer experience with the service.</li>
+<li><strong>Average_Ratings</strong>: The ratings are fairly normally distributed, with a mean around 4.26, indicating generally positive feedback from customers. The minimum rating is 3.5 and the maximum is 5.0.</li>
+<li><strong>Expected_Ride_Duration</strong>: The expected ride duration varies significantly from 10 to 180 minutes, with a mean of approximately 99.59 minutes. The distribution is fairly uniform.</li>
+<li><strong>Historical_Cost_of_Ride</strong>: The cost of rides varies widely, from about 26 to 836 units, with a mean of approximately 372.50 units. The distribution is right-skewed, indicating that most rides cost less than the mean, but there are some significantly more expensive rides.</li>
+</ol>
+<p>Next, we will explore the categorical features to understand their distribution and how they might relate to the target variable. We will plot the counts of each category for the categorical features and note any observations:</p>
+<pre><code class="language-python"># plotting distributions for categorical features
+fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(14, 12))
+fig.subplots_adjust(hspace=0.4, wspace=0.4)
+
+for i, col in enumerate(categorical_cols):
+    sns.countplot(data=data, x=col, ax=axes[i//2, i%2])
+    axes[i//2, i%2].set_title(f'Distribution of {col}', fontsize=10)
+    axes[i//2, i%2].set_xlabel('')
+    axes[i//2, i%2].set_ylabel('')
+    axes[i//2, i%2].tick_params(axis='x', rotation=45)
+
+plt.tight_layout()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Univariate Analysis for categorical variables" class="wp-image-22820" data-attachment-id="22820" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="EDA-for-feature-selection-2" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-2.png?fit=1024%2C877&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-2.png?fit=300%2C257&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-2.png?fit=1389%2C1189&amp;ssl=1" data-orig-size="1389,1189" data-permalink="https://my-ai-portfolio.com/2024/03/04/eda-for-feature-selection-using-python/eda-for-feature-selection-2/" data-recalc-dims="1" decoding="async" height="877" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-2.png?resize=1024%2C877&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-2.png?resize=1024%2C877&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-2.png?resize=300%2C257&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-2.png?resize=768%2C657&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-2.png?resize=1200%2C1027&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-2.png?w=1389&amp;ssl=1 1389w" style="width:701px;height:auto" width="1024"/></figure>
+<p>Here’s the Univariate Analysis Summary for Categorical Features:</p>
+<ol class="wp-block-list">
+<li><strong>Location_Category</strong>: The distribution across different location categories shows a variation, with “Urban” likely being the most common, followed by “Suburban” and “Rural” categories. It suggests that the location category could impact the cost of rides, potentially due to differences in demand and availability.</li>
+<li><strong>Customer_Loyalty_Status</strong>: There are varying levels of loyalty status among customers, including categories like “Silver”, “Regular”, and “Gold”. The distribution indicates a mix of new and loyal customers, which might influence ride costs through loyalty discounts or premium pricing.</li>
+<li><strong>Time_of_Booking</strong>: The time of booking varies, including “Night”, “Evening”, “Afternoon”, and “Morning”. This feature could affect ride costs due to varying demand at different times of the day.</li>
+<li><strong>Vehicle_Type</strong>: There’s a distribution across different vehicle types, such as “Premium” and “Economy”. The type of vehicle chosen for the ride likely impacts the cost directly, with premium vehicles costing more than economy options.</li>
+</ol>
+<h4 class="wp-block-heading">Bivariate Analysis</h4>
+<p>After analyzing the distributions of numerical and categorical features, the next step is to perform Bivariate Analysis to explore the relationships between the target variable (Historical_Cost_of_Ride) and the other features. This analysis will help us identify which features have the most significant impact on ride cost, guiding our feature selection process for predictive modelling. Let’s proceed with this:</p>
+<pre><code class="language-python">num_plots = len(numerical_cols[:-1])
+n_cols = 2
+n_rows = (num_plots + 1) // n_cols
+
+fig, axes = plt.subplots(nrows=n_rows, ncols=n_cols, figsize=(14, n_rows * 4))
+fig.subplots_adjust(hspace=0.4, wspace=0.4)
+
+axes = axes.flatten()
+
+# plot each numerical column against the historical cost.
+for i, col in enumerate(numerical_cols[:-1]):
+    sns.scatterplot(data=data, x=col, y='Historical_Cost_of_Ride', ax=axes[i])
+    axes[i].set_title(f'{col} vs Historical_Cost_of_Ride', fontsize=10)
+    axes[i].set_xlabel(col)
+    axes[i].set_ylabel('Historical_Cost_of_Ride')
+
+for j in range(i + 1, n_rows * n_cols):
+    fig.delaxes(axes[j])
+
+plt.tight_layout()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="EDA for Feature Selection: Bivariate Analysis of numerical features" class="wp-image-22823" data-attachment-id="22823" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="EDA-for-feature-selection-3" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-3.png?fit=1024%2C877&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-3.png?fit=300%2C257&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-3.png?fit=1389%2C1190&amp;ssl=1" data-orig-size="1389,1190" data-permalink="https://my-ai-portfolio.com/2024/03/04/eda-for-feature-selection-using-python/eda-for-feature-selection-3/" data-recalc-dims="1" decoding="async" height="877" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-3.png?resize=1024%2C877&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-3.png?resize=1024%2C877&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-3.png?resize=300%2C257&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-3.png?resize=768%2C658&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-3.png?resize=1200%2C1028&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-3.png?w=1389&amp;ssl=1 1389w" style="width:654px;height:auto" width="1024"/></figure>
+<p>The scatter plots of numerical features against the Historical_Cost_of_Ride reveal several insights:</p>
+<ol class="wp-block-list">
+<li><strong>Number_of_Riders</strong>: There does not appear to be a clear linear relationship between the number of riders and the cost of the ride. The distribution of points is quite scattered, suggesting that while the number of riders may influence the cost, it is not a straightforward linear relationship.</li>
+<li><strong>Number_of_Drivers</strong>: Similar to the number of riders, the number of drivers available does not show a clear linear relationship with the ride cost. It indicates that while driver availability might affect pricing dynamics, it does not do so in a simple, direct manner.</li>
+<li><strong>Number_of_Past_Rides</strong>: There’s no evident linear relationship between the number of past rides a customer has had and the cost of their rides. It suggests that customer loyalty, as measured by the number of past rides, does not directly influence the cost of rides linearly.</li>
+<li><strong>Average_Ratings</strong>: The scatter plot does not indicate a strong linear relationship between average ratings and ride cost. While we might have expected higher-rated drivers or customers to be associated with higher costs, the data does not support this.</li>
+<li><strong>Expected_Ride_Duration</strong>: There seems to be a more noticeable relationship here, with a potential trend indicating that longer expected ride durations are associated with higher costs. It is intuitive, as longer rides would naturally cost more.</li>
+</ol>
+<p>Given these observations, <strong>Expected_Ride_Duration</strong> stands out as a numerical feature with a more discernible relationship to the Historical_Cost_of_Ride. The other numerical features do not show clear linear relationships with the ride cost, but they might still contribute information in combination with other features or through non-linear relationships.</p>
+<p>Next, let’s examine how the categorical features relate to the Historical_Cost_of_Ride using box plots to explore the variance in ride costs across different categories. It will help identify if certain categories are consistently associated with higher or lower ride costs:</p>
+<pre><code class="language-python"># bivariate Analysis: categorical features vs historical_cost_of_ride
+fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(14, 12))
+fig.subplots_adjust(hspace=0.4, wspace=0.4)
+
+for i, col in enumerate(categorical_cols):
+    sns.boxplot(data=data, x=col, y='Historical_Cost_of_Ride', ax=axes[i//2, i%2])
+    axes[i//2, i%2].set_title(f'{col} vs Historical_Cost_of_Ride', fontsize=10)
+    axes[i//2, i%2].set_xlabel('')
+    axes[i//2, i%2].set_ylabel('Historical_Cost_of_Ride')
+    axes[i//2, i%2].tick_params(axis='x', rotation=45)
+
+plt.tight_layout()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Bivariate Analysis of categorical variables" class="wp-image-22825" data-attachment-id="22825" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="EDA-for-feature-selection-4" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-4.png?fit=1024%2C877&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-4.png?fit=300%2C257&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-4.png?fit=1389%2C1189&amp;ssl=1" data-orig-size="1389,1189" data-permalink="https://my-ai-portfolio.com/2024/03/04/eda-for-feature-selection-using-python/eda-for-feature-selection-4/" data-recalc-dims="1" decoding="async" height="877" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-4.png?resize=1024%2C877&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-4.png?resize=1024%2C877&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-4.png?resize=300%2C257&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-4.png?resize=768%2C657&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-4.png?resize=1200%2C1027&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/03/EDA-for-feature-selection-4.png?w=1389&amp;ssl=1 1389w" style="width:652px;height:auto" width="1024"/></figure>
+<p>The box plots reveal how the Historical_Cost_of_Ride varies across different categories for each categorical feature:</p>
+<ol class="wp-block-list">
+<li><strong>Location_Category</strong>: Ride costs vary significantly by location category, with “Urban” locations generally showing a wider range and potentially higher median costs compared to “Suburban” and “Rural” areas. It suggests that location plays a crucial role in determining ride costs, likely due to differences in demand, availability, and operational costs.</li>
+<li><strong>Customer_Loyalty_Status</strong>: There are noticeable differences in ride costs based on the loyalty status of the customer. While the median costs across different statuses seem relatively close, the variability in costs suggests that loyalty status could influence pricing, possibly through loyalty discounts or perks for higher-status customers.</li>
+<li><strong>Time_of_Booking</strong>: The time of booking appears to impact ride costs, with certain times of day showing different cost distributions. It could reflect demand variations throughout the day, with peak times potentially commanding higher prices.</li>
+<li><strong>Vehicle_Type</strong>: As expected, the type of vehicle has a significant impact on the cost of rides. “Premium” vehicles generally have higher costs compared to “Economy” vehicles, indicating that vehicle type is a critical factor in pricing.</li>
+</ol>
+<h4 class="wp-block-heading">Insights Gathered from EDA for Feature Selection</h4>
+<p>Based on the EDA, the following features are identified as potentially important for predicting ride costs:</p>
+<ul class="wp-block-list">
+<li><strong>Expected_Ride_Duration</strong>: Shows a clear relationship with ride cost.</li>
+<li><strong>Location_Category</strong>: Significant variance in costs by location.</li>
+<li><strong>Customer_Loyalty_Status</strong>: Variability in costs suggests an impact on pricing.</li>
+<li><strong>Time_of_Booking</strong>: Variations in costs indicate an influence of demand at different times.</li>
+<li><strong>Vehicle_Type</strong>: Directly influences cost with clear distinctions between vehicle types.</li>
+</ul>
+<p>The other numerical features (Number_of_Riders, Number_of_Drivers, Number_of_Past_Rides, Average_Ratings) do not show strong linear relationships with the target variable but could still be useful, especially when combined with other features or through engineered features that capture non-linear relationships or interactions.</p>
+<p>Other than these features, you are always free to select and create new features based on domain knowledge.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, this is how you can perform EDA for Feature Selection using Python. EDA is a valuable step in a data science workflow, particularly for feature selection. It helps you know about the best candidates for features based on their relationship with the target variable and each other, their relevance, and their predictive power.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="health-monitoring-and-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="here-s-how-to-choose-data-visualization-graphs.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

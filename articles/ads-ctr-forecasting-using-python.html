@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Ads CTR Forecasting using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Ads CTR Forecasting using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 30, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="netflix-subscriptions-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="website-performance-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Ads CTR Analysis stands for Click-Through Rate Analysis for advertisements. Ads CTR Analysis is the process of examining the effectiveness of online advertisements by measuring the rate at which users click on an ad’s link to reach the advertiser’s website. If you want to learn how to perform Ads CTR Analysis, this article is for you. In this article, I’ll take you through the task of Ads CTR Analysis and Forecasting using Python.</p>
+<h2 class="wp-block-heading">Ads CTR Forecasting: Process We Can Follow</h2>
+<p>Ads CTR Analysis and Forecasting are crucial for businesses to assess the return on investment (ROI) of their advertising efforts and make data-driven decisions to improve ad performance. Below are the steps we can follow for the task of Ads CTR Analysis and Forecasting:</p>
+<ol class="wp-block-list">
+<li>Gather ad data, including the number of ad impressions (how often an ad was shown), the number of clicks, and any other relevant metrics.</li>
+<li>Explore the data to understand its characteristics and distribution. Calculate basic statistics, such as the mean CTR (Click-Through Rate) and standard deviation.</li>
+<li>Create visualizations, such as line charts or bar graphs, to represent CTR trends over time.</li>
+<li>Conduct A/B tests if necessary to compare the performance of different ad variations.</li>
+<li>Analyze the CTR data to identify factors that influence ad performance.</li>
+<li>Build a forecasting model to predict future CTR values.</li>
+</ol>
+<p>So, the process begins with collecting data. I found an ideal dataset for the task of Ads CTR Analysis and Forecasting. You can download the dataset from <strong><a href="https://statso.io/ads-click-through-rate-case-study/">here</a></strong>.</p>
+<h2 class="wp-block-heading">Ads CTR Forecasting using Python</h2>
+<p>Let’s get started with the task of Ads CTR Analysis and forecasting by importing the necessary Python libraries and the <strong><a href="https://statso.io/ads-click-through-rate-case-study/">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+from statsmodels.tsa.statespace.sarimax import SARIMAX
+from statsmodels.tsa.seasonal import seasonal_decompose
+import matplotlib.pyplot as plt
+
+data = pd.read_csv("ctr.csv")
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>         Date  Clicks  Impressions
+0  2022-10-19    2851        58598
+1  2022-10-20    2707        57628
+2  2022-10-21    2246        50135
+3  2022-10-22    1686        40608
+4  2022-10-23    1808        41999</strong></pre>
+<p>Let’s start by converting the Date column in the DataFrame from a string format to a datetime format and then setting it as the index of the DataFrame:</p>
+<pre><code class="language-python"># Data Preparation
+data['Date'] = pd.to_datetime(data['Date'],
+                                     format='%Y/%m/%d')
+data.set_index('Date', inplace=True)</code></pre>
+<p>Now, let’s visualize the clicks and impressions over time:</p>
+<pre><code class="language-python"># Visualize Clicks and Impressions
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=data.index, y=data['Clicks'], mode='lines', name='Clicks'))
+fig.add_trace(go.Scatter(x=data.index, y=data['Impressions'], mode='lines', name='Impressions'))
+fig.update_layout(title='Clicks and Impressions Over Time')
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Ads CTR Forecasting: Clicks and Impressions Over Time" class="wp-image-21670" data-attachment-id="21670" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ad-ctr-1" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="../assets/datasets/ad-ctr-1.png" width="857"/></figure>
+<p>Now, let’s have a look at the relationship between clicks and impressions:</p>
+<pre><code class="language-python"># Create a scatter plot to visualize the relationship between Clicks and Impressions
+fig = px.scatter(data, x='Clicks', y='Impressions', title='Relationship Between Clicks and Impressions',
+                 labels={'Clicks': 'Clicks', 'Impressions': 'Impressions'})
+
+# Customize the layout
+fig.update_layout(xaxis_title='Clicks', yaxis_title='Impressions')
+
+# Show the plot
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Relationship Between Clicks and Impressions" class="wp-image-21672" data-attachment-id="21672" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ad-ctr-2" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="../assets/datasets/ad-ctr-2.png" width="857"/></figure>
+<p>So, the relationship between clicks and impressions is linear. It means higher ad impressions result in higher ad clicks. Now, let’s calculate and visualize CTR over time:</p>
+<pre><code class="language-python"># Calculate and visualize CTR
+data['CTR'] = (data['Clicks'] / data['Impressions']) * 100
+fig = px.line(data, x=data.index, y='CTR', title='Click-Through Rate (CTR) Over Time')
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Ads CTR Forecasting: Click-Through Rate (CTR) Over Time" class="wp-image-21674" data-attachment-id="21674" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ad-ctr-3" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/ad-ctr-3.png" width="857"/></figure>
+<p>Now, let’s have a look at the average CTR by day of the week:</p>
+<pre><code class="language-python">data['DayOfWeek'] = data.index.dayofweek
+data['WeekOfMonth'] = data.index.week // 4
+
+# EDA based on DayOfWeek
+day_of_week_ctr = data.groupby('DayOfWeek')['CTR'].mean().reset_index()
+day_of_week_ctr['DayOfWeek'] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+
+fig = px.bar(day_of_week_ctr, x='DayOfWeek', y='CTR', title='Average CTR by Day of the Week')
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Average CTR by Day of the Week" class="wp-image-21676" data-attachment-id="21676" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ad-ctr-4" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/ad-ctr-4.png" width="857"/></figure>
+<p>Now, let’s compare the CTR on weekdays and weekends:</p>
+<pre><code class="language-python"># Create a new column 'DayCategory' to categorize weekdays and weekends
+data['DayCategory'] = data['DayOfWeek'].apply(lambda x: 'Weekend' if x &gt;= 5 else 'Weekday')
+
+# Calculate average CTR for weekdays and weekends
+ctr_by_day_category = data.groupby('DayCategory')['CTR'].mean().reset_index()
+
+# Create a bar plot to compare CTR on weekdays vs. weekends
+fig = px.bar(ctr_by_day_category, x='DayCategory', y='CTR', title='Comparison of CTR on Weekdays vs. Weekends',
+             labels={'CTR': 'Average CTR'})
+
+# Customize the layout
+fig.update_layout(yaxis_title='Average CTR')
+
+# Show the plot
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Comparison of CTR on Weekdays vs. Weekends" class="wp-image-21678" data-attachment-id="21678" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ad-ctr-5" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/ad-ctr-5.png" width="857"/></figure>
+<p>Now, let’s compare the impressions and clicks on weekdays and weekends:</p>
+<pre><code class="language-python"># Group the data by 'DayCategory' and calculate the sum of Clicks and Impressions for each category
+grouped_data = data.groupby('DayCategory')[['Clicks', 'Impressions']].sum().reset_index()
+
+# Create a grouped bar chart to visualize Clicks and Impressions on weekdays vs. weekends
+fig = px.bar(grouped_data, x='DayCategory', y=['Clicks', 'Impressions'],
+             title='Impressions and Clicks on Weekdays vs. Weekends',
+             labels={'value': 'Count', 'variable': 'Metric'},
+             color_discrete_sequence=['blue', 'green'])
+
+# Customize the layout
+fig.update_layout(yaxis_title='Count')
+fig.update_xaxes(title_text='Day Category')
+
+# Show the plot
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Impressions and Clicks on Weekdays vs. Weekends" class="wp-image-21680" data-attachment-id="21680" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ad-ctr-6" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/ad-ctr-6.png" width="857"/></figure>
+<h2 class="wp-block-heading">Ads CTR Forecasting</h2>
+<p>Now, let’s see how to forecast the Ads CTR. As CTR is dependent on impressions and impressions change over time, we can use Time Series forecasting techniques to forecast CTR. As CTR is seasonal, let’s calculate the p, d, and q values for the SARIMA model:</p>
+<pre><code class="language-python">data.reset_index(inplace=True)
+
+from statsmodels.tsa.arima.model import ARIMA
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+
+# resetting index
+time_series = data.set_index('Date')['CTR']
+
+# Differencing
+differenced_series = time_series.diff().dropna()
+
+# Plot ACF and PACF of differenced time series
+fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+plot_acf(differenced_series, ax=axes[0])
+plot_pacf(differenced_series, ax=axes[1])
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Ads CTR: ACF and PACF" class="wp-image-21682" data-attachment-id="21682" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ad-ctr-7" data-orig-size="1002,374" data-recalc-dims="1" decoding="async" height="374" loading="lazy" sizes="auto, (max-width: 1002px) 100vw, 1002px" src="../assets/datasets/ad-ctr-7.png" width="1002"/></figure>
+<p>The value of p, d, and q will be one here. You can learn more about calculating p, d, and q values from <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">here</a></strong>. And as we are using the SARIMA model here, the value of s will be 12.</p>
+<p>Now, let’s train the forecasting model using SARIMA:</p>
+<pre><code class="language-python">from statsmodels.tsa.statespace.sarimax import SARIMAX
+
+p, d, q, s = 1, 1, 1, 12
+
+model = SARIMAX(time_series, order=(p, d, q), seasonal_order=(p, d, q, s))
+results = model.fit()
+print(results.summary())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>                                    SARIMAX Results                                      
+==========================================================================================
+Dep. Variable:                                CTR   No. Observations:                  365
+Model:             SARIMAX(1, 1, 1)x(1, 1, 1, 12)   Log Likelihood                 -71.365
+Date:                            Mon, 23 Oct 2023   AIC                            152.730
+Time:                                    07:35:12   BIC                            172.048
+Sample:                                10-19-2022   HQIC                           160.418
+                                     - 10-18-2023                                         
+Covariance Type:                              opg                                         
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+ar.L1          0.5266      0.070      7.513      0.000       0.389       0.664
+ma.L1         -0.9049      0.036    -25.361      0.000      -0.975      -0.835
+ar.S.L12      -0.1573      0.071     -2.225      0.026      -0.296      -0.019
+ma.S.L12      -0.9974      1.099     -0.908      0.364      -3.151       1.156
+sigma2         0.0772      0.084      0.917      0.359      -0.088       0.242
+===================================================================================
+Ljung-Box (L1) (Q):                   5.64   Jarque-Bera (JB):                 1.20
+Prob(Q):                              0.02   Prob(JB):                         0.55
+Heteroskedasticity (H):               1.14   Skew:                            -0.01
+Prob(H) (two-sided):                  0.48   Kurtosis:                         3.28
+===================================================================================</strong></pre>
+<p>Now, here’s how to predict the future CTR values:</p>
+<pre><code class="language-python"># Predict future values
+future_steps = 100
+predictions = results.predict(len(time_series), len(time_series) + future_steps - 1)
+print(predictions)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>2023-10-19    3.852350
+2023-10-20    3.889426
+2023-10-21    3.820260
+2023-10-22    3.727494
+2023-10-23    3.710360
+                ...   
+2024-01-22    3.545574
+2024-01-23    3.466648
+2024-01-24    3.561193
+2024-01-25    3.546697
+2024-01-26    3.580132
+Freq: D, Name: predicted_mean, Length: 100, dtype: float64</strong></pre>
+<p>Now, let’s visualize the forecasted trend of CTR:</p>
+<pre><code class="language-python"># Create a DataFrame with the original data and predictions
+forecast = pd.DataFrame({'Original': time_series, 'Predictions': predictions})
+
+# Plot the original data and predictions
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(x=forecast.index, y=forecast['Predictions'],
+                         mode='lines', name='Predictions'))
+
+fig.add_trace(go.Scatter(x=forecast.index, y=forecast['Original'],
+                         mode='lines', name='Original Data'))
+
+fig.update_layout(title='CTR Forecasting',
+                  xaxis_title='Time Period',
+                  yaxis_title='Impressions',
+                  legend=dict(x=0.1, y=0.9),
+                  showlegend=True)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="CTR Forecasting" class="wp-image-21685" data-attachment-id="21685" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ad-ctr-8" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/ad-ctr-8.png" style="width:750px;height:auto" width="857"/></figure>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, this is how we can analyze and forecast CTR using Python. Ads Click Through Rate Analysis and Forecasting are crucial for businesses to assess the return on investment (ROI) of their advertising efforts and make data-driven decisions to improve ad performance. I hope you liked this article on Ads CTR Analysis and Forecasting using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="netflix-subscriptions-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="website-performance-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

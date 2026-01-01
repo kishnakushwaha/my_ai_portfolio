@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Missing Value Imputation Methods using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Missing Value Imputation Methods using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 20, 2025 • 5 min read</div>
+<p>In any real-world data collection, missing values can occur due to various reasons like errors in data entry, non-response in surveys, equipment malfunctions, or data corruption. Missing value imputation refers to replacing missing data with substituted values in a dataset. If you want to learn the methods we can use for missing value imputation, this article is for you. In this article, I’ll take you through a guide to missing value imputation methods with implementation using Python.</p>
+<h2 class="wp-block-heading">Missing Value Imputation Methods</h2>
+<p>Below are some of the most commonly used missing value imputation methods used by <strong><a href="https://my-ai-portfolio.com/2022/03/09/data-science-projects/">Data Science</a></strong> professionals:</p>
+<ol class="wp-block-list">
+<li>Mean/Median/Mode Imputation</li>
+<li>Predictive Imputation</li>
+<li>Last Observation Carried Forward (LOCF) &amp; Next Observation Carried Backward (NOCB)</li>
+</ol>
+<p>Let’s go through each of these methods of missing value imputation and how to implement them using Python.</p>
+<h2 class="wp-block-heading">A Guide to Missing Value Imputation Methods with Implementation using Python</h2>
+<h4 class="wp-block-heading">Mean/Median/Mode Imputation</h4>
+<p>These are statistical methods of imputation to replace missing values with the mean, median, or mode of the available values in a dataset.</p>
+<ul class="wp-block-list">
+<li><strong>Mean Imputation</strong>: Replaces missing values with the mean (average) of the available values. This method is suitable for numerical data that does not have outliers, as outliers can significantly affect the mean.</li>
+<li><strong>Median Imputation</strong>: Replaces missing values with the median of the available values. It is more robust than mean imputation, especially for data with outliers or a non-normal distribution.</li>
+<li><strong>Mode Imputation</strong>: Replaces missing values with the mode (the most frequently occurring value). This method is used for categorical data.</li>
+</ul>
+<p>Let’s assume we have a dataset with some missing values. We will create a small dummy dataset and replace the missing values using mean, median, and mode using Python:</p>
+<pre><code class="language-python">import numpy as np
+import pandas as pd
+
+# Creating a sample data
+data = {'Score': [25, np.nan, 30, np.nan, 29, 27, 32, 31]}
+df = pd.DataFrame(data)
+
+# Mean Imputation
+df['Score_Mean'] = df['Score'].fillna(df['Score'].mean())
+
+# Median Imputation
+df['Score_Median'] = df['Score'].fillna(df['Score'].median())
+
+# Mode Imputation
+df['Score_Mode'] = df['Score'].fillna(df['Score'].mode()[0])
+
+print(df)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>   Score  Score_Mean  Score_Median  Score_Mode<br/>0   25.0        25.0          25.0        25.0<br/>1    NaN        29.0          29.5        25.0<br/>2   30.0        30.0          30.0        30.0<br/>3    NaN        29.0          29.5        25.0<br/>4   29.0        29.0          29.0        29.0<br/>5   27.0        27.0          27.0        27.0<br/>6   32.0        32.0          32.0        32.0<br/>7   31.0        31.0          31.0        31.0</strong></pre>
+<p>While these methods are simple and quick, they can lead to biased estimates if the missing data is not randomly distributed and can reduce the variability of the dataset, leading to underestimations of standard errors.</p>
+<h4 class="wp-block-heading">Predictive Imputation</h4>
+<p>Predictive imputation involves using statistical models to predict and fill in missing values based on the relationships observed in the rest of the data. Some methods include:</p>
+<ul class="wp-block-list">
+<li><strong>Regression Imputation</strong>: Uses a regression model to predict missing values based on other, related variables in the data.</li>
+<li><strong>K-Nearest Neighbors (KNN) Imputation</strong>: Identifies ‘k’ samples in the dataset that are similar to the observation with missing data and imputes values based on the average (or majority) of these ‘k’ neighbours.</li>
+</ul>
+<p>For predictive imputation, let’s use k-nearest neighbours (KNN). We’ll use the KNNImputer from the scikit-learn library using Python:</p>
+<pre><code class="language-python">from sklearn.impute import KNNImputer
+
+# Assuming the same initial data with missing values
+data = {'Feature1': [25, 20, 30, 40, 29, 27, 32, 31],
+        'Feature2': [20, 25, np.nan, 45, 30, 25, 35, 40]}
+df = pd.DataFrame(data)
+
+# Predictive Imputation using KNN
+imputer = KNNImputer(n_neighbors=2)
+df_filled = imputer.fit_transform(df)
+
+print(df_filled)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>[[25. 20.]<br/> [20. 25.]<br/> [30. 35.]<br/> [40. 45.]<br/> [29. 30.]<br/> [27. 25.]<br/> [32. 35.]<br/> [31. 40.]]</strong></pre>
+<p>Predictive methods generally provide more accurate imputations than simple statistical methods, especially when the data has complex relationships. </p>
+<h4 class="wp-block-heading">Last Observation Carried Forward (LOCF) &amp; Next Observation Carried Backward (NOCB)</h4>
+<p>These are imputation methods typically used in time series data or longitudinal studies where the ordering of observations is meaningful.</p>
+<ul class="wp-block-list">
+<li><strong>Last Observation Carried Forward (LOCF)</strong>: Replaces a missing value with the last observed value prior to the missing one. It is based on the assumption that the best guess for a missing value is the one that was most recently observed.</li>
+<li><strong>Next Observation Carried Backward (NOCB)</strong>: It is the reverse of LOCF. It replaces a missing value with the next observed value after the missing one.</li>
+</ul>
+<p>For LOCF and NOCB, you can use pandas’ fillna() method with method arguments:</p>
+<pre><code class="language-python">import pandas as pd
+
+# Let's assume a time series data with missing values
+time_data = {'Time': pd.date_range(start='1/1/2023', periods=8, freq='D'),
+             'Value': [1, np.nan, np.nan, 4, 5, np.nan, 7, 8]}
+df_time = pd.DataFrame(time_data)
+
+# LOCF
+df_time['Value_LOCF'] = df_time['Value'].fillna(method='ffill')
+
+# NOCB
+df_time['Value_NOCB'] = df_time['Value'].fillna(method='bfill')
+
+print(df_time)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>        Time  Value  Value_LOCF  Value_NOCB<br/>0 2023-01-01    1.0         1.0         1.0<br/>1 2023-01-02    NaN         1.0         4.0<br/>2 2023-01-03    NaN         1.0         4.0<br/>3 2023-01-04    4.0         4.0         4.0<br/>4 2023-01-05    5.0         5.0         5.0<br/>5 2023-01-06    NaN         5.0         7.0<br/>6 2023-01-07    7.0         7.0         7.0<br/>7 2023-01-08    8.0         8.0         8.0</strong></pre>
+<p>While LOCF and NOCB are straightforward and often used in clinical trials or studies, they can introduce significant bias and underestimate the variability in the data, especially if the data shows trends over time or if the missing values are not randomly distributed.</p>
+<h3 class="wp-block-heading">How to Choose an Imputation Technique?</h3>
+<p>In practice, each of these methods should be chosen according to the nature of the data and the specific context of the missing data.</p>
+<p>For instance, mean imputation may not be suitable for data with a non-normal distribution or with outliers, and LOCF/NOCB can introduce bias in time series analysis if the data have trends or seasonality.</p>
+<p>Always perform exploratory data analysis to understand the patterns of missingness and the distribution of your data before deciding on an imputation technique.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, below are some of the most commonly used missing value imputation methods used by Data Science professionals:</p>
+<ol class="wp-block-list">
+<li><strong>Mean/Median/Mode Imputation:</strong> When dealing with missing data in a dataset, a simple approach is to fill in the missing values with the mean, median, or mode of the respective feature.</li>
+<li><strong>Predictive Imputation:</strong> Predictive imputation involves using statistical models to estimate and replace missing values. It’s based on the relationships found in the other features of the data. </li>
+<li><strong>Last Observation Carried Forward (LOCF):</strong> This technique fills missing values with the last observed (non-missing) value.</li>
+<li><strong>Next Observation Carried Backward (NOCB):</strong> Contrary to LOCF, NOCB fills the missing values with the next observed (non-missing) value.</li>
+</ol>
+<p>I hope you liked this article on a guide to missing value imputation methods with implementation using Python. You can learn many more data preprocessing techniques from my book on <strong><a href="https://play.google.com/store/books/details?id=gPPUEAAAQBAJ">Machine Learning algorithms</a></strong>. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="here-s-how-to-choose-data-visualization-graphs.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="sql-joins-guide.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

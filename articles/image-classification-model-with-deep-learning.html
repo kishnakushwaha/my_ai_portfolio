@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Image Classification Model with Deep Learning | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Image Classification Model with Deep Learning</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 27, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="search-queries-anomaly-detection-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="hybrid-machine-learning-model-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>If you are a beginner in <strong><a href="https://play.google.com/store/books/details?id=LCAqEQAAQBAJ" rel="noreferrer noopener" target="_blank">Machine Learning</a></strong>, you must have heard about Deep Learning, which we use for working with larger datasets based on tabular data, textual data, and even audio and images. So, if you want to learn about Deep Learning practically, this article is for you. In this article, I’ll take you through the task of building an Image Classification model using Deep Learning that will help you understand Deep Learning practically.</p>
+<h2 class="wp-block-heading">Introducing the Dataset: Fashion MNIST</h2>
+<p>Fashion MNIST is a dataset of 70,000 grayscale images of clothing items. Each image is 28×28 pixels and labelled into one of 10 categories, such as T-shirts, Trousers, Sneakers, and more. This dataset contains:</p>
+<ol class="wp-block-list">
+<li><strong>60,000 images for training</strong></li>
+<li><strong>10,000 images for testing</strong></li>
+<li><strong>10 classes in total</strong></li>
+</ol>
+<p>Think of it as a more practical version of the classic handwritten digit MNIST dataset but with clothing items!</p>
+<h2 class="wp-block-heading">Building an Image Classification Model with Deep Learning</h2>
+<p>We’ll be using <strong>TensorFlow + Keras</strong>, one of the most beginner-friendly and powerful libraries for deep learning. So, let’s get started by importing the necessary Python libraries:</p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+from sklearn.metrics import classification_report, confusion_matrix</code></pre>
+<p>Now, let’s load the dataset:</p>
+<pre><code class="language-python">fashion_mnist = keras.datasets.fashion_mnist
+(x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/train-labels-idx1-ubyte.gz<br/>29515/29515 ━━━━━━━━━━━━━━━━━━━━ 0s 0us/step<br/>Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/train-images-idx3-ubyte.gz<br/>26421880/26421880 ━━━━━━━━━━━━━━━━━━━━ 0s 0us/step<br/>Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/t10k-labels-idx1-ubyte.gz<br/>5148/5148 ━━━━━━━━━━━━━━━━━━━━ 0s 0us/step<br/>Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/t10k-images-idx3-ubyte.gz<br/>4422102/4422102 ━━━━━━━━━━━━━━━━━━━━ 0s 0us/step</strong></pre>
+<p>Let’s take a look at the shape of our data:</p>
+<pre><code class="language-python">print("Training shape:", x_train.shape)
+print("Test shape:", x_test.shape)</code></pre>
+<pre class="wp-block-preformatted"><strong>Training shape: (60000, 28, 28)<br/>Test shape: (10000, 28, 28)</strong></pre>
+<p>It’s always good to see what your model will be working with. So, let’s visualize a sample of the data:</p>
+<pre><code class="language-python">import plotly.graph_objects as go
+import numpy as np
+from plotly.subplots import make_subplots
+
+fig = make_subplots(rows=2, cols=5, subplot_titles=[class_names[y_train[i]] for i in range(10)])
+
+for i in range(10):
+    row = i // 5 + 1
+    col = i % 5 + 1
+
+    fig.add_trace(go.Heatmap(z=x_train[i], colorscale='gray'), row=row, col=col)
+
+    fig.update_xaxes(showticklabels=False, row=row, col=col)
+    fig.update_yaxes(showticklabels=False, row=row, col=col)
+
+fig.update_layout(height=600, width=1000, title_text="Sample Images")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="visualize a sample of the fashion mnist data" class="wp-image-26414" data-attachment-id="26414" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="visualize a sample of the data" data-orig-size="1000,600" data-recalc-dims="1" decoding="async" height="600" sizes="(max-width: 1000px) 100vw, 1000px" src="../assets/datasets/visualize-a-sample-of-the-data.png" width="1000"/></figure>
+<h4 class="wp-block-heading">Preprocessing the Data</h4>
+<p>Before feeding data into a neural network, you need to <strong>normalize</strong> and <strong>reshape</strong> it. So, let’s preprocess the data with these steps:</p>
+<pre><code class="language-python">x_train = x_train / 255.0
+x_test = x_test / 255.0
+
+x_train = x_train.reshape(-1, 28, 28, 1)
+x_test = x_test.reshape(-1, 28, 28, 1)</code></pre>
+<p>Here, we started by <strong>normalizing the pixel values</strong> using x_train / 255.0. Why? Because the raw pixel values in grayscale images range from 0 to 255, and feeding that scale into a neural network is asking for trouble. Deep learning models train more efficiently when input values are in a small, consistent range, ideally [0, 1]. It speeds up convergence and helps with numerical stability during backpropagation.</p>
+<p>Next, we <strong>reshaped the input from (28, 28) to (28, 28, 1)</strong>. Now technically, nothing’s changed visually, we’re still working with grayscale images. But CNNs expect input with three dimensions per image: height, width, and number of channels. For RGB, that would be 3; for grayscale, it’s 1. So, adding that last dimension is just making sure the model knows it’s looking at 2D data with a single channel.</p>
+<h4 class="wp-block-heading">Building a Convolutional Neural Network</h4>
+<p>CNNs are designed to work with images. They extract patterns like edges, textures, and shapes, making them perfect for tasks like this. So, let’s build a CNN:</p>
+<pre><code class="language-python">def create_model():
+    model = keras.Sequential([
+        layers.Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)),
+        layers.MaxPooling2D(2, 2),
+        layers.Conv2D(64, (3, 3), activation='relu'),
+        layers.MaxPooling2D(2, 2),
+        layers.Flatten(),
+        layers.Dropout(0.3),
+        layers.Dense(128, activation='relu'),
+        layers.Dense(10, activation='softmax')
+    ])
+
+    model.compile(optimizer='adam',
+                  loss='sparse_categorical_crossentropy',
+                  metrics=['accuracy'])
+
+    return model
+
+model = create_model()
+model.summary()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Building a Convolutional Neural Network for Image Classification with deep learning" class="wp-image-26417" data-attachment-id="26417" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="1520,792" data-recalc-dims="1" decoding="async" height="534" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/image.png" width="1024"/></figure>
+<p>Here, we defined a straightforward but solid CNN architecture using Keras’s Sequential API. The model starts with two convolutional blocks, first with 32 filters, then 64, each followed by max pooling to downsample spatial dimensions and reduce computation. After flattening the output, we added a dropout layer to prevent overfitting by randomly deactivating 30% of the neurons during training.</p>
+<p>Then we have a fully connected dense layer with 128 ReLU units to learn non-linear patterns, and finally, a softmax output layer with 10 units for multiclass classification (one for each clothing category). We compiled the model using the Adam optimizer for adaptive learning, sparse_categorical_crossentropy since we’re working with integer labels, and accuracy as our evaluation metric, pretty standard for image classification.</p>
+<p>Now, let’s add callbacks. Callbacks like <strong>EarlyStopping</strong> and <strong>ModelCheckpoint</strong> make training smarter by stopping when the model stops improving and saving the best version of it:</p>
+<pre><code class="language-python">early_stop = keras.callbacks.EarlyStopping(patience=3, restore_best_weights=True)
+checkpoint = keras.callbacks.ModelCheckpoint("best_model.h5", save_best_only=True)</code></pre>
+<p>Next, we will train the model:</p>
+<pre><code class="language-python">history = model.fit(
+    x_train, y_train,
+    epochs=20,
+    batch_size=64,
+    validation_split=0.2,
+    callbacks=[early_stop, checkpoint]
+)</code></pre>
+<p>Here, your model is learning how to classify clothes!</p>
+<h4 class="wp-block-heading">Evaluating the Model</h4>
+<p>Let’s test how well the model performs on unseen data:</p>
+<pre><code class="language-python">test_loss, test_acc = model.evaluate(x_test, y_test)
+print(f"\nTest Accuracy: {test_acc:.4f}")</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>313/313 ━━━━━━━━━━━━━━━━━━━━ 5s 16ms/step - accuracy: 0.9066 - loss: 0.2523<br/><br/>Test Accuracy: 0.9084</strong></pre>
+<p>The output tells us that the model achieved an accuracy of around <strong>90.8%</strong>, which means it correctly classified about 9 out of every 10 test images,  pretty solid for a baseline CNN on Fashion MNIST. The<strong> loss value of 0.2523</strong> reflects how confident or calibrated the model’s predictions were; lower is better.</p>
+<p>Now, let’s have a look at the classification report:</p>
+<pre><code class="language-python">y_pred = model.predict(x_test)
+y_pred_classes = np.argmax(y_pred, axis=1)
+
+print(classification_report(y_test, y_pred_classes, target_names=class_names))</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="classification report" class="wp-image-26421" data-attachment-id="26421" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="936,576" data-recalc-dims="1" decoding="async" height="576" loading="lazy" sizes="auto, (max-width: 936px) 100vw, 936px" src="../assets/datasets/image-1.png" style="width:536px;height:auto" width="936"/></figure>
+<p>The overall accuracy sits at <strong>91%</strong>, which aligns with what we saw earlier, but this view gives more nuance. Classes like <strong>Trousers</strong>, <strong>Sandals</strong>, <strong>Bag</strong>, and<strong> Ankle Boots</strong> performed exceptionally well, with precision, recall, and F1-scores close to or above 0.98, meaning the model is both accurate and consistent for these categories. However, <strong>Shirt</strong> stands out as the weakest, with an F1-score of just 0.72, likely due to visual similarity with T-shirts, Pullovers, and Coats, which often confuses models in this dataset. The macro and weighted averages confirm balanced performance across classes.</p>
+<p>Next, you can work on a real-world project to solve a problem using Deep Learning. Here are some projects you should try:</p>
+<ol class="wp-block-list">
+<li><strong><a href="fashion-recommendation-system-using-image-features.html" rel="noreferrer noopener" target="">Fashion Recommendations using Image Features</a></strong></li>
+<li><strong><a href="next-word-prediction-model-using-python.html" rel="noreferrer noopener" target="">Next Word Prediction Model</a></strong></li>
+</ol>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, this is how to build an image classification model using Deep Learning with CNNs and TensorFlow. Here, you learned how to:</p>
+<ol class="wp-block-list">
+<li>Load and understand real-world image data</li>
+<li>Preprocess it for deep learning</li>
+<li>Build and train a CNN using TensorFlow</li>
+<li>Evaluate model performance</li>
+</ol>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="search-queries-anomaly-detection-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="hybrid-machine-learning-model-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

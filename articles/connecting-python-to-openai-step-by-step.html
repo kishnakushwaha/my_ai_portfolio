@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Connecting Python to OpenAI (Step-by-Step) | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Connecting Python to OpenAI (Step-by-Step)</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 13, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="4-llm-project-ideas-for-your-resume.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="remote-ai-ml-internships-this-week.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Using ChatGPT in your browser is very different from building with it in code. By connecting Python to OpenAI, you move from just using AI to actually creating with it. You can automate tasks, quickly summarise lots of documents, or make your own assistants. In this article, I’ll show you step-by-step how to connect Python to OpenAI.</p>
+<h2 class="wp-block-heading">Connecting Python to OpenAI</h2>
+<p>Before we start coding, let’s make sure we understand the process. Think of the OpenAI API as a smart<strong> remote consultant</strong>:</p>
+<ol class="wp-block-list">
+<li><strong>Your Python Script</strong> is the manager (You).</li>
+<li><strong>The API Key</strong> is your ID badge. It proves you are who you say you are and that you have permission (credits) to ask for help.</li>
+<li><strong>The Request</strong> is the specific brief you send the consultant (“Write a poem,” “Fix this bug,” “Analyse this sentiment”).</li>
+<li><strong>The Response</strong> is the consultant’s work returned to you.</li>
+</ol>
+<p>Before version 1.0.0 of the library, we would send requests without much structure. Now, we create a specific <strong>Client</strong> and use a dedicated channel to make sure everything is secure and reliable.</p>
+<h4 class="wp-block-heading">Step 1: The Setup</h4>
+<p><strong>Create your project folder.</strong> Open your terminal (or Command Prompt) and run:</p>
+<pre class="wp-block-preformatted">mkdir openai-project<br/>cd openai-project</pre>
+<p>Next, create <strong>a virtual environment.</strong> This keeps your project clean:</p>
+<pre class="wp-block-preformatted"># Windows<br/>python -m venv venv<br/>venv\Scripts\activate<br/><br/># Mac/Linux<br/>python3 -m venv venv<br/>source venv/bin/activate</pre>
+<p><strong>Now, install the library.</strong> We need the official OpenAI library:</p>
+<pre class="wp-block-preformatted">pip install openai</pre>
+<h4 class="wp-block-heading">Step 2: Getting Your API Key</h4>
+<p>You cannot skip this step:</p>
+<ol class="wp-block-list">
+<li>Go to the platform: <strong><a href="https://openai.com/">openai.com</a></strong>.</li>
+<li>Sign up or Log in.</li>
+<li>Navigate to <strong>Dashboard</strong> &gt; <strong>API Keys</strong>.</li>
+<li>Click <strong>Create new secret key</strong>.</li>
+<li><strong>Copy it immediately.</strong></li>
+</ol>
+<p>You will never see it again after you close that window.</p>
+<h4 class="wp-block-heading">Step 3: The Code</h4>
+<p>Create a file called app.py and add the following code. This example uses the latest OpenAI Python Client (version 1.0.0 or newer):</p>
+<pre><code class="language-python">import os
+from openai import OpenAI
+
+# 1. Instantiate the client
+# ideally, use: client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+# For learning purposes ONLY, you can paste your key below if env vars aren't set.
+client = OpenAI(
+    api_key="YOUR_OPENAI_API_KEY_HERE" 
+)
+
+print("Consultant is thinking...")
+
+# 2. Create the chat completion (The Request)
+response = client.chat.completions.create(
+    model="gpt-4o-mini",  # The "brain" we are asking (cost-effective)
+    messages=[
+        {"role": "system", "content": "You are a poetic assistant."},
+        {"role": "user", "content": "Explain recursion in a haiku."}
+    ]
+)
+
+# 3. Extract and print the answer (The Response)
+print("\n--- AI Response ---")
+print(response.choices[0].message.content)</code></pre>
+<p>In this code, <strong>client = OpenAI(…)</strong> starts the connection and checks your credentials. If your key is incorrect, the script will stop at this point. You can think of this step as dialing a phone number.</p>
+<p>The <strong>client.chat.completions.create(…)</strong> function is the main part of the code. We use chat.completions because newer models like GPT-4 work through chat, not just simple text completion.</p>
+<p>The <strong>model = “gpt-4o-mini”</strong> is the AI model we are using:</p>
+<ol class="wp-block-list">
+<li>gpt-4o: Smart, but expensive.</li>
+<li>gpt-4o-mini: Fast, cheap, and excellent for most tasks.</li>
+</ol>
+<p>The <strong>messages=[…]</strong> part is the conversation history. It’s a list of dictionaries.</p>
+<p>The <strong>response.choices[0].message.content</strong> gives you a detailed object with extra information like tokens used and the model name. We look at the choices list, take the first answer, check the message, and then get the text content.</p>
+<h2 class="wp-block-heading">Handling the Errors</h2>
+<p>Sometimes things go wrong. The API could be unavailable, or you might run out of credits. Here’s how professional engineers write code to avoid crashes:</p>
+<pre><code class="language-python">from openai import OpenAI, APIError
+
+client = OpenAI()
+
+try:
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[{"role": "user", "content": "Hello!"}]
+    )
+    print(response.choices[0].message.content)
+
+except APIError as e:
+    # This runs if OpenAI returns an error (e.g., 401 Unauthorized, 429 Rate Limit)
+    print(f"OpenAI connection failed: {e}")</code></pre>
+<p>If you get a RateLimitError, it means you are sending requests too quickly. Instead of retrying right away, wait for 2 seconds, then 4, then 8 before trying again.</p>
+<h3 class="wp-block-heading">Closing Thoughts</h3>
+<p>Connecting Python to OpenAI is a basic skill for modern AI work. However, what matters most is the <strong>logic</strong> you create with it.</p>
+<p>A Python script can loop through a thousand customer reviews. It can read a PDF and quiz you on it. It can write code to fix its own errors.</p>
+<p>Today, you learned how to give your Python script some intelligence. Next, you’ll need to learn how to guide it to do what you want.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="4-llm-project-ideas-for-your-resume.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="remote-ai-ml-internships-this-week.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

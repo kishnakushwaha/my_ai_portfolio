@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Automate Data Cleaning using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Automate Data Cleaning using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 14, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="stock-market-crash-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="data-preprocessing-pipeline-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>If you’ve worked on any real-world data project, you already know the truth that most of the time isn’t spent building models, it’s spent cleaning messy data. As a Data Engineer or Data Scientist, you’re often handed raw, inconsistent, duplicate-ridden datasets. And cleaning them every time from scratch is not only repetitive, it’s a waste of time. That’s why automating your data cleaning steps is one of the most valuable productivity boosts you can build. So, in this article, I’ll take you through how to write a reusable function to automate data cleaning using Python.</p>
+<h2 class="wp-block-heading">Automate Data Cleaning using Python</h2>
+<p>Let’s import the necessary Python libraries we need to write a function to automate data cleaning steps for any data:</p>
+<p>That’s it. No more dependencies. Just clean, reliable Pandas and NumPy.</p>
+<p><strong>Now, we will write a Python function to:</strong></p>
+<ol class="wp-block-list">
+<li>Standardize column names</li>
+<li>Remove duplicate rows</li>
+<li>Clean messy text values</li>
+<li>Handle missing values (even disguised ones!)</li>
+<li>Flag weird stuff like constant columns and outliers</li>
+<li>Prepare your data for modelling by converting text columns smartly</li>
+</ol>
+<p>Here’s how to write such a function:</p>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+
+def clean_dataframe(df: pd.DataFrame, verbose: bool = True) -&gt; pd.DataFrame:
+    df = df.copy()
+
+    # log helper
+    def log(msg):
+        if verbose:
+            print(f"[INFO] {msg}")
+
+    # 1. standardize column names
+    df.columns = df.columns.str.strip().str.lower().str.replace(' ', '_')
+    log("Standardized column names.")
+
+    # 2. remove exact duplicates
+    dup_count = df.duplicated().sum()
+    if dup_count &gt; 0:
+        df.drop_duplicates(inplace=True)
+        log(f"Removed {dup_count} duplicate rows.")
+
+    # 3. trim and lowercase all string (object) values
+    for col in df.select_dtypes(include='object'):
+        df[col] = df[col].astype(str).str.strip().str.lower()
+    log("Standardized string columns (lowercase + trimmed).")
+
+    # 4. detect missing values (including blanks and placeholders)
+    placeholder_values = ['n/a', 'na', '--', '-', 'none', 'null', '', 'nan']
+    df.replace(placeholder_values, np.nan, inplace=True)
+    null_report = df.isnull().sum()
+    null_report = null_report[null_report &gt; 0]
+    if not null_report.empty:
+        log(f"Missing values found in columns:\n{null_report}")
+
+    # 5. flag constant columns
+    constant_cols = [col for col in df.columns if df[col].nunique() == 1]
+    if constant_cols:
+        log(f"Constant columns (consider removing): {constant_cols}")
+
+    # 6. flag high cardinality categorical columns
+    high_card_cols = [col for col in df.select_dtypes(include='object') if df[col].nunique() &gt; 100]
+    if high_card_cols:
+        log(f"High-cardinality columns (consider encoding strategies): {high_card_cols}")
+
+    # 7. detect numeric outliers using IQR
+    num_cols = df.select_dtypes(include=np.number).columns
+    outlier_report = {}
+    for col in num_cols:
+        q1, q3 = df[col].quantile([0.25, 0.75])
+        iqr = q3 - q1
+        lower = q1 - 1.5 * iqr
+        upper = q3 + 1.5 * iqr
+        outliers = df[(df[col] &lt; lower) | (df[col] &gt; upper)][col].count()
+        if outliers &gt; 0:
+            outlier_report[col] = outliers
+    if outlier_report:
+        log(f"Potential numeric outliers detected:\n{outlier_report}")
+
+    # 8. convert applicable columns to category
+    for col in df.select_dtypes(include='object'):
+        n_unique = df[col].nunique()
+        if n_unique &lt; len(df) * 0.05:
+            df[col] = df[col].astype('category')
+    log("Converted suitable object columns to category dtype.")
+
+    log("Data cleaning complete.")
+    return df</code></pre>
+<p>Here’s what this Python function does:</p>
+<ol class="wp-block-list">
+<li><strong>Copies the data</strong> to keep your original safe.</li>
+<li><strong>Standardizes column names</strong> (lowercase, no spaces).</li>
+<li><strong>Removes duplicate rows</strong> if any.</li>
+<li><strong>Cleans string columns</strong> (trims and lowercases all text).</li>
+<li><strong>Handles missing values</strong> (turns things like –, N/A into NaN).</li>
+<li><strong>Reports missing values</strong> in each column.</li>
+<li><strong>Flags constant columns</strong> (same value in all rows).</li>
+<li><strong>Identifies high-cardinality text columns</strong> (too many unique values).</li>
+<li><strong>Detects numeric outliers</strong> using the IQR method.</li>
+<li><strong>Converts low-unique text columns to category</strong> type.</li>
+<li><strong>Logs every step</strong> if verbose=True.</li>
+</ol>
+<p>Now, let’s use this function on a dataset <strong>(download it <a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">here</a>)</strong>:</p>
+<pre><code class="language-python">import pandas as pd
+df = pd.read_csv('/content/loan-recovery.csv')
+clean_df = clean_dataframe(df)</code></pre>
+<pre class="wp-block-preformatted"><strong>[INFO] Standardized column names.<br/>[INFO] Standardized string columns (lowercase + trimmed).<br/>[INFO] High-cardinality columns (consider encoding strategies): ['borrower_id', 'loan_id']<br/>[INFO] Potential numeric outliers detected:<br/>{'outstanding_loan_amount': np.int64(3), 'monthly_emi': np.int64(35), 'num_missed_payments': np.int64(21), 'collection_attempts': np.int64(40)}<br/>[INFO] Converted suitable object columns to category dtype.<br/>[INFO] Data cleaning complete.</strong></pre>
+<p>Using this function, you can build data engineering projects by extending it to:</p>
+<ul class="wp-block-list">
+<li>Imputing missing values</li>
+<li>Exporting logs to a file</li>
+<li>Integrating into ETL workflows or Airflow DAGs</li>
+<li>Saving cleaned data to a data lake or S3</li>
+</ul>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, in this article, we explored how to automate data cleaning using Python by building a reusable function with Pandas and NumPy. This function helps standardize column names, remove duplicates, clean text, handle missing values (even hidden ones), detect outliers, flag constant and high-cardinality columns, and prepare text data for modelling, all while logging each step.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="stock-market-crash-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="data-preprocessing-pipeline-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

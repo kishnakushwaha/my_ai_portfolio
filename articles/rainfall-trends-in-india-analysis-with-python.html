@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Rainfall Trends in India Analysis with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Rainfall Trends in India Analysis with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 20, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="dynamic-pricing-strategy-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="instagram-reach-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Rainfall is a critical element of India’s climate system, which impacts agriculture, water resources, and the overall economy. Understanding rainfall patterns over time is essential for effective planning in sectors like agriculture, disaster management, and urban water supply. So, if you want to learn how to analyze rainfall trends in a country, this article is for you. In this article, I’ll take you through the task of Rainfall Trends in India Analysis with Python.</p>
+<h2 class="wp-block-heading">Rainfall Trends in India Analysis: Overview and Dataset</h2>
+<p>In this analysis, we aim to uncover long-term trends, seasonal patterns, and anomalies in India’s rainfall data. We will examine historical rainfall trends, detect years with extreme or deficient rainfall, explore relationships between seasonal and annual rainfall, and forecast future rainfall using time series models.</p>
+<p>For this analysis, we rely on a dataset containing monthly, seasonal, and annual rainfall measurements spanning over a century. I found an ideal dataset for this task, which includes monthly rainfall values, seasonal aggregations (e.g., monsoon rainfall), and annual totals, all of which are essential for understanding variability, detecting anomalies, and predicting future trends. <strong>You can download the dataset from <a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">here</a>.</strong></p>
+<h2 class="wp-block-heading">Rainfall Trends in India Analysis with Python</h2>
+<p>Now, we will begin by loading and exploring the dataset, which contains rainfall data for India from 1901 to 2015. Each record provides monthly, seasonal, and annual rainfall measurements. This data is critical for understanding long-term trends, seasonal variations, and extreme weather events:</p>
+<pre><code class="language-python">import pandas as pd
+
+rainfall_data = pd.read_csv("/content/rainfall_area-wt_India_1901-2015.csv")
+
+print(rainfall_data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>  REGION  YEAR   JAN   FEB   MAR   APR   MAY    JUN    JUL    AUG    SEP  \<br/>0  INDIA  1901  34.7  37.7  18.0  39.3  50.8  113.4  242.2  272.9  124.4   <br/>1  INDIA  1902   7.4   4.3  19.0  43.5  48.3  108.8  284.0  199.7  201.5   <br/>2  INDIA  1903  17.0   8.3  31.3  17.1  59.5  118.3  297.0  270.4  199.1   <br/>3  INDIA  1904  14.4   9.6  31.8  33.1  72.4  164.8  261.0  206.4  129.6   <br/>4  INDIA  1905  25.3  20.9  42.7  33.7  55.7   93.3  252.8  200.8  178.4   <br/><br/>     OCT   NOV   DEC  ANNUAL  Jan-Feb  Mar-May  Jun-Sep  Oct-Dec  <br/>0   52.7  38.0   8.3  1032.3     72.4    108.1    752.8     99.0  <br/>1   61.5  27.9  24.4  1030.2     11.7    110.8    794.0    113.8  <br/>2  117.9  36.9  17.7  1190.5     25.3    107.9    884.8    172.5  <br/>3   69.0  11.2  16.3  1019.8     24.0    137.4    761.8     96.6  <br/>4   51.4   9.7  10.5   975.3     46.2    132.2    725.4     71.6  </strong></pre>
+<h4 class="wp-block-heading">Analyzing Annual Rainfall Trends Over Time</h4>
+<p>To understand the broader trends, we will plot three plots:</p>
+<ol class="wp-block-list">
+<li>We will plot annual rainfall over time and compare it with the overall mean. This helps identify whether there is a noticeable long-term trend, such as an increase or decrease in rainfall over the years.</li>
+<li>We will calculate the average rainfall for each month across all years. And by plotting a bar chart, we can identify the months with the highest and lowest average rainfall.</li>
+<li>Next, we will analyze seasonal rainfall by aggregating rainfall data into four seasons: <strong>Jan-Feb</strong>, <strong>Mar-May</strong>, <strong>Jun-Sep (Monsoon)</strong>, and <strong>Oct-Dec</strong>.</li>
+</ol>
+<p>Let’s visualize these plots to get started with rainfall trends in India analysis:</p>
+<pre><code class="language-python">import plotly.graph_objects as go
+import plotly.express as px
+
+# analyze trends in annual rainfall over time
+annual_rainfall = rainfall_data[['YEAR', 'ANNUAL']]
+
+fig_annual = go.Figure()
+fig_annual.add_trace(go.Scatter(
+    x=annual_rainfall['YEAR'],
+    y=annual_rainfall['ANNUAL'],
+    mode='lines',
+    name='Annual Rainfall',
+    line=dict(color='blue', width=2),
+    opacity=0.7
+))
+fig_annual.add_trace(go.Scatter(
+    x=annual_rainfall['YEAR'],
+    y=[annual_rainfall['ANNUAL'].mean()] * len(annual_rainfall),
+    mode='lines',
+    name='Mean Rainfall',
+    line=dict(color='red', dash='dash')
+))
+fig_annual.update_layout(
+    title='Trend in Annual Rainfall in India (1901-2015)',
+    xaxis_title='Year',
+    yaxis_title='Rainfall (mm)',
+    template='plotly_white',
+    legend=dict(title="Legend"),
+    height=500
+)
+fig_annual.show()
+
+# identify months with the highest and lowest rainfall on average
+monthly_columns = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+monthly_avg = rainfall_data[monthly_columns].mean()
+
+highest_rainfall_month = monthly_avg.idxmax()
+lowest_rainfall_month = monthly_avg.idxmin()
+
+fig_monthly = px.bar(
+    x=monthly_avg.index,
+    y=monthly_avg.values,
+    labels={'x': 'Month', 'y': 'Rainfall (mm)'},
+    title='Average Monthly Rainfall in India (1901-2015)',
+    text=monthly_avg.values
+)
+fig_monthly.add_hline(
+    y=monthly_avg.mean(),
+    line_dash="dash",
+    line_color="red",
+    annotation_text="Mean Rainfall",
+    annotation_position="top right"
+)
+fig_monthly.update_traces(marker_color='skyblue', marker_line_color='black', marker_line_width=1)
+fig_monthly.update_layout(template='plotly_white', height=500)
+fig_monthly.show()
+
+# seasonal rainfall distribution
+seasonal_columns = ['Jan-Feb', 'Mar-May', 'Jun-Sep', 'Oct-Dec']
+seasonal_avg = rainfall_data[seasonal_columns].mean()
+
+fig_seasonal = px.bar(
+    x=seasonal_avg.index,
+    y=seasonal_avg.values,
+    labels={'x': 'Season', 'y': 'Rainfall (mm)'},
+    title='Seasonal Rainfall Distribution in India (1901-2015)',
+    text=seasonal_avg.values,
+    color=seasonal_avg.values,
+    color_continuous_scale=['gold', 'skyblue', 'green', 'orange']
+)
+
+fig_seasonal.update_traces(marker_line_color='black', marker_line_width=1)
+fig_seasonal.update_layout(
+    template='plotly_white',
+    height=500,
+    coloraxis_colorbar=dict(title='mm')
+)
+fig_seasonal.update_layout(template='plotly_white', height=500)
+fig_seasonal.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Trend in Annual Rainfall in India (1901-2015)" class="wp-image-25202" data-attachment-id="25202" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Trend in Annual Rainfall in India (1901-2015)" data-orig-size="855,500" data-recalc-dims="1" decoding="async" height="500" sizes="(max-width: 855px) 100vw, 855px" src="../assets/datasets/Trend-in-Annual-Rainfall-in-India-1901-2015.png" width="855"/></figure>
+<p>The above graph shows significant year-to-year variability in India’s annual rainfall, with no apparent long-term upward or downward trend over the century. The red dashed line indicates the mean rainfall, around which the annual rainfall oscillates. Notable peaks and troughs highlight extreme rainfall events and dry years.</p>
+<figure class="wp-block-image alignwide size-full"><img alt="Average Monthly Rainfall in India (1901-2015)" class="wp-image-25192" data-attachment-id="25192" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="rainfall 2" data-orig-size="855,500" data-recalc-dims="1" decoding="async" height="500" sizes="(max-width: 855px) 100vw, 855px" src="../assets/datasets/rainfall-2.png" width="855"/></figure>
+<p>This bar chart illustrates a highly uneven distribution of rainfall across months, with July and August receiving the highest average rainfall. The red dashed line represents the mean monthly rainfall, showing that most months receive rainfall below the average, except during the monsoon months (June to September).</p>
+<figure class="wp-block-image alignwide size-full"><img alt="Seasonal Rainfall Distribution in India (1901-2015)" class="wp-image-25194" data-attachment-id="25194" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="rainfall 3" data-orig-size="855,500" data-recalc-dims="1" decoding="async" height="500" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/rainfall-3.png" width="855"/></figure>
+<p>The seasonal distribution highlights the dominance of the monsoon season (June to September), which contributes the bulk of annual rainfall (around 890 mm). In contrast, the other seasons (January-February, March-May, and October-December) contribute significantly less to the annual total, which emphasizes the critical role of the monsoon.</p>
+<h4 class="wp-block-heading">Assessing the Impact of Climate Change in the Rainfall Trends in India</h4>
+<p>Now, we will calculate a 10-year rolling average of annual rainfall to identify long-term trends and smooth out short-term variations. This will help assess the potential impact of climate change on rainfall patterns:</p>
+<pre><code class="language-python"># calculating rolling averages to assess climate change impact
+rainfall_data['10-Year Rolling Avg'] = rainfall_data['ANNUAL'].rolling(window=10).mean()
+
+fig_climate_change = go.Figure()
+
+fig_climate_change.add_trace(go.Scatter(
+    x=rainfall_data['YEAR'],
+    y=rainfall_data['ANNUAL'],
+    mode='lines',
+    name='Annual Rainfall',
+    line=dict(color='blue', width=2),
+    opacity=0.6
+))
+
+fig_climate_change.add_trace(go.Scatter(
+    x=rainfall_data['YEAR'],
+    y=rainfall_data['10-Year Rolling Avg'],
+    mode='lines',
+    name='10-Year Rolling Avg',
+    line=dict(color='red', width=3)
+))
+
+fig_climate_change.update_layout(
+    title='Impact of Climate Change on Rainfall Patterns (1901-2015)',
+    xaxis_title='Year',
+    yaxis_title='Rainfall (mm)',
+    template='plotly_white',
+    legend=dict(title="Legend"),
+    height=500
+)
+
+fig_climate_change.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Impact of Climate Change on Rainfall Patterns (1901-2015)" class="wp-image-25203" data-attachment-id="25203" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Impact of Climate Change on Rainfall Patterns (1901-2015)" data-orig-size="855,500" data-recalc-dims="1" decoding="async" height="500" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/Impact-of-Climate-Change-on-Rainfall-Patterns-1901-2015.png" width="855"/></figure>
+<p>This graph shows the annual rainfall trends in India (blue line) and a 10-year rolling average (red line) to identify long-term patterns. While annual rainfall exhibits significant variability, the 10-year rolling average indicates a slight downward trend post-1960, which suggests a possible impact of climate change on rainfall distribution. Periods of higher averages in the early 20th-century contrast with more consistent but lower averages in recent decades.</p>
+<p>Now, using statistical thresholds (1.5 standard deviations below or above the mean), let’s identify years with extreme or deficient rainfall. This will help detect drought years and periods of excessive rainfall:</p>
+<pre><code class="language-python">from scipy.stats import pearsonr
+
+# identifying drought and extreme rainfall years
+mean_rainfall = rainfall_data['ANNUAL'].mean()
+std_dev_rainfall = rainfall_data['ANNUAL'].std()
+
+drought_years = rainfall_data[rainfall_data['ANNUAL'] &lt; (mean_rainfall - 1.5 * std_dev_rainfall)]
+extreme_rainfall_years = rainfall_data[rainfall_data['ANNUAL'] &gt; (mean_rainfall + 1.5 * std_dev_rainfall)]
+
+# correlating seasonal rainfall with annual rainfall totals
+seasonal_columns = ['Jan-Feb', 'Mar-May', 'Jun-Sep', 'Oct-Dec']
+seasonal_correlations = {
+    season: pearsonr(rainfall_data[season], rainfall_data['ANNUAL'])[0] for season in seasonal_columns
+}
+
+# displaying results for drought/extreme years and correlations
+drought_years_summary = drought_years[['YEAR', 'ANNUAL']].reset_index(drop=True)
+extreme_rainfall_years_summary = extreme_rainfall_years[['YEAR', 'ANNUAL']].reset_index(drop=True)
+seasonal_correlations_summary = pd.DataFrame.from_dict(seasonal_correlations, orient='index', columns=['Correlation'])
+
+drought_years_summary, extreme_rainfall_years_summary, seasonal_correlations_summary</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>(   YEAR  ANNUAL<br/> 0  1905   975.3<br/> 1  1965   938.4<br/> 2  1972   948.5<br/> 3  2002   920.8<br/> 4  2009   959.3,<br/>    YEAR  ANNUAL<br/> 0  1917  1480.3<br/> 1  1933  1393.5<br/> 2  1956  1386.2<br/> 3  1959  1382.1<br/> 4  1961  1403.0<br/> 5  1988  1351.0<br/> 6  1990  1400.6,<br/>          Correlation<br/> Jan-Feb     0.228913<br/> Mar-May     0.313057<br/> Jun-Sep     0.930027<br/> Oct-Dec     0.531648)</strong></pre>
+<p>The analysis identifies five significant drought years (e.g., 2002 and 2009) and seven extreme rainfall years (e.g., 1917 and 1990) based on deviations from the mean annual rainfall. Seasonal rainfall correlations with annual totals reveal that the monsoon season (June-September) has the strongest correlation (0.93), which indicates it predominantly drives annual rainfall patterns. In contrast, other seasons like January-February (0.23) and March-May (0.31) have weaker correlations, which emphasizes the critical role of the monsoon in India’s overall rainfall dynamics.</p>
+<h4 class="wp-block-heading">Detecting Anomalies in the Rainfall Trends in India</h4>
+<p>Now, using an Isolation Forest algorithm, we will identify anomalies in both annual and monthly rainfall. This will highlight specific years or months with unusual rainfall patterns. Let’s start with identifying anomalies in annual rainfall:</p>
+<pre><code class="language-python">from sklearn.ensemble import IsolationForest
+
+# detect anomalous rainfall years based on annual data
+isolation_forest = IsolationForest(contamination=0.05, random_state=42)
+rainfall_data['Annual_Anomaly'] = isolation_forest.fit_predict(rainfall_data[['ANNUAL']])
+
+# identify anomalies in annual rainfall
+annual_anomalies = rainfall_data[rainfall_data['Annual_Anomaly'] == -1]
+
+# detect anomalous months based on monthly data
+monthly_data = rainfall_data[['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']]
+monthly_anomalies = isolation_forest.fit_predict(monthly_data)
+
+# add anomaly detection results for months
+rainfall_data['Monthly_Anomaly'] = monthly_anomalies
+monthly_anomalies_df = rainfall_data[rainfall_data['Monthly_Anomaly'] == -1][['YEAR'] + monthly_columns]
+
+fig_annual_anomalies = go.Figure()
+
+fig_annual_anomalies.add_trace(go.Scatter(
+    x=rainfall_data['YEAR'],
+    y=rainfall_data['ANNUAL'],
+    mode='lines',
+    name='Annual Rainfall',
+    line=dict(color='blue', width=2),
+    opacity=0.6
+))
+
+fig_annual_anomalies.add_trace(go.Scatter(
+    x=annual_anomalies['YEAR'],
+    y=annual_anomalies['ANNUAL'],
+    mode='markers',
+    name='Anomalous Years',
+    marker=dict(color='red', size=8, symbol='circle')
+))
+
+fig_annual_anomalies.add_hline(
+    y=rainfall_data['ANNUAL'].mean(),
+    line_dash='dash',
+    line_color='green',
+    annotation_text='Mean Rainfall',
+    annotation_position='bottom right'
+)
+
+fig_annual_anomalies.update_layout(
+    title='Annual Rainfall Anomalies in India (1901-2015)',
+    xaxis_title='Year',
+    yaxis_title='Rainfall (mm)',
+    template='plotly_white',
+    legend=dict(title="Legend"),
+    height=500
+)
+
+fig_annual_anomalies.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Annual Rainfall Anomalies in India (1901-2015)" class="wp-image-25204" data-attachment-id="25204" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Annual Rainfall Anomalies in India (1901-2015)" data-orig-size="855,500" data-recalc-dims="1" decoding="async" height="500" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/Annual-Rainfall-Anomalies-in-India-1901-2015.png" width="855"/></figure>
+<p>This graph highlights years with significant rainfall anomalies, where annual rainfall deviated substantially from the mean. Drought years (e.g., 1905, 1965, 2002) and extreme rainfall years (e.g., 1917, 1961) are marked as red points, which showcase outliers in rainfall patterns. While most years cluster around the mean (green dashed line), the anomalies emphasize the variability in India’s rainfall, driven by factors like monsoonal fluctuations and climate events. This underscores the need for monitoring and preparedness for extreme weather events.</p>
+<p>Now, let’s identify anomalies in monthly rainfall:</p>
+<pre><code class="language-python"># preparing data for monthly anomalies
+monthly_anomalies = []
+for column in monthly_columns:
+    for _, row in monthly_anomalies_df.iterrows():
+        monthly_anomalies.append({'Year': row['YEAR'], 'Month': column, 'Rainfall': row[column]})
+
+monthly_anomalies_df_long = pd.DataFrame(monthly_anomalies)
+
+fig_monthly_anomalies = px.line(
+    rainfall_data,
+    x='YEAR',
+    y=monthly_columns,
+    labels={'YEAR': 'Year', 'value': 'Rainfall (mm)', 'variable': 'Month'},
+    title='Monthly Rainfall Anomalies in India (1901-2015)',
+    color_discrete_sequence=px.colors.qualitative.Set3
+)
+
+fig_monthly_anomalies.add_trace(go.Scatter(
+    x=monthly_anomalies_df_long['Year'],
+    y=monthly_anomalies_df_long['Rainfall'],
+    mode='markers',
+    name='Anomalous Months',
+    marker=dict(color='red', size=5, symbol='circle')
+))
+
+fig_monthly_anomalies.update_layout(
+    template='plotly_white',
+    legend=dict(title="Legend"),
+    height=500
+)
+
+fig_monthly_anomalies.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="" class="wp-image-25205" data-attachment-id="25205" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Monthly Rainfall Anomalies in India (1901-2015)" data-orig-size="855,500" data-recalc-dims="1" decoding="async" height="500" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/Monthly-Rainfall-Anomalies-in-India-1901-2015.png" width="855"/></figure>
+<p>The variability is most pronounced during the monsoon months (June to September), which reflects the critical role of these months in India’s rainfall dynamics. Anomalies in non-monsoon months, while less frequent, highlight periods of unusual weather patterns, potentially linked to climate variability or regional disturbances. This graph underscores the uneven distribution and high dependence on monsoonal rainfall for India’s water resources.</p>
+<h4 class="wp-block-heading">Correlating Seasonal Rainfall with Annual Totals</h4>
+<p>Now, we will calculate the correlation coefficients between seasonal rainfall and annual rainfall totals to understand how much each season contributes to the overall yearly rainfall:</p>
+<pre><code class="language-python"># correlation analysis between monsoon (Jun-Sep) rainfall and other seasons
+seasonal_columns = ['Jan-Feb', 'Mar-May', 'Jun-Sep', 'Oct-Dec']
+monsoon_column = 'Jun-Sep'
+relationships = {}
+
+for season in seasonal_columns:
+    if season != monsoon_column:
+        corr, _ = pearsonr(rainfall_data[monsoon_column], rainfall_data[season])
+        relationships[season] = corr
+
+correlation_data = pd.DataFrame({
+    'Season': list(relationships.keys()),
+    'Correlation Coefficient': list(relationships.values())
+})
+
+fig = px.bar(
+    correlation_data,
+    x='Season',
+    y='Correlation Coefficient',
+    title='Correlation Between Monsoon (Jun-Sep) Rainfall and Other Seasons',
+    labels={'Season': 'Season', 'Correlation Coefficient': 'Correlation Coefficient'},
+    text='Correlation Coefficient',
+    color='Correlation Coefficient',
+    color_continuous_scale='Blues'
+)
+
+fig.add_hline(
+    y=0,
+    line_dash="dash",
+    line_color="red",
+    annotation_text="No Correlation",
+    annotation_position="bottom left"
+)
+
+fig.update_traces(marker_line_color='black', marker_line_width=1, texttemplate='%{text:.2f}')
+fig.update_layout(
+    template='plotly_white',
+    height=500
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Correlation Between Monsoon (Jun-Sep) Rainfall and Other Seasons" class="wp-image-25207" data-attachment-id="25207" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Correlation Between Monsoon (Jun-Sep) Rainfall and Other Seasons" data-orig-size="855,500" data-recalc-dims="1" decoding="async" height="500" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/Correlation-Between-Monsoon-Jun-Sep-Rainfall-and-Other-Seasons.png" width="855"/></figure>
+<p>This graph shows the correlation between monsoon rainfall and rainfall during other seasons. The October-December season has the highest correlation (0.29), which suggests a moderate relationship, possibly due to the post-monsoon retreat rains. The January-February (0.14) and March-May (0.10) seasons exhibit weaker correlations, which indicate minimal dependence on monsoon rainfall. This highlights the dominance of monsoonal patterns as an independent driver of India’s annual rainfall, with limited spillover effects on other seasons.</p>
+<h4 class="wp-block-heading">Grouping Years Based on Rainfall Patterns</h4>
+<p>Now, by applying k-means clustering, we will group years into three categories: <strong>Dry</strong>, <strong>Normal</strong>, and <strong>Wet</strong>, based on rainfall patterns:</p>
+<pre><code class="language-python">from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+
+# prepare data for clustering
+rainfall_features = rainfall_data[['Jan-Feb', 'Mar-May', 'Jun-Sep', 'Oct-Dec', 'ANNUAL']]
+scaler = StandardScaler()
+scaled_features = scaler.fit_transform(rainfall_features)
+
+# perform k-means clustering
+kmeans = KMeans(n_clusters=3, random_state=42)
+rainfall_data['Rainfall_Cluster'] = kmeans.fit_predict(scaled_features)
+
+# map cluster labels to categories (e.g., Dry, Normal, Wet)
+cluster_labels = {0: 'Dry', 1: 'Normal', 2: 'Wet'}
+rainfall_data['Rainfall_Category'] = rainfall_data['Rainfall_Cluster'].map(cluster_labels)
+
+fig = px.scatter(
+    rainfall_data,
+    x='YEAR',
+    y='ANNUAL',
+    color='Rainfall_Category',
+    title='Clustering of Years Based on Rainfall Patterns',
+    labels={'YEAR': 'Year', 'ANNUAL': 'Annual Rainfall (mm)', 'Rainfall_Category': 'Rainfall Category'},
+    color_discrete_sequence=px.colors.qualitative.Set2,
+    hover_data={'Rainfall_Cluster': True, 'Rainfall_Category': True}
+)
+
+fig.update_layout(
+    template='plotly_white',
+    legend_title='Rainfall Category',
+    height=500
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Clustering of Years Based on Rainfall Patterns" class="wp-image-25209" data-attachment-id="25209" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Clustering of Years Based on Rainfall Patterns" data-orig-size="855,500" data-recalc-dims="1" decoding="async" height="500" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/Clustering-of-Years-Based-on-Rainfall-Patterns.png" width="855"/></figure>
+<p>The clusters reveal that most years fall into the Normal category, while Wet years (above-normal rainfall) are sporadically distributed throughout the timeline, with a concentration in the early and mid-20th century. Dry years (below-normal rainfall) are more frequent in the latter half of the timeline, which indicates a potential shift in rainfall patterns over time. This clustering emphasizes the variability and potential long-term changes in India’s rainfall dynamics.</p>
+<h4 class="wp-block-heading">Forecasting Future Rainfall</h4>
+<p>Finally, we will use the Prophet library to forecast annual rainfall for the next 20 years:</p>
+<pre><code class="language-python">rainfall_data['DATE'] = pd.to_datetime(rainfall_data['YEAR'], format='%Y')
+annual_rainfall_ts = rainfall_data.set_index('DATE')['ANNUAL']
+
+# use: pip install prophet
+
+from prophet import Prophet
+# Prepare the data for Prophet
+prophet_data = annual_rainfall_ts.reset_index()
+prophet_data.columns = ['ds', 'y']
+
+from prophet.plot import plot_plotly, plot_components_plotly
+
+prophet_model = Prophet()
+prophet_model.fit(prophet_data)
+
+# create a future dataframe for the next 20 years
+future = prophet_model.make_future_dataframe(periods=20, freq='Y')
+forecast = prophet_model.predict(future)
+
+fig_forecast = plot_plotly(prophet_model, forecast)
+
+fig_forecast.update_layout(
+    title='Annual Rainfall Forecast Using Prophet',
+    xaxis_title='Year',
+    yaxis_title='Rainfall (mm)',
+    template='plotly_white',
+    height=500
+)
+
+fig_forecast.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Annual Rainfall Forecast" class="wp-image-25212" data-attachment-id="25212" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Annual Rainfall Forecast" data-orig-size="900,500" data-recalc-dims="1" decoding="async" height="500" loading="lazy" sizes="auto, (max-width: 900px) 100vw, 900px" src="../assets/datasets/Annual-Rainfall-Forecast.png" width="900"/></figure>
+<p>The blue line represents the model’s forecast trend, while the shaded area indicates the confidence interval. The trend reveals a slight decline in annual rainfall over time, with notable year-to-year variability (black dots representing actual data points). The model captures the variability well but highlights that future rainfall may continue to slightly decrease, which emphasizes the need for adaptive strategies to manage potential water resource challenges.</p>
+<p><em><strong>Find many more analysis like this to learn Data Science for real-world problems <a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">here</a>!</strong></em></p>
+<h3 class="wp-block-heading">Conclusion</h3>
+<p>The analysis of India’s rainfall trends and patterns from 1901 to 2015 reveals significant variability in annual and seasonal rainfall, with the monsoon season (June-September) being the dominant contributor. Anomalous years of extreme drought and wetness highlight the unpredictability of rainfall, while clustering shows a shift towards more dry years in recent decades. Correlations indicate the limited dependency of non-monsoon seasons on monsoon rainfall. A time-series forecast using Prophet suggests a slight declining trend in annual rainfall, which emphasises the need for long-term water resource planning and adaptation to changing climate patterns.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="dynamic-pricing-strategy-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="instagram-reach-forecasting-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Text Emotions Classification using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Text Emotions Classification using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 02, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="ads-click-through-rate-prediction-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="diamond-price-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Text emotions classification is the problem of assigning emotion to a text by understanding the context and the emotion behind the text. One real-world example is the keyboard of an iPhone that recommends the most relevant emoji by understanding the text. So, if you want to learn how to classify the emotions of a text, this article is for you. In this article, I will take you through the task of text emotions classification with <strong><a href="machine-learning-roadmap.html" rel="noreferrer noopener" target="">Machine Learning</a></strong> using Python.</p>
+<h2 class="wp-block-heading">Text Emotions Classification</h2>
+<p>Text emotions classification is the problem of natural language processing and text classification. Here we need to train a text classification model to classify the emotion of a text.</p>
+<p>To solve this problem, we need labelled data of texts and their emotions. I found an ideal dataset to solve this problem on Kaggle. You can download the dataset from <strong><a href="https://www.kaggle.com/datasets/praveengovi/emotions-dataset-for-nlp" rel="noreferrer noopener" target="_blank">here</a></strong>.</p>
+<p>In the section below, I’ll take you through how to train a text classification model for the task of Text Emotions Classification using Machine Learning and the Python programming language.</p>
+<h2 class="wp-block-heading">Text Emotions Classification using Python</h2>
+<p>I’ll start by importing the necessary Python libraries and the <strong><a href="https://www.kaggle.com/datasets/praveengovi/emotions-dataset-for-nlp" rel="noreferrer noopener" target="_blank">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+import keras
+import tensorflow
+from keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
+from keras.models import Sequential
+from keras.layers import Embedding, Flatten, Dense
+
+
+data = pd.read_csv("train.txt", sep=';')
+data.columns = ["Text", "Emotions"]
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>                                                Text Emotions
+0  i can go from feeling so hopeless to so damned...  sadness
+1   im grabbing a minute to post i feel greedy wrong    anger
+2  i am ever feeling nostalgic about the fireplac...     love
+3                               i am feeling grouchy    anger
+4  ive been feeling a little burdened lately wasn...  sadness</strong></pre>
+<p>As this is a problem of natural language processing, I’ll start by tokenizing the data:</p>
+<pre><code class="language-python">texts = data["Text"].tolist()
+labels = data["Emotions"].tolist()
+
+# Tokenize the text data
+tokenizer = Tokenizer()
+tokenizer.fit_on_texts(texts)</code></pre>
+<p>Now we need to pad the sequences to the same length to feed them into a neural network. Here’s how we can pad the sequences of the texts to have the same length:</p>
+<pre><code class="language-python">sequences = tokenizer.texts_to_sequences(texts)
+max_length = max([len(seq) for seq in sequences])
+padded_sequences = pad_sequences(sequences, maxlen=max_length)</code></pre>
+<p>Now I’ll use the label encoder method to convert the classes from strings to a numerical representation:</p>
+<pre><code class="language-python"># Encode the string labels to integers
+label_encoder = LabelEncoder()
+labels = label_encoder.fit_transform(labels)</code></pre>
+<p>We are now going to One-hot encode the labels. One hot encoding refers to the transformation of categorical labels into a binary representation where each label is represented as a vector of all zeros except a single 1. This is necessary because machine learning algorithms work with numerical data. So here is how we can One-hot encode the labels:</p>
+<pre><code class="language-python"># One-hot encode the labels
+one_hot_labels = keras.utils.to_categorical(labels)</code></pre>
+<h2 class="wp-block-heading">Text Emotions Classification Model</h2>
+<p>Now we will split the data into training and test sets:</p>
+<pre><code class="language-python"># Split the data into training and testing sets
+xtrain, xtest, ytrain, ytest = train_test_split(padded_sequences, 
+                                                one_hot_labels, 
+                                                test_size=0.2)</code></pre>
+<p>Now let’s define a neural network architecture for our classification problem and use it to train a model to classify emotions:</p>
+<pre><code class="language-python"># Define the model
+model = Sequential()
+model.add(Embedding(input_dim=len(tokenizer.word_index) + 1, 
+                    output_dim=128, input_length=max_length))
+model.add(Flatten())
+model.add(Dense(units=128, activation="relu"))
+model.add(Dense(units=len(one_hot_labels[0]), activation="softmax"))
+
+model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
+model.fit(xtrain, ytrain, epochs=10, batch_size=32, validation_data=(xtest, ytest))</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Epoch 1/10
+400/400 [==============================] - 12s 28ms/step - loss: 1.3766 - accuracy: 0.4693 - val_loss: 0.8994 - val_accuracy: 0.7028
+Epoch 2/10
+400/400 [==============================] - 11s 28ms/step - loss: 0.3783 - accuracy: 0.8862 - val_loss: 0.5440 - val_accuracy: 0.8338
+Epoch 3/10
+400/400 [==============================] - 11s 28ms/step - loss: 0.0681 - accuracy: 0.9831 - val_loss: 0.5799 - val_accuracy: 0.8281
+Epoch 4/10
+400/400 [==============================] - 11s 27ms/step - loss: 0.0278 - accuracy: 0.9941 - val_loss: 0.6063 - val_accuracy: 0.8272
+Epoch 5/10
+400/400 [==============================] - 11s 28ms/step - loss: 0.0173 - accuracy: 0.9962 - val_loss: 0.6683 - val_accuracy: 0.8281
+Epoch 6/10
+400/400 [==============================] - 11s 28ms/step - loss: 0.0164 - accuracy: 0.9968 - val_loss: 0.7021 - val_accuracy: 0.8250
+Epoch 7/10
+400/400 [==============================] - 13s 31ms/step - loss: 0.0135 - accuracy: 0.9972 - val_loss: 0.7059 - val_accuracy: 0.8238
+Epoch 8/10
+400/400 [==============================] - 12s 31ms/step - loss: 0.0127 - accuracy: 0.9977 - val_loss: 0.7705 - val_accuracy: 0.8163
+Epoch 9/10
+400/400 [==============================] - 11s 28ms/step - loss: 0.0127 - accuracy: 0.9971 - val_loss: 0.7710 - val_accuracy: 0.8181
+Epoch 10/10
+400/400 [==============================] - 11s 28ms/step - loss: 0.0110 - accuracy: 0.9975 - val_loss: 0.8234 - val_accuracy: 0.8206
+&lt;keras.callbacks.History at 0x7fa6a85354f0&gt;</strong></pre>
+<p>Now let’s take a sentence as an input text and see how the model performs:</p>
+<pre><code class="language-python">input_text = "She didn't come today because she lost her dog yestertay!"
+
+# Preprocess the input text
+input_sequence = tokenizer.texts_to_sequences([input_text])
+padded_input_sequence = pad_sequences(input_sequence, maxlen=max_length)
+prediction = model.predict(padded_input_sequence)
+predicted_label = label_encoder.inverse_transform([np.argmax(prediction[0])])
+print(predicted_label)</code></pre>
+<pre class="wp-block-preformatted"><strong>1/1 [==============================] - 0s 145ms/step
+['sadness']</strong></pre>
+<p>So this is how you can use Machine Learning for the task of text emotion classification using the Python programming language.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>Text emotion classification is the problem of assigning emotion to a text by understanding the context and the emotion behind the text. One real-world example is the keyboard of an iPhone that recommends the most relevant emoji by understanding the text. I hope you liked this article on Text Emotion Classification with Machine Learning using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="ads-click-through-rate-prediction-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="diamond-price-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

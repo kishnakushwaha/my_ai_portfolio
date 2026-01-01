@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Stock Market Anomaly Detection using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Stock Market Anomaly Detection using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 31, 2025 • 5 min read</div>
+<p>Stock market anomaly detection refers to the process of identifying unusual patterns or behaviours in stock market data that deviate significantly from the expected norm. The key is that these events are unexpected and can lead to significant price movements or unusual trading volumes. So, if you want to learn how to detect, analyze, and interpret anomalies in the stock market, this article is for you. In this article, I’ll take you through the task of Stock Market Anomaly Detection using <strong><a href="https://my-ai-portfolio.com/2022/07/15/python-practice-questions-for-coding-interviews/">Python</a></strong>.</p>
+<h2 class="wp-block-heading">Stock Market Anomaly Detection: Process We Can Follow</h2>
+<p>Anomalies in the stock market are important because they can indicate opportunities or risks. For example, a sudden spike in a stock’s price could be due to positive news about the company or its industry, which signals a potential investment opportunity. Conversely, an unexpected price drop could warn of underlying issues or market sentiment changes, which signals a risk that investors may need to manage.</p>
+<p>Below is the process we can follow for the task of stock market anomaly detection:</p>
+<ul class="wp-block-list">
+<li>Gather historical stock market data, including prices (open, high, low, close, adjusted close) and trading volumes.</li>
+<li>Develop additional features that may help in detecting anomalies, such as moving averages, relative strength index (RSI), or percentage changes over specific periods.</li>
+<li>Visualize the data to identify potential outliers or unusual patterns across time.</li>
+<li>Employ statistical methods like Z-score analysis, where data points that are a certain number of standard deviations away from the mean are flagged as anomalies.</li>
+<li>Use the insights gained from anomaly detection to inform investment decisions, risk management, and strategic planning.</li>
+</ul>
+<p>I will collect real-time stock market data for this task using the yfinance API. Still, if you need a dataset for this task, download it from <strong><a href="https://statso.io/anomalies-in-stock-market-case-study/">here</a></strong>.</p>
+<h2 class="wp-block-heading">Collecting Real-time Stock Market Data using Python</h2>
+<p>Before getting started with Stock Market Anomaly Detection, I’ll collect real-time stock market data of several companies. I’ll use the yfinance API for this task. If you haven’t used it before, you can install it on your Python virtual environment by using the command mentioned below on your terminal or the command prompt:</p>
+<ul class="wp-block-list">
+<li>pip install yfinance</li>
+</ul>
+<p>Below is how we can collect real-time stock market data using Python:</p>
+<pre><code class="language-python">import pandas as pd
+import yfinance as yf
+from datetime import date, timedelta
+
+# define the time period for the data
+end_date = date.today().strftime("%Y-%m-%d")
+start_date = (date.today() - timedelta(days=365)).strftime("%Y-%m-%d")
+
+# list of stock tickers to download
+tickers = ['AAPL', 'MSFT', 'NFLX', 'GOOG', 'TSLA']
+
+data = yf.download(tickers, start=start_date, end=end_date, progress=False)
+
+# reset index to bring Date into the columns for the melt function
+data = data.reset_index()
+
+# melt the DataFrame to make it long format where each row is a unique combination of Date, Ticker, and attributes
+data_melted = data.melt(id_vars=['Date'], var_name=['Attribute', 'Ticker'])
+
+# pivot the melted DataFrame to have the attributes (Open, High, Low, etc.) as columns
+data_pivoted = data_melted.pivot_table(index=['Date', 'Ticker'], columns='Attribute', values='value', aggfunc='first')
+
+# reset index to turn multi-index into columns
+stock_data = data_pivoted.reset_index()
+
+print(stock_data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Attribute       Date Ticker   Adj Close       Close        High         Low  \<br/>0         2023-04-10   AAPL  161.169724  162.029999  162.029999  160.080002   <br/>1         2023-04-10   GOOG  106.949997  106.949997  107.970001  105.599998   <br/>2         2023-04-10   MSFT  287.034241  289.390015  289.600006  284.709991   <br/>3         2023-04-10   NFLX  338.989990  338.989990  339.880005  333.359985   <br/>4         2023-04-10   TSLA  184.509995  184.509995  185.100006  176.110001   <br/><br/>Attribute        Open       Volume  <br/>0          161.419998   47716900.0  <br/>1          107.389999   19741500.0  <br/>2          289.209991   23103000.0  <br/>3          335.269989    2657900.0  <br/>4          179.940002  142154600.0  </strong></pre>
+<p>The data we collected contains the following columns:</p>
+<ul class="wp-block-list">
+<li>Date: The date of the stock data entry.</li>
+<li>Ticker: The stock ticker symbol.</li>
+<li>Adj Close: The adjusted closing price of the stock, which accounts for any corporate actions like splits or dividends.</li>
+<li>Close: The closing price of the stock.</li>
+<li>High: The highest price of the stock during the trading day.</li>
+<li>Low: The lowest price of the stock during the trading day.</li>
+<li>Open: The opening price of the stock.</li>
+<li>Volume: The number of shares traded during the day.</li>
+</ul>
+<p>Now, let’s make some necessary transformations in the dataset before moving forward:</p>
+<pre><code class="language-python"># convert the 'Date' column to datetime format
+stock_data['Date'] = pd.to_datetime(stock_data['Date'])
+
+# set the 'Date' column as the index of the dataframe
+stock_data.set_index('Date', inplace=True)
+print(stock_data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Attribute  Ticker   Adj Close       Close        High         Low        Open  \<br/>Date                                                                            <br/>2023-04-10   AAPL  161.169724  162.029999  162.029999  160.080002  161.419998   <br/>2023-04-10   GOOG  106.949997  106.949997  107.970001  105.599998  107.389999   <br/>2023-04-10   MSFT  287.034241  289.390015  289.600006  284.709991  289.209991   <br/>2023-04-10   NFLX  338.989990  338.989990  339.880005  333.359985  335.269989   <br/>2023-04-10   TSLA  184.509995  184.509995  185.100006  176.110001  179.940002   <br/><br/>Attribute        Volume  <br/>Date                     <br/>2023-04-10   47716900.0  <br/>2023-04-10   19741500.0  <br/>2023-04-10   23103000.0  <br/>2023-04-10    2657900.0  <br/>2023-04-10  142154600.0  </strong></pre>
+<h2 class="wp-block-heading">Stock Market Anomaly Detection using Python</h2>
+<p>Now, let’s get started with the task of stock market anomaly detection with a visualization of the adjusted close prices and volumes for each ticker over time to get an overview of the data:</p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+import seaborn as sns
+sns.set(style="whitegrid")
+
+# plotting the adjusted close prices for each ticker over time
+plt.figure(figsize=(15, 6))
+for ticker in stock_data['Ticker'].unique():
+    subset = stock_data[stock_data['Ticker'] == ticker]
+    plt.plot(subset.index, subset['Adj Close'], label=ticker)
+
+plt.title('Adjusted Close Prices Over Time')
+plt.xlabel('Date')
+plt.ylabel('Adjusted Close Price')
+plt.legend()
+plt.show()
+
+# plotting the trading volume for each ticker over time
+plt.figure(figsize=(15, 6))
+for ticker in stock_data['Ticker'].unique():
+    subset = stock_data[stock_data['Ticker'] == ticker]
+    plt.plot(subset.index, subset['Volume'], label=ticker)
+
+plt.title('Trading Volume Over Time')
+plt.xlabel('Date')
+plt.ylabel('Volume')
+plt.legend()
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Stock Market Anomaly Detection: Adjusted Close Prices Over Time" class="wp-image-23127" data-attachment-id="23127" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="stock-market-anomalies-1" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/stock-market-anomalies-1.png?fit=1024%2C456&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/stock-market-anomalies-1.png?fit=300%2C134&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/stock-market-anomalies-1.png?fit=1248%2C556&amp;ssl=1" data-orig-size="1248,556" data-permalink="https://my-ai-portfolio.com/2024/04/08/stock-market-anomaly-detection-using-python/stock-market-anomalies-1/" data-recalc-dims="1" decoding="async" height="456" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/stock-market-anomalies-1.png?resize=1024%2C456&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/stock-market-anomalies-1.png?resize=1024%2C456&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/stock-market-anomalies-1.png?resize=300%2C134&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/stock-market-anomalies-1.png?resize=768%2C342&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/stock-market-anomalies-1.png?resize=1200%2C535&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/stock-market-anomalies-1.png?w=1248&amp;ssl=1 1248w" style="width:678px;height:auto" width="1024"/></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Trading Volume Over Time" class="wp-image-23128" data-attachment-id="23128" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="stock-market-anomalies-2" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/stock-market-anomalies-2.png?fit=1024%2C458&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/stock-market-anomalies-2.png?fit=300%2C134&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/stock-market-anomalies-2.png?fit=1243%2C556&amp;ssl=1" data-orig-size="1243,556" data-permalink="https://my-ai-portfolio.com/2024/04/08/stock-market-anomaly-detection-using-python/stock-market-anomalies-2/" data-recalc-dims="1" decoding="async" height="458" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/stock-market-anomalies-2.png?resize=1024%2C458&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/stock-market-anomalies-2.png?resize=1024%2C458&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/stock-market-anomalies-2.png?resize=300%2C134&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/stock-market-anomalies-2.png?resize=768%2C344&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/stock-market-anomalies-2.png?resize=1200%2C537&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/stock-market-anomalies-2.png?w=1243&amp;ssl=1 1243w" style="width:669px;height:auto" width="1024"/></figure>
+<p>The first graph shows the adjusted closing prices of five different stocks:</p>
+<ol class="wp-block-list">
+<li>AAPL (Apple Inc.)</li>
+<li>GOOG (Alphabet Inc.)</li>
+<li>MSFT (Microsoft Corporation)</li>
+<li>NFLX (Netflix, Inc.)</li>
+<li>and TSLA (Tesla, Inc.)</li>
+</ol>
+<p>GOOG appears to have the highest price and shows a general uptrend throughout the period, despite some volatility. TSLA and AAPL also exhibit an uptrend, with AAPL’s stock price increasing more steadily. MSFT and NFLX display relatively lower prices compared to the others, with NFLX showing considerable fluctuation but remaining mostly flat, and MSFT demonstrating a slight downtrend towards the end of the period.</p>
+<p>From the second graph, it is evident that AAPL and TSLA have the highest and most volatile trading volumes, with TSLA showing particularly large spikes. It suggests significant investor interest or reactions to events during those times. GOOG, while having the highest stock price, shows moderate and relatively stable trading volume. MSFT and NFLX have lower and less volatile trading volumes in comparison to AAPL and TSLA. The spikes and dips in trading volumes could correspond to earnings reports, product announcements, or other market-moving events for these companies.</p>
+<h4 class="wp-block-heading">Detecting Anomalies in the Stock Market</h4>
+<p>Given the variability and trends observed in both adjusted close prices and trading volumes, anomaly detection can focus on identifying:</p>
+<ol class="wp-block-list">
+<li>Significant price movements that deviate from the stock’s typical price range or trend.</li>
+<li>Unusual trading volumes that stand out from the normal trading activity.</li>
+</ol>
+<p>For the task of stock market anomaly detection, we can use the Z-score method, which identifies anomalies based on how many standard deviations away a data point is from the mean. A common threshold for identifying an anomaly is a Z-score greater than 2 or less than -2, which corresponds to data points that are more than 2 standard deviations away from the mean.</p>
+<p>We will compute the Z-scores for both the adjusted close prices and trading volumes for each stock and then identify any data points that exceed this threshold:</p>
+<pre><code class="language-python">from scipy.stats import zscore
+
+def detect_anomalies(df, column):
+    df_copy = df.copy()
+
+    # calculate Z-scores and add them as a new column
+    df_copy['Z-score'] = zscore(df_copy[column])
+
+    # find where the absolute Z-score is greater than 2 (common threshold for anomalies)
+    anomalies = df_copy[abs(df_copy['Z-score']) &gt; 2]
+    return anomalies
+
+anomalies_adj_close = pd.DataFrame()
+anomalies_volume = pd.DataFrame()
+
+for ticker in stock_data['Ticker'].unique():
+    data_ticker = stock_data[stock_data['Ticker'] == ticker]
+
+    adj_close_anomalies = detect_anomalies(data_ticker, 'Adj Close')
+    volume_anomalies = detect_anomalies(data_ticker, 'Volume')
+
+    # use concat instead of append
+    anomalies_adj_close = pd.concat([anomalies_adj_close, adj_close_anomalies])
+    anomalies_volume = pd.concat([anomalies_volume, volume_anomalies])
+
+print(anomalies_adj_close.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Attribute  Ticker   Adj Close       Close        High         Low        Open  \<br/>Date                                                                            <br/>2023-04-10   AAPL  161.169724  162.029999  162.029999  160.080002  161.419998   <br/>2023-04-11   AAPL  159.946259  160.800003  162.360001  160.509995  162.350006   <br/>2023-04-12   AAPL  159.249985  160.100006  162.059998  159.779999  161.220001   <br/>2023-04-10   GOOG  106.949997  106.949997  107.970001  105.599998  107.389999   <br/>2023-04-11   GOOG  106.120003  106.120003  107.220001  105.279999  106.919998   <br/><br/>Attribute       Volume   Z-score  <br/>Date                              <br/>2023-04-10  47716900.0 -2.140730  <br/>2023-04-11  47644200.0 -2.275332  <br/>2023-04-12  50133100.0 -2.351934  <br/>2023-04-10  19741500.0 -2.104352  <br/>2023-04-11  18721300.0 -2.173283  </strong></pre>
+<pre><code class="language-python">print(anomalies_volume.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Attribute  Ticker   Adj Close       Close        High         Low        Open  \<br/>Date                                                                            <br/>2023-05-05   AAPL  172.648468  173.570007  174.300003  170.759995  170.979996   <br/>2023-05-31   AAPL  176.552780  177.250000  179.350006  176.759995  177.330002   <br/>2023-06-05   AAPL  178.873611  179.580002  184.949997  178.039993  182.630005   <br/>2023-06-16   AAPL  184.192612  184.919998  186.990005  184.270004  186.729996   <br/>2023-08-04   AAPL  181.274155  181.990005  187.380005  181.919998  185.520004   <br/><br/>Attribute        Volume   Z-score  <br/>Date                               <br/>2023-05-05  113316400.0  3.243334  <br/>2023-05-31   99625300.0  2.448999  <br/>2023-06-05  121946500.0  3.744038  <br/>2023-06-16  101235600.0  2.542426  <br/>2023-08-04  115799700.0  3.387411  </strong></pre>
+<p>Now, let’s plot the adjusted close prices and trading volumes again for each company, highlighting the anomalies we detected:</p>
+<pre><code class="language-python">def plot_anomalies(ticker, anomalies_adj_close, anomalies_volume):
+    # Filter the main and anomalies data for the given ticker
+    data_ticker = stock_data[stock_data['Ticker'] == ticker]
+    adj_close_anomalies = anomalies_adj_close[anomalies_adj_close['Ticker'] == ticker]
+    volume_anomalies = anomalies_volume[anomalies_volume['Ticker'] == ticker]
+
+    # plotting
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(15, 12))
+
+    # adjusted close price
+    ax1.plot(data_ticker.index, data_ticker['Adj Close'], label='Adj Close', color='blue')
+    ax1.scatter(adj_close_anomalies.index, adj_close_anomalies['Adj Close'], color='red', label='Anomalies')
+    ax1.set_title(f'{ticker} Adjusted Close Price and Anomalies')
+    ax1.set_xlabel('Date')
+    ax1.set_ylabel('Adjusted Close Price')
+    ax1.legend()
+
+    # volume
+    ax2.plot(data_ticker.index, data_ticker['Volume'], label='Volume', color='green')
+    ax2.scatter(volume_anomalies.index, volume_anomalies['Volume'], color='orange', label='Anomalies')
+    ax2.set_title(f'{ticker} Trading Volume and Anomalies')
+    ax2.set_xlabel('Date')
+    ax2.set_ylabel('Volume')
+    ax2.legend()
+
+    plt.tight_layout()
+    plt.show()
+
+# plot anomalies for each ticker
+for ticker in stock_data['Ticker'].unique():
+    plot_anomalies(ticker, anomalies_adj_close, anomalies_volume)</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="anomalies 1" class="wp-image-23132" data-attachment-id="23132" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="anomalies-in-stock-market-3" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-3.png?fit=1024%2C817&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-3.png?fit=300%2C239&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-3.png?fit=1484%2C1184&amp;ssl=1" data-orig-size="1484,1184" data-permalink="https://my-ai-portfolio.com/2024/04/08/stock-market-anomaly-detection-using-python/anomalies-in-stock-market-3/" data-recalc-dims="1" decoding="async" height="817" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-3.png?resize=1024%2C817&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-3.png?resize=1024%2C817&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-3.png?resize=300%2C239&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-3.png?resize=768%2C613&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-3.png?resize=1200%2C957&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-3.png?w=1484&amp;ssl=1 1484w" style="width:657px;height:auto" width="1024"/></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="anomalies 2" class="wp-image-23133" data-attachment-id="23133" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="anomalies-in-stock-market-4" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-4.png?fit=1024%2C817&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-4.png?fit=300%2C239&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-4.png?fit=1484%2C1184&amp;ssl=1" data-orig-size="1484,1184" data-permalink="https://my-ai-portfolio.com/2024/04/08/stock-market-anomaly-detection-using-python/anomalies-in-stock-market-4/" data-recalc-dims="1" decoding="async" height="817" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-4.png?resize=1024%2C817&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-4.png?resize=1024%2C817&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-4.png?resize=300%2C239&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-4.png?resize=768%2C613&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-4.png?resize=1200%2C957&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-4.png?w=1484&amp;ssl=1 1484w" style="width:669px;height:auto" width="1024"/></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="anomalies in stock market 3" class="wp-image-23135" data-attachment-id="23135" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="anomalies-in-stock-market-5" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-5.png?fit=1024%2C817&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-5.png?fit=300%2C239&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-5.png?fit=1484%2C1184&amp;ssl=1" data-orig-size="1484,1184" data-permalink="https://my-ai-portfolio.com/2024/04/08/stock-market-anomaly-detection-using-python/anomalies-in-stock-market-5/" data-recalc-dims="1" decoding="async" height="817" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-5.png?resize=1024%2C817&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-5.png?resize=1024%2C817&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-5.png?resize=300%2C239&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-5.png?resize=768%2C613&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-5.png?resize=1200%2C957&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-5.png?w=1484&amp;ssl=1 1484w" style="width:677px;height:auto" width="1024"/></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="anomalies in stock market 4" class="wp-image-23136" data-attachment-id="23136" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="anomalies-in-stock-market-6" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-6.png?fit=1024%2C817&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-6.png?fit=300%2C239&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-6.png?fit=1484%2C1184&amp;ssl=1" data-orig-size="1484,1184" data-permalink="https://my-ai-portfolio.com/2024/04/08/stock-market-anomaly-detection-using-python/anomalies-in-stock-market-6/" data-recalc-dims="1" decoding="async" height="817" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-6.png?resize=1024%2C817&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-6.png?resize=1024%2C817&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-6.png?resize=300%2C239&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-6.png?resize=768%2C613&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-6.png?resize=1200%2C957&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-6.png?w=1484&amp;ssl=1 1484w" style="width:667px;height:auto" width="1024"/></figure>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="anomalies in stock market 5" class="wp-image-23138" data-attachment-id="23138" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="anomalies-in-stock-market-7" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-7.png?fit=1024%2C817&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-7.png?fit=300%2C239&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-7.png?fit=1484%2C1184&amp;ssl=1" data-orig-size="1484,1184" data-permalink="https://my-ai-portfolio.com/2024/04/08/stock-market-anomaly-detection-using-python/anomalies-in-stock-market-7/" data-recalc-dims="1" decoding="async" height="817" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-7.png?resize=1024%2C817&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-7.png?resize=1024%2C817&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-7.png?resize=300%2C239&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-7.png?resize=768%2C613&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-7.png?resize=1200%2C957&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/04/anomalies-in-stock-market-7.png?w=1484&amp;ssl=1 1484w" style="width:659px;height:auto" width="1024"/></figure>
+<p>The above charts for each company display the adjusted close prices and trading volumes over time, with anomalies highlighted:</p>
+<ul class="wp-block-list">
+<li>Anomalies are marked in red and represent significant deviations from the typical price range. These could correspond to days with unexpected news, earnings reports, or market shifts.</li>
+<li>Anomalies in trading volume are marked in orange and indicate days with exceptionally high or low trading activity compared to the norm. Such spikes could be due to market events, announcements, or other factors influencing trader behaviour.</li>
+</ul>
+<p>Now, let’s analyze the correlation in the anomalies of all the companies:</p>
+<pre><code class="language-python"># consolidate anomalies for adjusted close prices and volumes
+all_anomalies_adj_close = anomalies_adj_close[['Ticker']].copy()
+all_anomalies_adj_close['Adj Close Anomaly'] = 1  # indicator variable for anomalies
+
+all_anomalies_volume = anomalies_volume[['Ticker']].copy()
+all_anomalies_volume['Volume Anomaly'] = 1  # indicator variable for anomalies
+
+# pivot these dataframes to have one row per date and columns for each ticker, filling non-anomalies with 0
+adj_close_pivot = all_anomalies_adj_close.pivot_table(index=all_anomalies_adj_close.index, columns='Ticker',
+                                                       fill_value=0, aggfunc='sum')
+
+volume_pivot = all_anomalies_volume.pivot_table(index=all_anomalies_volume.index, columns='Ticker',
+                                                fill_value=0, aggfunc='sum')
+
+# flatten the multi-level column index
+adj_close_pivot.columns = adj_close_pivot.columns.get_level_values(1)
+volume_pivot.columns = volume_pivot.columns.get_level_values(1)
+
+# combine the two pivoted dataframes
+combined_anomalies = pd.concat([adj_close_pivot, volume_pivot], axis=1, keys=['Adj Close Anomaly', 'Volume Anomaly'])
+
+# calculate the correlation matrix for the anomalies
+correlation_matrix = combined_anomalies.corr()
+
+print(correlation_matrix)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>                         Adj Close Anomaly                                \<br/>Ticker                                AAPL      GOOG      MSFT      NFLX   <br/>                  Ticker                                                   <br/>Adj Close Anomaly AAPL            1.000000  0.219214 -0.072232 -0.219214   <br/>                  GOOG            0.219214  1.000000  0.121395 -1.000000   <br/>                  MSFT           -0.072232  0.121395  1.000000 -0.121395   <br/>                  NFLX           -0.219214 -1.000000 -0.121395  1.000000   <br/>Volume Anomaly    AAPL                 NaN -0.645497 -0.258199  0.645497   <br/>                  GOOG                 NaN       NaN       NaN       NaN   <br/>                  MSFT                 NaN  0.258199  0.645497 -0.258199   <br/>                  NFLX                 NaN  0.258199 -0.258199 -0.258199   <br/>                  TSLA                 NaN  0.166667 -0.166667 -0.166667   <br/><br/>                         Volume Anomaly                                \<br/>Ticker                             AAPL      GOOG      MSFT      NFLX   <br/>                  Ticker                                                <br/>Adj Close Anomaly AAPL              NaN       NaN       NaN       NaN   <br/>                  GOOG        -0.645497       NaN  0.258199  0.258199   <br/>                  MSFT        -0.258199       NaN  0.645497 -0.258199   <br/>                  NFLX         0.645497       NaN -0.258199 -0.258199   <br/>Volume Anomaly    AAPL         1.000000  0.170507 -0.004707 -0.336011   <br/>                  GOOG         0.170507  1.000000  0.418917 -0.216007   <br/>                  MSFT        -0.004707  0.418917  1.000000 -0.196116   <br/>                  NFLX        -0.336011 -0.216007 -0.196116  1.000000   <br/>                  TSLA        -0.405244 -0.405244 -0.384353 -0.050252   <br/><br/>                                    <br/>Ticker                        TSLA  <br/>                  Ticker            <br/>Adj Close Anomaly AAPL         NaN  <br/>                  GOOG    0.166667  <br/>                  MSFT   -0.166667  <br/>                  NFLX   -0.166667  <br/>Volume Anomaly    AAPL   -0.405244  <br/>                  GOOG   -0.405244  <br/>                  MSFT   -0.384353  <br/>                  NFLX   -0.050252  <br/>                  TSLA    1.000000  </strong></pre>
+<p>AAPL has a low positive correlation with GOOG and a negative correlation with NFLX in terms of adjusted close price anomalies. It suggests that price movements in AAPL have some level of simultaneous occurrence with GOOG but move inversely with NFLX. On the other hand, GOOG and NFLX show a strong negative correlation, indicating that when one experiences an anomalous price increase (or decrease), the other tends to move in the opposite direction.</p>
+<p>In trading volumes, GOOG shows a positive correlation with MSFT in trading volume anomalies, suggesting that these companies might have simultaneous unusual trading activities. AAPL’s volume anomalies have a negative correlation with other companies like NFLX and TSLA, indicating that when AAPL experiences unusual trading volume, these companies tend to have opposite anomalies in their trading volumes.</p>
+<h4 class="wp-block-heading">Analyzing the Risk of Anomalies</h4>
+<p>Now, let’s rate each stock based on the risk inferred from the anomalies detected. For this task, we can consider the frequency and magnitude of these anomalies. A stock could be considered more risky if it has frequent and large anomalies in its price or volume. Here’s how we can approach this:</p>
+<ol class="wp-block-list">
+<li><strong>Frequency of Anomalies</strong>: A higher number of anomalies may indicate a higher risk.</li>
+<li><strong>Magnitude of Anomalies</strong>: Larger deviations from the mean (higher absolute Z-scores) suggest higher risk.</li>
+</ol>
+<p>We can compute a risk score for each stock by combining these factors. For simplicity, we could average the absolute Z-scores of anomalies for each stock and then normalize these scores across all stocks to get a risk rating:</p>
+<pre><code class="language-python"># calculate the mean absolute Z-score for each stock as a risk indicator
+adj_close_risk = anomalies_adj_close.groupby('Ticker')['Z-score'].apply(lambda x: abs(x).mean())
+volume_risk = anomalies_volume.groupby('Ticker')['Z-score'].apply(lambda x: abs(x).mean())
+
+# combine the risk scores from both price and volume anomalies
+total_risk = adj_close_risk + volume_risk
+
+# normalize the risk scores to get a relative risk rating from 0 to 1
+risk_rating = (total_risk - total_risk.min()) / (total_risk.max() - total_risk.min())
+
+print(risk_rating)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Ticker<br/>AAPL    0.173652<br/>GOOG    0.063253<br/>MSFT    0.000000<br/>NFLX    1.000000<br/>TSLA         NaN<br/>Name: Z-score, dtype: float64</strong></pre>
+<p>Here’s the interpretation of each rating:</p>
+<ul class="wp-block-list">
+<li><strong>AAPL:</strong> Has a risk rating of approximately 0.17. It suggests that Apple’s stock shows some level of risk due to anomalies, but it is relatively moderate compared to others like NFLX.</li>
+<li><strong>GOOG: </strong>With a risk rating of around 0.06, GOOG appears to be less risky compared to AAPL. It indicates fewer or less significant anomalies in its trading data.</li>
+<li><strong>MSFT:</strong> Shows a risk rating of 0.00, indicating the least risk among the stocks listed. It suggests that Microsoft had the fewest and smallest anomalies in its price and volume data.</li>
+<li><strong>NFLX:</strong> Has the highest risk rating at 1.00. It indicates that Netflix is the most risky among these stocks, with the most frequent and largest anomalies detected.</li>
+<li><strong>TSLA:</strong> The NaN value suggests that it did not have detectable anomalies in the period analyzed.</li>
+</ul>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, this is how you can detect, analyze, and interpret the anomalies in the stock market. Anomalies in the stock market are important because they can indicate opportunities or risks. For example, a sudden spike in a stock’s price could be due to positive news about the company or its industry, which signals a potential investment opportunity. Conversely, an unexpected price drop could warn of underlying issues or market sentiment changes, which signals a risk that investors may need to manage.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="creating-a-mutual-fund-plan-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="hypothesis-testing-for-data-scientists-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

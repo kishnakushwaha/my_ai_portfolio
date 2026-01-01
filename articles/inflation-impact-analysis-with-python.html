@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Inflation Impact Analysis with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Inflation Impact Analysis with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 04, 2025 • 5 min read</div>
+<p>Inflation is the rate at which the general level of prices for goods and services rises over time, which leads to a decrease in the purchasing power of money. It indicates how much more expensive a set of goods and services has become over a certain period. If you want to learn about Inflation and how to analyze its impact on an economy, this article is for you. In this article, I’ll take you through the task of Inflation impact analysis with <strong><a href="https://my-ai-portfolio.com/2022/07/15/python-practice-questions-for-coding-interviews/">Python</a></strong>.</p>
+<h2 class="wp-block-heading">Inflation Impact Analysis: Overview</h2>
+<p>Inflation occurs when there is a sustained increase in the general price level of goods and services in an economy over time. It impacts various aspects of the economy, including purchasing power, consumer behaviour, savings, and investment. Moderate inflation is typically a sign of a healthy, growing economy, as it encourages spending and investment. However, high or unpredictable inflation can erode the value of money, disrupt financial planning, and lead to economic uncertainty.</p>
+<p>To analyze the impact of inflation, we need to compare it with other economic indicators. So, to analyze the impact of inflation on the economy, we will compare it with the exchange rates over time. This comparison is important because exchange rates are influenced by inflation differentials between countries, such that higher inflation in a country generally leads to a weaker currency relative to countries with lower inflation.</p>
+<p>I found an ideal dataset for this task, which contains data about inflation in India and the United States with the exchange rates over time. You can download the dataset from <strong><a href="https://statso.io/impact-of-inflation-case-study/" rel="noreferrer noopener" target="_blank">here</a></strong>.</p>
+<h2 class="wp-block-heading">Inflation Impact Analysis with Python</h2>
+<p>We have two data files for this task. Let’s start the task of Inflation impact analysis by importing the necessary Python libraries and the <strong><a href="https://statso.io/impact-of-inflation-case-study/" rel="noreferrer noopener" target="_blank">datasets</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+import plotly.express as px
+import plotly.graph_objs as go
+
+inflation_data = pd.read_csv('Inflation_Rates_Transformed.csv')
+exchange_rate_data = pd.read_csv('USD_INR_Exchange_Rates_1980_2024.csv')
+
+exchange_rate_data.head()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="Exchange Rate Data" class="wp-image-24332" data-attachment-id="24332" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-1.png?fit=728%2C382&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-1.png?fit=300%2C157&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-1.png?fit=728%2C382&amp;ssl=1" data-orig-size="728,382" data-permalink="https://my-ai-portfolio.com/2024/08/12/inflation-impact-analysis-with-python/image-160/" data-recalc-dims="1" decoding="async" height="382" sizes="(max-width: 728px) 100vw, 728px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-1.png?resize=728%2C382&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-1.png?w=728&amp;ssl=1 728w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-1.png?resize=300%2C157&amp;ssl=1 300w" style="width:629px;height:auto" width="728"/></figure>
+<pre><code class="language-python">inflation_data.head()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Inflation data" class="wp-image-24334" data-attachment-id="24334" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-2.png?fit=1006%2C382&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-2.png?fit=300%2C114&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-2.png?fit=1006%2C382&amp;ssl=1" data-orig-size="1006,382" data-permalink="https://my-ai-portfolio.com/2024/08/12/inflation-impact-analysis-with-python/image-161/" data-recalc-dims="1" decoding="async" height="382" sizes="(max-width: 1006px) 100vw, 1006px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-2.png?resize=1006%2C382&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-2.png?w=1006&amp;ssl=1 1006w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-2.png?resize=300%2C114&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-2.png?resize=768%2C292&amp;ssl=1 768w" width="1006"/></figure>
+<p>I’ll now prepare this dataset for analysis by merging the relevant parts of these datasets to analyze the impact of inflation on exchange rates:</p>
+<pre><code class="language-python"># filter the inflation data for India and the United States
+inflation_filtered_df = inflation_data[inflation_data['Country'].isin(['India', 'United States'])]
+
+# pivot the inflation data to have separate columns for India and the United States inflation rates
+inflation_pivot_df = inflation_filtered_df.pivot(index='Year', columns='Country', values='Inflation Rate').reset_index()
+
+# merge the exchange rates data with the inflation data
+merged_df = pd.merge(exchange_rate_data, inflation_pivot_df, on='Year')
+
+# renaming columns
+merged_df.columns = ['Year', 'Exchange Rate (INR/USD)', 'Inflation Rate (India)', 'Inflation Rate (United States)']
+
+merged_df.head()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Inflation Impact Analysis: merged data" class="wp-image-24336" data-attachment-id="24336" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-3.png?fit=1024%2C263&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-3.png?fit=300%2C77&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-3.png?fit=1504%2C386&amp;ssl=1" data-orig-size="1504,386" data-permalink="https://my-ai-portfolio.com/2024/08/12/inflation-impact-analysis-with-python/image-162/" data-recalc-dims="1" decoding="async" height="263" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-3.png?resize=1024%2C263&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-3.png?resize=1024%2C263&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-3.png?resize=300%2C77&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-3.png?resize=768%2C197&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-3.png?resize=1200%2C308&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-3.png?w=1504&amp;ssl=1 1504w" width="1024"/></figure>
+<p>The merged dataset now contains the following columns for each year:</p>
+<ul class="wp-block-list">
+<li><strong>Exchange Rate (INR/USD)</strong>: The average exchange rate of INR to USD.</li>
+<li><strong>Inflation Rate (India)</strong>: The inflation rate for India.</li>
+<li><strong>Inflation Rate (United States)</strong>: The inflation rate for the United States.</li>
+</ul>
+<p>Let’s start by analyzing the trend of inflation rates for both India and the United States alongside the exchange rate:</p>
+<pre><code class="language-python">import plotly.graph_objs as go
+from plotly.subplots import make_subplots
+
+fig = make_subplots(rows=3, cols=1,
+                    shared_xaxes=True,
+                    vertical_spacing=0.1,
+                    subplot_titles=("Trend of Exchange Rate (INR/USD)",
+                                    "Trend of Inflation Rate (India)",
+                                    "Trend of Inflation Rate (United States)"))
+
+fig.add_trace(go.Scatter(x=merged_df['Year'],
+                         y=merged_df['Exchange Rate (INR/USD)'],
+                         mode='lines+markers',
+                         marker=dict(color='blue'),
+                         name='Exchange Rate (INR/USD)'),
+              row=1, col=1)
+
+fig.add_trace(go.Scatter(x=merged_df['Year'],
+                         y=merged_df['Inflation Rate (India)'],
+                         mode='lines+markers',
+                         marker=dict(color='orange'),
+                         name='Inflation Rate (India)'),
+              row=2, col=1)
+
+fig.add_trace(go.Scatter(x=merged_df['Year'],
+                         y=merged_df['Inflation Rate (United States)'],
+                         mode='lines+markers',
+                         marker=dict(color='green'),
+                         name='Inflation Rate (United States)'),
+              row=3, col=1)
+
+fig.update_layout(height=800,
+                  width=900,
+                  showlegend=False,
+                  title_text="Trends of Exchange Rate and Inflation Rates",
+                  xaxis3_title="Year",
+                  template='plotly_white')
+
+fig.update_yaxes(title_text="Exchange Rate (INR/USD)", row=1, col=1)
+fig.update_yaxes(title_text="Inflation Rate (%)", row=2, col=1)
+fig.update_yaxes(title_text="Inflation Rate (%)", row=3, col=1)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Trends of Exchange Rate and Inflation Rates" class="wp-image-24338" data-attachment-id="24338" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="inflation 1" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/inflation-1.png?fit=900%2C800&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/inflation-1.png?fit=300%2C267&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/inflation-1.png?fit=900%2C800&amp;ssl=1" data-orig-size="900,800" data-permalink="https://my-ai-portfolio.com/2024/08/12/inflation-impact-analysis-with-python/inflation-1/" data-recalc-dims="1" decoding="async" height="800" loading="lazy" sizes="auto, (max-width: 900px) 100vw, 900px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/inflation-1.png?resize=900%2C800&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/inflation-1.png?w=900&amp;ssl=1 900w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/inflation-1.png?resize=300%2C267&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/inflation-1.png?resize=768%2C683&amp;ssl=1 768w" width="900"/></figure>
+<p>The exchange rate shows a general upward trend over the years, which indicates a depreciation of the Indian Rupee against the US Dollar. However, there are periods of both sharp increases and relative stability.</p>
+<p>India’s inflation rate has fluctuated significantly over the years, with periods of high inflation (e.g., early 2000s) and more stable inflation in recent years. The United States has generally experienced lower and more stable inflation rates compared to India, with fewer extreme fluctuations.</p>
+<p>Next, let’s perform a correlation analysis to explore the relationship between the inflation rates and the exchange rates:</p>
+<pre><code class="language-python">correlation_matrix = merged_df[['Exchange Rate (INR/USD)',
+                                'Inflation Rate (India)',
+                                'Inflation Rate (United States)']].corr()
+
+correlation_matrix</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Correlation Analysis" class="wp-image-24340" data-attachment-id="24340" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-4.png?fit=1024%2C146&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-4.png?fit=300%2C43&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-4.png?fit=1780%2C254&amp;ssl=1" data-orig-size="1780,254" data-permalink="https://my-ai-portfolio.com/2024/08/12/inflation-impact-analysis-with-python/image-163/" data-recalc-dims="1" decoding="async" height="146" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-4.png?resize=1024%2C146&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-4.png?resize=1024%2C146&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-4.png?resize=300%2C43&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-4.png?resize=768%2C110&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-4.png?resize=1536%2C219&amp;ssl=1 1536w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-4.png?resize=1200%2C171&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/image-4.png?w=1780&amp;ssl=1 1780w" width="1024"/></figure>
+<p>Findings from the correlation analysis:</p>
+<ol class="wp-block-list">
+<li><strong>Exchange Rate vs. Inflation Rate (India)</strong>: The correlation coefficient is approximately <strong>-0.34</strong>, which indicates a weak negative relationship. It suggests that as inflation in India increases, the INR tends to depreciate against the USD, though the relationship is not very strong.</li>
+<li><strong>Exchange Rate vs. Inflation Rate (United States)</strong>: The correlation coefficient is approximately <strong>0.24</strong>, which indicates a weak positive relationship. It suggests that higher inflation in the United States might be associated with a depreciation of the USD against the INR, but again, the relationship is not strong.</li>
+<li><strong>Inflation Rate (India) vs. Inflation Rate (United States)</strong>: The correlation between the inflation rates of India and the United States is very weak and negative (<strong>-0.12</strong>), which indicates that the inflation rates in these two countries do not move together.</li>
+</ol>
+<p>Next, we’ll perform a comparative analysis to highlight periods of significant divergence or convergence between the inflation rates and the exchange rates:</p>
+<pre><code class="language-python">fig = go.Figure()
+
+fig.add_trace(go.Scatter(x=merged_df['Year'],
+                         y=merged_df['Exchange Rate (INR/USD)'],
+                         mode='lines+markers',
+                         name='Exchange Rate (INR/USD)',
+                         line=dict(color='blue')))
+
+fig.add_trace(go.Scatter(x=merged_df['Year'],
+                         y=merged_df['Inflation Rate (India)'],
+                         mode='lines+markers',
+                         name='Inflation Rate (India)',
+                         line=dict(color='orange')))
+
+fig.add_trace(go.Scatter(x=merged_df['Year'],
+                         y=merged_df['Inflation Rate (United States)'],
+                         mode='lines+markers',
+                         name='Inflation Rate (United States)',
+                         line=dict(color='green')))
+
+fig.update_layout(title='Comparative Analysis: Exchange Rate vs Inflation Rates (India &amp; US)',
+                  xaxis_title='Year',
+                  yaxis_title='Value',
+                  legend_title_text='Indicators',
+                  template='plotly_white',
+                  height=600,
+                  width=1000)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Comparative Analysis: Exchange Rate vs Inflation Rates (India &amp; US)" class="wp-image-24343" data-attachment-id="24343" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="inflation 2" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/inflation-2.png?fit=1000%2C600&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/inflation-2.png?fit=300%2C180&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/inflation-2.png?fit=1000%2C600&amp;ssl=1" data-orig-size="1000,600" data-permalink="https://my-ai-portfolio.com/2024/08/12/inflation-impact-analysis-with-python/inflation-2/" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 1000px) 100vw, 1000px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/inflation-2.png?resize=1000%2C600&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/inflation-2.png?w=1000&amp;ssl=1 1000w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/inflation-2.png?resize=300%2C180&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/inflation-2.png?resize=768%2C461&amp;ssl=1 768w" width="1000"/></figure>
+<p>Findings from the comparative analysis:</p>
+<ol class="wp-block-list">
+<li><strong>Early 2000s</strong>: A period of high inflation in India coincides with a period of relative stability in the exchange rate. It suggests that factors other than inflation may have been driving the exchange rate during this time.</li>
+<li><strong>Late 2000s to Early 2010s</strong>: The period shows some alignment between rising inflation in India and a weakening INR, which indicates that inflation could be contributing to exchange rate movements.</li>
+<li><strong>2015 Onwards</strong>: The exchange rate continues to rise, while both India’s and the United States’ inflation rates remain relatively low. This divergence suggests that the exchange rate is influenced by additional factors beyond inflation, such as economic growth, monetary policy, and international trade dynamics.</li>
+</ol>
+<h4 class="wp-block-heading">Analyzing Inflation based on the Purchasing Power Parity (PPP)</h4>
+<p>Purchasing Power Parity (PPP) is an economic theory that suggests that in the long term, exchange rates between two countries should adjust so that a basket of goods costs the same in both countries when priced in a common currency. PPP is used as a method to compare the economic productivity and standards of living between different countries. If one country’s inflation rate is higher than another’s, its currency should depreciate accordingly to maintain parity in purchasing power to ensure that the same goods cost the same in both locations.</p>
+<p>We will now analyze whether the Purchasing Power Parity theory holds by comparing the relative inflation rates and exchange rate movements over time. It will provide a deeper understanding of whether the exchange rate aligns with the theoretical value based on inflation differentials.</p>
+<p>To test whether PPP holds for India and the United States, we can:</p>
+<ol class="wp-block-list">
+<li>Calculate the Expected Exchange Rate Based on PPP</li>
+<li>Compare the Actual Exchange Rate with the PPP-Based Expected Exchange Rate</li>
+</ol>
+<p>The formula for PPP-based exchange rate prediction is:</p>
+<blockquote class="wp-block-quote is-style-plain is-layout-flow wp-block-quote-is-layout-flow">
+<p><strong><em>Expected Exchange Rate = Initial Exchange Rate × ( 1 + Inflation Rate in India / 1 + Inflation Rate in the US)</em></strong></p>
+</blockquote>
+<p>Let’s calculate and visualize the PPP-based expected exchange rate versus the actual exchange rate:</p>
+<pre><code class="language-python">initial_exchange_rate = merged_df['Exchange Rate (INR/USD)'].iloc[0]
+
+# calculate expected exchange rate based on PPP
+merged_df['Expected Exchange Rate (PPP)'] = initial_exchange_rate * (
+    (1 + merged_df['Inflation Rate (India)'] / 100) / (1 + merged_df['Inflation Rate (United States)'] / 100)
+).cumprod()
+
+fig = go.Figure()
+
+# plot actual exchange rate
+fig.add_trace(go.Scatter(x=merged_df['Year'],
+                         y=merged_df['Exchange Rate (INR/USD)'],
+                         mode='lines+markers',
+                         name='Actual Exchange Rate (INR/USD)',
+                         line=dict(color='blue')))
+
+# plot PPP-based expected exchange rate
+fig.add_trace(go.Scatter(x=merged_df['Year'],
+                         y=merged_df['Expected Exchange Rate (PPP)'],
+                         mode='lines+markers',
+                         name='Expected Exchange Rate (PPP)',
+                         line=dict(color='orange', dash='dash')))
+
+fig.update_layout(title='Actual vs. Expected Exchange Rate (PPP)',
+                  xaxis_title='Year',
+                  yaxis_title='Exchange Rate (INR/USD)',
+                  legend_title_text='Exchange Rates',
+                  template='plotly_white',
+                  height=600,
+                  width=1000)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Actual vs. Expected Exchange Rate (PPP)" class="wp-image-24346" data-attachment-id="24346" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="inflation 3" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/inflation-3.png?fit=1000%2C600&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/inflation-3.png?fit=300%2C180&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/inflation-3.png?fit=1000%2C600&amp;ssl=1" data-orig-size="1000,600" data-permalink="https://my-ai-portfolio.com/2024/08/12/inflation-impact-analysis-with-python/inflation-3/" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 1000px) 100vw, 1000px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/inflation-3.png?resize=1000%2C600&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/inflation-3.png?w=1000&amp;ssl=1 1000w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/inflation-3.png?resize=300%2C180&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/08/inflation-3.png?resize=768%2C461&amp;ssl=1 768w" width="1000"/></figure>
+<p>The blue line represents the actual exchange rate (INR/USD) over time, while the orange dashed line represents the expected exchange rate based on PPP. In some periods, the actual exchange rate closely follows the expected PPP-based rate, which suggests that PPP holds. However, in other periods, there are significant deviations between the two.</p>
+<p>The PPP-based expected exchange rate shows a more rapid increase compared to the actual exchange rate. It suggests that, according to PPP, the INR should have depreciated more than it actually did. However, the actual exchange rate was consistently lower than the PPP-based expected rate, which indicates that factors other than inflation are at play.</p>
+<h3 class="wp-block-heading">Conclusion</h3>
+<p>Our analysis revealed that inflation in India and the United States influences the exchange rate between INR and USD. Higher inflation in India generally leads to a depreciation of the INR relative to the USD, while lower inflation in the United States contributes to a stronger USD. While inflation affects the exchange rate between INR and USD, it is only one of many factors.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="electric-vehicles-market-size-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="ipl-2024-rcb-vs-dc-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

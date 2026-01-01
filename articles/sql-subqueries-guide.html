@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>SQL Subqueries Guide | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        SQL Subqueries Guide</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 18, 2025 • 5 min read</div>
+<p><strong><a href="https://my-ai-portfolio.com/2023/07/19/sql-interview-questions-for-data-science/">SQL</a></strong> Subqueries are a powerful tool used to perform operations within a query by embedding one query within another. Data Analysts/Scientists use SQL subqueries for complex data retrieval and manipulation. So, if you want to learn about SQL subqueries, this article is for you. In this article, I’ll take you through a detailed practical guide to SQL subqueries for Data Science.</p>
+<h2 class="wp-block-heading">SQL Subqueries Guide</h2>
+<p>A subquery is a query nested inside another query. It can be used in various parts of a SQL statement, such as in the SELECT, FROM, WHERE, or HAVING clauses. The main types of SQL subqueries are:</p>
+<ol class="wp-block-list">
+<li>Single-Row Subqueries</li>
+<li>Multi-Row Subqueries</li>
+<li>Correlated Subqueries</li>
+<li>Nested Subqueries</li>
+<li>Subqueries in the FROM Clause</li>
+</ol>
+<p>Let’s understand all these practically one by one. Below are two example tables that I’ll use to show the practical implementation of all these SQL subqueries.</p>
+<figure class="wp-block-table is-style-stripes has-small-font-size"><table class="has-fixed-layout"><thead><tr><th>EmployeeID</th><th>EmployeeName</th><th>DepartmentID</th><th>Salary</th></tr></thead><tbody><tr><td>1</td><td>John</td><td>1</td><td>70000</td></tr><tr><td>2</td><td>Sarah</td><td>2</td><td>80000</td></tr><tr><td>3</td><td>Mike</td><td>1</td><td>60000</td></tr><tr><td>4</td><td>Linda</td><td>3</td><td>90000</td></tr></tbody></table><figcaption class="wp-element-caption"><strong>Table: Employees</strong></figcaption></figure>
+<figure class="wp-block-table is-style-stripes has-small-font-size"><table class="has-fixed-layout"><thead><tr><th>DepartmentID</th><th>DepartmentName</th></tr></thead><tbody><tr><td>1</td><td>HR</td></tr><tr><td>2</td><td>IT</td></tr><tr><td>3</td><td>Marketing</td></tr></tbody></table><figcaption class="wp-element-caption"><strong>Table: Departments</strong></figcaption></figure>
+<h4 class="wp-block-heading">Single-Row Subqueries</h4>
+<p>Single-row subqueries return only one row as a result. They are often used in the WHERE clause. Here’s an example to find the employees whose salary is above the average salary:</p>
+<pre><code class="language-sql">SELECT EmployeeName, Salary
+FROM Employees
+WHERE Salary &gt; (SELECT AVG(Salary) FROM Employees);</code></pre>
+<figure class="wp-block-table is-style-stripes"><table class="has-fixed-layout"><thead><tr><th>EmployeeName</th><th>Salary</th></tr></thead><tbody><tr><td>Sarah</td><td>80000</td></tr><tr><td>Linda</td><td>90000</td></tr></tbody></table></figure>
+<p>Here, the subquery <strong>(SELECT AVG(Salary) FROM Employees)</strong> returns the average salary, which is then used to filter employees whose salary is above that average.</p>
+<h4 class="wp-block-heading">Multi-Row Subqueries</h4>
+<p>Multi-row subqueries return more than one row. They are often used with IN, ANY, or ALL operators. Here’s an example to find the employees who belong to departments with more than one employee:</p>
+<pre><code class="language-sql">SELECT EmployeeName
+FROM Employees
+WHERE DepartmentID IN (
+    SELECT DepartmentID
+    FROM Employees
+    GROUP BY DepartmentID
+    HAVING COUNT(*) &gt; 1
+);</code></pre>
+<figure class="wp-block-table is-style-stripes"><table class="has-fixed-layout"><thead><tr><th>EmployeeName</th></tr></thead><tbody><tr><td>John</td></tr><tr><td>Mike</td></tr></tbody></table></figure>
+<p>Here, the subquery identifies departments with more than one employee, and the main query retrieves the names of employees in those departments.</p>
+<h4 class="wp-block-heading">Correlated Subqueries</h4>
+<p>Correlated subqueries reference columns from the outer query. They are evaluated once for each row processed by the outer query. Here’s an example to find employees whose salary is higher than the average salary of their department:</p>
+<pre><code class="language-sql">SELECT EmployeeName, Salary
+FROM Employees e1
+WHERE Salary &gt; (
+    SELECT AVG(Salary)
+    FROM Employees e2
+    WHERE e1.DepartmentID = e2.DepartmentID
+);</code></pre>
+<figure class="wp-block-table is-style-stripes"><table class="has-fixed-layout"><thead><tr><th>EmployeeName</th><th>Salary</th></tr></thead><tbody><tr><td>Sarah</td><td>80000</td></tr><tr><td>Linda</td><td>90000</td></tr></tbody></table></figure>
+<p>Here, the subquery calculates the average salary within the department of each employee, and the main query selects those whose salary exceeds that average.</p>
+<h4 class="wp-block-heading">Nested Subqueries</h4>
+<p>Nested subqueries involve multiple layers of subqueries within one another. Here’s an example to find the department with the highest average salary:</p>
+<pre><code class="language-sql">SELECT DepartmentName
+FROM Departments
+WHERE DepartmentID = (
+    SELECT DepartmentID
+    FROM Employees
+    GROUP BY DepartmentID
+    ORDER BY AVG(Salary) DESC
+    LIMIT 1
+);</code></pre>
+<pre class="wp-block-preformatted"><strong>Output: Marketing</strong></pre>
+<p>Here, the innermost subquery calculates the average salary per department, and the outer query retrieves the department name with the highest average salary.</p>
+<h4 class="wp-block-heading">Subqueries in the FROM Clause</h4>
+<p>Subqueries can also be used in the <strong>FROM</strong> clause to create a temporary table or result set. Here’s an example to find the average salary of each department and include it in the main query:</p>
+<pre><code class="language-sql">SELECT d.DepartmentName, sub.AvgSalary
+FROM Departments d
+JOIN (
+    SELECT DepartmentID, AVG(Salary) AS AvgSalary
+    FROM Employees
+    GROUP BY DepartmentID
+) sub
+ON d.DepartmentID = sub.DepartmentID;</code></pre>
+<figure class="wp-block-table is-style-stripes"><table class="has-fixed-layout"><thead><tr><th>DepartmentName</th><th>AvgSalary</th></tr></thead><tbody><tr><td>HR</td><td>65000</td></tr><tr><td>IT</td><td>80000</td></tr><tr><td>Marketing</td><td>90000</td></tr></tbody></table></figure>
+<p>Here, the subquery in the FROM clause calculates the average salary per department, and the main query joins this result with the Departments table.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, here are the SQL subqueries you should know for Data Science:</p>
+<ol class="wp-block-list">
+<li><strong>Single-Row Subqueries</strong>: Return a single row and are often used in WHERE clauses.</li>
+<li><strong>Multi-Row Subqueries</strong>: Return multiple rows, typically used with IN, ANY, or ALL.</li>
+<li><strong>Correlated Subqueries</strong>: Reference columns from the outer query and are evaluated row by row.</li>
+<li><strong>Nested Subqueries</strong>: Involve multiple layers of subqueries within each other.</li>
+<li><strong>Subqueries in the FROM Clause</strong>: Used to create temporary tables or result sets within a query.</li>
+</ol>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="sql-aggregation-functions.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="sql-data-cleaning-methods.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

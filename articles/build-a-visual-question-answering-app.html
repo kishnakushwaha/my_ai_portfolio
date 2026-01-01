@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Build a Visual Question Answering App | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Build a Visual Question Answering App</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 07, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="neural-networks-in-machine-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="75-data-science-projects-for-every-level.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>For a long time, I used models separately: Natural Language Processing for text and Computer Vision for images. Each was powerful, but they missed context. An NLP model couldn’t see the image you meant, and a CV model couldn’t understand your question. Now, things are different. Multimodal AI is here, and it’s easier to use than you might expect. Let’s learn about it by building a Visual Question Answering App with Python.</p>
+<h2 class="wp-block-heading">What is Multimodal AI?</h2>
+<p>Think about how you understand the world. If you see a picture of a dog in a park and someone asks, “What is the dog doing?” you don’t just analyze the text of the question or the pixels of the image. You instantly <strong>fuse</strong> both. You see the dog (vision) and understand the query (language) to form an answer: “It’s catching a frisbee.”</p>
+<p>That, in a nutshell, is <strong>multimodal AI</strong>. It’s a system that can process, understand, and reason about information from multiple modalities (such as text, images, and audio) simultaneously.</p>
+<p>The specific task we’ll build today is called <strong>Visual Question Answering (VQA)</strong>. It’s a classic multimodal task:</p>
+<ol class="wp-block-list">
+<li><strong>Input:</strong> An image + a text-based question about the image.</li>
+<li><strong>Output:</strong> A text-based answer.</li>
+</ol>
+<h2 class="wp-block-heading">Visual Question Answering App</h2>
+<p>Let’s build a web app that lets you upload any image, ask a question about it, and get an answer from an AI. We can do this in about 20 lines of Python, thanks to the amazing open-source community.</p>
+<p>We’ll use two key tools:</p>
+<ol class="wp-block-list">
+<li><strong>Hugging Face </strong><strong>transformers</strong>: To download and run a powerful, pre-trained VQA model.</li>
+<li><strong>Gradio</strong>: To instantly create a simple, shareable web interface for our model.</li>
+</ol>
+<h4 class="wp-block-heading">Step 1: Set Up Your Environment</h4>
+<p>First, you need to install the necessary libraries. Open your terminal and run:</p>
+<pre class="wp-block-preformatted"><strong>pip install gradio transformers torch Pillow</strong></pre>
+<p>Here’s a breakdown of each of these libraries:</p>
+<ol class="wp-block-list">
+<li>gradio builds the UI.</li>
+<li>transformers gets us the AI model.</li>
+<li>torch is a deep learning framework.</li>
+<li>Pillow (PIL) helps us handle the images.</li>
+</ol>
+<h4 class="wp-block-heading">Step 2: Building the App</h4>
+<p>Create a new Python file named app.py and write the following code. I’ve added comments to explain every single line:</p>
+<pre><code class="language-python">import gradio as gr
+from transformers import ViltProcessor, ViltForQuestionAnswering
+from PIL import Image
+
+# 1. Load the pre-trained model and its processor
+# A "processor" prepares the data (image + text) for the model.
+# We're using a "ViLT" (Vision-and-Language Transformer) model 
+# fine-tuned for visual question answering.
+processor = ViltProcessor.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
+model = ViltForQuestionAnswering.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
+
+# 2. Define the core "prediction" function
+# This function will be called every time a user clicks "Submit".
+def answer_question(image, text):
+    try:
+        # 3. Prepare the inputs
+        # The processor converts the raw image and text query into
+        # the specific numerical format the model expects.
+        encoding = processor(image, text, return_tensors="pt")
+
+        # 4. Run the model
+        # We pass the processed inputs to the model...
+        outputs = model(**encoding)
+        logits = outputs.logits
+
+        # 5. Decode the answer
+        # The model's raw output ("logits") is just a set of numbers.
+        # We find the highest-scoring number (the "argmax") and use
+        # the model's config to turn it back into a readable word.
+        idx = logits.argmax(-1).item()
+        answer = model.config.id2label[idx]
+        
+        return answer
+        
+    except Exception as e:
+        print(f"Error: {e}")
+        return "Sorry, I had trouble processing that. Try a different image or question."
+
+# 6. Create the Gradio web interface
+# This one line of code builds the entire UI!
+iface = gr.Interface(
+    fn=answer_question,  # The function to call
+    inputs=[
+        gr.Image(type="pil"), # An image upload box (provides a PIL image)
+        gr.Textbox(label="Ask a question about the image...") # A text input box
+    ],
+    outputs=gr.Textbox(label="Answer"), # A text output box
+    title="🤖 Multimodal AI: Visual Question Answering",
+    description="Upload an image and ask any question about it. (Model: dandelin/vilt-b32-finetuned-vqa)"
+)
+
+# 7. Launch the app!
+iface.launch()</code></pre>
+<h4 class="wp-block-heading">Step 3: Run Your App</h4>
+<p>Go back to your terminal, make sure you’re in the same directory as your app.py file, and run:</p>
+<pre class="wp-block-preformatted"><strong>python app.py</strong></pre>
+<p>Your terminal will show a local URL. Open that link in your browser.</p>
+<p>That’s it! You now have a running multimodal AI application. Upload a picture of your pet, your room, or a landscape, and ask it questions like:</p>
+<ul class="wp-block-list">
+<li>“What colour is the cat?”</li>
+<li>“How many chairs are in the image?”</li>
+<li>“Is there a person on the beach?”</li>
+</ul>
+<p>Here’s an example of how the final UI and the Output will look:</p>
+<figure class="wp-block-image size-large"><img alt="Visual Question Answering App" class="wp-image-28467" data-attachment-id="28467" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-orig-size="1486,1014" data-recalc-dims="1" decoding="async" height="699" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/image-2.png" width="1024"/></figure>
+<h3 class="wp-block-heading">Final Words</h3>
+<p>By building this simple Visual Question Answering app, you’ve done more than just link two libraries. You’ve created a system that perceives the world in a more human-like way. This is the foundation for everything from apps that describe the world to the visually impaired to creative co-pilots that can brainstorm ideas based on a sketch and a conversation.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="neural-networks-in-machine-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="75-data-science-projects-for-every-level.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

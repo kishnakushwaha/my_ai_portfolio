@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Netflix Content Strategy Analysis with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Netflix Content Strategy Analysis with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 09, 2025 • 5 min read</div>
+<p>Content Strategy Analysis means analyzing how content is created, released, distributed, and consumed to achieve specific goals, such as maximizing audience engagement, viewership, brand reach, or revenue. If you want to learn how to analyze the content strategy of a platform known for streaming content, this article is for you. In this article, I’ll take you through the task of Netflix Content Strategy Analysis with Python.</p>
+<h2 class="wp-block-heading">Netflix Content Strategy Analysis: Getting Started</h2>
+<p>For the task of Netflix Content Strategy Analysis, we need data based on content titles, type (show or movie), genre, language, and release details (date, day of the week, season) to understand timing and content performance. Viewership metrics like hours viewed are also crucial for measuring audience engagement.</p>
+<p>I found an ideal dataset for this task, which contains data about title, release date, language, content type (show or movie), availability status, and viewership hours of the content on Netflix of all the shows and movies released in 2023. <strong>You can download the dataset from <a href="../assets/datasets/netflix_content.csv" rel="noreferrer noopener" target="_blank">here</a>.</strong></p>
+<h2 class="wp-block-heading">Netflix Content Strategy Analysis with Python</h2>
+<p>Now, let’s get started with the task of Netflix Content Strategy Analysis by importing the necessary Python libraries and the <strong><a href="../assets/datasets/netflix_content.csv" rel="noreferrer noopener" target="_blank">dataset</a></strong>:</p>
+<pre><code class="language-python">import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+import plotly.io as pio
+pio.templates.default = "plotly_white"
+
+netflix_data = pd.read_csv("/content/netflix_content_2023.csv")
+
+netflix_data.head()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="netflix content strategy data" class="wp-image-24746" data-attachment-id="24746" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-8.png?fit=1024%2C293&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-8.png?fit=300%2C86&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-8.png?fit=1708%2C488&amp;ssl=1" data-orig-size="1708,488" data-permalink="https://my-ai-portfolio.com/2024/09/30/netflix-content-strategy-analysis-with-python/image-176/" data-recalc-dims="1" decoding="async" height="293" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-8.png?resize=1024%2C293&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-8.png?resize=1024%2C293&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-8.png?resize=300%2C86&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-8.png?resize=768%2C219&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-8.png?resize=1536%2C439&amp;ssl=1 1536w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-8.png?resize=1200%2C343&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-8.png?w=1708&amp;ssl=1 1708w" width="1024"/></figure>
+<p>Let me start with cleaning and preprocessing the “Hours Viewed” column to prepare it for analysis:</p>
+<pre><code class="language-python">netflix_data['Hours Viewed'] = netflix_data['Hours Viewed'].replace(',', '', regex=True).astype(float)
+
+netflix_data[['Title', 'Hours Viewed']].head()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="cleaned data" class="wp-image-24748" data-attachment-id="24748" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-9.png?fit=808%2C364&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-9.png?fit=300%2C135&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-9.png?fit=808%2C364&amp;ssl=1" data-orig-size="808,364" data-permalink="https://my-ai-portfolio.com/2024/09/30/netflix-content-strategy-analysis-with-python/image-177/" data-recalc-dims="1" decoding="async" height="364" sizes="(max-width: 808px) 100vw, 808px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-9.png?resize=808%2C364&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-9.png?w=808&amp;ssl=1 808w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-9.png?resize=300%2C135&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-9.png?resize=768%2C346&amp;ssl=1 768w" style="width:630px;height:auto" width="808"/></figure>
+<p>The “Hours Viewed” column has been successfully cleaned and converted to a numeric format. Now, I’ll analyze trends in content type to determine whether shows or movies dominate viewership. Let’s visualize the distribution of total viewership hours between Shows and Movies:</p>
+<pre><code class="language-python"># aggregate viewership hours by content type
+content_type_viewership = netflix_data.groupby('Content Type')['Hours Viewed'].sum()
+
+fig = go.Figure(data=[
+    go.Bar(
+        x=content_type_viewership.index,
+        y=content_type_viewership.values,
+        marker_color=['skyblue', 'salmon']
+    )
+])
+
+fig.update_layout(
+    title='Total Viewership Hours by Content Type (2023)',
+    xaxis_title='Content Type',
+    yaxis_title='Total Hours Viewed (in billions)',
+    xaxis_tickangle=0,
+    height=500,
+    width=800
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Total Viewership Hours by Content Type (2023)" class="wp-image-24750" data-attachment-id="24750" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Total Viewership Hours by Content Type (2023)" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Total-Viewership-Hours-by-Content-Type-2023.png?fit=800%2C500&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Total-Viewership-Hours-by-Content-Type-2023.png?fit=300%2C188&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Total-Viewership-Hours-by-Content-Type-2023.png?fit=800%2C500&amp;ssl=1" data-orig-size="800,500" data-permalink="https://my-ai-portfolio.com/2024/09/30/netflix-content-strategy-analysis-with-python/total-viewership-hours-by-content-type-2023/" data-recalc-dims="1" decoding="async" height="500" loading="lazy" sizes="auto, (max-width: 800px) 100vw, 800px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Total-Viewership-Hours-by-Content-Type-2023.png?resize=800%2C500&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Total-Viewership-Hours-by-Content-Type-2023.png?w=800&amp;ssl=1 800w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Total-Viewership-Hours-by-Content-Type-2023.png?resize=300%2C188&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Total-Viewership-Hours-by-Content-Type-2023.png?resize=768%2C480&amp;ssl=1 768w" width="800"/></figure>
+<p>The visualization indicates that <strong>shows</strong> dominate the total viewership hours on Netflix in 2023 compared to movies. This suggests that Netflix’s content strategy leans heavily toward shows, as they tend to attract more watch hours overall.</p>
+<p>Next, let’s analyze the distribution of viewership across different languages to understand which languages are contributing the most to Netflix’s content consumption:</p>
+<pre><code class="language-python"># aggregate viewership hours by language
+language_viewership = netflix_data.groupby('Language Indicator')['Hours Viewed'].sum().sort_values(ascending=False)
+
+fig = go.Figure(data=[
+    go.Bar(
+        x=language_viewership.index,
+        y=language_viewership.values,
+        marker_color='lightcoral'
+    )
+])
+
+fig.update_layout(
+    title='Total Viewership Hours by Language (2023)',
+    xaxis_title='Language',
+    yaxis_title='Total Hours Viewed (in billions)',
+    xaxis_tickangle=45,
+    height=600,
+    width=1000
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Netflix content strategy analysis: Total Viewership Hours by Language (2023)" class="wp-image-24753" data-attachment-id="24753" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Total Viewership Hours by Language (2023)" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Total-Viewership-Hours-by-Language-2023.png?fit=1000%2C600&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Total-Viewership-Hours-by-Language-2023.png?fit=300%2C180&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Total-Viewership-Hours-by-Language-2023.png?fit=1000%2C600&amp;ssl=1" data-orig-size="1000,600" data-permalink="https://my-ai-portfolio.com/2024/09/30/netflix-content-strategy-analysis-with-python/total-viewership-hours-by-language-2023/" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 1000px) 100vw, 1000px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Total-Viewership-Hours-by-Language-2023.png?resize=1000%2C600&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Total-Viewership-Hours-by-Language-2023.png?w=1000&amp;ssl=1 1000w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Total-Viewership-Hours-by-Language-2023.png?resize=300%2C180&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Total-Viewership-Hours-by-Language-2023.png?resize=768%2C461&amp;ssl=1 768w" width="1000"/></figure>
+<p>The visualization reveals that <strong>English-language content</strong> significantly dominates Netflix’s viewership, followed by other languages like Korean. It indicates that Netflix’s primary audience is consuming English content, although non-English shows and movies also have a considerable viewership share, which shows a diverse content strategy.</p>
+<p>Next, I’ll analyze how viewership varies based on release dates to identify any trends over time, such as seasonality or patterns around specific months:</p>
+<pre><code class="language-python"># convert the "Release Date" to a datetime format and extract the month
+netflix_data['Release Date'] = pd.to_datetime(netflix_data['Release Date'])
+netflix_data['Release Month'] = netflix_data['Release Date'].dt.month
+
+# aggregate viewership hours by release month
+monthly_viewership = netflix_data.groupby('Release Month')['Hours Viewed'].sum()
+
+fig = go.Figure(data=[
+    go.Scatter(
+        x=monthly_viewership.index,
+        y=monthly_viewership.values,
+        mode='lines+markers',
+        marker=dict(color='blue'),
+        line=dict(color='blue')
+    )
+])
+
+fig.update_layout(
+    title='Total Viewership Hours by Release Month (2023)',
+    xaxis_title='Month',
+    yaxis_title='Total Hours Viewed (in billions)',
+    xaxis=dict(
+        tickmode='array',
+        tickvals=list(range(1, 13)),
+        ticktext=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    ),
+    height=600,
+    width=1000
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Total Viewership Hours by Release Month (2023)" class="wp-image-24756" data-attachment-id="24756" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot (10)" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/newplot-10.png?fit=1000%2C600&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/newplot-10.png?fit=300%2C180&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/newplot-10.png?fit=1000%2C600&amp;ssl=1" data-orig-size="1000,600" data-permalink="https://my-ai-portfolio.com/2024/09/30/netflix-content-strategy-analysis-with-python/newplot-10-6/" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 1000px) 100vw, 1000px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/newplot-10.png?resize=1000%2C600&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/newplot-10.png?w=1000&amp;ssl=1 1000w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/newplot-10.png?resize=300%2C180&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/newplot-10.png?resize=768%2C461&amp;ssl=1 768w" width="1000"/></figure>
+<p>The graph shows the total viewership hours by month, which reveals a notable increase in viewership during June and a sharp rise toward the end of the year in December. It suggests that Netflix experiences spikes in audience engagement during these periods, possibly due to strategic content releases, seasonal trends, or holidays, while the middle months have a steady but lower viewership pattern.</p>
+<p>To delve deeper, we can analyze the most successful content (both shows and movies) and understand the specific characteristics, such as genre or theme, that may have contributed to high viewership:</p>
+<pre><code class="language-python"># extract the top 5 titles based on viewership hours
+top_5_titles = netflix_data.nlargest(5, 'Hours Viewed')
+
+top_5_titles[['Title', 'Hours Viewed', 'Language Indicator', 'Content Type', 'Release Date']]</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Netflix content strategy analysis: top 5 titles based on viewership hours" class="wp-image-24758" data-attachment-id="24758" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-10.png?fit=1024%2C275&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-10.png?fit=300%2C81&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-10.png?fit=1704%2C458&amp;ssl=1" data-orig-size="1704,458" data-permalink="https://my-ai-portfolio.com/2024/09/30/netflix-content-strategy-analysis-with-python/image-178/" data-recalc-dims="1" decoding="async" height="275" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-10.png?resize=1024%2C275&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-10.png?resize=1024%2C275&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-10.png?resize=300%2C81&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-10.png?resize=768%2C206&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-10.png?resize=1536%2C413&amp;ssl=1 1536w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-10.png?resize=1200%2C323&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-10.png?w=1704&amp;ssl=1 1704w" width="1024"/></figure>
+<p>The top 5 most-viewed titles on Netflix in 2023 are:</p>
+<ol class="wp-block-list">
+<li><strong>The Night Agent: Season 1</strong> (English, Show) with 812.1 million hours viewed.</li>
+<li><strong>Ginny &amp; Georgia: Season 2</strong> (English, Show) with 665.1 million hours viewed.</li>
+<li><strong>King the Land: Limited Series</strong> (Korean, Movie) with 630.2 million hours viewed.</li>
+<li><strong>The Glory: Season 1</strong> (Korean, Show) with 622.8 million hours viewed.</li>
+<li><strong>ONE PIECE: Season 1</strong> (English, Show) with 541.9 million hours viewed.</li>
+</ol>
+<p>English-language shows dominate the top viewership spots. But, Korean content also has a notable presence in the top titles, which indicates its global popularity.</p>
+<p>Now, let’s have a look at the viewership trends by content type:</p>
+<pre><code class="language-python"># aggregate viewership hours by content type and release month
+monthly_viewership_by_type = netflix_data.pivot_table(index='Release Month',
+                                                      columns='Content Type',
+                                                      values='Hours Viewed',
+                                                      aggfunc='sum')
+
+fig = go.Figure()
+
+for content_type in monthly_viewership_by_type.columns:
+    fig.add_trace(
+        go.Scatter(
+            x=monthly_viewership_by_type.index,
+            y=monthly_viewership_by_type[content_type],
+            mode='lines+markers',
+            name=content_type
+        )
+    )
+
+fig.update_layout(
+    title='Viewership Trends by Content Type and Release Month (2023)',
+    xaxis_title='Month',
+    yaxis_title='Total Hours Viewed (in billions)',
+    xaxis=dict(
+        tickmode='array',
+        tickvals=list(range(1, 13)),
+        ticktext=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    ),
+    height=600,
+    width=1000,
+    legend_title='Content Type'
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Viewership Trends by Content Type and Release Month (2023)" class="wp-image-24761" data-attachment-id="24761" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot (12)" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/newplot-12.png?fit=1000%2C600&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/newplot-12.png?fit=300%2C180&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/newplot-12.png?fit=1000%2C600&amp;ssl=1" data-orig-size="1000,600" data-permalink="https://my-ai-portfolio.com/2024/09/30/netflix-content-strategy-analysis-with-python/newplot-12-4/" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 1000px) 100vw, 1000px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/newplot-12.png?resize=1000%2C600&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/newplot-12.png?w=1000&amp;ssl=1 1000w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/newplot-12.png?resize=300%2C180&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/newplot-12.png?resize=768%2C461&amp;ssl=1 768w" width="1000"/></figure>
+<p>The graph compares viewership trends between movies and shows throughout 2023. It shows that shows consistently have higher viewership than movies, peaking in December. Movies have more fluctuating viewership, with notable increases in June and October. This indicates that Netflix’s audience engages more with shows across the year, while movie viewership experiences occasional spikes, possibly linked to specific releases or events.</p>
+<p>Now, let’s explore the total viewership hours distributed across different release seasons:</p>
+<pre><code class="language-python"># define seasons based on release months
+def get_season(month):
+    if month in [12, 1, 2]:
+        return 'Winter'
+    elif month in [3, 4, 5]:
+        return 'Spring'
+    elif month in [6, 7, 8]:
+        return 'Summer'
+    else:
+        return 'Fall'
+
+# apply the season categorization to the dataset
+netflix_data['Release Season'] = netflix_data['Release Month'].apply(get_season)
+
+# aggregate viewership hours by release season
+seasonal_viewership = netflix_data.groupby('Release Season')['Hours Viewed'].sum()
+
+# order the seasons as 'Winter', 'Spring', 'Summer', 'Fall'
+seasons_order = ['Winter', 'Spring', 'Summer', 'Fall']
+seasonal_viewership = seasonal_viewership.reindex(seasons_order)
+
+fig = go.Figure(data=[
+    go.Bar(
+        x=seasonal_viewership.index,
+        y=seasonal_viewership.values,
+        marker_color='orange'
+    )
+])
+
+fig.update_layout(
+    title='Total Viewership Hours by Release Season (2023)',
+    xaxis_title='Season',
+    yaxis_title='Total Hours Viewed (in billions)',
+    xaxis_tickangle=0,
+    height=500,
+    width=800,
+    xaxis=dict(
+        categoryorder='array',
+        categoryarray=seasons_order
+    )
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Netflix content strategy analysis: Total Viewership Hours by Release Season (2023)" class="wp-image-24763" data-attachment-id="24763" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Total Viewership Hours by Release Season (2023)" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Total-Viewership-Hours-by-Release-Season-2023.png?fit=800%2C500&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Total-Viewership-Hours-by-Release-Season-2023.png?fit=300%2C188&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Total-Viewership-Hours-by-Release-Season-2023.png?fit=800%2C500&amp;ssl=1" data-orig-size="800,500" data-permalink="https://my-ai-portfolio.com/2024/09/30/netflix-content-strategy-analysis-with-python/total-viewership-hours-by-release-season-2023/" data-recalc-dims="1" decoding="async" height="500" loading="lazy" sizes="auto, (max-width: 800px) 100vw, 800px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Total-Viewership-Hours-by-Release-Season-2023.png?resize=800%2C500&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Total-Viewership-Hours-by-Release-Season-2023.png?w=800&amp;ssl=1 800w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Total-Viewership-Hours-by-Release-Season-2023.png?resize=300%2C188&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Total-Viewership-Hours-by-Release-Season-2023.png?resize=768%2C480&amp;ssl=1 768w" width="800"/></figure>
+<p>The graph indicates that viewership hours peak significantly in the Fall season, with over 80 billion hours viewed, while Winter, Spring, and Summer each have relatively stable and similar viewership around the 20 billion mark. This suggests that Netflix experiences the highest audience engagement during the Fall.</p>
+<p>Now, let’s analyze the number of content releases and their viewership hours across months:</p>
+<pre><code class="language-python">monthly_releases = netflix_data['Release Month'].value_counts().sort_index()
+
+monthly_viewership = netflix_data.groupby('Release Month')['Hours Viewed'].sum()
+
+fig = go.Figure()
+
+fig.add_trace(
+    go.Bar(
+        x=monthly_releases.index,
+        y=monthly_releases.values,
+        name='Number of Releases',
+        marker_color='goldenrod', 
+        opacity=0.7,
+        yaxis='y1'
+    )
+)
+
+fig.add_trace(
+    go.Scatter(
+        x=monthly_viewership.index,
+        y=monthly_viewership.values,
+        name='Viewership Hours',
+        mode='lines+markers',
+        marker=dict(color='red'),
+        line=dict(color='red'),
+        yaxis='y2'
+    )
+)
+
+fig.update_layout(
+    title='Monthly Release Patterns and Viewership Hours (2023)',
+    xaxis=dict(
+        title='Month',
+        tickmode='array',
+        tickvals=list(range(1, 13)),
+        ticktext=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    ),
+    yaxis=dict(
+        title='Number of Releases',
+        showgrid=False,
+        side='left'
+    ),
+    yaxis2=dict(
+        title='Total Hours Viewed (in billions)',
+        overlaying='y',
+        side='right',
+        showgrid=False
+    ),
+    legend=dict(
+        x=1.05,  
+        y=1,
+        orientation='v',
+        xanchor='left'
+    ),
+    height=600,
+    width=1000
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Monthly Release Patterns and Viewership Hours (2023)" class="wp-image-24766" data-attachment-id="24766" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Monthly Release Patterns and Viewership Hours (2023)" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Monthly-Release-Patterns-and-Viewership-Hours-2023.png?fit=1000%2C600&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Monthly-Release-Patterns-and-Viewership-Hours-2023.png?fit=300%2C180&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Monthly-Release-Patterns-and-Viewership-Hours-2023.png?fit=1000%2C600&amp;ssl=1" data-orig-size="1000,600" data-permalink="https://my-ai-portfolio.com/2024/09/30/netflix-content-strategy-analysis-with-python/monthly-release-patterns-and-viewership-hours-2023/" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 1000px) 100vw, 1000px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Monthly-Release-Patterns-and-Viewership-Hours-2023.png?resize=1000%2C600&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Monthly-Release-Patterns-and-Viewership-Hours-2023.png?w=1000&amp;ssl=1 1000w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Monthly-Release-Patterns-and-Viewership-Hours-2023.png?resize=300%2C180&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Monthly-Release-Patterns-and-Viewership-Hours-2023.png?resize=768%2C461&amp;ssl=1 768w" width="1000"/></figure>
+<p>While the number of releases is relatively steady throughout the year, viewership hours experience a sharp increase in June and a significant rise in December, despite a stable release count. This indicates that viewership is not solely dependent on the number of releases but influenced by the timing and appeal of specific content during these months.</p>
+<p>Next, let’s explore whether Netflix has a preference for releasing content on specific weekdays and how this influences viewership patterns:</p>
+<pre><code class="language-python">netflix_data['Release Day'] = netflix_data['Release Date'].dt.day_name()
+
+weekday_releases = netflix_data['Release Day'].value_counts().reindex(
+    ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+)
+
+# aggregate viewership hours by day of the week
+weekday_viewership = netflix_data.groupby('Release Day')['Hours Viewed'].sum().reindex(
+    ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+)
+
+fig = go.Figure()
+
+fig.add_trace(
+    go.Bar(
+        x=weekday_releases.index,
+        y=weekday_releases.values,
+        name='Number of Releases',
+        marker_color='blue',
+        opacity=0.6,
+        yaxis='y1'
+    )
+)
+
+fig.add_trace(
+    go.Scatter(
+        x=weekday_viewership.index,
+        y=weekday_viewership.values,
+        name='Viewership Hours',
+        mode='lines+markers',
+        marker=dict(color='red'),
+        line=dict(color='red'),
+        yaxis='y2'
+    )
+)
+
+fig.update_layout(
+    title='Weekly Release Patterns and Viewership Hours (2023)',
+    xaxis=dict(
+        title='Day of the Week',
+        categoryorder='array',
+        categoryarray=['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    ),
+    yaxis=dict(
+        title='Number of Releases',
+        showgrid=False,
+        side='left'
+    ),
+    yaxis2=dict(
+        title='Total Hours Viewed (in billions)',
+        overlaying='y',
+        side='right',
+        showgrid=False
+    ),
+    legend=dict(
+        x=1.05,  
+        y=1,
+        orientation='v',
+        xanchor='left'
+    ),
+    height=600,
+    width=1000
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image alignwide size-full"><img alt="Netflix content strategy analysis: Weekly Release Patterns and Viewership Hours (2023)" class="wp-image-24768" data-attachment-id="24768" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Weekly Release Patterns and Viewership Hours (2023)" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Weekly-Release-Patterns-and-Viewership-Hours-2023.png?fit=1000%2C600&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Weekly-Release-Patterns-and-Viewership-Hours-2023.png?fit=300%2C180&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Weekly-Release-Patterns-and-Viewership-Hours-2023.png?fit=1000%2C600&amp;ssl=1" data-orig-size="1000,600" data-permalink="https://my-ai-portfolio.com/2024/09/30/netflix-content-strategy-analysis-with-python/weekly-release-patterns-and-viewership-hours-2023/" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 1000px) 100vw, 1000px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Weekly-Release-Patterns-and-Viewership-Hours-2023.png?resize=1000%2C600&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Weekly-Release-Patterns-and-Viewership-Hours-2023.png?w=1000&amp;ssl=1 1000w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Weekly-Release-Patterns-and-Viewership-Hours-2023.png?resize=300%2C180&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/Weekly-Release-Patterns-and-Viewership-Hours-2023.png?resize=768%2C461&amp;ssl=1 768w" width="1000"/></figure>
+<p>The graph highlights that most content releases occur on Fridays, with viewership hours also peaking significantly on that day. This suggests that Netflix strategically releases content toward the weekend to maximize audience engagement. The viewership drops sharply on Saturdays and Sundays, despite some releases, indicating that the audience tends to consume newly released content right at the start of the weekend, which makes Friday the most impactful day for both releases and viewership.</p>
+<p>To further understand the strategy, let’s explore specific high-impact dates, such as holidays or major events, and their correlation with content releases:</p>
+<pre><code class="language-python"># define significant holidays and events in 2023
+important_dates = [
+    '2023-01-01',  # new year's day
+    '2023-02-14',  # valentine's ay
+    '2023-07-04',  # independence day (US)
+    '2023-10-31',  # halloween
+    '2023-12-25'   # christmas day
+]
+
+# convert to datetime
+important_dates = pd.to_datetime(important_dates)
+
+# check for content releases close to these significant holidays (within a 3-day window)
+holiday_releases = netflix_data[netflix_data['Release Date'].apply(
+    lambda x: any((x - date).days in range(-3, 4) for date in important_dates)
+)]
+
+# aggregate viewership hours for releases near significant holidays
+holiday_viewership = holiday_releases.groupby('Release Date')['Hours Viewed'].sum()
+
+holiday_releases[['Title', 'Release Date', 'Hours Viewed']]</code></pre>
+<figure class="wp-block-image alignwide size-large"><img alt="content releases close to significant holidays" class="wp-image-24771" data-attachment-id="24771" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-11.png?fit=1024%2C647&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-11.png?fit=300%2C190&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-11.png?fit=1294%2C818&amp;ssl=1" data-orig-size="1294,818" data-permalink="https://my-ai-portfolio.com/2024/09/30/netflix-content-strategy-analysis-with-python/image-179/" data-recalc-dims="1" decoding="async" height="647" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-11.png?resize=1024%2C647&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-11.png?resize=1024%2C647&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-11.png?resize=300%2C190&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-11.png?resize=768%2C485&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-11.png?resize=1200%2C759&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/09/image-11.png?w=1294&amp;ssl=1 1294w" width="1024"/></figure>
+<p>The data reveals that Netflix has strategically released content around key holidays and events. Some of the significant releases include:</p>
+<ul class="wp-block-list">
+<li><strong>New Year’s Period</strong>: <em>The Glory: Season 1</em>, <em>La Reina del Sur: Season 3</em>, and <em>Kaleidoscope: Limited Series</em> were released close to New Year’s Day, resulting in high viewership.</li>
+<li><strong>Valentine’s Day</strong>: <em>Perfect Match: Season 1</em> and <em>The Romantics: Limited Series</em> were released on February 14th, which align with a romantic theme and capitalize on the holiday’s sentiment.</li>
+</ul>
+<h3 class="wp-block-heading">Conclusion</h3>
+<p>So, the content strategy of Netflix revolves around maximizing viewership through targeted release timing and content variety. Shows consistently outperform movies in viewership, with significant spikes in December and June, indicating strategic releases around these periods. The Fall season stands out as the peak time for audience engagement. Most content is released on Fridays, which aims to capture viewers right before the weekend, and viewership aligns strongly with this release pattern. While the number of releases is steady throughout the year, viewership varies, which suggests a focus on high-impact titles and optimal release timing over sheer volume.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="exploratory-data-analysis-using-sql.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="instagram-content-strategy-optimization-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

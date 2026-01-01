@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Stock Market Crash Analysis with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Stock Market Crash Analysis with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 14, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="financial-data-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="automate-data-cleaning-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Stock market crashes are periods of rapid and significant declines in market values. Understanding these events and their precursors can provide valuable insights into market dynamics and help develop early warning systems. In this article, I’ll take you through stock market crash analysis with <strong><a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">Python</a></strong> and how to build an early warning system to identify crashes in the stock market.</p>
+<h2 class="wp-block-heading">Stock Market Crash Analysis: An Overview</h2>
+<p>In this task, we will use 30 years of historical Indian stock market data. We will focus on the Sensex to analyze and understand market crashes.</p>
+<p>We will start by cleaning and processing the financial data for analysis. Then, we will calculate daily returns, drawdowns, and rolling 10-day average returns and volatility. These metrics will help us identify and cluster periods of high market stress. We will highlight major crash events such as those in 1997, 2008–2009, and 2020. Using rolling metrics, we will build an early warning system to detect signs of an upcoming crash. This system will help data scientists and analysts manage risk and make informed investment decisions.</p>
+<p><strong>You can find the dataset we will use for this task from <a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">here</a>.</strong></p>
+<h2 class="wp-block-heading">Getting Started with Stock Market Crash Analysis with Python</h2>
+<p>So, let’s get started with the task of stock market crash analysis by importing the necessary Python libraries and the dataset:</p>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+
+df = pd.read_csv('cleaned_sensex.csv')
+print(df.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>         Date        Close         High          Low         Open  Volume<br/>0  1997-07-01  4300.859863  4301.770020  4247.660156  4263.109863       0<br/>1  1997-07-02  4333.899902  4395.310059  4295.399902  4302.959961       0<br/>2  1997-07-03  4323.459961  4393.290039  4299.970215  4335.790039       0<br/>3  1997-07-04  4323.819824  4347.589844  4300.580078  4332.700195       0<br/>4  1997-07-07  4291.450195  4391.009766  4289.490234  4326.810059       0</strong></pre>
+<p>Let’s convert the ‘Date’ column to datetime, sort the data by date, and set it as the DataFrame index:</p>
+<pre><code class="language-python">if 'Date' in df.columns:
+    df['Date'] = pd.to_datetime(df['Date'])
+    df = df.sort_values('Date')
+    df.set_index('Date', inplace=True)
+
+print("\nDataFrame after processing the Date column:")
+print(df.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>DataFrame after processing the Date column:<br/>                  Close         High          Low         Open  Volume<br/>Date                                                                  <br/>1997-07-01  4300.859863  4301.770020  4247.660156  4263.109863       0<br/>1997-07-02  4333.899902  4395.310059  4295.399902  4302.959961       0<br/>1997-07-03  4323.459961  4393.290039  4299.970215  4335.790039       0<br/>1997-07-04  4323.819824  4347.589844  4300.580078  4332.700195       0<br/>1997-07-07  4291.450195  4391.009766  4289.490234  4326.810059       0</strong></pre>
+<p>The code first checks if the DataFrame contains a ‘Date’ column. It then converts the values in the ‘Date’ column to datetime objects. This step ensures the dates have the correct format for time series analysis. Next, the code sorts the DataFrame by the ‘Date’ column in chronological order. Finally, it sets the ‘Date’ column as the index to simplify time series operations.</p>
+<h4 class="wp-block-heading">Analyzing Crashes</h4>
+<p>Now, let’s calculate the daily percentage change and identify crash days:</p>
+<pre><code class="language-python">df['Daily_Return'] = df['Close'].pct_change() * 100
+
+# Define a threshold for a daily crash (e.g., drop more than 5%)
+crash_threshold_daily = -5
+df['Crash_Daily'] = df['Daily_Return'] &lt;= crash_threshold_daily</code></pre>
+<p>The code first calculates the daily percentage change in the ‘Close’ column using the <code>pct_change()</code> function. It then multiplies the result by 100 to convert the changes into percentages. The resulting values are stored in a new column called ‘Daily_Return’. Next, the code defines a threshold of -5% to identify significant daily drops. These drops are flagged as potential crash events for further analysis.</p>
+<p>The code then creates a boolean column named ‘Crash_Daily’ to flag extreme daily declines. It marks a day as True if the daily return is less than or equal to -5%. Otherwise, it marks the day as False. This step helps quickly identify days with significant market drops.</p>
+<p>Now, let’s have a look at the Sensex closing prices and highlight daily crashes:</p>
+<pre><code class="language-python">import plotly.graph_objects as go
+
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(x=df.index, y=df['Close'], mode='lines', name='Closing Price'))
+
+crash_days = df.index[df['Crash_Daily']]
+crash_closes = df['Close'][df['Crash_Daily']]
+
+fig.add_trace(go.Scatter(x=crash_days, y=crash_closes, mode='markers',
+                          marker=dict(color='red'),
+                          name=f'Daily Crash (&lt;= {crash_threshold_daily}%)'))
+
+fig.update_layout(
+    title='Sensex Closing Price with Daily Crashes Highlighted',
+    xaxis_title='Date',
+    yaxis_title='Sensex Close',
+    xaxis_rangeslider_visible=True,  
+    template="plotly_white" 
+
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image size-full"><img alt="Stock Market Crash Analysis with Python: Sensex Closing Price with Daily Crashes Highlighted" class="wp-image-26318" data-attachment-id="26318" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Sensex Closing Price with Daily Crashes Highlighted" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 855px) 100vw, 855px" src="../assets/datasets/Sensex-Closing-Price-with-Daily-Crashes-Highlighted.png" width="855"/></figure>
+<p>The data shows that major crashes often occur during global or domestic economic crises like the 2008 meltdown and COVID-19 in 2020. These crashes usually happen suddenly and sharply, breaking long-term upward trends. Despite several crashes over the years, the Sensex shows strong long-term growth. This pattern highlights the market’s resilience and ability to recover after a crisis.</p>
+<h4 class="wp-block-heading">Analyzing Drawdowns</h4>
+<p>Next, let’s calculate the cumulative maximum and drawdown (percentage drop from the cumulative maximum):</p>
+<pre><code class="language-python"># Calculate cumulative max and drawdown (% drop from the cumulative max)
+df['Cumulative_Max'] = df['Close'].cummax()
+df['Drawdown'] = (df['Close'] - df['Cumulative_Max']) / df['Cumulative_Max'] * 100</code></pre>
+<p>The code first calculates the cumulative maximum of the ‘Close’ prices using the <code>cummax()</code> function. This tracks the highest closing price reached up to each point in time. It then computes the drawdown by subtracting the cumulative maximum from the current closing price. After that, it divides the result by the cumulative maximum and converts it into a percentage.</p>
+<p>This gives a measure of how far the current price is below its historical peak, indicating the severity of any decline.</p>
+<p>Now, let’s have a look at the market drawdown over time and highlight a specific drawdown threshold:</p>
+<pre><code class="language-python">drawdown_threshold = -20
+fig = go.Figure()
+
+fig.add_trace(go.Scatter(x=df.index, y=df['Drawdown'], mode='lines', name='Drawdown (%)'))
+
+fig.add_hline(y=drawdown_threshold, line_dash='dash', line_color='red',
+              annotation_text=f'Drawdown Threshold ({drawdown_threshold}%)',
+              annotation_position='bottom right')
+
+fig.update_layout(
+    title='Market Drawdown Over Time',
+    xaxis_title='Date',
+    yaxis_title='Drawdown (%)',
+    xaxis_rangeslider_visible=True,  
+    template="plotly_white"
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Market Drawdown Over Time" class="wp-image-26320" data-attachment-id="26320" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Market Drawdown Over Time" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 855px) 100vw, 855px" src="../assets/datasets/Market-Drawdown-Over-Time.png" width="855"/></figure>
+<p>So, the major crashes are clearly visible around 2000, 2008–2009, and 2020, where drawdowns exceeded -50%, indicating severe market stress. These deep troughs correspond to global financial crises and the pandemic. While smaller drawdowns occur frequently, the most impactful market crashes are rare but sharp, often taking years to recover.</p>
+<p>Next, let’s identify the dates where the market drawdown exceeded the -20% threshold and print a sample of these events:</p>
+<pre><code class="language-python">crash_drawdowns = df[df['Drawdown'] &lt;= drawdown_threshold]
+print("Dates where drawdown exceeded threshold:")
+print(crash_drawdowns[['Close', 'Cumulative_Max', 'Drawdown']].dropna().head(10))</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Dates where drawdown exceeded threshold:<br/>                  Close  Cumulative_Max   Drawdown<br/>Date                                              <br/>1997-11-12  3633.179932      4548.02002 -20.115129<br/>1997-11-13  3554.100098      4548.02002 -21.853904<br/>1997-11-14  3569.770020      4548.02002 -21.509360<br/>1997-11-17  3578.100098      4548.02002 -21.326202<br/>1997-11-18  3518.899902      4548.02002 -22.627871<br/>1997-11-19  3454.649902      4548.02002 -24.040574<br/>1997-11-20  3466.860107      4548.02002 -23.772101<br/>1997-11-21  3523.439941      4548.02002 -22.528047<br/>1997-11-24  3403.070068      4548.02002 -25.174690<br/>1997-11-25  3479.889893      4548.02002 -23.485607</strong></pre>
+<p>Here, we filtered the DataFrame to select rows where the ‘Drawdown’ value is less than or equal to the defined threshold (-20%). It then prints a subset of columns: ‘Close’, ‘Cumulative_Max’, and ‘Drawdown’, for these filtered dates, after dropping any missing values. This allows us to quickly see the first ten instances when the drawdown condition was met, providing insight into the periods of significant market decline.</p>
+<h4 class="wp-block-heading">Analyzing Periods of Crashes</h4>
+<p>We will now further zoom into these periods of crashes for a more detailed analysis to compare patterns across different crash events.</p>
+<p>So, let’s identify contiguous periods (clusters) where the drawdown is below the threshold:</p>
+<pre><code class="language-python">crash_dates = df.index[df['Drawdown'] &lt;= drawdown_threshold]
+clusters = []
+current_cluster = []
+
+for date in crash_dates:
+    if not current_cluster:
+        current_cluster.append(date)
+    else:
+        if (date - current_cluster[-1]).days &lt;= 3:
+            current_cluster.append(date)
+        else:
+            clusters.append(current_cluster)
+            current_cluster = [date]
+if current_cluster:
+    clusters.append(current_cluster)
+
+print("Identified crash clusters based on drawdown threshold:")
+for idx, cluster in enumerate(clusters):
+    print(f"Cluster {idx+1}: {cluster[0].date()} to {cluster[-1].date()} (Total days: {len(cluster)})")</code></pre>
+<pre class="wp-block-preformatted">Identified crash clusters based on drawdown threshold:<br/>Cluster 1: 1997-11-12 to 1997-12-26 (Total days: 31)<br/>Cluster 2: 1997-12-30 to 1997-12-30 (Total days: 1)<br/>Cluster 3: 1998-01-08 to 1998-01-23 (Total days: 12)<br/>Cluster 4: 1998-01-27 to 1998-01-29 (Total days: 3)<br/>Cluster 5: 1998-02-02 to 1998-02-27 (Total days: 19)<br/>Cluster 6: 1998-06-02 to 1998-09-30 (Total days: 86)<br/>...<br/>Cluster 82: 2020-05-04 to 2020-05-22 (Total days: 15)<br/>Cluster 83: 2020-05-26 to 2020-06-01 (Total days: 5)<br/>Cluster 84: 2020-06-11 to 2020-06-11 (Total days: 1)<br/>Cluster 85: 2020-06-15 to 2020-06-17 (Total days: 2)</pre>
+<p>This part starts by extracting the dates when the drawdown exceeds the defined threshold (i.e. when the drawdown is less than or equal to -20%). It then iterates over these dates to group them into clusters. A new cluster is started when there is a gap of more than three days between consecutive crash dates (to account for weekends or holidays). Each cluster represents a contiguous period of market stress, and the code finally prints the start and end dates of each cluster along with the total number of days in that cluster.</p>
+<p>Let’s zoom into the first crash cluster and visualize the closing price, daily returns, and drawdown within a 30-day window before and after the cluster:</p>
+<pre><code class="language-python">if clusters:
+    cluster_start = clusters[0][0]
+    cluster_end = clusters[0][-1]
+    print(f"\nZooming into crash cluster from {cluster_start.date()} to {cluster_end.date()}")
+
+    zoom_start = cluster_start - pd.Timedelta(days=30)
+    zoom_end = cluster_end + pd.Timedelta(days=30)
+    zoom_df = df.loc[zoom_start:zoom_end]
+
+    fig_close = go.Figure()
+    fig_close.add_trace(go.Scatter(x=zoom_df.index, y=zoom_df['Close'], mode='lines', name='Closing Price'))
+    fig_close.add_vrect(x0=cluster_start, x1=cluster_end, fillcolor='red', opacity=0.3, layer='below', line_width=0, name='Crash Period')
+    fig_close.update_layout(
+        title=f'Sensex Closing Price from {zoom_start.date()} to {zoom_end.date()}',
+        xaxis_title='Date',
+        yaxis_title='Sensex Close',
+        xaxis_rangeslider_visible=True,
+        template="plotly_white"
+    )
+    fig_close.show()
+
+    fig_returns = go.Figure()
+    fig_returns.add_trace(go.Scatter(x=zoom_df.index, y=zoom_df['Daily_Return'], mode='lines', name='Daily Return (%)'))
+    fig_returns.add_hline(y=0, line_color='black', line_width=0.8)
+    fig_returns.add_vrect(x0=cluster_start, x1=cluster_end, fillcolor='red', opacity=0.3, layer='below', line_width=0, name='Crash Period')
+    fig_returns.update_layout(
+        title=f'Sensex Daily Returns from {zoom_start.date()} to {zoom_end.date()}',
+        xaxis_title='Date',
+        yaxis_title='Daily Return (%)',
+        xaxis_rangeslider_visible=True,
+        template="plotly_white"
+    )
+    fig_returns.show()
+
+    fig_drawdown = go.Figure()
+    fig_drawdown.add_trace(go.Scatter(x=zoom_df.index, y=zoom_df['Drawdown'], mode='lines', name='Drawdown (%)'))
+    fig_drawdown.add_hline(y=drawdown_threshold, line_dash='dash', line_color='red',
+                          annotation_text=f'Drawdown Threshold ({drawdown_threshold}%)',
+                          annotation_position='bottom right')
+    fig_drawdown.add_vrect(x0=cluster_start, x1=cluster_end, fillcolor='red', opacity=0.3, layer='below', line_width=0, name='Crash Period')
+    fig_drawdown.update_layout(
+        title=f'Sensex Drawdown from {zoom_start.date()} to {zoom_end.date()}',
+        xaxis_title='Date',
+        yaxis_title='Drawdown (%)',
+        xaxis_rangeslider_visible=True,
+        template="plotly_white"
+    )
+    fig_drawdown.show()
+
+else:
+    print("No crash clusters identified based on the drawdown threshold.")</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Sensex Closing Price" class="wp-image-26324" data-attachment-id="26324" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot (2)" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/newplot-2.png" width="855"/></figure>
+<figure class="wp-block-image aligncenter size-full"><img alt="Sensex Daily Returns" class="wp-image-26326" data-attachment-id="26326" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot (3)" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/newplot-3.png" width="855"/></figure>
+<figure class="wp-block-image aligncenter size-full"><img alt="Sensex Drawdown" class="wp-image-26327" data-attachment-id="26327" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot (4)" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/newplot-4.png" width="855"/></figure>
+<p>The <strong>closing price chart</strong> shows a clear downward trend as the market moves from above 4000 to the mid-3000 range. The <strong>daily returns chart</strong> captures short-term volatility, oscillating around zero and reflecting larger negative spikes during the crash period. Finally, the<strong> drawdown chart</strong> reveals how far the index has fallen from its previous peak, crossing below the -20% threshold in the red-shaded region and signalling a significant market decline.</p>
+<p>Now, let’s define specific crash periods and create functions to visualize the closing prices and daily returns for these periods with a 30-day zoom window:</p>
+<pre><code class="language-python"># Define the clusters
+cluster1_start = pd.to_datetime("1997-11-12")
+cluster1_end = pd.to_datetime("1997-12-26")
+
+cluster49_start = pd.to_datetime("2008-08-18")
+cluster49_end = pd.to_datetime("2009-01-23")
+
+cluster79_start = pd.to_datetime("2020-03-16")
+cluster79_end = pd.to_datetime("2020-04-03")
+
+def plot_crash_period(cluster_start, cluster_end, title_suffix=""):
+    zoom_start = cluster_start - pd.Timedelta(days=30)
+    zoom_end = cluster_end + pd.Timedelta(days=30)
+    zoom_df = df.loc[zoom_start:zoom_end]
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=zoom_df.index, y=zoom_df['Close'], mode='lines', name='Closing Price'))
+    fig.add_vrect(x0=cluster_start, x1=cluster_end, fillcolor='red', opacity=0.3, layer='below', line_width=0, name='Crash Period')
+    fig.update_layout(
+        title=f'Sensex Closing Price {title_suffix}&lt;br&gt;({zoom_start.date()} to {zoom_end.date()})',
+        xaxis_title='Date',
+        yaxis_title='Sensex Close',
+        xaxis_rangeslider_visible=True,
+        template="plotly_white"
+    )
+    fig.show()
+
+def plot_daily_returns(cluster_start, cluster_end, title_suffix=""):
+    zoom_start = cluster_start - pd.Timedelta(days=30)
+    zoom_end = cluster_end + pd.Timedelta(days=30)
+    zoom_df = df.loc[zoom_start:zoom_end]
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=zoom_df.index, y=zoom_df['Daily_Return'], mode='lines', name='Daily Return (%)'))
+    fig.add_hline(y=0, line_color='black', line_width=0.8)
+    fig.add_vrect(x0=cluster_start, x1=cluster_end, fillcolor='red', opacity=0.3, layer='below', line_width=0, name='Crash Period')
+    fig.update_layout(
+        title=f'Sensex Daily Returns {title_suffix}&lt;br&gt;({zoom_start.date()} to {zoom_end.date()})',
+        xaxis_title='Date',
+        yaxis_title='Daily Return (%)',
+        xaxis_rangeslider_visible=True,
+        template="plotly_white"
+    )
+    fig.show()
+
+# Plot for each crash period
+plot_crash_period(cluster1_start, cluster1_end, "1997 Crash")
+plot_crash_period(cluster49_start, cluster49_end, "2008-2009 Crash")
+plot_crash_period(cluster79_start, cluster79_end, "2020 Crash")
+
+# Plot daily returns for each crash period
+plot_daily_returns(cluster1_start, cluster1_end, "1997 Crash")
+plot_daily_returns(cluster49_start, cluster49_end, "2008-2009 Crash")
+plot_daily_returns(cluster79_start, cluster79_end, "2020 Crash")</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Stock Market Crash Analysis with Python: Sensex Closing Price" class="wp-image-26331" data-attachment-id="26331" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot (5)" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/newplot-5.png" width="855"/></figure>
+<figure class="wp-block-image aligncenter size-full"><img alt="Sensex Closing Price 2" class="wp-image-26333" data-attachment-id="26333" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot (6)" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/newplot-6.png" width="855"/></figure>
+<figure class="wp-block-image aligncenter size-full"><img alt="Sensex Closing Price 3" class="wp-image-26334" data-attachment-id="26334" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot (7)" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/newplot-7.png" width="855"/></figure>
+<figure class="wp-block-image aligncenter size-full"><img alt="Stock Market Crash Analysis: Sensex Daily Returns" class="wp-image-26336" data-attachment-id="26336" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot (8)" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/newplot-8.png" width="855"/></figure>
+<figure class="wp-block-image aligncenter size-full"><img alt="Sensex Daily Returns 2" class="wp-image-26338" data-attachment-id="26338" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot (9)" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/newplot-9.png" width="855"/></figure>
+<figure class="wp-block-image aligncenter size-full"><img alt="Sensex Daily Returns 3" class="wp-image-26339" data-attachment-id="26339" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot (10)" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/newplot-10.png" width="855"/></figure>
+<p>Together, these visualizations illustrate how the market experienced sharp declines in closing prices and significant volatility in daily returns during the crash events, offering valuable insights into market behaviour surrounding these downturns.</p>
+<h4 class="wp-block-heading">Developing Early Warning Signals</h4>
+<p>Let’s build an early warning system (EWS) based on some common pre-crash indicators. In our historical analysis, we observed that before major downturns:</p>
+<ul class="wp-block-list">
+<li>The <strong>daily returns</strong> tend to show persistent declines.</li>
+<li>The <strong>volatility</strong> (i.e., the rolling standard deviation of returns) tends to increase.</li>
+</ul>
+<p>From historical observations, we can set thresholds (these thresholds are heuristic and can be fine-tuned):</p>
+<ul class="wp-block-list">
+<li>If the 10-day moving average return falls below <strong>-0.5%</strong>, <em>and</em></li>
+<li>The 10-day volatility exceeds, say, <strong>2%</strong>,</li>
+</ul>
+<p>Then the system will trigger an early warning signal.</p>
+<p>We’ll assume that we have a dataset for 2025 (here, we’ll simulate a synthetic dataset for 2025 based on our historical performance). We’ll apply our EWS to this data to see if any warning conditions are met.</p>
+<p>So, let’s simulate synthetic 2025 data for approximately 250 trading days:</p>
+<pre><code class="language-python">np.random.seed(42)
+
+dates_2025 = pd.bdate_range(start="2025-01-01", periods=250)
+
+daily_returns = np.zeros(250)
+daily_returns[:150] = np.random.normal(loc=0.0005, scale=0.01, size=150)
+daily_returns[150:200] = np.random.normal(loc=-0.008, scale=0.025, size=50)
+daily_returns[200:] = np.random.normal(loc=0.0005, scale=0.01, size=50)
+
+prices = [30000]
+for ret in daily_returns:
+    prices.append(prices[-1]*(1+ret))
+prices = prices[1:]
+
+df_2025 = pd.DataFrame({
+    'Date': dates_2025,
+    'Close': prices,
+    'Daily_Return': daily_returns * 100 
+})
+df_2025.set_index('Date', inplace=True)</code></pre>
+<p>This section begins by setting a random seed to ensure consistent synthetic data across runs. It then generates a date range for 2025 using business days, assuming 250 trading days in total. The code creates synthetic daily returns to reflect different market conditions. The first 150 days simulate normal behavior with a slight positive drift and low volatility. Days 151–200 reflect pre-crash conditions with a negative drift and higher volatility. Days 201–250 shift back to normal market behavior.</p>
+<p>Starting with an initial closing price of 30,000, the code calculates the synthetic closing prices by compounding these returns over time. Finally, the data is assembled into a Pandas DataFrame with the ‘Date’ column set as the index, ready for further analysis.</p>
+<p>Next, we will compute the 10-day rolling average return and rolling volatility for the synthetic 2025 data, and then define and identify early warning signals based on these metrics:</p>
+<pre><code class="language-python">df_2025['Rolling_Mean_Return'] = df_2025['Daily_Return'].rolling(window=10).mean()
+df_2025['Rolling_Volatility'] = df_2025['Daily_Return'].rolling(window=10).std()
+
+warning_condition = (df_2025['Rolling_Mean_Return'] &lt; -0.5) &amp; (df_2025['Rolling_Volatility'] &gt; 2)
+df_2025['Warning'] = warning_condition
+
+warnings_df = df_2025[df_2025['Warning']]
+print("Early Warning Signals for 2025:")
+print(warnings_df[['Close', 'Daily_Return', 'Rolling_Mean_Return', 'Rolling_Volatility']].head(15))</code></pre>
+<p>We calculated two key rolling metrics over a 10-day window for the synthetic 2025 dataset: the average daily return (Rolling_Mean_Return) and the volatility (standard deviation of daily returns, Rolling_Volatility). We then defined an early warning condition to flag periods when the 10-day rolling average return falls below -0.5% and volatility rises above 2%. These conditions create a new boolean column, ‘Warning’, which indicates when the warning criteria are met.</p>
+<p>Finally, we filtered and found the first 15 instances from the DataFrame where an early warning signal occurs, showing the relevant metrics (closing price, daily return, rolling mean return, and rolling volatility).</p>
+<p>Now, let’s have a look at the synthetic 2025 Sensex closing price and mark the early warning signals:</p>
+<pre><code class="language-python">fig = go.Figure()
+
+fig.add_trace(go.Scatter(x=df_2025.index, y=df_2025['Close'], mode='lines', name='Closing Price'))
+
+warning_dates = df_2025.index[df_2025['Warning']]
+warning_closes = df_2025['Close'][df_2025['Warning']]
+
+fig.add_trace(go.Scatter(x=warning_dates, y=warning_closes, mode='markers',
+                          marker=dict(color='red'),
+                          name='Early Warning Signal'))
+
+fig.update_layout(
+    title='Synthetic 2025 Sensex Closing Price with Early Warning Signals',
+    xaxis_title='Date',
+    yaxis_title='Sensex Close',
+    xaxis_rangeslider_visible=True, 
+    template="plotly_white"
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Stock Market Crash Analysis: Synthetic 2025 Sensex Closing Price with Early Warning Signals" class="wp-image-26343" data-attachment-id="26343" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Synthetic 2025 Sensex Closing Price with Early Warning Signals" data-orig-size="855,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="../assets/datasets/Synthetic-2025-Sensex-Closing-Price-with-Early-Warning-Signals.png" width="855"/></figure>
+<p>The early warning signals, marked in red, appear shortly before and during the crash, suggesting potential predictive indicators of market stress. The market starts the year strong but gradually weakens, with the crash accelerating after a series of warning signals. This simulated scenario demonstrates the value of early detection tools in identifying the onset of a crash, enabling investors or systems to potentially act before severe losses occur.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, through this analysis, we learned about:</p>
+<ol class="wp-block-list">
+<li>Identifying market crashes using daily percentage changes and drawdown methods.</li>
+<li>Grouping consecutive days of market stress into distinct crash clusters.</li>
+<li>Visualizing and comparing different crash periods to uncover unique market behaviours.</li>
+<li>Developing an early warning system using rolling statistics of returns and volatility.</li>
+</ol>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="financial-data-analysis-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="automate-data-cleaning-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

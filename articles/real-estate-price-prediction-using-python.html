@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Real Estate Price Prediction using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Real Estate Price Prediction using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 29, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="clustering-music-genres-with-machine-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="house-rent-prediction-with-machine-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Real Estate Price Prediction is the process of estimating or forecasting the future prices of real estate properties, such as houses, apartments, or commercial buildings. The goal is to provide accurate property rates to buyers, sellers, investors, and real estate professionals to make informed decisions about real estate transactions. If you want to learn how to predict real estate prices, this article is for you. In this article, I’ll take you through the task of Real Estate Price Prediction with <strong><a href="https://play.google.com/store/books/details?id=gPPUEAAAQBAJ">Machine Learning</a></strong> using Python.</p>
+<h2 class="wp-block-heading">Real Estate Price Prediction: Process We Can Follow</h2>
+<p>Below is the process we can follow for real estate price prediction to help individuals and businesses make informed decisions in the real estate market:</p>
+<ol class="wp-block-list">
+<li>Gather relevant data from various sources, including real estate databases, government records, online listings, and other public or private sources.</li>
+<li>Clean and prepare the collected data by handling missing values, removing outliers, and converting categorical variables into numerical representations.</li>
+<li>Create new features or transform existing ones to capture important information that can influence real estate prices.</li>
+<li>Explore and visualize the data to gain insights into its distribution, correlations, and patterns.</li>
+<li>Choose appropriate machine learning algorithms or predictive models for the task.</li>
+<li>Train the selected model on the training data, optimizing its parameters to make accurate predictions.</li>
+</ol>
+<p>For the task of Real Estate Price Prediction, we need historical data with various features that can influence property prices. I found an ideal dataset for this task. You can download the dataset from <a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;"><strong>here</strong></a>.</p>
+<h2 class="wp-block-heading">Real Estate Price Prediction using Python</h2>
+<p>Now, let’s get started with the task of real estate price prediction by importing the necessary Python libraries and the <a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;"><strong>dataset</strong></a>:</p>
+<pre><code class="language-python">import pandas as pd
+
+# Load the dataset
+real_estate_data = pd.read_csv("/content/Real_Estate.csv")
+
+# Display the first few rows of the dataset and the info about the dataset
+real_estate_data_head = real_estate_data.head()
+data_info = real_estate_data.info()
+
+print(real_estate_data_head)
+print(data_info)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>&lt;class 'pandas.core.frame.DataFrame'&gt;<br/>RangeIndex: 414 entries, 0 to 413<br/>Data columns (total 7 columns):<br/> #   Column                               Non-Null Count  Dtype  <br/>---  ------                               --------------  -----  <br/> 0   Transaction date                     414 non-null    object <br/> 1   House age                            414 non-null    float64<br/> 2   Distance to the nearest MRT station  414 non-null    float64<br/> 3   Number of convenience stores         414 non-null    int64  <br/> 4   Latitude                             414 non-null    float64<br/> 5   Longitude                            414 non-null    float64<br/> 6   House price of unit area             414 non-null    float64<br/>dtypes: float64(5), int64(1), object(1)<br/>memory usage: 22.8+ KB<br/>             Transaction date  House age  Distance to the nearest MRT station  \<br/>0  2012-09-02 16:42:30.519336       13.3                            4082.0150   <br/>1  2012-09-04 22:52:29.919544       35.5                             274.0144   <br/>2  2012-09-05 01:10:52.349449        1.1                            1978.6710   <br/>3  2012-09-05 13:26:01.189083       22.2                            1055.0670   <br/>4  2012-09-06 08:29:47.910523        8.5                             967.4000   <br/><br/>   Number of convenience stores   Latitude   Longitude  \<br/>0                             8  25.007059  121.561694   <br/>1                             2  25.012148  121.546990   <br/>2                            10  25.003850  121.528336   <br/>3                             5  24.962887  121.482178   <br/>4                             6  25.011037  121.479946   <br/><br/>   House price of unit area  <br/>0                  6.488673  <br/>1                 24.970725  <br/>2                 26.694267  <br/>3                 38.091638  <br/>4                 21.654710  <br/>None</strong></pre>
+<p>The dataset contains 7 columns. Here’s a brief overview of the columns:</p>
+<ol class="wp-block-list">
+<li><strong>Transaction date</strong>: The date of the real estate transaction.</li>
+<li><strong>House age</strong>: Age of the house in years.</li>
+<li><strong>Distance to the nearest MRT station</strong>: Distance to the nearest Mass Rapid Transit station in meters.</li>
+<li><strong>Number of convenience stores</strong>: Number of convenience stores in the vicinity.</li>
+<li><strong>Latitude</strong>: Latitude of the property location.</li>
+<li><strong>Longitude</strong>: Longitude of the property location.</li>
+<li><strong>House price of unit area</strong>: House price of unit area.</li>
+</ol>
+<p>Now, let’s have a look if the data contains any null values or not:</p>
+<pre><code class="language-python">print(real_estate_data.isnull().sum())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Transaction date                       0<br/>House age                              0<br/>Distance to the nearest MRT station    0<br/>Number of convenience stores           0<br/>Latitude                               0<br/>Longitude                              0<br/>House price of unit area               0<br/>dtype: int64</strong></pre>
+<p>There are no null values in the dataset. Now, let’s have a look at the descriptive statistics of the dataset:</p>
+<pre><code class="language-python"># Descriptive statistics of the dataset
+descriptive_stats = real_estate_data.describe()
+
+print(descriptive_stats)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>        House age  Distance to the nearest MRT station  \<br/>count  414.000000                           414.000000   <br/>mean    18.405072                          1064.468233   <br/>std     11.757670                          1196.749385   <br/>min      0.000000                            23.382840   <br/>25%      9.900000                           289.324800   <br/>50%     16.450000                           506.114400   <br/>75%     30.375000                          1454.279000   <br/>max     42.700000                          6306.153000   <br/><br/>       Number of convenience stores    Latitude   Longitude  \<br/>count                    414.000000  414.000000  414.000000   <br/>mean                       4.265700   24.973605  121.520268   <br/>std                        2.880498    0.024178    0.026989   <br/>min                        0.000000   24.932075  121.473888   <br/>25%                        2.000000   24.952422  121.496866   <br/>50%                        5.000000   24.974353  121.520912   <br/>75%                        6.750000   24.994947  121.544676   <br/>max                       10.000000   25.014578  121.565321   <br/><br/>       House price of unit area  <br/>count                414.000000  <br/>mean                  29.102149  <br/>std                   15.750935  <br/>min                    0.000000  <br/>25%                   18.422493  <br/>50%                   30.394070  <br/>75%                   40.615184  <br/>max                   65.571716  </strong></pre>
+<p>Now, let’s have a look at the histograms of all the numerical features:</p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Set the aesthetic style of the plots
+sns.set_style("whitegrid")
+
+# Create histograms for the numerical columns
+fig, axes = plt.subplots(nrows=3, ncols=2, figsize=(12, 12))
+fig.suptitle('Histograms of Real Estate Data', fontsize=16)
+
+cols = ['House age', 'Distance to the nearest MRT station', 'Number of convenience stores',
+        'Latitude', 'Longitude', 'House price of unit area']
+
+for i, col in enumerate(cols):
+    sns.histplot(real_estate_data[col], kde=True, ax=axes[i//2, i%2])
+    axes[i//2, i%2].set_title(col)
+    axes[i//2, i%2].set_xlabel('')
+    axes[i//2, i%2].set_ylabel('')
+
+plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Real Estate Price Prediction: Histograms of Real Estate Data" class="wp-image-22053" data-attachment-id="22053" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Real-Estate-Prices-1" data-orig-size="1189,1145" data-recalc-dims="1" decoding="async" height="986" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/Real-Estate-Prices-1.png" style="width:586px;height:auto" width="1024"/></figure>
+<p>The histograms provide insights into the distribution of each variable:</p>
+<ol class="wp-block-list">
+<li><strong>House Age</strong>: This shows a relatively uniform distribution with a slight increase in the number of newer properties (lower age).</li>
+<li><strong>Distance to the Nearest MRT Station</strong>: Most properties are located close to an MRT station, as indicated by the high frequency of lower distances. There’s a long tail extending towards higher distances, suggesting some properties are quite far from MRT stations.</li>
+<li><strong>Number of Convenience Stores</strong>: Displays a wide range, with notable peaks at specific counts, like 0, 5, and 10. It suggests certain common configurations in terms of convenience store availability.</li>
+<li><strong>Latitude and Longitude</strong>: Both show relatively concentrated distributions, indicating that the properties are located in a geographically limited area.</li>
+<li><strong>House Price of Unit Area</strong>: Displays a right-skewed distribution, with a concentration of properties in the lower price range and fewer properties as prices increase.</li>
+</ol>
+<p>Next, I’ll create scatter plots to explore the relationships between these variables and the house price. It will help us understand which factors might be influencing property prices more significantly:</p>
+<pre><code class="language-python"># Scatter plots to observe the relationship with house price
+fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(12, 10))
+fig.suptitle('Scatter Plots with House Price of Unit Area', fontsize=16)
+
+# Scatter plot for each variable against the house price
+sns.scatterplot(data=real_estate_data, x='House age', y='House price of unit area', ax=axes[0, 0])
+sns.scatterplot(data=real_estate_data, x='Distance to the nearest MRT station', y='House price of unit area', ax=axes[0, 1])
+sns.scatterplot(data=real_estate_data, x='Number of convenience stores', y='House price of unit area', ax=axes[1, 0])
+sns.scatterplot(data=real_estate_data, x='Latitude', y='House price of unit area', ax=axes[1, 1])
+
+plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="Scatter Plots with House Price of Unit Area" class="wp-image-22055" data-attachment-id="22055" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Real-Estate-Prices-2" data-orig-size="1190,955" data-recalc-dims="1" decoding="async" height="822" sizes="(max-width: 1024px) 100vw, 1024px" src="../assets/datasets/Real-Estate-Prices-2.png" style="width:571px;height:auto" width="1024"/></figure>
+<p>The scatter plots revealed interesting relationships between various factors and house prices:</p>
+<ol class="wp-block-list">
+<li><strong>House Age vs. House Price</strong>: There doesn’t seem to be a strong linear relationship between house age and price. However, it appears that very new and very old houses might have higher prices.</li>
+<li><strong>Distance to the Nearest MRT Station vs. House Price</strong>: There is a clear trend showing that as the distance to the nearest MRT station increases, the house price tends to decrease. It suggests a strong negative relationship between these two variables.</li>
+<li><strong>Number of Convenience Stores vs. House Price</strong>: There seems to be a positive relationship between the number of convenience stores and house prices. Houses with more convenience stores in the vicinity tend to have higher prices.</li>
+<li><strong>Latitude vs. House Price</strong>: While not a strong linear relationship, there seems to be a pattern where certain latitudes correspond to higher or lower house prices. It could be indicative of specific neighbourhoods being more desirable.</li>
+</ol>
+<p>Finally, it would be beneficial to perform a correlation analysis to quantify the relationships between these variables, especially how each one correlates with the house price:</p>
+<pre><code class="language-python"># Correlation matrix
+correlation_matrix = real_estate_data.corr()
+
+# Plotting the correlation matrix
+plt.figure(figsize=(10, 6))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f", linewidths=.5)
+plt.title('Correlation Matrix')
+plt.show()
+
+print(correlation_matrix)</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="Correlation Matrix" class="wp-image-22059" data-attachment-id="22059" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Real-Estate-Prices-3" data-orig-size="1003,762" data-recalc-dims="1" decoding="async" height="762" loading="lazy" sizes="auto, (max-width: 1003px) 100vw, 1003px" src="../assets/datasets/Real-Estate-Prices-3.png" style="width:624px;height:auto" width="1003"/></figure>
+<pre class="wp-block-preformatted has-small-font-size"><strong>                                     House age  \<br/>House age                             1.000000   <br/>Distance to the nearest MRT station   0.021596   <br/>Number of convenience stores          0.021973   <br/>Latitude                              0.114345   <br/>Longitude                             0.036449   <br/>House price of unit area             -0.012284   <br/><br/>                                     Distance to the nearest MRT station  \<br/>House age                                                       0.021596   <br/>Distance to the nearest MRT station                             1.000000   <br/>Number of convenience stores                                    0.069015   <br/>Latitude                                                        0.038954   <br/>Longitude                                                       0.064229   <br/>House price of unit area                                       -0.636579   <br/><br/>                                     Number of convenience stores  Latitude  \<br/>House age                                                0.021973  0.114345   <br/>Distance to the nearest MRT station                      0.069015  0.038954   <br/>Number of convenience stores                             1.000000  0.082725   <br/>Latitude                                                 0.082725  1.000000   <br/>Longitude                                                0.013156  0.007754   <br/>House price of unit area                                 0.280763  0.081008   <br/><br/>                                     Longitude  House price of unit area  <br/>House age                             0.036449                 -0.012284  <br/>Distance to the nearest MRT station   0.064229                 -0.636579  <br/>Number of convenience stores          0.013156                  0.280763  <br/>Latitude                              0.007754                  0.081008  <br/>Longitude                             1.000000                 -0.098626  <br/>House price of unit area             -0.098626                  1.000000  </strong></pre>
+<p>The correlation matrix provides quantified insights into how each variable is related to the others, especially with respect to the house price:</p>
+<ol class="wp-block-list">
+<li><strong>House Age</strong>: This shows a very weak negative correlation with house price (-0.012), implying that age is not a strong predictor of price in this dataset.</li>
+<li><strong>Distance to Nearest MRT Station</strong>: Has a strong negative correlation with house price (-0.637). It indicates that properties closer to MRT stations tend to have higher prices, which is a significant factor in property valuation.</li>
+<li><strong>Number of Convenience Stores</strong>: Displays a moderate positive correlation with house price (0.281). More convenience stores in the vicinity seem to positively affect property prices.</li>
+<li><strong>Latitude and Longitude</strong>: Both show a weak correlation with house prices. Latitude has a slight positive correlation (0.081), while longitude has a slight negative correlation (-0.099).</li>
+</ol>
+<p>Overall, the most significant factors affecting house prices in this dataset appear to be the proximity to MRT stations and the number of convenience stores nearby. The geographical location (latitude and longitude) and the age of the house seem to have less impact on the price.</p>
+<p>Now, let’s build a regression model to predict the real estate prices by using the <strong><a href="here-s-how-linear-regression-algorithm-works.html" target="">Linear Regression</a></strong> algorithm:</p>
+<pre><code class="language-python">from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Selecting features and target variable
+features = ['Distance to the nearest MRT station', 'Number of convenience stores', 'Latitude', 'Longitude']
+target = 'House price of unit area'
+
+X = real_estate_data[features]
+y = real_estate_data[target]
+
+# Splitting the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Model initialization
+model = LinearRegression()
+
+# Training the model
+model.fit(X_train, y_train)</code></pre>
+<p>Now, let’s visualize the actual versus predicted values to assess how well our model is performing:</p>
+<pre><code class="language-python"># Making predictions using the linear regression model
+y_pred_lr = model.predict(X_test)
+
+# Visualization: Actual vs. Predicted values
+plt.figure(figsize=(10, 6))
+plt.scatter(y_test, y_pred_lr, alpha=0.5)
+plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'k--', lw=2)
+plt.xlabel('Actual')
+plt.ylabel('Predicted')
+plt.title('Actual vs. Predicted House Prices')
+plt.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="Actual vs. Predicted House Prices: Actual vs. Predicted House Prices" class="wp-image-22062" data-attachment-id="22062" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Real-Estate-Prices-4" data-orig-size="841,547" data-recalc-dims="1" decoding="async" height="547" loading="lazy" sizes="auto, (max-width: 841px) 100vw, 841px" src="../assets/datasets/Real-Estate-Prices-4.png" style="width:581px;height:auto" width="841"/></figure>
+<p>The diagonal dashed line represents where the actual and predicted values would be equal. Points close to this line indicate accurate predictions. From the plot, we can observe:</p>
+<ul class="wp-block-list">
+<li>Many points are close to the diagonal line, suggesting that the model makes reasonably accurate predictions for a significant portion of the test set.</li>
+<li>Some points are further from the line, indicating areas where the model’s predictions deviate more significantly from the actual values.</li>
+</ul>
+<p>So, this is how we can predict real estate prices with Machine Learning using Python.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>Real Estate Price Prediction is the process of estimating or forecasting the future prices of real estate properties, such as houses, apartments, or commercial buildings. The goal is to provide accurate property rates to buyers, sellers, investors, and real estate professionals to make informed decisions about real estate transactions. I hope you liked this article on Real Estate Price Prediction with Machine Learning using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="clustering-music-genres-with-machine-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="house-rent-prediction-with-machine-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

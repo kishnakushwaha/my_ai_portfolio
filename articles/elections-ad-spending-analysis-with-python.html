@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Elections Ad Spending Analysis with Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Elections Ad Spending Analysis with Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 06, 2025 • 5 min read</div>
+<p>If you are highly active on Facebook and Instagram, you must have seen ads based on elections by any of the political parties, especially BJP and INC. All the parties in India usually spend a lot of money on election campaigns. I recently collected data from Meta ads about how much money was spent on Instagram and Facebook ads by each political party during the Indian elections 2024 in each state. In this article, we perform elections ad spending analysis using Python and how it impacted the voting patterns.</p>
+<h2 class="wp-block-heading">Elections Ad Spending Analysis: Dataset Overview</h2>
+<p>The dataset I have collected contains three files:</p>
+<ol class="wp-block-list">
+<li>The <strong>Advertisers Dataset</strong> provides insights into which pages (parties or organizations) spend money on election ads and the volume of ads they run.</li>
+<li>The <strong>Locations Dataset</strong> shows how much money was spent on ads in different locations, indicating where the campaigns were focusing their efforts.</li>
+<li>The <strong>Results Dataset</strong> provides actual voting data, showing how many people voted in each area and the percentage of voter turnout.</li>
+</ol>
+<p>You can download the dataset from <strong><a href="../assets/datasets/4f58d-elections-data.zip" rel="noreferrer noopener" target="_blank">here</a></strong>.</p>
+<h2 class="wp-block-heading">Elections Ad Spending Analysis with Python</h2>
+<p>Now, let’s get started with elections ad spending analysis by importing the <strong><a href="../assets/datasets/4f58d-elections-data.zip">dataset</a></strong> and the necessary Python libraries:</p>
+<pre><code class="language-python">import pandas as pd
+
+results = pd.read_csv('/content/results.csv')
+advertisers = pd.read_csv('/content/advertisers.csv')
+locations = pd.read_csv('/content/locations.csv')
+
+results.head()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Elections Ad Spending Analysis: results data" class="wp-image-23782" data-attachment-id="23782" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image-1" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-1.png?fit=1024%2C277&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-1.png?fit=300%2C81&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-1.png?fit=1710%2C462&amp;ssl=1" data-orig-size="1710,462" data-permalink="https://my-ai-portfolio.com/2024/06/10/elections-ad-spending-analysis-with-python/image-1-28/" data-recalc-dims="1" decoding="async" height="277" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-1.png?resize=1024%2C277&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-1.png?resize=1024%2C277&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-1.png?resize=300%2C81&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-1.png?resize=768%2C207&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-1.png?resize=1536%2C415&amp;ssl=1 1536w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-1.png?resize=1200%2C324&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-1.png?w=1710&amp;ssl=1 1710w" width="1024"/></figure>
+<pre><code class="language-python">advertisers.head()</code></pre>
+<figure class="wp-block-image aligncenter size-large is-resized"><img alt="advertisers data" class="wp-image-23784" data-attachment-id="23784" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image-2" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-2.png?fit=1024%2C348&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-2.png?fit=300%2C102&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-2.png?fit=1714%2C582&amp;ssl=1" data-orig-size="1714,582" data-permalink="https://my-ai-portfolio.com/2024/06/10/elections-ad-spending-analysis-with-python/image-2-24/" data-recalc-dims="1" decoding="async" height="348" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-2.png?resize=1024%2C348&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-2.png?resize=1024%2C348&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-2.png?resize=300%2C102&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-2.png?resize=768%2C261&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-2.png?resize=1536%2C522&amp;ssl=1 1536w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-2.png?resize=1200%2C407&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-2.png?w=1714&amp;ssl=1 1714w" style="width:750px;height:auto" width="1024"/></figure>
+<pre><code class="language-python">locations.head()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="locations data" class="wp-image-23786" data-attachment-id="23786" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image-3" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-3.png?fit=794%2C372&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-3.png?fit=300%2C141&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-3.png?fit=794%2C372&amp;ssl=1" data-orig-size="794,372" data-permalink="https://my-ai-portfolio.com/2024/06/10/elections-ad-spending-analysis-with-python/image-3-23/" data-recalc-dims="1" decoding="async" height="372" loading="lazy" sizes="auto, (max-width: 794px) 100vw, 794px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-3.png?resize=794%2C372&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-3.png?w=794&amp;ssl=1 794w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-3.png?resize=300%2C141&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-3.png?resize=768%2C360&amp;ssl=1 768w" style="width:578px;height:auto" width="794"/></figure>
+<p>The results data has a column named state, and the location data has a column named location name. We will merge these datasets using these columns:</p>
+<pre><code class="language-python">results['State'] = results['State'].str.strip().str.lower()
+
+locations['Location name'] = locations['Location name'].str.strip().str.lower()
+
+merged_data = results.merge(
+    locations,
+    left_on='State',
+    right_on='Location name',
+    how='left'
+)
+
+merged_data.head()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Elections Ad Spending Analysis: merged data" class="wp-image-23788" data-attachment-id="23788" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image-4" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-4.png?fit=1024%2C309&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-4.png?fit=300%2C91&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-4.png?fit=1694%2C512&amp;ssl=1" data-orig-size="1694,512" data-permalink="https://my-ai-portfolio.com/2024/06/10/elections-ad-spending-analysis-with-python/image-4-22/" data-recalc-dims="1" decoding="async" height="309" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-4.png?resize=1024%2C309&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-4.png?resize=1024%2C309&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-4.png?resize=300%2C91&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-4.png?resize=768%2C232&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-4.png?resize=1536%2C464&amp;ssl=1 1536w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-4.png?resize=1200%2C363&amp;ssl=1 1200w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/image-4.png?w=1694&amp;ssl=1 1694w" width="1024"/></figure>
+<p>Let’s have a look at the total ad spend by state:</p>
+<pre><code class="language-python">import plotly.express as px
+import plotly.io as pio
+import plotly.graph_objects as go
+pio.templates.default = "plotly_white"
+
+state_ad_spend = merged_data.groupby('State')['Amount spent (INR)'].sum().reset_index()
+
+fig = px.bar(state_ad_spend, x='State', y='Amount spent (INR)',
+             labels={'State': 'State', 'Amount spent (INR)': 'Ad Spend (INR)'},
+             title='Total Ad Spend by State')
+
+fig.update_layout(xaxis={'categoryorder': 'total descending'},
+                  xaxis_tickangle=-90,
+                  width=800,
+                  height=600)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Total Ad Spend by State" class="wp-image-23791" data-attachment-id="23791" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="elections-1" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-1.png?fit=800%2C600&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-1.png?fit=300%2C225&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-1.png?fit=800%2C600&amp;ssl=1" data-orig-size="800,600" data-permalink="https://my-ai-portfolio.com/2024/06/10/elections-ad-spending-analysis-with-python/elections-1/" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 800px) 100vw, 800px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-1.png?resize=800%2C600&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-1.png?w=800&amp;ssl=1 800w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-1.png?resize=300%2C225&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-1.png?resize=768%2C576&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-1.png?resize=600%2C450&amp;ssl=1 600w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-1.png?resize=400%2C300&amp;ssl=1 400w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-1.png?resize=200%2C150&amp;ssl=1 200w" width="800"/></figure>
+<p>The bar graph shows the total ad spend (in INR) by state. Uttar Pradesh leads significantly with the highest ad spend, followed by Maharashtra and Odisha. States like West Bengal, Tamil Nadu, Andhra Pradesh, and Bihar also show substantial ad expenditures. In contrast, states such as Lakshadweep, Dadra &amp; Nagar Haveli, Daman &amp; Diu, Andaman &amp; Nicobar Islands, and Arunachal Pradesh have the lowest ad spend. It indicates that larger and more populous states tend to spend more on ads, likely reflecting their greater political significance and larger voter base.</p>
+<p>Now, let’s have a look at the average voter turnout by state:</p>
+<pre><code class="language-python">state_voter_turnout = merged_data.groupby('State')['Polled (%)'].mean().reset_index()
+
+fig = px.bar(state_voter_turnout, x='State', y='Polled (%)',
+             labels={'State': 'State', 'Polled (%)': 'Voter Turnout (%)'},
+             title='Average Voter Turnout by State')
+
+fig.update_layout(xaxis={'categoryorder': 'total descending'},
+                  xaxis_tickangle=-90,
+                  width=800,
+                  height=600)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Elections Ad Spending Analysis: Average Voter Turnout by State" class="wp-image-23793" data-attachment-id="23793" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="elections-2" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-2.png?fit=800%2C600&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-2.png?fit=300%2C225&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-2.png?fit=800%2C600&amp;ssl=1" data-orig-size="800,600" data-permalink="https://my-ai-portfolio.com/2024/06/10/elections-ad-spending-analysis-with-python/elections-2/" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 800px) 100vw, 800px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-2.png?resize=800%2C600&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-2.png?w=800&amp;ssl=1 800w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-2.png?resize=300%2C225&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-2.png?resize=768%2C576&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-2.png?resize=600%2C450&amp;ssl=1 600w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-2.png?resize=400%2C300&amp;ssl=1 400w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-2.png?resize=200%2C150&amp;ssl=1 200w" width="800"/></figure>
+<p>Lakshadweep has the highest average voter turnout at nearly 80%, followed closely by Tripura and Assam. States like Andhra Pradesh, Sikkim, and West Bengal also show high voter engagement, with turnouts above 70%. On the other end of the spectrum, states such as Bihar, Uttar Pradesh, and Uttarakhand have the lowest average voter turnout, around 50-55%. It indicates significant regional variations in voter participation, with some smaller states and union territories exhibiting higher engagement compared to larger states with higher ad spend.</p>
+<p>Now, let’s have a look at the top 5 parties by ad spend:</p>
+<pre><code class="language-python">advertisers['Amount spent (INR)'] = pd.to_numeric(advertisers['Amount spent (INR)'], errors='coerce')
+
+advertisers.dropna(subset=['Amount spent (INR)'], inplace=True)
+
+party_ad_spend = advertisers.groupby('Page name')['Amount spent (INR)'].sum().sort_values(ascending=False)
+
+top_5_parties = party_ad_spend.head(5).reset_index()
+
+colors = ['#ff9999', '#66b3ff', '#99ff99', '#ffcc99', '#c2c2f0']
+
+fig = px.pie(top_5_parties, values='Amount spent (INR)', names='Page name',
+             title='Top 5 Parties by Ad Spend', color_discrete_sequence=colors,
+             labels={'Page name': 'Political Party', 'Amount spent (INR)': 'Ad Spend (INR)'})
+
+fig.update_traces(textinfo='percent')
+
+fig.update_layout(
+    showlegend=True,
+    legend=dict(
+        orientation="v",
+        yanchor="top",
+        y=1,
+        xanchor="left",
+        x=-0.3
+    ),
+    title=dict(
+        y=0.95,
+        x=0.5,
+        xanchor='center',
+        yanchor='top'
+    ),
+    margin=dict(l=200, r=50, t=100, b=50) 
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Top 5 Parties by Ad Spend" class="wp-image-23796" data-attachment-id="23796" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="elections-3" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-3.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-3.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-3.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/06/10/elections-ad-spending-analysis-with-python/elections-3/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-3.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-3.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-3.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-3.png?resize=768%2C472&amp;ssl=1 768w" width="855"/></figure>
+<p>The Bharatiya Janata Party (BJP) has the highest ad spend, accounting for 42.3% of the total. This is followed by the Ama Chinha Sankha Chinha party at 24.5% and the Indian National Congress at 23.7%. Ellorum Nammudan and BJP Odisha have significantly lower ad spends, at 5.19% and 4.27%, respectively. It indicates that BJP dominates in terms of ad spending on Facebook and Instagram ads, with nearly half of the total expenditure, suggesting a significant investment in advertising compared to other parties.</p>
+<p>Now, let’s have a look at the correlation between ad spend and voter turnout:</p>
+<pre><code class="language-python"># calculate the correlation between ad spend and voter turnout
+correlation = merged_data[['Amount spent (INR)', 'Polled (%)']].corr()
+print(correlation)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>                    Amount spent (INR)  Polled (%)<br/>Amount spent (INR)            1.000000   -0.010688<br/>Polled (%)                   -0.010688    1.000000</strong></pre>
+<p>The correlation matrix shows that the relationship between the amount spent (INR) and the percentage of votes polled (%) is very weak and slightly negative, with a correlation coefficient of -0.010688. This indicates that there is virtually no linear relationship between ad spend and voter turnout. In other words, increasing the amount spent on advertising does not significantly affect the percentage of voter turnout.</p>
+<p>Now, let’s have a look at the relationship between ad spend and voter turnout by parliamentary constituency:</p>
+<pre><code class="language-python">merged_constituency_data = results.merge(
+    locations,
+    left_on='State',
+    right_on='Location name',
+    how='left'
+)
+
+fig = px.scatter(merged_constituency_data, x='Amount spent (INR)', y='Polled (%)',
+                 color='State',
+                 labels={'Amount spent (INR)': 'Ad Spend (INR)', 'Polled (%)': 'Voter Turnout (%)'},
+                 title='Ad Spend and Voter Turnout by Parliamentary Constituency')
+
+fig.update_layout(width=800, height=600)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Elections Ad Spending Analysis: Ad Spend and Voter Turnout by Parliamentary Constituency" class="wp-image-23799" data-attachment-id="23799" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="elections-4" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-4.png?fit=800%2C600&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-4.png?fit=300%2C225&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-4.png?fit=800%2C600&amp;ssl=1" data-orig-size="800,600" data-permalink="https://my-ai-portfolio.com/2024/06/10/elections-ad-spending-analysis-with-python/elections-4/" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 800px) 100vw, 800px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-4.png?resize=800%2C600&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-4.png?w=800&amp;ssl=1 800w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-4.png?resize=300%2C225&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-4.png?resize=768%2C576&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-4.png?resize=600%2C450&amp;ssl=1 600w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-4.png?resize=400%2C300&amp;ssl=1 400w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-4.png?resize=200%2C150&amp;ssl=1 200w" width="800"/></figure>
+<p>It shows that higher ad spending does not necessarily correlate with higher voter turnout. Voter turnout seems to cluster between 60% and 80% across most constituencies, regardless of the ad spend amount, which ranges from 0 to 150 million INR. This suggests that other factors besides ad spend may play a significant role in influencing voter turnout.</p>
+<p>Now, let’s have a look at the distribution of ad spending:</p>
+<pre><code class="language-python">fig = px.histogram(merged_data, x='Amount spent (INR)', nbins=30, marginal='box',
+                   labels={'Amount spent (INR)': 'Ad Spend (INR)'},
+                   title='Distribution of Ad Spend')
+
+fig.update_traces(marker=dict(line=dict(color='black', width=1)))
+fig.update_layout(bargap=0.1, width=800, height=600)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Distribution of Ad Spend" class="wp-image-23802" data-attachment-id="23802" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="elections-5" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-5.png?fit=800%2C600&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-5.png?fit=300%2C225&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-5.png?fit=800%2C600&amp;ssl=1" data-orig-size="800,600" data-permalink="https://my-ai-portfolio.com/2024/06/10/elections-ad-spending-analysis-with-python/elections-5/" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 800px) 100vw, 800px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-5.png?resize=800%2C600&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-5.png?w=800&amp;ssl=1 800w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-5.png?resize=300%2C225&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-5.png?resize=768%2C576&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-5.png?resize=600%2C450&amp;ssl=1 600w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-5.png?resize=400%2C300&amp;ssl=1 400w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-5.png?resize=200%2C150&amp;ssl=1 200w" width="800"/></figure>
+<p>The histogram indicates that most constituencies have ad spends clustered around the 50M and 100M INR marks, with fewer constituencies spending less than 10M INR or more than 150M INR. The box plot highlights that the median ad spend is around 70M INR, with the interquartile range (IQR) spanning from approximately 30M to 110M INR. There are a few outliers, particularly a constituency with an exceptionally high ad spend above 150M INR. This distribution suggests that while the majority of ad spends are concentrated within a certain range, there are notable exceptions with significantly higher expenditures.</p>
+<p>Now, let’s analyze ad spending and voter turnout by election phase:</p>
+<pre><code class="language-python">import plotly.graph_objects as go
+
+phase_analysis = merged_data.groupby('Phase').agg({
+    'Amount spent (INR)': 'sum',
+    'Polled (%)': 'mean'
+}).reset_index()
+
+fig = go.Figure()
+
+fig.add_trace(go.Bar(
+    x=phase_analysis['Phase'],
+    y=phase_analysis['Amount spent (INR)'],
+    name='Ad Spend (INR)',
+    marker_color='indianred',
+    yaxis='y1'
+))
+
+fig.add_trace(go.Scatter(
+    x=phase_analysis['Phase'],
+    y=phase_analysis['Polled (%)'],
+    name='Voter Turnout (%)',
+    marker_color='lightsalmon',
+    yaxis='y2'
+))
+
+fig.update_layout(
+    title='Ad Spend and Voter Turnout by Election Phase',
+    xaxis=dict(title='Election Phase'),
+    yaxis=dict(
+        title='Ad Spend (INR)',
+        titlefont=dict(color='indianred'),
+        tickfont=dict(color='indianred')
+    ),
+    yaxis2=dict(
+        title='Voter Turnout (%)',
+        titlefont=dict(color='lightsalmon'),
+        tickfont=dict(color='lightsalmon'),
+        overlaying='y',
+        side='right'
+    ),
+    legend=dict(x=0.1, y=1.1, orientation='h'),
+    width=800,
+    height=600
+)
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Elections Ad Spending Analysis: Ad Spend and Voter Turnout by Election Phase" class="wp-image-23804" data-attachment-id="23804" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="elections-6" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-6.png?fit=800%2C600&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-6.png?fit=300%2C225&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-6.png?fit=800%2C600&amp;ssl=1" data-orig-size="800,600" data-permalink="https://my-ai-portfolio.com/2024/06/10/elections-ad-spending-analysis-with-python/elections-6/" data-recalc-dims="1" decoding="async" height="600" loading="lazy" sizes="auto, (max-width: 800px) 100vw, 800px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-6.png?resize=800%2C600&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-6.png?w=800&amp;ssl=1 800w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-6.png?resize=300%2C225&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-6.png?resize=768%2C576&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-6.png?resize=600%2C450&amp;ssl=1 600w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-6.png?resize=400%2C300&amp;ssl=1 400w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/06/elections-6.png?resize=200%2C150&amp;ssl=1 200w" width="800"/></figure>
+<p>There is no consistent trend between ad spend and voter turnout. Election phases 1 and 4 have the highest ad spends, with phase 4 peaking in voter turnout at around 70%. However, phase 1, despite high ad spend, has a lower voter turnout of about 67%. Phases with moderate ad spend (e.g., 2 and 6) have lower voter turnout, while phase 5 has a notably low turnout despite moderate spending.</p>
+<p><strong>I hope you liked my analysis of election ad spending and voting patterns. Find more more analysis to learn how to analyze data from <a href="https://my-ai-portfolio.com/2023/07/22/data-analysis-projects-using-python/">here</a>.</strong></p>
+<h3 class="wp-block-heading">Conclusion</h3>
+<p>Overall, the analyses indicate that higher ad spend does not guarantee higher voter turnout and voter engagement is influenced by various other factors. Larger and more significant states tend to spend more on ads, but this does not necessarily translate to higher voter participation. Political parties, particularly the BJP, invest heavily in advertising, yet the effectiveness of this spending in increasing voter turnout is questionable.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="analytics-dashboard-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="metro-operations-optimization-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Credit Score Classification with Machine Learning | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Credit Score Classification with Machine Learning</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 30, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="house-rent-prediction-with-machine-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="loan-approval-prediction-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Banks and credit card companies calculate your credit score to determine your creditworthiness. It helps banks and credit card companies immediately to issue loans to customers with good creditworthiness. Today banks and credit card companies use Machine Learning <strong><a href="https://medium.com/coders-camp/all-machine-learning-algorithms-models-explained-adcd95d5fb3c" rel="noreferrer noopener" target="_blank">algorithms</a></strong> to classify all the customers in their database based on their credit history. So, if you want to learn how to use Machine Learning for credit score classification, this article is for you. In this article, I will take you through the task of credit score classification with Machine Learning using <a href="roadmap-to-learn-python.html" rel="noreferrer noopener" target=""><strong>Python</strong></a>.</p>
+<h2 class="wp-block-heading">Credit Score Classification</h2>
+<p>There are three credit scores that banks and credit card companies use to label their customers:</p>
+<ol class="wp-block-list">
+<li>Good</li>
+<li>Standard</li>
+<li>Poor</li>
+</ol>
+<p>A person with a good credit score will get loans from any bank and financial institution. For the task of Credit Score Classification, we need a labelled dataset with credit scores.</p>
+<p>I found an ideal dataset for this task labelled according to the credit history of credit card customers. You can download the dataset <a href="https://statso.io/credit-score-classification-case-study/" rel="noreferrer noopener" target="_blank"><strong>here</strong></a>.</p>
+<p>In the section below, I will take you through the task of credit score classification with Machine Learning using Python.</p>
+<h2 class="wp-block-heading">Credit Score Classification using Python</h2>
+<p>Let’s start the task of credit score classification by importing the necessary Python libraries and the <a href="https://statso.io/credit-score-classification-case-study/" rel="noreferrer noopener" target="_blank"><strong>dataset</strong></a>:</p>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+import plotly.express as px
+import plotly.graph_objects as go
+import plotly.io as pio
+pio.templates.default = "plotly_white"
+
+data = pd.read_csv("train.csv")
+print(data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>     ID  Customer_ID  Month           Name   Age          SSN Occupation  \
+0  5634         3392      1  Aaron Maashoh  23.0  821000265.0  Scientist   
+1  5635         3392      2  Aaron Maashoh  23.0  821000265.0  Scientist   
+2  5636         3392      3  Aaron Maashoh  23.0  821000265.0  Scientist   
+3  5637         3392      4  Aaron Maashoh  23.0  821000265.0  Scientist   
+4  5638         3392      5  Aaron Maashoh  23.0  821000265.0  Scientist   
+
+   Annual_Income  Monthly_Inhand_Salary  Num_Bank_Accounts  ...  Credit_Mix  \
+0       19114.12            1824.843333                3.0  ...        Good   
+1       19114.12            1824.843333                3.0  ...        Good   
+2       19114.12            1824.843333                3.0  ...        Good   
+3       19114.12            1824.843333                3.0  ...        Good   
+4       19114.12            1824.843333                3.0  ...        Good   
+
+   Outstanding_Debt  Credit_Utilization_Ratio Credit_History_Age  \
+0            809.98                 26.822620              265.0   
+1            809.98                 31.944960              266.0   
+2            809.98                 28.609352              267.0   
+3            809.98                 31.377862              268.0   
+4            809.98                 24.797347              269.0   
+
+   Payment_of_Min_Amount  Total_EMI_per_month  Amount_invested_monthly  \
+0                     No            49.574949                 21.46538   
+1                     No            49.574949                 21.46538   
+2                     No            49.574949                 21.46538   
+3                     No            49.574949                 21.46538   
+4                     No            49.574949                 21.46538   
+
+                  Payment_Behaviour Monthly_Balance  Credit_Score  
+0   High_spent_Small_value_payments      312.494089          Good  
+1    Low_spent_Large_value_payments      284.629162          Good  
+2   Low_spent_Medium_value_payments      331.209863          Good  
+3    Low_spent_Small_value_payments      223.451310          Good  
+4  High_spent_Medium_value_payments      341.489231          Good  
+
+[5 rows x 28 columns]</strong></pre>
+<p>Let’s have a look at the information about the columns in the dataset:</p>
+<pre><code class="language-python">print(data.info())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 100000 entries, 0 to 99999
+Data columns (total 28 columns):
+ #   Column                    Non-Null Count   Dtype  
+---  ------                    --------------   -----  
+ 0   ID                        100000 non-null  int64  
+ 1   Customer_ID               100000 non-null  int64  
+ 2   Month                     100000 non-null  int64  
+ 3   Name                      100000 non-null  object 
+ 4   Age                       100000 non-null  float64
+ 5   SSN                       100000 non-null  float64
+ 6   Occupation                100000 non-null  object 
+ 7   Annual_Income             100000 non-null  float64
+ 8   Monthly_Inhand_Salary     100000 non-null  float64
+ 9   Num_Bank_Accounts         100000 non-null  float64
+ 10  Num_Credit_Card           100000 non-null  float64
+ 11  Interest_Rate             100000 non-null  float64
+ 12  Num_of_Loan               100000 non-null  float64
+ 13  Type_of_Loan              100000 non-null  object 
+ 14  Delay_from_due_date       100000 non-null  float64
+ 15  Num_of_Delayed_Payment    100000 non-null  float64
+ 16  Changed_Credit_Limit      100000 non-null  float64
+ 17  Num_Credit_Inquiries      100000 non-null  float64
+ 18  Credit_Mix                100000 non-null  object 
+ 19  Outstanding_Debt          100000 non-null  float64
+ 20  Credit_Utilization_Ratio  100000 non-null  float64
+ 21  Credit_History_Age        100000 non-null  float64
+ 22  Payment_of_Min_Amount     100000 non-null  object 
+ 23  Total_EMI_per_month       100000 non-null  float64
+ 24  Amount_invested_monthly   100000 non-null  float64
+ 25  Payment_Behaviour         100000 non-null  object 
+ 26  Monthly_Balance           100000 non-null  float64
+ 27  Credit_Score              100000 non-null  object 
+dtypes: float64(18), int64(3), object(7)
+memory usage: 21.4+ MB
+None</strong></pre>
+<p>Before moving forward, let’s have a look if the dataset has any null values or not:</p>
+<pre><code class="language-python">print(data.isnull().sum())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>ID                          0
+Customer_ID                 0
+Month                       0
+Name                        0
+Age                         0
+SSN                         0
+Occupation                  0
+Annual_Income               0
+Monthly_Inhand_Salary       0
+Num_Bank_Accounts           0
+Num_Credit_Card             0
+Interest_Rate               0
+Num_of_Loan                 0
+Type_of_Loan                0
+Delay_from_due_date         0
+Num_of_Delayed_Payment      0
+Changed_Credit_Limit        0
+Num_Credit_Inquiries        0
+Credit_Mix                  0
+Outstanding_Debt            0
+Credit_Utilization_Ratio    0
+Credit_History_Age          0
+Payment_of_Min_Amount       0
+Total_EMI_per_month         0
+Amount_invested_monthly     0
+Payment_Behaviour           0
+Monthly_Balance             0
+Credit_Score                0
+dtype: int64</strong></pre>
+<p>The dataset doesn’t have any null values. As this dataset is labelled, let’s have a look at the Credit_Score column values:</p>
+<pre><code class="language-python">data["Credit_Score"].value_counts()</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Standard    53174
+Poor        28998
+Good        17828
+Name: Credit_Score, dtype: int64</strong></pre>
+<h4 class="wp-block-heading">Data Exploration</h4>
+<p>The dataset has many features that can train a Machine Learning model for credit score classification. Let’s explore all the features one by one.</p>
+<p>I will start by exploring the occupation feature to know if the occupation of the person affects credit scores:</p>
+<pre><code class="language-python">fig = px.box(data, 
+             x="Occupation",  
+             color="Credit_Score", 
+             title="Credit Scores Based on Occupation", 
+             color_discrete_map={'Poor':'red',
+                                 'Standard':'yellow',
+                                 'Good':'green'})
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Credit Scores Based on Occupation" class="wp-image-19041" data-attachment-id="19041" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot (15)" data-orig-size="777,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 777px) 100vw, 777px" src="../assets/datasets/newplot-15.png" width="777"/></figure>
+<p>There’s not much difference in the credit scores of all occupations mentioned in the data. Now let’s explore whether the Annual Income of the person impacts your credit scores or not:</p>
+<pre><code class="language-python">fig = px.box(data, 
+             x="Credit_Score", 
+             y="Annual_Income", 
+             color="Credit_Score",
+             title="Credit Scores Based on Annual Income", 
+             color_discrete_map={'Poor':'red',
+                                 'Standard':'yellow',
+                                 'Good':'green'})
+fig.update_traces(quartilemethod="exclusive")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Credit Score Classification: Credit Scores Based on Annual Income" class="wp-image-19043" data-attachment-id="19043" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-1" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 857px) 100vw, 857px" src="../assets/datasets/newplot-1.png" width="857"/></figure>
+<p>According to the above visualization, the more you earn annually, the better your credit score is. Now let’s explore whether the monthly in-hand salary impacts credit scores or not:</p>
+<pre><code class="language-python">fig = px.box(data, 
+             x="Credit_Score", 
+             y="Monthly_Inhand_Salary", 
+             color="Credit_Score",
+             title="Credit Scores Based on Monthly Inhand Salary", 
+             color_discrete_map={'Poor':'red',
+                                 'Standard':'yellow',
+                                 'Good':'green'})
+fig.update_traces(quartilemethod="exclusive")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Credit Scores Based on Monthly Inhand Salary" class="wp-image-19045" data-attachment-id="19045" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-2" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/newplot-2.png" width="857"/></figure>
+<p>Like annual income, the more monthly in-hand salary you earn, the better your credit score will become. Now let’s see if having more bank accounts impacts credit scores or not:</p>
+<pre><code class="language-python">fig = px.box(data, 
+             x="Credit_Score", 
+             y="Num_Bank_Accounts", 
+             color="Credit_Score",
+             title="Credit Scores Based on Number of Bank Accounts", 
+             color_discrete_map={'Poor':'red',
+                                 'Standard':'yellow',
+                                 'Good':'green'})
+fig.update_traces(quartilemethod="exclusive")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Credit Score Classification: Credit Scores Based on Number of Bank Accounts" class="wp-image-19047" data-attachment-id="19047" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-3" data-orig-size="857,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 857px) 100vw, 857px" src="../assets/datasets/newplot-3.png" width="857"/></figure>
+<p>Maintaining more than five accounts is not good for having a good credit score. A person should have 2 – 3 bank accounts only. So having more bank accounts doesn’t positively impact credit scores. Now let’s see the impact on credit scores based on the number of credit cards you have:</p>
+<pre><code class="language-python">fig = px.box(data, 
+             x="Credit_Score", 
+             y="Num_Credit_Card", 
+             color="Credit_Score",
+             title="Credit Scores Based on Number of Credit cards", 
+             color_discrete_map={'Poor':'red',
+                                 'Standard':'yellow',
+                                 'Good':'green'})
+fig.update_traces(quartilemethod="exclusive")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Credit Scores Based on Number of Credit cards" class="wp-image-19049" data-attachment-id="19049" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-4" data-orig-size="777,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 777px) 100vw, 777px" src="../assets/datasets/newplot-4.png" width="777"/></figure>
+<p>Just like the number of bank accounts, having more credit cards will not positively impact your credit scores. Having 3 – 5 credit cards is good for your credit score. Now let’s see the impact on credit scores based on how much average interest you pay on loans and EMIs:</p>
+<pre><code class="language-python">fig = px.box(data, 
+             x="Credit_Score", 
+             y="Interest_Rate", 
+             color="Credit_Score",
+             title="Credit Scores Based on the Average Interest rates", 
+             color_discrete_map={'Poor':'red',
+                                 'Standard':'yellow',
+                                 'Good':'green'})
+fig.update_traces(quartilemethod="exclusive")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Credit Scores Based on the Average Interest rates" class="wp-image-19051" data-attachment-id="19051" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-5" data-orig-size="777,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 777px) 100vw, 777px" src="../assets/datasets/newplot-5.png" width="777"/></figure>
+<p>If the average interest rate is 4 – 11%, the credit score is good. Having an average interest rate of more than 15% is bad for your credit scores. Now let’s see how many loans you can take at a time for a good credit score:</p>
+<pre><code class="language-python">fig = px.box(data, 
+             x="Credit_Score", 
+             y="Num_of_Loan", 
+             color="Credit_Score", 
+             title="Credit Scores Based on Number of Loans Taken by the Person",
+             color_discrete_map={'Poor':'red',
+                                 'Standard':'yellow',
+                                 'Good':'green'})
+fig.update_traces(quartilemethod="exclusive")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Credit Scores Based on Number of Loans Taken by the Person" class="wp-image-19053" data-attachment-id="19053" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-6" data-orig-size="777,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 777px) 100vw, 777px" src="../assets/datasets/newplot-6.png" width="777"/></figure>
+<p>To have a good credit score, you should not take more than 1 – 3 loans at a time. Having more than three loans at a time will negatively impact your credit scores. Now let’s see if delaying payments on the due date impacts your credit scores or not:</p>
+<pre><code class="language-python">fig = px.box(data, 
+             x="Credit_Score", 
+             y="Delay_from_due_date", 
+             color="Credit_Score",
+             title="Credit Scores Based on Average Number of Days Delayed for Credit card Payments", 
+             color_discrete_map={'Poor':'red',
+                                 'Standard':'yellow',
+                                 'Good':'green'})
+fig.update_traces(quartilemethod="exclusive")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Credit Scores Based on Average Number of Days Delayed for Credit card Payments" class="wp-image-19055" data-attachment-id="19055" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-7" data-orig-size="777,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 777px) 100vw, 777px" src="../assets/datasets/newplot-7.png" width="777"/></figure>
+<p>So you can delay your credit card payment 5 – 14 days from the due date. Delaying your payments for more than 17 days from the due date will impact your credit scores negatively. Now let’s have a look at if frequently delaying payments will impact credit scores or not:</p>
+<pre><code class="language-python">fig = px.box(data, 
+             x="Credit_Score", 
+             y="Num_of_Delayed_Payment", 
+             color="Credit_Score", 
+             title="Credit Scores Based on Number of Delayed Payments",
+             color_discrete_map={'Poor':'red',
+                                 'Standard':'yellow',
+                                 'Good':'green'})
+fig.update_traces(quartilemethod="exclusive")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Credit Score Classification: Credit Scores Based on Number of Delayed Payments" class="wp-image-19057" data-attachment-id="19057" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-8" data-orig-size="777,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 777px) 100vw, 777px" src="../assets/datasets/newplot-8.png" width="777"/></figure>
+<p>So delaying 4 – 12 payments from the due date will not affect your credit scores. But delaying more than 12 payments from the due date will affect your credit scores negatively. Now let’s see if having more debt will affect credit scores or not:</p>
+<pre><code class="language-python">fig = px.box(data, 
+             x="Credit_Score", 
+             y="Outstanding_Debt", 
+             color="Credit_Score", 
+             title="Credit Scores Based on Outstanding Debt",
+             color_discrete_map={'Poor':'red',
+                                 'Standard':'yellow',
+                                 'Good':'green'})
+fig.update_traces(quartilemethod="exclusive")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Credit Scores Based on Outstanding Debt" class="wp-image-19059" data-attachment-id="19059" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-9" data-orig-size="777,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 777px) 100vw, 777px" src="../assets/datasets/newplot-9.png" width="777"/></figure>
+<p>An outstanding debt of $380 – $1150 will not affect your credit scores. But always having a debt of more than $1338 will affect your credit scores negatively. Now let’s see if having a high credit utilization ratio will affect credit scores or not:</p>
+<pre><code class="language-python">fig = px.box(data, 
+             x="Credit_Score", 
+             y="Credit_Utilization_Ratio", 
+             color="Credit_Score",
+             title="Credit Scores Based on Credit Utilization Ratio", 
+             color_discrete_map={'Poor':'red',
+                                 'Standard':'yellow',
+                                 'Good':'green'})
+fig.update_traces(quartilemethod="exclusive")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Credit Scores Based on Credit Utilization Ratio" class="wp-image-19064" data-attachment-id="19064" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot (16)" data-orig-size="777,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 777px) 100vw, 777px" src="../assets/datasets/newplot-16.png" width="777"/></figure>
+<p><strong>Credit utilization ratio means your total debt divided by your total available credit.</strong> According to the above figure, your credit utilization ratio doesn’t affect your credit scores. Now let’s see how the credit history age of a person affects credit scores:</p>
+<pre><code class="language-python">fig = px.box(data, 
+             x="Credit_Score", 
+             y="Credit_History_Age", 
+             color="Credit_Score", 
+             title="Credit Scores Based on Credit History Age",
+             color_discrete_map={'Poor':'red',
+                                 'Standard':'yellow',
+                                 'Good':'green'})
+fig.update_traces(quartilemethod="exclusive")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Credit Score Classification: Credit Scores Based on Credit History Age" class="wp-image-19066" data-attachment-id="19066" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-11" data-orig-size="777,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 777px) 100vw, 777px" src="../assets/datasets/newplot-11.png" width="777"/></figure>
+<p>So, having a long credit history results in better credit scores. Now let’s see how many EMIs you can have in a month for a good credit score:</p>
+<pre><code class="language-python">fig = px.box(data, 
+             x="Credit_Score", 
+             y="Total_EMI_per_month", 
+             color="Credit_Score", 
+             title="Credit Scores Based on Total Number of EMIs per Month",
+             color_discrete_map={'Poor':'red',
+                                 'Standard':'yellow',
+                                 'Good':'green'})
+fig.update_traces(quartilemethod="exclusive")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Credit Scores Based on Total Number of EMIs per Month" class="wp-image-19068" data-attachment-id="19068" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-12" data-orig-size="777,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 777px) 100vw, 777px" src="../assets/datasets/newplot-12.png" width="777"/></figure>
+<p>The number of EMIs you are paying in a month doesn’t affect much on credit scores. Now let’s see if your monthly investments affect your credit scores or not:</p>
+<pre><code class="language-python">fig = px.box(data, 
+             x="Credit_Score", 
+             y="Amount_invested_monthly", 
+             color="Credit_Score", 
+             title="Credit Scores Based on Amount Invested Monthly",
+             color_discrete_map={'Poor':'red',
+                                 'Standard':'yellow',
+                                 'Good':'green'})
+fig.update_traces(quartilemethod="exclusive")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Credit Score Classification: Credit Scores Based on Amount Invested Monthly" class="wp-image-19071" data-attachment-id="19071" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-13" data-orig-size="777,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 777px) 100vw, 777px" src="../assets/datasets/newplot-13.png" width="777"/></figure>
+<p>The amount of money you invest monthly doesn’t affect your credit scores a lot. Now let’s see if having a low amount at the end of the month affects credit scores or not:</p>
+<pre><code class="language-python">fig = px.box(data, 
+             x="Credit_Score", 
+             y="Monthly_Balance", 
+             color="Credit_Score", 
+             title="Credit Scores Based on Monthly Balance Left",
+             color_discrete_map={'Poor':'red',
+                                 'Standard':'yellow',
+                                 'Good':'green'})
+fig.update_traces(quartilemethod="exclusive")
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full"><img alt="Credit Scores Based on Monthly Balance Left" class="wp-image-19073" data-attachment-id="19073" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="newplot-14" data-orig-size="777,525" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 777px) 100vw, 777px" src="../assets/datasets/newplot-14.png" width="777"/></figure>
+<p>So, having a high monthly balance in your account at the end of the month is good for your credit scores. A monthly balance of less than $250 is bad for credit scores.</p>
+<h4 class="wp-block-heading">Credit Score Classification Model</h4>
+<p>One more important feature (Credit Mix) in the dataset is valuable for determining credit scores. The credit mix feature tells about the types of credits and loans you have taken.</p>
+<p>As the Credit_Mix column is categorical, I will transform it into a numerical feature so that we can use it to train a Machine Learning model for the task of credit score classification:</p>
+<pre><code class="language-python">data["Credit_Mix"] = data["Credit_Mix"].map({"Standard": 1, 
+                               "Good": 2, 
+                               "Bad": 0})</code></pre>
+<p>Now I will split the data into features and labels by selecting the features we found important for our model:</p>
+<pre><code class="language-python">from sklearn.model_selection import train_test_split
+x = np.array(data[["Annual_Income", "Monthly_Inhand_Salary", 
+                   "Num_Bank_Accounts", "Num_Credit_Card", 
+                   "Interest_Rate", "Num_of_Loan", 
+                   "Delay_from_due_date", "Num_of_Delayed_Payment", 
+                   "Credit_Mix", "Outstanding_Debt", 
+                   "Credit_History_Age", "Monthly_Balance"]])
+y = np.array(data[["Credit_Score"]])</code></pre>
+<p>Now, let’s split the data into training and test sets and proceed further by training a credit score classification model:</p>
+<pre><code class="language-python">xtrain, xtest, ytrain, ytest = train_test_split(x, y, 
+                                                    test_size=0.33, 
+                                                    random_state=42)
+from sklearn.ensemble import RandomForestClassifier
+model = RandomForestClassifier()
+model.fit(xtrain, ytrain)</code></pre>
+<p>Now, let’s make predictions from our model by giving inputs to our model according to the features we used to train the model:</p>
+<pre><code class="language-python">print("Credit Score Prediction : ")
+a = float(input("Annual Income: "))
+b = float(input("Monthly Inhand Salary: "))
+c = float(input("Number of Bank Accounts: "))
+d = float(input("Number of Credit cards: "))
+e = float(input("Interest rate: "))
+f = float(input("Number of Loans: "))
+g = float(input("Average number of days delayed by the person: "))
+h = float(input("Number of delayed payments: "))
+i = input("Credit Mix (Bad: 0, Standard: 1, Good: 3) : ")
+j = float(input("Outstanding Debt: "))
+k = float(input("Credit History Age: "))
+l = float(input("Monthly Balance: "))
+
+features = np.array([[a, b, c, d, e, f, g, h, i, j, k, l]])
+print("Predicted Credit Score = ", model.predict(features))</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Credit Score Prediction : 
+Annual Income: 19114.12
+Monthly Inhand Salary: 1824.843333
+Number of Bank Accounts: 2
+Number of Credit cards: 2
+Interest rate: 9
+Number of Loans: 2
+Average number of days delayed by the person: 12
+Number of delayed payments: 3
+Credit Mix (Bad: 0, Standard: 1, Good: 3) : 3
+Outstanding Debt: 250
+Credit History Age: 200
+Monthly Balance: 310
+Predicted Credit Score =  ['Good']</strong></pre>
+<p>So this is how you can use Machine Learning for the task of Credit Score Classification using Python.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>Classifying customers based on their credit scores helps banks and credit card companies immediately to issue loans to customers with good creditworthiness. A person with a good credit score will get loans from any bank and financial institution. I hope you liked this article on Credit Score Classification with Machine Learning using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="house-rent-prediction-with-machine-learning.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="loan-approval-prediction-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

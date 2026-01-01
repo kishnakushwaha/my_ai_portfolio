@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Data Preprocessing Techniques You Should Know | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Data Preprocessing Techniques You Should Know</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 24, 2025 • 5 min read</div>
+<p><a href="https://my-ai-portfolio.com/2023/06/19/data-preprocessing-pipeline-using-python/" rel="noreferrer noopener" target="_blank"><strong>Data preprocessing</strong></a> is a critical step in the data analysis and <a href="https://amzn.eu/d/3Bgb8IK" rel="noreferrer noopener" target="_blank"><strong>machine learning</strong></a> workflow. It involves transforming raw data into a clean, understandable format suitable for analysis. It includes tasks like cleaning, transformation, normalization, and feature extraction. So, if you want to learn about the essential data preprocessing techniques you should know, this article is for you. In this article, I’ll take you through some data preprocessing techniques you should know and how to implement them using Python.</p>
+<h2 class="wp-block-heading">Data Preprocessing Techniques You Should Know</h2>
+<p>Below are some of the data preprocessing techniques that you should know for any Data Science job:</p>
+<ol class="wp-block-list">
+<li>Handling Missing Values</li>
+<li>Handling Outliers</li>
+<li>Feature Selection</li>
+<li>Principal Component Analysis</li>
+<li>Feature Scaling</li>
+<li>Hyperparameter Tuning</li>
+<li>SMOTE</li>
+</ol>
+<p>Let’s go through each of these data preprocessing techniques in detail.</p>
+<h4 class="wp-block-heading">Handling Missing Values</h4>
+<p>Missing values occur when no data is stored for certain observations within a variable. Missing data can arise due to various reasons, such as errors in data collection, non-response in surveys, or deliberate omission. Handling missing values is crucial as most <a href="https://amzn.eu/d/3Bgb8IK" rel="noreferrer noopener" target="_blank"><strong>machine learning algorithms</strong></a> do not support data with missing values.</p>
+<p>You should address missing values before applying any machine learning model. The method of handling missing data depends on the nature of the data and the percentage of missing values. Below are some techniques to address missing values:</p>
+<ul class="wp-block-list">
+<li><strong>Imputation:</strong> Replacing missing values with statistical measures (mean, median, mode) for numerical data or a specific value for categorical data.</li>
+<li><strong>Prediction Models:</strong> Using algorithms like k-Nearest Neighbors or regression models to predict and fill in missing values.</li>
+<li><strong>Deletion:</strong> Removing records with missing values, which is only advisable when the number of such records is relatively small.</li>
+</ul>
+<p>Here’s an example of a Python function to replace missing values using the imputation method (using mean):</p>
+<pre><code class="language-python">from sklearn.impute import SimpleImputer
+import pandas as pd
+
+def impute_missing_values(data, strategy='mean', fill_value=None):
+    if strategy == 'constant' and fill_value is None:
+        raise ValueError("fill_value must be specified for strategy='constant'")
+
+    imputer = SimpleImputer(strategy=strategy, fill_value=fill_value)
+    return pd.DataFrame(imputer.fit_transform(data), columns=data.columns)</code></pre>
+<p>You can learn more about handling missing values in detail <a href="missing-value-imputation-methods-using-python.html" rel="noreferrer noopener" target=""><strong>here</strong></a>.</p>
+<h4 class="wp-block-heading">Handling Outliers</h4>
+<p>Outliers are data points that deviate significantly from the rest of the data. They can occur due to variability in measurement or experimental errors. Outliers can distort statistical analyses and models.</p>
+<p>Identifying and handling outliers before training a model is crucial, especially for algorithms sensitive to outlier values, such as linear regression. Below are some techniques you can use to address outliers in your dataset:</p>
+<ul class="wp-block-list">
+<li><strong>Z-score:</strong> Identifying outliers by finding data points with a certain number of standard deviations away from the mean.</li>
+<li><strong>IQR (Interquartile Range) Method:</strong> Removing data points that lie beyond the 1.5 * IQR above the third quartile and below the first quartile.</li>
+</ul>
+<p>Here’s an example of a Python function to remove outliers using the IQR method:</p>
+<pre><code class="language-python">def handle_outliers_iqr(data, threshold=1.5):
+    Q1 = data.quantile(0.25)
+    Q3 = data.quantile(0.75)
+    IQR = Q3 - Q1
+
+    lower_bound = Q1 - (threshold * IQR)
+    upper_bound = Q3 + (threshold * IQR)
+
+    return data[~((data &lt; lower_bound) | (data &gt; upper_bound)).any(axis=1)]</code></pre>
+<p>You can learn more about outlier detection in detail <a href="https://my-ai-portfolio.com/2023/07/26/detect-and-remove-outliers-using-python/" rel="noreferrer noopener" target="_blank"><strong>here</strong></a>.</p>
+<h4 class="wp-block-heading">Feature Selection</h4>
+<p>Feature selection involves selecting a subset of relevant features (variables, predictors) to use for model construction. It reduces overfitting, improves accuracy, and reduces training time.</p>
+<p>Use feature selection when you have a dataset with a large number of features, some of which might be irrelevant or redundant for predicting the output variable. Below are some recommended techniques for selecting features:</p>
+<ul class="wp-block-list">
+<li><strong>Filter Methods:</strong> Use statistical techniques to evaluate the relationship between each feature and the target variable (e.g., correlation coefficient, Chi-square test).</li>
+<li><strong>Wrapper Methods:</strong> Use an algorithm to search for the best combination of features (e.g., forward selection, backward elimination, recursive feature elimination).</li>
+<li><strong>Embedded Methods:</strong> Algorithms that perform feature selection as part of the model training process (e.g., LASSO regression).</li>
+</ul>
+<p>Here’s an example of a Python function for feature selection using the wrapper method (recursive feature elimination):</p>
+<pre><code class="language-python">from sklearn.feature_selection import RFE
+from sklearn.linear_model import LogisticRegression
+
+def select_features_rfe(data, target, n_features_to_select=5):
+    model = LogisticRegression(solver='liblinear')
+    rfe = RFE(model, n_features_to_select=n_features_to_select)
+    fit = rfe.fit(data, target)
+
+    selected_features = [f for f, s in zip(data.columns, fit.support_) if s]
+    return selected_features</code></pre>
+<p>One of my favourite techniques to select features for Machine Learning models is to perform EDA step by step to find the relationship between all features with the target variable. You can learn more about it <a href="eda-for-feature-selection-using-python.html" rel="noreferrer noopener" target=""><strong>here</strong></a>.</p>
+<h4 class="wp-block-heading">Principal Component Analysis (PCA)</h4>
+<p>PCA is a dimensionality reduction technique that transforms a large set of variables into a smaller one that still contains most of the information in the large set. It’s used to simplify the dataset, improve visualization, or improve model performance by reducing overfitting.</p>
+<p>Apply PCA when you have a high-dimensional dataset, and you want to reduce the number of variables without losing much information. Here’s an example of a Python function to implement PCA:</p>
+<pre><code class="language-python">from sklearn.decomposition import PCA
+
+def apply_pca(data, n_components=2):
+    pca = PCA(n_components=n_components)
+    principalComponents = pca.fit_transform(data)
+    return pd.DataFrame(data=principalComponents, columns=[f'PC{i+1}' for i in range(n_components)])</code></pre>
+<h4 class="wp-block-heading">Feature Scaling</h4>
+<p>Feature scaling involves standardizing the range of independent variables or features of data. In the absence of scaling, machine learning algorithms can behave poorly or converge slowly.</p>
+<p>Scaling is necessary for algorithms that compute distances between data points, such as k-nearest Neighbors, and for optimization algorithms like gradient descent. Below are some techniques used for feature scaling:</p>
+<ul class="wp-block-list">
+<li><strong>Normalization (Min-Max Scaling):</strong> Transforms features to be on a similar scale by converting values to a range between 0 and 1.</li>
+<li><strong>Standardization (Z-score Normalization):</strong> Transforms features to have a mean of 0 and a standard deviation of 1.</li>
+</ul>
+<p>Here’s an example of a Python function to implement feature scaling using the standardization method:</p>
+<pre><code class="language-python">from sklearn.preprocessing import StandardScaler
+
+def standardize_features(data):
+    scaler = StandardScaler()
+    scaled_data = scaler.fit_transform(data)
+    return pd.DataFrame(scaled_data, columns=data.columns)</code></pre>
+<p>You can learn more about feature scaling in detail <a href="https://my-ai-portfolio.com/2023/06/06/scaling-and-normalization-in-machine-learning/" rel="noreferrer noopener" target="_blank"><strong>here</strong></a>.</p>
+<h4 class="wp-block-heading">Hyperparameter Tuning</h4>
+<p>Hyperparameter tuning involves finding the combination of hyperparameters for a learning algorithm that performs the best under a specific performance metric. Hyperparameters are the configuration settings used to structure the learning process and must be set before training the model.</p>
+<p>Use hyperparameter tuning to improve model performance by optimizing the learning process. It applies to nearly all machine learning algorithms. Below are some techniques you can use for hyperparameter tuning:</p>
+<ul class="wp-block-list">
+<li><strong>Grid Search:</strong> Exhaustively searches through a manually specified subset of the hyperparameter space.</li>
+<li><strong>Random Search:</strong> Randomly searches through the hyperparameter space, providing a more efficient and less exhaustive search method.</li>
+<li><strong>Bayesian Optimization:</strong> Uses a probabilistic model to guide the search for the best hyperparameters.</li>
+</ul>
+<p>Here’s an example of a Python function to implement hyperparameter tuning using the grid search method:</p>
+<pre><code class="language-python">from sklearn.model_selection import GridSearchCV
+
+def tune_hyperparameters(model, param_grid, X_train, y_train, cv=5):
+    grid_search = GridSearchCV(estimator=model, param_grid=param_grid, cv=cv)
+    grid_search.fit(X_train, y_train)
+    return grid_search.best_params_</code></pre>
+<p>You can learn more about hyperparameter tuning in detail <a href="https://my-ai-portfolio.com/2023/08/15/hyperparameter-tuning-in-machine-learning/" rel="noreferrer noopener" target="_blank"><strong>here</strong></a>.</p>
+<h4 class="wp-block-heading">SMOTE (Synthetic Minority Over-sampling Technique)</h4>
+<p>SMOTE is an oversampling technique used to address class imbalance by creating synthetic examples of the minority class. It helps improve model performance on imbalanced datasets by balancing the class distribution.</p>
+<p>SMOTE is particularly useful when dealing with highly imbalanced datasets, where the number of instances in one class significantly outnumbers the instances in the other classes. Here’s an example of a Python function to implement SMOTE to address class imbalance:</p>
+<pre><code class="language-python">from imblearn.over_sampling import SMOTE
+
+def apply_smote(X, y):
+    smote = SMOTE()
+    X_res, y_res = smote.fit_resample(X, y)
+    return X_res, y_res</code></pre>
+<p>You can learn more about class imbalance and SMOTE in detail <a href="https://my-ai-portfolio.com/2023/10/04/data-resampling-using-python/" rel="noreferrer noopener" target="_blank"><strong>here</strong></a>.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, these are the essential data preprocessing techniques you should know. Data preprocessing is a critical step in the data analysis and machine learning workflow. It involves transforming raw data into a clean, understandable format suitable for analysis. It includes tasks like cleaning, transformation, normalization, and feature extraction.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="data-visualization-rules-to-never-go-wrong.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="how-to-actually-learn-ai-to-get-a-job.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

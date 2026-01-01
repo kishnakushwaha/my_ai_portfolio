@@ -1,0 +1,144 @@
+@<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me | Kishna Kushwaha</title>
+    <meta name="description" content="About Kishna Kushwaha - AI/ML Engineer, Skills, Experience, and Education.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-circle"></div> <!-- Placeholder for logo -->
+                Kishna Kushwaha
+            </a>
+
+            <button class="mobile-menu-btn" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="articles.html">Articles</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#courses">Recommended Resources</a></li>
+                <li>
+                    <button id="search-trigger" class="search-trigger-btn nav-link-btn" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <!-- About Section (Migrated) -->
+        <section class="section about-section" id="about" style="padding-top: 4rem;">
+            <div class="container about-content">
+                <div class="section-header text-center">
+                    <h2 class="section-title">About Me</h2>
+                </div>
+
+                <p class="about-intro">
+                    Hi! I'm <strong>Kishna Kushwaha</strong>, an AI/ML Engineer based in <strong>Delhi, India</strong>.
+                    <br><br>
+                    I specialize in building end-to-end Machine Learning pipelines, from data scraping to model
+                    deployment. Currently, I am focused on <strong>Computer Vision</strong> and <strong>Agentic
+                        AI</strong> solutions.
+                </p>
+
+                <div class="about-sub-section">
+                    <h3 class="about-sub-title">🛠 Tech Stack</h3>
+                    <table class="skills-table">
+                        <tr>
+                            <th>Languages</th>
+                            <td>Python, Go (Golang), SQL</td>
+                        </tr>
+                        <tr>
+                            <th>Machine Learning</th>
+                            <td>NumPy, Pandas, Scikit-Learn, PyTorch</td>
+                        </tr>
+                        <tr>
+                            <th>Deep Learning</th>
+                            <td>CNNs (ResNet, YOLO), RNNs, Transformers</td>
+                        </tr>
+                        <tr>
+                            <th>Deployment</th>
+                            <td>Docker, FastAPI, Git/GitHub</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="about-sub-section">
+                    <h3 class="about-sub-title">🎓 Education</h3>
+                    <div class="timeline-item">
+                        <h4 class="timeline-title">CDAC NOIDA</h4>
+                        <div class="timeline-subtitle">PG Diploma in Artificial Intelligence</div>
+                        <span class="timeline-date">2025 - Present</span>
+                    </div>
+                </div>
+
+                <div class="about-sub-section">
+                    <h3 class="about-sub-title">💼 Experience / Projects</h3>
+                    <div class="timeline-item">
+                        <h4 class="timeline-title">Freelance Developer</h4>
+                        <p class="timeline-desc">Built automated catalog video generation tools for e-commerce
+                            businesses using Generative AI.</p>
+                    </div>
+                </div>
+
+                <div class="text-center" style="margin-top: 2rem;">
+                    <a href="#" class="btn btn-primary"><i class="fas fa-download"></i> Download Resume</a>
+                    <a href="#" class="btn btn-outline"><i class="fab fa-linkedin"></i> Connect on LinkedIn</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Kishna Kushwaha. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+        <!-- Go to top button -->
+        <a href="#" class="go-top-btn" aria-label="Go to top"><i class="fas fa-arrow-up"></i></a>
+    </footer>
+
+    <!-- Custom JS -->
+    <script src="js/script.js"></script>
+    <script src="js/search.js"></script>
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay">
+        <div class="search-container">
+            <button id="search-close" class="search-close-btn">&times;</button>
+            <input type="text" id="search-input" placeholder="Search articles, projects..." autocomplete="off">
+            <div id="search-results" class="search-results"></div>
+        </div>
+    </div>
+</body>
+
+</html>

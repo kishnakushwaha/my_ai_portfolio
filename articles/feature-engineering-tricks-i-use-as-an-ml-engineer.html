@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Feature Engineering Tricks I Use as an ML Engineer | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a class="active" href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Feature Engineering Tricks I Use as an ML Engineer</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 23, 2025 • 5 min read</div>
+<p>People often call feature engineering the black art of <strong><a href="projects-to-master-modern-machine-learning.html">machine learning</a></strong>. Even if you use the most advanced algorithm, like a deep neural network with millions of parameters, it won’t work well if you give it raw data. As an ML engineer, I actually spend about 70% of my time on feature engineering instead of tuning models. This work is all about turning your domain knowledge into something the model can use. In this article, I’ll share some feature engineering tricks that I use in my own work.</p>
+<h2 class="wp-block-heading">Feature Engineering Tricks</h2>
+<p>In this guide, I’ll walk you through <strong>4 practical feature engineering tricks</strong> I use constantly. We’ll use a real-world scenario based on <strong>Loan Recovery Analysis</strong>. <strong>You can download the dataset I am using from <a href="../assets/datasets/loan-recovery.csv">here</a></strong>.</p>
+<p>First, let’s load our data:</p>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+
+# Load the dataset
+df = pd.read_csv('loan recovery.csv')
+
+# Let's verify what we have
+print(df[['Age', 'Monthly_Income', 'Loan_Amount', 'Loan_Type']].head())</code></pre>
+<pre class="wp-block-preformatted"><strong>   Age  Monthly_Income  Loan_Amount Loan_Type<br/>0   59          215422      1445796      Home<br/>1   49           60893      1044620      Auto<br/>2   35          116520      1923410      Home<br/>3   63          140818      1811663      Home<br/>4   28           76272        88578  Personal</strong></pre>
+<p>We have a dataset containing borrower details like Income, Loan Amount, and Age. Now, let’s dive into the tricks.</p>
+<h4 class="wp-block-heading">Trick 1: The Ratio Feature</h4>
+<p>Raw numbers often lack context. A $5,000 monthly EMI (Equated Monthly Instalment) sounds high, right? But if the borrower earns $500,000 a month, it’s peanuts. If they earn $6,000, it’s a crisis.</p>
+<p>So, always create a ratio. Here, we calculate the <strong>Debt-to-Income (DTI) Ratio</strong>. This single number captures the financial burden much better than income or EMI alone:</p>
+<pre><code class="language-python"># Create a ratio of EMI to Income
+df['DTI_Ratio'] = df['Monthly_Income'] / df['Monthly_EMI']
+
+# Let's see the difference context makes
+print(df[['Monthly_Income', 'Monthly_EMI', 'DTI_Ratio']].head())</code></pre>
+<pre class="wp-block-preformatted"><strong>   Monthly_Income  Monthly_EMI  DTI_Ratio<br/>0          215422      4856.88  44.353989<br/>1           60893     55433.68   1.098484<br/>2          116520     14324.61   8.134253<br/>3          140818      6249.28  22.533476<br/>4           76272       816.46  93.417926</strong></pre>
+<p>Models love normalised relationships. A ratio creates a standard scale that applies to everyone, regardless of whether they are a millionaire or a fresh graduate.</p>
+<h4 class="wp-block-heading">Trick 2: Binning</h4>
+<p>Is a 29-year-old borrower significantly different risk-wise from a 30-year-old? Probably not. But a 25-year-old (early career) is very different from a 55-year-old (approaching retirement). Raw continuous variables like <strong>Age</strong> can sometimes introduce noise or complexity that the model doesn’t need.</p>
+<p>So, always group continuous values into Bins or buckets:</p>
+<pre><code class="language-python"># Define our bins and labels
+bins = [20, 35, 55, 100]
+labels = ['Young Adult', 'Middle-Aged', 'Senior']
+
+# Create a new categorical feature
+df['Age_Group'] = pd.cut(df['Age'], bins=bins, labels=labels)
+
+print(df[['Age', 'Age_Group']].head())</code></pre>
+<pre class="wp-block-preformatted"><strong>   Age    Age_Group<br/>0   59       Senior<br/>1   49  Middle-Aged<br/>2   35  Young Adult<br/>3   63       Senior<br/>4   28  Young Adult</strong></pre>
+<p>It helps the model handle non-linear relationships. The risk might not increase linearly with every single year of age, but it might jump significantly between Young Adult and Senior.</p>
+<h4 class="wp-block-heading">Trick 3: Log Transformation</h4>
+<p>Money variables (like Income or Loan Amount) rarely follow a nice, normal Bell Curve. They usually have a Long Tail; lots of people with average incomes, and a few people with massive incomes. These massive outliers can confuse models (especially linear ones).</p>
+<p>So, always apply a Logarithm. It squashes the huge values down, making the distribution look more Normal:</p>
+<pre><code class="language-python"># Apply log transformation (np.log1p adds 1 to avoid log(0) errors)
+df['Log_Income'] = np.log1p(df['Monthly_Income'])
+
+# Compare raw vs transformed
+print(df[['Monthly_Income', 'Log_Income']].head())</code></pre>
+<pre class="wp-block-preformatted">   Monthly_Income  Log_Income<br/>0          215422   12.280359<br/>1           60893   11.016890<br/>2          116520   11.665827<br/>3          140818   11.855231<br/>4           76272   11.242074</pre>
+<p>It stabilises the variance. The difference between $50k and $60k feels huge to a model, but the difference between $1M and $1.01M might confuse it if treated strictly linearly. Log scales focus on magnitude rather than raw differences.</p>
+<h4 class="wp-block-heading">Trick 4: Domain Interaction</h4>
+<p>Sometimes the most powerful features come from simple business logic. In our dataset, we have Loan_Amount (total borrowed) and Outstanding_Loan_Amount (left to pay).</p>
+<p>Here, instead of feeding both raw numbers, let’s calculate <strong>Repayment Progress</strong>:</p>
+<pre><code class="language-python"># Calculate how much of the loan has arguably been paid off
+df['Repayment_Progress'] = 1 - (df['Outstanding_Loan_Amount'] / df['Loan_Amount'])
+
+print(df[['Loan_Amount', 'Outstanding_Loan_Amount', 'Repayment_Progress']].head())</code></pre>
+<pre class="wp-block-preformatted"><strong>   Loan_Amount  Outstanding_Loan_Amount  Repayment_Progress<br/>0      1445796             2.914130e+05            0.798441<br/>1      1044620             6.652042e+05            0.363209<br/>2      1923410             1.031372e+06            0.463779<br/>3      1811663             2.249739e+05            0.875819<br/>4        88578             3.918989e+04            0.557566</strong></pre>
+<p>This feature directly represents good behaviour. A borrower with 90% progress is very different from one with 5%, even if their outstanding amounts are similar.</p>
+<h3 class="wp-block-heading">Closing Thoughts</h3>
+<p>Feature engineering isn’t just about math; it’s about <strong>empathy</strong>. You are trying to tell the story of the human behind the data points. When we created the DTI_Ratio, we were asking, <em>“Can this person actually afford their life?”</em> When we created Age_Groups, we were acknowledging, <em>“Different life stages have different priorities.”</em></p>
+<p><strong>Better data beats a better algorithm.</strong> Don’t just throw raw CSVs into a model. Take the time to craft features that tell the truth.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="the-ultimate-2026-ml-engineering-roadmap.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="a-guide-to-polars-for-faster-data-analysis.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

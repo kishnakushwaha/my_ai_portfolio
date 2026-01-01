@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>MLOps Pipeline using Apache Airflow | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        MLOps Pipeline using Apache Airflow</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Nov 17, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="b2b-courier-charges-accuracy-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="video-chaptering-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>Machine Learning Operations (MLOps) integrates machine learning model development and deployment into a robust, automated pipeline. Every machine Learning Engineer and experienced Data Scientist (more than 1 year) should know about MLOps. In this article, I’ll explain how to build an MLOps pipeline using Apache Airflow to automate preprocessing, model training, and deployment tasks.</p>
+<h2 class="wp-block-heading">MLOps Pipeline using Apache Airflow: Overview</h2>
+<p>The given dataset contains app usage behaviour with five key columns:</p>
+<ol class="wp-block-list">
+<li>Date (usage day)</li>
+<li>App (e.g., Instagram, WhatsApp)</li>
+<li>Usage (minutes spent)</li>
+<li>Notifications (alerts received)</li>
+<li>and Times Opened (app launches).</li>
+</ol>
+<p><strong>Download the dataset from <a href="#" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">here</a>.</strong></p>
+<p>The goal of this pipeline is to streamline the process of analyzing screentime data by automating its preprocessing and utilizing machine learning to predict app usage. To ensure seamless execution, we will design an Airflow DAG to schedule and automate daily data preprocessing tasks to support a robust and scalable workflow.</p>
+<h2 class="wp-block-heading">Building an MLOps Pipeline using Apache Airflow</h2>
+<p>Let’s start building an MLOps pipeline using Apache Airflow with the necessary data preprocessing steps:</p>
+<pre><code class="language-python">import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
+
+# load the dataset
+data = pd.read_csv('screentime_analysis.csv')
+
+# check for missing values and duplicates
+print(data.isnull().sum())
+print(data.duplicated().sum())
+
+# convert Date column to datetime and extract features
+data['Date'] = pd.to_datetime(data['Date'])
+data['DayOfWeek'] = data['Date'].dt.dayofweek
+data['Month'] = data['Date'].dt.month
+
+# encode the categorical 'App' column using one-hot encoding
+data = pd.get_dummies(data, columns=['App'], drop_first=True)
+
+# scale numerical features using MinMaxScaler
+scaler = MinMaxScaler()
+data[['Notifications', 'Times Opened']] = scaler.fit_transform(data[['Notifications', 'Times Opened']])
+
+# feature engineering
+data['Previous_Day_Usage'] = data['Usage (minutes)'].shift(1)
+data['Notifications_x_TimesOpened'] = data['Notifications'] * data['Times Opened']
+
+# save the preprocessed data to a file
+data.to_csv('preprocessed_screentime_analysis.csv', index=False)</code></pre>
+<p>The above code performs data preprocessing to prepare the screentime dataset for machine learning. It begins by loading the dataset and ensuring data quality through checks for missing values and duplicates. It then processes the Date column to extract useful temporal features like DayOfWeek and Month. The App column is transformed using one-hot encoding to convert it into a numeric format.</p>
+<p>The process scales numerical columns, such as Notifications and Times Opened, using MinMaxScaler to ensure uniformity. Feature engineering creates lagged (Previous_Day_Usage) and interaction (Notifications_x_TimesOpened) features to enhance predictive power.</p>
+<h4 class="wp-block-heading">Training the Model</h4>
+<p>Next, after preprocessing, we will train a Random Forest model to predict app usage:</p>
+<pre><code class="language-python">from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error
+
+# split data into features and target variable
+X = data.drop(columns=['Usage (minutes)', 'Date'])
+y = data['Usage (minutes)']
+
+# train-test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# train the model
+model = RandomForestRegressor(random_state=42)
+model.fit(X_train, y_train)
+
+# evaluate the model
+predictions = model.predict(X_test)
+mae = mean_absolute_error(y_test, predictions)
+print(f'Mean Absolute Error: {mae}')</code></pre>
+<pre class="wp-block-preformatted"><strong>Mean Absolute Error: 15.398500000000002</strong></pre>
+<p>In the above code, we are splitting the preprocessed data into training and testing sets, training a Random Forest Regressor model, and evaluating its performance.</p>
+<p>First, the process separates the target variable (Usage (minutes)) from the features and performs an 80-20 train-test split. The training data is used to train the RandomForestRegressor model. After completing the training, the model generates predictions on the test set, and the Mean Absolute Error (MAE) metric quantifies the average difference between the predicted and actual values to assess performance.</p>
+<p>The Mean Absolute Error (MAE) of 15.3985 indicates that, on average, the model’s predicted screentime differs from the actual screentime by approximately 15.4 minutes. This gives a measure of the model’s predictive accuracy, showing that while the model performs reasonably well, there is still room for improvement in reducing this error to make predictions more precise.</p>
+<h4 class="wp-block-heading">Automating Preprocessing with a Pipeline using Apache Airflow</h4>
+<p>Apache Airflow enables the automation of tasks using <strong><a href="https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dags.html" rel="noreferrer noopener" target="_blank">Directed Acyclic Graphs</a></strong> (DAGs). Here, we will use a DAG to build a pipeline to preprocess data daily. First, install Apache Airflow:</p>
+<pre class="wp-block-preformatted"><strong>pip install apache-airflow</strong></pre>
+<p>Now, we will define the DAG and task to build the pipeline:</p>
+<pre><code class="language-python">from airflow import DAG
+from airflow.operators.python import PythonOperator
+from datetime import datetime
+
+# define the data preprocessing function
+def preprocess_data():
+    file_path = 'screentime_analysis.csv'
+    data = pd.read_csv(file_path)
+
+    data['Date'] = pd.to_datetime(data['Date'])
+    data['DayOfWeek'] = data['Date'].dt.dayofweek
+    data['Month'] = data['Date'].dt.month
+
+    data = data.drop(columns=['Date'])
+
+    data = pd.get_dummies(data, columns=['App'], drop_first=True)
+
+    scaler = MinMaxScaler()
+    data[['Notifications', 'Times Opened']] = scaler.fit_transform(data[['Notifications', 'Times Opened']])
+
+    preprocessed_path = 'preprocessed_screentime_analysis.csv'
+    data.to_csv(preprocessed_path, index=False)
+    print(f"Preprocessed data saved to {preprocessed_path}")
+
+# define the DAG
+dag = DAG(
+    dag_id='data_preprocessing',
+    schedule_interval='@daily',
+    start_date=datetime(2025, 1, 1),
+    catchup=False,
+)
+
+# define the task
+preprocess_task = PythonOperator(
+    task_id='preprocess',
+    python_callable=preprocess_data,
+    dag=dag,
+)</code></pre>
+<p>The above code defines a Directed Acyclic Graph with a single task to preprocess screentime data. The preprocess_data function loads the dataset, extracts temporal features (DayOfWeek and Month) from the Date column, encodes the App column using one-hot encoding, and scales numerical features (Notifications and Times Opened) using MinMaxScaler.</p>
+<p>Next, the system saves the processed data to a new CSV file. The Airflow DAG schedules this task daily, which ensures automation and reproducibility in the data preparation process.</p>
+<h4 class="wp-block-heading">Testing and Running the Pipeline</h4>
+<p>Testing and Running the Pipeline are meant to be executed in the terminal. These commands should be run in separate terminal windows (or tabs) while your Python environment is active. First, initialize the database:</p>
+<pre class="wp-block-preformatted"><strong>airflow db init</strong></pre>
+<p>This command initializes the metadata database used by Airflow to store details about tasks, DAGs, and schedules.</p>
+<p>Next, start the Airflow webserver:</p>
+<pre class="wp-block-preformatted"><strong>airflow webserver --port 8080</strong></pre>
+<p>This starts the Airflow webserver, which hosts the user interface for managing DAGs and monitoring task execution. The default port is 8080, but you can specify a different port if needed.</p>
+<p>Finally, start the Airflow scheduler:</p>
+<pre class="wp-block-preformatted"><strong>airflow scheduler</strong></pre>
+<p>The scheduler is responsible for executing tasks as per the DAG schedule. It monitors the tasks and ensures they are executed in the correct order.</p>
+<p>To access the Airflow UI, navigate to <a href="http://localhost:8080" rel="noreferrer noopener" target="_blank">http://localhost:8080</a> in your browser. Once there, enable the data_preprocessing DAG and manually trigger it to execute the defined tasks. After the DAG has run successfully, validate the output by checking the preprocessed file to ensure it contains the updated and preprocessed data.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="b2b-courier-charges-accuracy-analysis-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="video-chaptering-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>

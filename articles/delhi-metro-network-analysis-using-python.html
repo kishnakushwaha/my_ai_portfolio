@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Delhi Metro Network Analysis using Python | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Delhi Metro Network Analysis using Python</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 25, 2025 • 5 min read</div>
+<p>Metro Network Analysis involves examining the network of metro systems to understand their structure, efficiency, and effectiveness. It typically includes analyzing routes, stations, traffic, connectivity, and other operational aspects. So, if you want to learn how to analyze the metro network in a city, this article is for you. In this article, I’ll take you through the task of Delhi Metro Network Analysis using <a href="https://my-ai-portfolio.com/2022/07/15/python-practice-questions-for-coding-interviews/" rel="noreferrer noopener" target="_blank"><strong>Python</strong></a>.</p>
+<h2 class="wp-block-heading">Delhi Metro Network Analysis: Process We Can Follow</h2>
+<p>Analyzing the metro network in a city like Delhi helps improve urban transportation infrastructure, leading to better city planning and enhanced commuter experiences. Below is the process we can follow for the task of Metro Network Analysis of Delhi:</p>
+<ol class="wp-block-list">
+<li>Determine what you want to achieve. It could be optimizing routes, reducing congestion, improving passenger flow, or understanding travel patterns.</li>
+<li>Collect data on metro lines, stations, connections, and transit schedules.</li>
+<li>Clean the data for inconsistencies, missing values, or errors.</li>
+<li>Create visual representations of the network, such as route maps, passenger flow charts, or heat maps of station congestion.</li>
+<li>Analyze how effectively the network handles passenger traffic and meets operational targets.</li>
+</ol>
+<p>So, for the task of Delhi Metro Network Analysis, we need to have a dataset based on all metro lines in Delhi and how they connect with each other. I found an ideal dataset for this task. You can download the dataset from <a href="../assets/datasets/delhi-metro-network-1.zip" rel="noreferrer noopener" target="_blank"><strong>here</strong></a>.</p>
+<h2 class="wp-block-heading">Metro Network Analysis using Python</h2>
+<p>Let’s get started with the task of Delhi Metro Network Analysis by importing the necessary Python libraries and the <a href="../assets/datasets/delhi-metro-network-1.zip" rel="noreferrer noopener" target="_blank"><strong>dataset</strong></a>:</p>
+<pre><code class="language-python">import pandas as pd
+import folium
+import plotly.express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import plotly.io as pio
+pio.templates.default = "plotly_white"
+
+metro_data = pd.read_csv("Delhi Metro Network.csv")
+
+print(metro_data.head())</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>   Station ID         Station Name  Distance from Start (km)          Line  \<br/>0           1             Jhil Mil                      10.3      Red line   <br/>1           2  Welcome [Conn: Red]                      46.8     Pink line   <br/>2           3          DLF Phase 3                      10.0   Rapid Metro   <br/>3           4           Okhla NSIC                      23.8  Magenta line   <br/>4           5           Dwarka Mor                      10.2     Blue line   <br/><br/>  Opening Date Station Layout   Latitude  Longitude  <br/>0   2008-04-06       Elevated  28.675790  77.312390  <br/>1   2018-10-31       Elevated  28.671800  77.277560  <br/>2   2013-11-14       Elevated  28.493600  77.093500  <br/>3   2017-12-25       Elevated  28.554483  77.264849  <br/>4   2005-12-30       Elevated  28.619320  77.033260  </strong></pre>
+<p>Now, let’s have a look at whether the dataset has any null values or not and then look at the data types:</p>
+<pre><code class="language-python"># checking for missing values
+missing_values = metro_data.isnull().sum()
+
+# checking data types
+data_types = metro_data.dtypes
+
+missing_values</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Station ID                  0<br/>Station Name                0<br/>Distance from Start (km)    0<br/>Line                        0<br/>Opening Date                0<br/>Station Layout              0<br/>Latitude                    0<br/>Longitude                   0<br/>dtype: int64</strong></pre>
+<pre><code class="language-python">data_types</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Station ID                    int64<br/>Station Name                 object<br/>Distance from Start (km)    float64<br/>Line                         object<br/>Opening Date                 object<br/>Station Layout               object<br/>Latitude                    float64<br/>Longitude                   float64<br/>dtype: object</strong></pre>
+<p>Now, I’ll convert the Opening Date column to a datetime format for ease of analysis:</p>
+<pre><code class="language-python"># converting 'Opening Date' to datetime format
+metro_data['Opening Date'] = pd.to_datetime(metro_data['Opening Date'])</code></pre>
+<h4 class="wp-block-heading">Geospatial Analysis</h4>
+<p>Now, I’ll start by visualizing the locations of the metro stations on a map. It will give us an insight into the geographical distribution of the stations across Delhi. We will use the latitude and longitude data to plot each station.</p>
+<p>For this, I’ll create a map with markers for each metro station. Each marker will represent a station, and we’ll be able to analyze aspects like station density and geographic spread. Let’s proceed with this visualization:</p>
+<pre><code class="language-python"># defining a color scheme for the metro lines
+line_colors = {
+    'Red line': 'red',
+    'Blue line': 'blue',
+    'Yellow line': 'beige',
+    'Green line': 'green',
+    'Voilet line': 'purple',
+    'Pink line': 'pink',
+    'Magenta line': 'darkred',
+    'Orange line': 'orange',
+    'Rapid Metro': 'cadetblue',
+    'Aqua line': 'black',
+    'Green line branch': 'lightgreen',
+    'Blue line branch': 'lightblue',
+    'Gray line': 'lightgray'
+}
+
+delhi_map_with_line_tooltip = folium.Map(location=[28.7041, 77.1025], zoom_start=11)
+
+# adding colored markers for each metro station with line name in tooltip
+for index, row in metro_data.iterrows():
+    line = row['Line']
+    color = line_colors.get(line, 'black')  # Default color is black if line not found in the dictionary
+    folium.Marker(
+        location=[row['Latitude'], row['Longitude']],
+        popup=f"{row['Station Name']}",
+        tooltip=f"{row['Station Name']}, {line}",
+        icon=folium.Icon(color=color)
+    ).add_to(delhi_map_with_line_tooltip)
+
+# Displaying the updated map
+delhi_map_with_line_tooltip</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Delhi Metro Network Analysis" class="wp-image-22480" data-attachment-id="22480" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Delhi-Metro-Network-1" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-1.png?fit=1024%2C609&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-1.png?fit=300%2C178&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-1.png?fit=2500%2C1486&amp;ssl=1" data-orig-size="2500,1486" data-permalink="https://my-ai-portfolio.com/2024/01/29/delhi-metro-network-analysis-using-python/delhi-metro-network-1/" data-recalc-dims="1" decoding="async" height="609" sizes="(max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-1.png?resize=1024%2C609&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-1.png?resize=1024%2C609&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-1.png?resize=300%2C178&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-1.png?resize=768%2C456&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-1.png?resize=1536%2C913&amp;ssl=1 1536w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-1.png?resize=2048%2C1217&amp;ssl=1 2048w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-1.png?resize=540%2C320&amp;ssl=1 540w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-1.png?resize=1200%2C713&amp;ssl=1 1200w" width="1024"/></figure>
+<p>Here is the map showing the geographical distribution of Delhi Metro stations. Each marker represents a metro station, and you can hover over or click on the markers to see the station name and the metro line it belongs to. This map provides a visual understanding of how the metro stations are spread across Delhi.</p>
+<h4 class="wp-block-heading">Temporal Analysis</h4>
+<p>Now, I will analyze the growth of the Delhi Metro network over time. I’ll look at how many stations were opened each year and visualize this growth. It can provide insights into the pace of metro network expansion and its development phases.</p>
+<p>I’ll start by extracting the year from the Opening Date and then count the number of stations opened each year. Following this, I’ll visualize this information in a bar plot. Let’s proceed with this analysis:</p>
+<pre><code class="language-python">metro_data['Opening Year'] = metro_data['Opening Date'].dt.year
+
+# counting the number of stations opened each year
+stations_per_year = metro_data['Opening Year'].value_counts().sort_index()
+
+stations_per_year_df = stations_per_year.reset_index()
+stations_per_year_df.columns = ['Year', 'Number of Stations']
+
+fig = px.bar(stations_per_year_df, x='Year', y='Number of Stations',
+             title="Number of Metro Stations Opened Each Year in Delhi",
+             labels={'Year': 'Year', 'Number of Stations': 'Number of Stations Opened'})
+
+fig.update_layout(xaxis_tickangle=-45, xaxis=dict(tickmode='linear'),
+                  yaxis=dict(title='Number of Stations Opened'),
+                  xaxis_title="Year")
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="Number of Metro Stations Opened Each Year in Delhi" class="wp-image-22482" data-attachment-id="22482" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Delhi-Metro-Network-2" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-2.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-2.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-2.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/01/29/delhi-metro-network-analysis-using-python/delhi-metro-network-2/" data-recalc-dims="1" decoding="async" height="525" sizes="(max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-2.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-2.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-2.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-2.png?resize=768%2C472&amp;ssl=1 768w" style="width:620px;height:auto" width="855"/></figure>
+<p>The bar chart illustrates the number of Delhi Metro stations opened each year. This visualization helps us understand the temporal development of the metro network. Some key observations include:</p>
+<ul class="wp-block-list">
+<li>Some years show a significant number of new station openings, indicating phases of rapid network expansion.</li>
+<li>Conversely, there are years with few or no new stations, which could be due to various factors like planning, funding, or construction challenges.</li>
+</ul>
+<h4 class="wp-block-heading">Line Analysis</h4>
+<p>Now, I’ll analyze the various metro lines in terms of the number of stations they have and the average distance between stations. It will give us insights into the characteristics of each metro line, such as which lines are more extensive or denser.</p>
+<p>I’ll calculate the number of stations per line and the average distance between stations on each line. I’ll then visualize these metrics to better understand the differences between the lines. Let’s start with these calculations:</p>
+<pre><code class="language-python">stations_per_line = metro_data['Line'].value_counts()
+
+# calculating the total distance of each metro line (max distance from start)
+total_distance_per_line = metro_data.groupby('Line')['Distance from Start (km)'].max()
+
+avg_distance_per_line = total_distance_per_line / (stations_per_line - 1)
+
+line_analysis = pd.DataFrame({
+    'Line': stations_per_line.index,
+    'Number of Stations': stations_per_line.values,
+    'Average Distance Between Stations (km)': avg_distance_per_line
+})
+
+# sorting the DataFrame by the number of stations
+line_analysis = line_analysis.sort_values(by='Number of Stations', ascending=False)
+
+line_analysis.reset_index(drop=True, inplace=True)
+print(line_analysis)</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>                 Line  Number of Stations  \<br/>0           Blue line                  49   <br/>1           Pink line                  38   <br/>2         Yellow line                  37   <br/>3         Voilet line                  34   <br/>4            Red line                  29   <br/>5        Magenta line                  25   <br/>6           Aqua line                  21   <br/>7          Green line                  21   <br/>8         Rapid Metro                  11   <br/>9    Blue line branch                   8   <br/>10        Orange line                   6   <br/>11          Gray line                   3   <br/>12  Green line branch                   3   <br/><br/>    Average Distance Between Stations (km)  <br/>0                                 1.355000  <br/>1                                 1.097917  <br/>2                                 1.157143  <br/>3                                 1.950000  <br/>4                                 1.240000  <br/>5                                 1.050000  <br/>6                                 1.379167  <br/>7                                 4.160000  <br/>8                                 1.421622  <br/>9                                 1.000000  <br/>10                                1.167857  <br/>11                                1.318182  <br/>12                                1.269444  </strong></pre>
+<p>The table presents a detailed analysis of the Delhi Metro lines, including the number of stations on each line and the average distance between stations.</p>
+<p>To better understand these metrics, let’s visualize them. I’ll create two plots: one for the number of stations per line and another for the average distance between stations. It will provide a comparative view of the metro lines:</p>
+<pre><code class="language-python"># creating subplots
+fig = make_subplots(rows=1, cols=2, subplot_titles=('Number of Stations Per Metro Line',
+                                                    'Average Distance Between Stations Per Metro Line'),
+                    horizontal_spacing=0.2)
+
+# plot for Number of Stations per Line
+fig.add_trace(
+    go.Bar(y=line_analysis['Line'], x=line_analysis['Number of Stations'],
+           orientation='h', name='Number of Stations', marker_color='crimson'),
+    row=1, col=1
+)
+
+# plot for Average Distance Between Stations
+fig.add_trace(
+    go.Bar(y=line_analysis['Line'], x=line_analysis['Average Distance Between Stations (km)'],
+           orientation='h', name='Average Distance (km)', marker_color='navy'),
+    row=1, col=2
+)
+
+# update xaxis properties
+fig.update_xaxes(title_text="Number of Stations", row=1, col=1)
+fig.update_xaxes(title_text="Average Distance Between Stations (km)", row=1, col=2)
+
+# update yaxis properties
+fig.update_yaxes(title_text="Metro Line", row=1, col=1)
+fig.update_yaxes(title_text="", row=1, col=2)
+
+# update layout
+fig.update_layout(height=600, width=1200, title_text="Metro Line Analysis", template="plotly_white")
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-large"><img alt="Delhi Metro Network Analysis: Metro Line Analysis" class="wp-image-22485" data-attachment-id="22485" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Delhi-Metro-Network-3" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-3.png?fit=1024%2C512&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-3.png?fit=300%2C150&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-3.png?fit=1200%2C600&amp;ssl=1" data-orig-size="1200,600" data-permalink="https://my-ai-portfolio.com/2024/01/29/delhi-metro-network-analysis-using-python/delhi-metro-network-3/" data-recalc-dims="1" decoding="async" height="512" loading="lazy" sizes="auto, (max-width: 1024px) 100vw, 1024px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-3.png?resize=1024%2C512&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-3.png?resize=1024%2C512&amp;ssl=1 1024w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-3.png?resize=300%2C150&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-3.png?resize=768%2C384&amp;ssl=1 768w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-3.png?w=1200&amp;ssl=1 1200w" width="1024"/></figure>
+<h4 class="wp-block-heading">Station Layout Analysis</h4>
+<p>Next, I’ll explore the station layouts (Elevated, Ground Level, Underground). I’ll analyze the distribution of these layouts across the network and see if there are any patterns or trends, such as certain lines favouring a particular layout.</p>
+<p>I’ll calculate the frequency of each layout type and then visualize these frequencies to get a clearer picture of the layout distribution. Let’s proceed with this:</p>
+<pre><code class="language-python">layout_counts = metro_data['Station Layout'].value_counts()
+
+# creating the bar plot using Plotly
+fig = px.bar(x=layout_counts.index, y=layout_counts.values,
+             labels={'x': 'Station Layout', 'y': 'Number of Stations'},
+             title='Distribution of Delhi Metro Station Layouts',
+             color=layout_counts.index,
+             color_continuous_scale='pastel')
+
+# updating layout for better presentation
+fig.update_layout(xaxis_title="Station Layout",
+                  yaxis_title="Number of Stations",
+                  coloraxis_showscale=False,
+                  template="plotly_white")
+
+fig.show()</code></pre>
+<figure class="wp-block-image aligncenter size-full is-resized"><img alt="Distribution of Station Layouts" class="wp-image-22487" data-attachment-id="22487" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Delhi-Metro-Network-4" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-4.png?fit=855%2C525&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-4.png?fit=300%2C184&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-4.png?fit=855%2C525&amp;ssl=1" data-orig-size="855,525" data-permalink="https://my-ai-portfolio.com/2024/01/29/delhi-metro-network-analysis-using-python/delhi-metro-network-4/" data-recalc-dims="1" decoding="async" height="525" loading="lazy" sizes="auto, (max-width: 855px) 100vw, 855px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-4.png?resize=855%2C525&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-4.png?w=855&amp;ssl=1 855w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-4.png?resize=300%2C184&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/01/Delhi-Metro-Network-4.png?resize=768%2C472&amp;ssl=1 768w" style="width:679px;height:auto" width="855"/></figure>
+<p>The bar chart and the counts show the distribution of different station layouts in the Delhi Metro network.</p>
+<h5 class="wp-block-heading">Observations:</h5>
+<ol class="wp-block-list">
+<li><strong>Elevated Stations:</strong> The majority of the stations are Elevated. It is a common design choice in urban areas to save space and reduce land acquisition issues.</li>
+<li><strong>Underground Stations:</strong> The Underground stations are fewer compared to elevated ones. These are likely in densely populated or central areas where above-ground construction is less feasible.</li>
+<li><strong>At-Grade Stations:</strong> There are only a few At-Grade (ground level) stations, suggesting they are less common in the network, possibly due to land and traffic considerations.</li>
+</ol>
+<h3 class="wp-block-heading">Summary</h3>
+<p>So, this is how you can perform Delhi Metro Network Analysis using Python. Metro Network Analysis involves examining the network of metro systems to understand their structure, efficiency, and effectiveness. It typically includes analyzing routes, stations, traffic, connectivity, and other operational aspects.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="data-analytics-guided-projects-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="data-visualization-rules-to-never-go-wrong.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

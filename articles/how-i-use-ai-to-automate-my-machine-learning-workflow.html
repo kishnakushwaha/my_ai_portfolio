@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>How I Use AI to Automate My Machine Learning Workflow | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a class="active" href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        How I Use AI to Automate My Machine Learning Workflow</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Dec 17, 2025 • 5 min read</div>
+<p>We are often told that Data Science is about math and insights. But in reality, it’s mostly plumbing. It’s connecting pipes, cleaning leaks, and ensuring data flows from A to B without crashing your RAM. <strong><a href="10-generative-ai-projects-to-build-for-your-portfolio.html">Generative AI</a></strong> has changed the math. It hasn’t replaced the data scientist; it has given us an exoskeleton. In this article, I aim to guide you through the exact process of using AI to automate the heavy lifting of my Machine Learning workflow, allowing me to focus on the art, not just the code.</p>
+<h2 class="wp-block-heading">How I Use AI to Automate My Entire Machine Learning Workflow</h2>
+<p>Before we dive into the tactics, we need to set the stage. When I say automate, I don’t mean I tell ChatGPT to build me a fraud detection system, and then go take a nap. That is a recipe for hallucinations and bad architecture.</p>
+<p>Think of Large Language Models as an incredibly fast, well-read, but occasionally confident junior developer sitting next to you. They know the syntax for every library in existence, but they don’t know your business context.</p>
+<p>My formula for success is simple: <strong>Value = (Your Strategic Intent) x (AI’s Coding Speed).</strong></p>
+<p>Here is the step-by-step workflow I use to maximise that equation.</p>
+<h4 class="wp-block-heading">Step 1: The Smart Start (EDA &amp; Ideation)</h4>
+<p>The hardest part of any project is the blank page. I used to spend hours just setting up the environment and writing initial inspection scripts. Now, I treat the AI as a brainstorming partner.</p>
+<p>Instead of manually typing out df.head(), df.describe(), and df.isnull().sum(), I provide the AI with the <strong>schema</strong> (not the data itself, for privacy) and a goal.</p>
+<p>Here’s the kind of prompt I use:</p>
+<pre class="wp-block-preformatted"><em>I have a dataset with the following columns: [List Columns]. I want to predict [Target Variable]. Act as a senior Data Scientist. Suggest 5 specific hypotheses I should test during Exploratory Data Analysis (EDA) and write the Python/Pandas code to visualise these relationships using Seaborn.</em></pre>
+<p>The AI often suggests relationships I hadn’t considered (like interaction effects between two seemingly unrelated features).</p>
+<h4 class="wp-block-heading">Step 2: The Grunt Work (Preprocessing &amp; Cleaning)</h4>
+<p>This is where 80% of our time dies. Data cleaning is essential, but it is rarely fun. This is where LLMs work at best.</p>
+<p>I haven’t written a raw Regular Expression in two years. Here’s the kind of prompt I use:</p>
+<pre class="wp-block-preformatted"><em>Write a Python regex to extract email domains from a text string, but exclude any domains ending in .net. Handle edge cases where the email is None.</em></pre>
+<p>And, instead of just blindly filling missing values with the mean, I ask the AI for a strategy. Here’s the kind of prompt I use for that:</p>
+<pre class="wp-block-preformatted"><em>I have missing values in the 'Age' column. The dataset also has 'Job_Title' and 'Education'. Write a function to impute 'Age' based on the median age of people with the same Job and Education level.</em></pre>
+<p>AI is great at writing the logic for complex transformations that would take you 20 minutes to structure in your head.</p>
+<h4 class="wp-block-heading">Step 3: Modelling &amp; The Explain Like I’m 5 Trick</h4>
+<p>When building models, we often get stuck on complex documentation or obscure error messages.</p>
+<p>When my PyTorch tensor dimensions don’t match (a classic nightmare), I don’t just stare at the screen. I paste the error trace and the model class into the AI. This is the prompt I use for that:</p>
+<pre class="wp-block-preformatted"><em>Here is my model architecture, and here is the Runtime Error regarding size mismatch. Trace the tensor shapes layer by layer and tell me exactly where the mismatch happens.</em></pre>
+<p>Sometimes, I find a research paper with a complex new loss function. Here’s how I translate it into code:</p>
+<pre class="wp-block-preformatted"><em>Convert this mathematical formula from the paper into a clean, vectorised Python function using NumPy. Explain the variables using comments.</em></pre>
+<h4 class="wp-block-heading">Step 4: Refactoring and Future-Proofing</h4>
+<p>We are all guilty of writing spaghetti code in Jupyter Notebooks. It works, but it’s a mess. Before I move a model to production (or even share it with a colleague), I let the AI clean up my mess.</p>
+<p>Here are the three prompts you can use for that:</p>
+<pre class="wp-block-preformatted"><strong><em>Modularisation:</em></strong><em> Take this long cell of training code and refactor it into a class called ModelTrainer with methods for train, evaluate, and save_checkpoint."</em><br/><br/><strong><em>Docstrings:</em></strong><em> Add Google-style docstrings to every function in this script, explaining the arguments and return types.</em><br/><br/><strong><em>Optimisation:</em></strong><em> Review this Pandas loop. Is there a way to vectorise this operation to make it run faster?</em></pre>
+<p>This step alone has made me a better programmer. Seeing how the AI refactors my code teaches me design patterns I unintentionally skipped.</p>
+<h3 class="wp-block-heading">Final Thoughts</h3>
+<p>When I started, I thought using tools like this was cheating. I worried that if I didn’t write every line of code myself, I wasn’t learning.</p>
+<p>I was wrong. By automating the syntax and the boilerplate, I am forced to spend more time on the <strong>concepts</strong>. I spend less time worrying about how to centre a plot in Matplotlib, and more time asking, <em>“Is this plot actually telling me the truth about the data?”</em></p>
+<p>This technology doesn’t make the learning curve flatter; it makes the climb faster. It invites you to be more curious, more ambitious, and more creative.</p>
+<p>I hope you liked this article on how I use AI to automate the heavy lifting of my Machine Learning workflow. <strong>Follow me on <a href="https://www.instagram.com/amankharwal.official/" rel="noreferrer noopener" target="_blank">Instagram</a> for many more resources.</strong></p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="which-ai-role-fits-you-best.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="the-2026-ai-stack-decoded.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

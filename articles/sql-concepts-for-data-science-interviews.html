@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>SQL Concepts for Data Science Interviews | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        SQL Concepts for Data Science Interviews</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 26, 2025 • 5 min read</div>
+<p>Data Scientists use <strong><a href="essential-sql-topics-for-data-science.html" rel="noreferrer noopener" target="">SQL</a></strong> to solve complex data manipulation, aggregation, and transformation problems. In Data Science interviews, Interviewers often test your SQL knowledge to work with structured and semi-structured data, create readable queries, and handle real-world challenges like hierarchy, JSON, and summarization. So, if you are preparing for Data Science interviews and looking for practice problems based on SQL, this article is for you. In this article, I’ll take you through a guide to essential SQL concepts for Data Science interviews, with example questions.</p>
+<h2 class="wp-block-heading">SQL Concepts for Data Science Interviews</h2>
+<p>Below are must-know SQL concepts for Data Science interviews, each explained in detail with an example question.</p>
+<h4 class="wp-block-heading">Window Functions</h4>
+<p>Window functions perform calculations across a set of rows related to the current row without collapsing the result into a single output. They are useful for running totals, rankings, and moving averages.</p>
+<p><strong>Example Question</strong>: You have a sales table with columns: sale_id, sale_date, store_id, and amount. Write a query to calculate the running total of sales for each store ordered by date.</p>
+<p>Here’s how to solve this SQL problem:</p>
+<pre><code class="language-sql">SELECT 
+    store_id,
+    sale_date,
+    amount,
+    SUM(amount) OVER (PARTITION BY store_id ORDER BY sale_date) AS running_total
+FROM 
+    sales
+ORDER BY 
+    store_id, sale_date;</code></pre>
+<p>The output will show each store’s store_id, sale_date, amount, and a cumulative running_total of sales up to each date, ordered by store_id and sale_date.</p>
+<h4 class="wp-block-heading">Common Table Expressions (CTEs)</h4>
+<p>CTEs allow you to create temporary result sets that can be referred to within the same query. They improve query readability and can be used for recursive queries.</p>
+<p><strong>Example Question</strong>: You have an employees table with columns: employee_id, manager_id, and salary. Write a query to calculate the total salary expense for each manager, including their direct reports.</p>
+<p>Here’s how to solve this SQL problem:</p>
+<pre><code class="language-sql">WITH ManagerSalaries AS (
+    SELECT 
+        manager_id,
+        SUM(salary) AS total_salary
+    FROM 
+        employees
+    GROUP BY 
+        manager_id
+)
+SELECT 
+    m.manager_id,
+    e.employee_id,
+    e.salary,
+    m.total_salary
+FROM 
+    ManagerSalaries m
+JOIN 
+    employees e
+ON 
+    m.manager_id = e.manager_id;</code></pre>
+<p>The output will show each manager’s manager_id, their employees’ employee_id and salary, and the total salary managed by that manager.</p>
+<h4 class="wp-block-heading">Recursive Queries</h4>
+<p>Recursive queries use CTEs to process hierarchical or sequential data. They are particularly useful for analyzing tree-like structures, such as organizational charts or file systems.</p>
+<p><strong>Example Question</strong>: You have a departments table with columns: department_id and parent_department_id. Write a query to find all sub-departments under a given department.</p>
+<p>Here’s how to solve this SQL problem:</p>
+<pre><code class="language-sql">WITH RecursiveDept AS (
+    SELECT 
+        department_id,
+        parent_department_id
+    FROM 
+        departments
+    WHERE 
+        department_id = 1 -- Starting point
+
+    UNION ALL
+
+    SELECT 
+        d.department_id,
+        d.parent_department_id
+    FROM 
+        departments d
+    INNER JOIN 
+        RecursiveDept r
+    ON 
+        d.parent_department_id = r.department_id
+)
+SELECT 
+    * 
+FROM 
+    RecursiveDept;</code></pre>
+<p>The output will show all departments and their parent-child relationships starting from the specified department (department_id = 1), including all its sub-departments recursively.</p>
+<h4 class="wp-block-heading">Handling JSON Data</h4>
+<p>Modern databases like PostgreSQL and MySQL support JSON data types, allowing you to store and query semi-structured data. It is critical for handling APIs or logs.</p>
+<p><strong>Example Question</strong>: You have a user_data table with a user_info column containing JSON data. Write a query to extract the email field and count users by their country.</p>
+<p>Here’s how to solve this SQL problem:</p>
+<pre><code class="language-sql">SELECT 
+    user_info-&gt;&gt;'country' AS country,
+    COUNT(*) AS user_count
+FROM 
+    user_data
+GROUP BY 
+    user_info-&gt;&gt;'country';</code></pre>
+<p>The output will display each country extracted from the JSON column user_info and the corresponding count of users from that country.</p>
+<h4 class="wp-block-heading">Pivoting Data with CASE Statements</h4>
+<p>Pivoting transforms rows into columns, which helps create reports or summarize data. It can be achieved using CASE statements or database-specific pivot functions.</p>
+<p><strong>Example Question</strong>: You have a sales table with columns: store_id, sale_date, and amount. Write a query to show the total sales for each store, with separate columns for each month.</p>
+<p>Here’s how to solve this SQL problem:</p>
+<pre><code class="language-sql">SELECT 
+    store_id,
+    SUM(CASE WHEN EXTRACT(MONTH FROM sale_date) = 1 THEN amount ELSE 0 END) AS january_sales,
+    SUM(CASE WHEN EXTRACT(MONTH FROM sale_date) = 2 THEN amount ELSE 0 END) AS february_sales,
+    SUM(CASE WHEN EXTRACT(MONTH FROM sale_date) = 3 THEN amount ELSE 0 END) AS march_sales
+FROM 
+    sales
+GROUP BY 
+    store_id;</code></pre>
+<p>The output will show each store’s store_id along with total sales for January, February, and March as separate columns (january_sales, february_sales, march_sales).</p>
+<h3 class="wp-block-heading">Summary</h3>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="hypothesis-testing-using-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="data-analytics-guided-projects-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

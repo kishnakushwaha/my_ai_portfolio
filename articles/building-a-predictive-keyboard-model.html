@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Building a Predictive Keyboard Model | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Building a Predictive Keyboard Model</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Jan 01, 2026 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="text-classification-pipeline-with-hugging-face-transformers.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="#" style="text-decoration: none; color: var(--primary-color); font-weight: 600;; color: #ccc; pointer-events: none">Next Article →</a>
+</div>
+<p>Every time you type on your smartphone, you see three words pop up as suggestions. That’s a <strong>predictive keyboard</strong> in action. These suggestions aren’t random. They are based on deep learning models that have learned language patterns from tons of text data. So, if you want to learn about building the model behind a predictive keyboard, this article is for you. In this article, I’ll take you through the task of building a predictive keyboard model with PyTorch.</p>
+<h2 class="wp-block-heading">Building a Predictive Keyboard Model Using PyTorch</h2>
+<p>The task of building a predictive keyboard model includes these steps:</p>
+<ol class="wp-block-list">
+<li>Tokenizing and preparing natural language data</li>
+<li>Building a vocabulary and converting words to indices</li>
+<li>Training a next-word prediction model using LSTMs</li>
+<li>Generating top-k predictions like a predictive keyboard</li>
+</ol>
+<p>We will use these steps, and in the end, we will see a model generating three suggestions for the next word, just like a predictive keyboard in your smartphone.</p>
+<p>The richer the data, the better your model will generalize. So, the dataset we will use is based on the stories of Sherlock Holmes. <strong>You can find this dataset <a href="#" rel="noreferrer noopener" style="pointer-events: none; cursor: default; text-decoration: none; color: inherit;">here</a>.</strong></p>
+<h4 class="wp-block-heading">Step 1: Preparing the Dataset</h4>
+<p>We will start with tokenizing the text data and converting everything to lowercase:</p>
+<pre><code class="language-python">import nltk
+from nltk.tokenize import word_tokenize
+nltk.download('punkt')
+nltk.download('punkt_tab')
+
+# load data
+with open('sherlock-holm.es_stories_plain-text_advs.txt', 'r', encoding='utf-8') as f:
+    text = f.read().lower()
+
+tokens = word_tokenize(text)
+print("Total Tokens:", len(tokens))</code></pre>
+<pre class="wp-block-preformatted"><strong>Total Tokens: 125772</strong></pre>
+<p>Here, we converted the text to lowercase (to maintain consistency) and used <strong>word_tokenize</strong> to break the entire corpus into word-level tokens. This prepares our data for model training by converting raw text into a structured format that the model can understand.</p>
+<h4 class="wp-block-heading">Step 2: Creating a Vocabulary</h4>
+<p>Next, we need a way to convert words into numbers. So we will create:</p>
+<ol class="wp-block-list">
+<li>a dictionary to map each word to an index</li>
+<li>and another dictionary to reverse it back</li>
+</ol>
+<p>So, let’s build the vocabulary and create word-to-index mappings:</p>
+<pre><code class="language-python">from collections import Counter
+
+word_counts = Counter(tokens)
+vocab = sorted(word_counts, key=word_counts.get, reverse=True)
+
+word2idx = {word: idx for idx, word in enumerate(vocab)}
+idx2word = {idx: word for word, idx in word2idx.items()}
+vocab_size = len(vocab)</code></pre>
+<p>Here, we counted how often each word appears using Counter, then sorted the vocabulary from most to least frequent. This sorted list helps us assign lower indices to more common words (useful for embeddings). Then, we created <strong>word2idx and idx2word dictionaries</strong> to convert words to unique IDs and back. Finally, we stored the total vocabulary size, which will define the input and output dimensions for our model.</p>
+<h4 class="wp-block-heading">Step 3: Building Input-Output Sequences</h4>
+<p>To predict the next word, the model needs context. We can use a sliding window approach. So, let’s create input-target sequences for next word prediction:</p>
+<pre><code class="language-python">sequence_length = 4  # e.g., "I am going to [predict this]"
+
+data = []
+for i in range(len(tokens) - sequence_length):
+    input_seq = tokens[i:i + sequence_length - 1]
+    target = tokens[i + sequence_length - 1]
+    data.append((input_seq, target))
+
+# convert words to indices
+def encode(seq): return [word2idx[word] for word in seq]
+
+encoded_data = [(torch.tensor(encode(inp)), torch.tensor(word2idx[target]))
+                for inp, target in data]</code></pre>
+<p>Here, we used a sliding window approach to generate training samples: for every group of 3 consecutive words (input), we predict the next word (target). It prepares the data for sequence modelling.</p>
+<p>Then, we defined an <strong>encode function</strong> to convert each word in the sequence into its corresponding index using our vocabulary. Finally, we build <strong>encoded_data</strong>, a list of (input_tensor, target_tensor) pairs, where each input is a tensor of word indices and the target is the index of the next word to be predicted.</p>
+<h4 class="wp-block-heading">Step 4: Designing the Model Architecture</h4>
+<p>For sequence data, <strong><a href="stock-price-prediction-with-lstm.html" rel="noreferrer noopener" target="">LSTMs</a></strong> are still the go-to. They can remember patterns across time steps, which makes them perfect for language modelling. So, let’s define the LSTM-based Predictive Keyboard model:</p>
+<pre><code class="language-python">import torch.nn as nn
+
+class PredictiveKeyboard(nn.Module):
+    def __init__(self, vocab_size, embed_dim=64, hidden_dim=128):
+        super(PredictiveKeyboard, self).__init__()
+        self.embedding = nn.Embedding(vocab_size, embed_dim)
+        self.lstm = nn.LSTM(embed_dim, hidden_dim, batch_first=True)
+        self.fc = nn.Linear(hidden_dim, vocab_size)
+
+    def forward(self, x):
+        x = self.embedding(x)
+        output, _ = self.lstm(x)
+        output = self.fc(output[:, -1, :])  # last LSTM output
+        return output</code></pre>
+<p>This class defines our neural network model. First, the Embedding layer converts word indices into dense vectors. These embeddings are then passed through an LSTM layer, which captures the sequential context of the input.</p>
+<p>Finally, we take the output of the <strong>last time step</strong> and feed it through a Linear layer to get a vector of size <strong>vocab_size</strong>, representing the predicted probabilities for each word in the vocabulary. This architecture allows the model to learn patterns and dependencies in word sequences for next-word prediction.</p>
+<h4 class="wp-block-heading">Step 5: Training the Model</h4>
+<p>We’ll use CrossEntropyLoss (standard for classification tasks) and train over a small batch of sequences. So, let’s train the model on input-target word sequences:</p>
+<pre><code class="language-python">import torch
+import torch.optim as optim
+import random
+
+model = PredictiveKeyboard(vocab_size)
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.005)
+
+epochs = 20
+for epoch in range(epochs):
+    total_loss = 0
+    random.shuffle(encoded_data)
+    for input_seq, target in encoded_data[:10000]:  # Limit data for speed
+        input_seq = input_seq.unsqueeze(0)
+        output = model(input_seq)
+        loss = criterion(output, target.unsqueeze(0))
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+        total_loss += loss.item()
+
+    print(f"Epoch {epoch+1}, Loss: {total_loss:.4f}")</code></pre>
+<pre class="wp-block-preformatted has-small-font-size"><strong>Epoch 1, Loss: 66887.7021<br/>Epoch 2, Loss: 67179.4026<br/>Epoch 3, Loss: 68716.7401<br/>Epoch 4, Loss: 72399.9313<br/>Epoch 5, Loss: 72274.3920<br/>Epoch 6, Loss: 73415.8201<br/>Epoch 7, Loss: 73517.9691<br/>Epoch 8, Loss: 75054.6567<br/>Epoch 9, Loss: 75603.8497<br/>Epoch 10, Loss: 75316.2069<br/>Epoch 11, Loss: 77058.3788<br/>Epoch 12, Loss: 77787.7627<br/>Epoch 13, Loss: 77840.5772<br/>Epoch 14, Loss: 79864.1127<br/>Epoch 15, Loss: 77990.9982<br/>Epoch 16, Loss: 80775.6010<br/>Epoch 17, Loss: 79951.5634<br/>Epoch 18, Loss: 80578.3322<br/>Epoch 19, Loss: 81427.6879<br/>Epoch 20, Loss: 81869.4849</strong></pre>
+<p>Here, we instantiated the model, defined a loss function (<strong>CrossEntropyLoss</strong>), and used the Adam optimizer for efficient gradient updates. During each training epoch, we shuffled the dataset for better generalization. For each training sample, we added a batch dimension to the input, computed the output, and calculated the loss between predicted and actual next-word indices.</p>
+<p>Then we performed backpropagation, updated the weights, and accumulated the total loss for tracking. This loop trains the model to predict the next word based on the previous sequence.</p>
+<h4 class="wp-block-heading">Predicting the Next Words</h4>
+<p>Now, we will use this model just like a smartphone keyboard. Instead of predicting just one word, we will mimic how smartphone keyboards suggest three possible next words. So, let’s generate the top 3 next-word predictions like a predictive keyboard:</p>
+<pre><code class="language-python">import torch.nn.functional as F
+
+def suggest_next_words(model, text_prompt, top_k=3):
+    model.eval()
+    tokens = word_tokenize(text_prompt.lower())
+    if len(tokens) &lt; sequence_length - 1:
+        raise ValueError(f"Input should be at least {sequence_length - 1} words long.")
+
+    input_seq = tokens[-(sequence_length - 1):]
+    input_tensor = torch.tensor(encode(input_seq)).unsqueeze(0)
+
+    with torch.no_grad():
+        output = model(input_tensor)
+        probs = F.softmax(output, dim=1).squeeze()
+        top_indices = torch.topk(probs, top_k).indices.tolist()
+
+    return [idx2word[idx] for idx in top_indices]
+
+print("Suggestions:", suggest_next_words(model, "So, are we really at"))</code></pre>
+<pre class="wp-block-preformatted"><strong>Suggestions: ['the', 'his', 'a']</strong></pre>
+<p>This function takes a user input like <strong>“So, are we really at”</strong>, tokenizes and encodes the last few words, and passes them through the trained model to get output scores.</p>
+<p>These scores are then converted into probabilities using softmax, and the top k predictions (like the three most probable next words) are selected using<strong> torch.topk</strong>. The function then maps these indices back to actual words using <strong>idx2word</strong>, mimicking the behaviour of a real predictive keyboard.</p>
+<h3 class="wp-block-heading">Summary</h3>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="text-classification-pipeline-with-hugging-face-transformers.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="#" style="text-decoration: none; color: var(--primary-color); font-weight: 600;; color: #ccc; pointer-events: none">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>
