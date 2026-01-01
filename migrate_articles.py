@@ -151,9 +151,35 @@ def get_article_details(url):
 
 print("Starting recursive migration...")
 
+# Special Group Logic
+PYTHON_PARENT_URL = "https://amanxai.com/2024/08/23/python-problems-for-coding-interviews/"
+special_urls = set()
+special_urls.add(PYTHON_PARENT_URL)
+special_urls.add(PYTHON_PARENT_URL.rstrip('/'))
+
+# Pre-fetch special group to identify children
+print("identifying Python Interview sub-articles...")
+try:
+    resp = requests.get(PYTHON_PARENT_URL, headers={'User-Agent': 'Mozilla/5.0'})
+    if resp.status_code == 200:
+        p_soup = BeautifulSoup(resp.content, 'html.parser')
+        p_div = p_soup.find('div', class_='entry-content') or p_soup.find('article')
+        if p_div:
+            for a in p_div.find_all('a', href=True):
+                if 'amanxai.com' in a['href']:
+                     special_urls.add(a['href'])
+                     special_urls.add(a['href'].rstrip('/'))
+except Exception as e:
+    print(f"Warning: Could not pre-fetch special group: {e}")
+
 max_articles = 150 # Safety limit
 count = 0
-date_cursor = datetime.date(2025, 10, 30)
+count_special = 0
+
+# Normal Date Cursor (From Today)
+date_normal = datetime.date.today()
+# Special Date Cursor (Requested Oct 25, 2025)
+date_special = datetime.date(2025, 10, 25)
 
 while processing_queue and count < max_articles:
     current_art = processing_queue.pop(0)
@@ -166,12 +192,11 @@ while processing_queue and count < max_articles:
         
     print(f"Processing ({count+1}): {current_art.get('title', 'Unknown Article')}")
     
+    # --- FETCH LOGIC OMITTED FOR BREVITY, ASSUMED UNCHANGED UNTIL DATE ASSIGNMENT ---
+    
     # Fetch Content
-    # If we already have title, we just need content. If not, we need both.
     if 'content_html' not in current_art:
-        # We need to fetch
         try:
-             # Reuse fetch logic but we need raw soup to find links first
             response = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
             soup = BeautifulSoup(response.content, 'html.parser')
             
@@ -180,32 +205,19 @@ while processing_queue and count < max_articles:
                 print("Skipping empty content...")
                 continue
 
-            # If title missing (discovered link), get it
             if 'title' not in current_art:
                 h1 = soup.find('h1')
                 current_art['title'] = h1.get_text().strip() if h1 else "Untitled AI Article"
 
-            # Parse for new links BEFORE cleaning
-            # We want links to other amanxai.com/machine-learning/ or similar articles
             for a in content_div.find_all('a', href=True):
                 href = a['href']
-                # Check if internal relevant link (Expand to 2022-2025 to catch older projects)
                 if SOURCE_DOMAIN in href and ('/2021/' in href or '/2022/' in href or '/2023/' in href or '/2024/' in href or '/2025/' in href):
-                    # Check if already in queue or processed
                     check_url = href.rstrip('/')
                     if check_url not in processed_urls:
-                         # Prepare new entry
-                         # We don't have title yet, will fetch when processing
-                         # Check if it's already in queue
                          is_in_queue = any(q['url'].rstrip('/') == check_url for q in processing_queue)
                          if not is_in_queue:
                              processing_queue.append({'url': href})
 
-            # Now clean content using our function logic (inline or call helper)
-            # Refactored fetch_and_clean_content handles soup, but we have soup here.
-            # Let's just use the logic here to save re-request.
-            
-            # Clean CodeMirror
             code_blocks = content_div.find_all(class_='wp-block-codemirror-blocks-code-block')
             for block in code_blocks:
                 pre_tag = block.find('pre')
@@ -229,18 +241,16 @@ while processing_queue and count < max_articles:
                     new_pre.append(new_code)
                     block.replace_with(new_pre)
 
-            # Remove unwanted
             for unwanted in content_div.select('.st-post-share, .jp-relatedposts, .widget-area, script, iframe'):
                 unwanted.decompose()
             for p in content_div.find_all('p'):
                 if "follow me on Instagram" in p.get_text() or "Hands-On GenAI" in p.get_text():
                     p.decompose()
 
-            # Extract description (first paragraph)
             if 'description' not in current_art:
                 first_p = content_div.find('p')
                 if first_p:
-                   text = first_p.get_text().strip().replace('"', "'") # Escape quotes
+                   text = first_p.get_text().strip().replace('"', "'")
                    current_art['description'] = text[:160] + "..." if len(text) > 160 else text
                 else:
                    current_art['description'] = f"Learn more about {current_art['title']}."
@@ -251,20 +261,29 @@ while processing_queue and count < max_articles:
             print(f"Error processing article: {e}")
             continue
 
-    # Add to processed
     processed_urls.add(clean_url)
     
-    # Filter out bad titles/content
     bad_titles = ["Untitled AI Article", "Oops! That page can’t be found.", "Page not found", "404 Not Found"]
     if current_art['title'] in bad_titles or "Oops!" in current_art['title']:
         print(f"Skipping invalid article: {current_art['title']}")
         continue
 
-    # Generate Slug and Meta
     slug = slugify(current_art['title'])
-    clean_date = date_cursor.strftime("%b %d, %Y")
     
-    # Store in Migrated Content
+    # --- DATE ASSIGNMENT LOGIC ---
+    if url in special_urls or clean_url in special_urls:
+        # Special Group: Oct 25, 2025 start, 2 per day
+        clean_date = date_special.strftime("%b %d, %Y")
+        count_special += 1
+        if count_special % 2 == 0:
+            date_special -= datetime.timedelta(days=1)
+    else:
+        # Normal Group: Today start, 1 per day (or 2 per day if preferred, keeping original logic)
+        clean_date = date_normal.strftime("%b %d, %Y")
+        # Decrement distinct from special
+        if count % 2 == 0: # Keeping user's general '2 per day' preference if that was the case
+             date_normal -= datetime.timedelta(days=1)
+
     migrated_content[clean_url] = {
         'title': current_art['title'],
         'slug': slug,
@@ -275,13 +294,9 @@ while processing_queue and count < max_articles:
         'link': f"articles/{slug}"
     }
     
-    # Also map the full url
-    migrated_content[url] = migrated_content[clean_url] # Reference same obj
+    migrated_content[url] = migrated_content[clean_url]
     
     count += 1
-    # Backdate every 2 articles to avoid going back too far? Or just keep same date logic
-    if count % 2 == 0:
-        date_cursor -= datetime.timedelta(days=1)
 
 print(f"Total articles fetched: {len(migrated_content) // 2}") # Div 2 because double mapping
 
