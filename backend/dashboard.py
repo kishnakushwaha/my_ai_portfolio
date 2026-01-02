@@ -224,12 +224,15 @@ def manage_project_item(ml_page, title, target_file, action):
         set_visibility(real_path, action)
 
 def render_bulk_actions(selected_items, item_type="files", custom_handler=None, key_suffix=""):
+    """
+    Renders Vertical Action Buttons (Toolbar style)
+    """
     if not selected_items:
-        st.caption("Select items to perform actions.")
+        st.info("👈 Select items to see actions")
         return
 
-    # Right-aligned Buttons: Spacer takes up 5/8 of width
-    c_spacer, c1, c2, c3 = st.columns([5, 1, 1, 1])
+    st.markdown("#### Bulk Actions")
+    st.caption(f"Selected: {len(selected_items)} items")
     
     def process_bulk(action):
         count = 0
@@ -243,15 +246,15 @@ def render_bulk_actions(selected_items, item_type="files", custom_handler=None, 
         st.success(f"Updated {count} {item_type} to '{action}'!")
         st.rerun()
 
-    with c1:
-        if st.button(f"Make Public 🟢", key=f"bulk_pub_{key_suffix}", help=f"Apply to {len(selected_items)} items"):
-            process_bulk('public')
-    with c2:
-        if st.button(f"Make Unlisted 🟡", key=f"bulk_unl_{key_suffix}", help=f"Apply to {len(selected_items)} items"):
-            process_bulk('unlisted')
-    with c3:
-        if st.button(f"Drafts 🔴", key=f"bulk_drf_{key_suffix}", help=f"Apply to {len(selected_items)} items"):
-            process_bulk('private')
+    # Vertical Stack of Buttons
+    if st.button(f"Make Public 🟢", key=f"bulk_pub_{key_suffix}", use_container_width=True):
+        process_bulk('public')
+    
+    if st.button(f"Make Unlisted 🟡", key=f"bulk_unl_{key_suffix}", use_container_width=True):
+        process_bulk('unlisted')
+    
+    if st.button(f"Move to Drafts 🔴", key=f"bulk_drf_{key_suffix}", use_container_width=True):
+        process_bulk('private')
 
 def render_file_list(files, key_suffix=""):
     selected = []
@@ -268,7 +271,7 @@ def render_file_list(files, key_suffix=""):
                     status_icon = "🟡"
         
         # Dense row
-        col1, col2 = st.columns([0.5, 12])
+        col1, col2 = st.columns([0.1, 1])
         with col1:
              if st.checkbox("", key=f"chk_{key_suffix}_{name}"):
                  selected.append(p)
@@ -291,50 +294,61 @@ tabs = st.tabs(["📄 Articles", "🚀 Projects", "🎨 Sections & Menu", "📝 
 with tabs[0]:
     st.header("Manage Articles")
     
-    col_pub, col_draft = st.columns(2)
+    # Left: List | Right: Controls
     
-    with col_pub:
-        st.subheader("🟢 Public / Unlisted")
+    # 1. Public Articles
+    st.subheader("🟢 Public / Unlisted")
+    c1, c2 = st.columns([3, 1])
+    
+    with c1:
         public_files = get_files(PATHS["public_articles"])
-        
-        with st.container(height=500, border=True):
+        with st.container(height=400, border=True):
              sel_pub = render_file_list(public_files, "art_pub")
-        
+    with c2:
         render_bulk_actions(sel_pub, "articles", key_suffix="art_pub_act")
 
-    with col_draft:
-        st.subheader("🔴 Drafts")
+    st.divider()
+
+    # 2. Drafts
+    st.subheader("🔴 Drafts")
+    c3, c4 = st.columns([3, 1])
+    
+    with c3:
         draft_files = get_files(PATHS["draft_articles"])
-        
-        with st.container(height=500, border=True):
+        with st.container(height=300, border=True):
             sel_draft = render_file_list(draft_files, "art_draft")
-            
+    with c4:
         render_bulk_actions(sel_draft, "drafts", key_suffix="art_draft_act")
 
 # --- TAB 2: PROJECTS ---
 with tabs[1]:
     st.header("Manage Projects")
     
-    c_page, c_items = st.columns(2)
+    # 1. Page Files
+    st.subheader("📂 Project Pages")
+    c1, c2 = st.columns([3, 1])
     
-    with c_page:
-        st.subheader("📂 Project Pages (Files)")
+    with c1:
         all_proj_files = get_files(PATHS["public_projects"])
-        
-        with st.container(height=500, border=True):
+        with st.container(height=300, border=True):
             sel_projs = render_file_list(all_proj_files, "proj_main")
-            
+    with c2:
         render_bulk_actions(sel_projs, "projects", key_suffix="proj_main_act")
 
-    with c_items:
-        st.subheader("🧩 Machine Learning Items")
-        ml_page = os.path.join(PATHS["public_projects"], "machine_learning.html")
+    st.divider()
+
+    # 2. Specific Items
+    st.subheader("🧩 Machine Learning Items")
+    ml_page = os.path.join(PATHS["public_projects"], "machine_learning.html")
+    
+    if os.path.exists(ml_page):
+        cards = get_project_cards(ml_page)
         
-        if os.path.exists(ml_page):
-            cards = get_project_cards(ml_page)
+        c3, c4 = st.columns([3, 1])
+        
+        with c3:
             if not cards:
                 st.info("No items found.")
-            
             selected_items = []
             
             with st.container(height=500, border=True):
@@ -349,20 +363,21 @@ with tabs[1]:
                             if 'content="unlisted"' in f.read():
                                 status_icon = "🟡"
                     
-                    col1, col2 = st.columns([0.5, 12])
+                    col1, col2 = st.columns([0.1, 1])
                     with col1:
                         if st.checkbox("", key=f"chk_ml_{title}"):
                             selected_items.append(item)
                     with col2:
                         st.write(f"{status_icon} {title}")
-            
+        
+        with c4:
             def ml_handler(item, action):
                 manage_project_item(ml_page, item['title'], item['target'], action)
                 
             render_bulk_actions(selected_items, "ML Items", custom_handler=ml_handler, key_suffix="ml_act")
             
-        else:
-            st.warning("machine_learning.html not found")
+    else:
+        st.warning("machine_learning.html not found")
 
 # --- TAB 3: SECTIONS ---
 with tabs[2]:
