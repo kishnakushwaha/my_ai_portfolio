@@ -2352,6 +2352,14 @@
     "image": ""
   },
   {
+    "title": "Backend testing",
+    "description": "this is to test the backend",
+    "url": "articles/backend-testing.html",
+    "category": "Article",
+    "date": "Aug 04, 2025",
+    "image": ""
+  },
+  {
     "title": "Anomaly Detection in Transactions using Python",
     "description": "Anomaly detection in transactions means identifying unusual or unexpected patterns within transactions or related activities. These patterns, known as...",
     "url": "articles/anomaly-detection-in-transactions-using-python.html",
