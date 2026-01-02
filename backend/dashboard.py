@@ -297,11 +297,20 @@ with tabs[0]:
     # Left: List | Right: Controls
     
     # 1. Public Articles
-    st.subheader("🟢 Public / Unlisted")
+    c_head, c_search = st.columns([2, 1])
+    with c_head:
+         st.subheader("🟢 Public / Unlisted")
+    with c_search:
+         search_pub = st.text_input("Search", key="s_pub", placeholder="🔍 Filter articles...", label_visibility="collapsed")
+
     c1, c2 = st.columns([3, 1])
     
     with c1:
         public_files = get_files(PATHS["public_articles"])
+        # Filter
+        if search_pub:
+            public_files = [f for f in public_files if search_pub.lower() in os.path.basename(f).lower()]
+            
         with st.container(height=400, border=True):
              sel_pub = render_file_list(public_files, "art_pub")
     with c2:
@@ -338,11 +347,20 @@ with tabs[1]:
     st.divider()
 
     # 2. Specific Items
-    st.subheader("🧩 Machine Learning Items")
+    c_head2, c_search2 = st.columns([2, 1])
+    with c_head2:
+        st.subheader("🧩 Machine Learning Items")
+    with c_search2:
+        search_ml = st.text_input("Search", key="s_ml", placeholder="🔍 Filter items...", label_visibility="collapsed")
+
     ml_page = os.path.join(PATHS["public_projects"], "machine_learning.html")
     
     if os.path.exists(ml_page):
         cards = get_project_cards(ml_page)
+        
+        # Filter Cards
+        if search_ml:
+            cards = [c for c in cards if search_ml.lower() in c['title'].lower()]
         
         c3, c4 = st.columns([3, 1])
         
