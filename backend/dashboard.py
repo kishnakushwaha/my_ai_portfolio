@@ -80,12 +80,7 @@ def set_visibility(file_path, status):
     with open(target_path, 'w', encoding='utf-8') as f:
         f.write(str(soup))
         
-    # Auto-update homepage if public change
-    if "public" in target_path or status == 'unlisted':
-        try:
-            update_homepage_listings()
-        except Exception as e:
-            print(f"Warning: Failed to update homepage listings: {e}")
+    # Validating/Updating site is now handled by the caller (process_bulk) via run_search_index
 
 def create_article(title, description, date, content_html, category="Article"):
     with open(PATHS["template"], 'r', encoding='utf-8') as f:
@@ -144,13 +139,9 @@ def run_git_push():
 
 def run_search_index():
     try:
+        # Now this script rebuilds articles.html and search.json
         subprocess.run(["python3", "generate_search_index.py"], cwd=ROOT_DIR, check=True)
-        # Also auto-update homepage listings
-        try:
-             update_homepage_listings()
-        except:
-             pass
-        return True, "Index and Homepage Listings Updated!"
+        return True, "Site Rebuilt: Search Index and Article Listings Updated!"
     except Exception as e:
         return False, str(e)
 
@@ -348,7 +339,16 @@ def render_bulk_actions(selected_items, item_type="files", custom_handler=None, 
                 else:
                     set_visibility(item, action)
                 count += 1
-        st.success(f"Updated {count} {item_type} to '{action}'!")
+            
+            # --- AUTO UPDATE TRIGGER ---
+            st.toast("Regenerating site listings...", icon="🔄")
+            ok, msg = run_search_index()
+            if ok:
+                st.toast(msg, icon="✅")
+            else:
+                st.error(f"Site rebuild failed: {msg}")
+                
+        st.success(f"Updated {count} {item_type} to '{action}' and rebuilt site!")
         st.rerun()
 
     # Vertical Stack of Buttons
