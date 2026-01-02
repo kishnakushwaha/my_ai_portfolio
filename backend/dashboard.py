@@ -11,7 +11,6 @@ import re
 st.set_page_config(page_title="AI Portfolio CMS", layout="wide", page_icon="⚡")
 
 # --- PATHS ---
-# logic: dashboard.py is in backend/, so we go up one level for root
 BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(BACKEND_DIR)
 
@@ -32,7 +31,8 @@ os.makedirs(PATHS["draft_projects"], exist_ok=True)
 # --- HELPER FUNCTIONS ---
 
 def get_files(directory, extension="*.html"):
-    return glob.glob(os.path.join(directory, extension))
+    files = glob.glob(os.path.join(directory, extension))
+    return sorted(files)
 
 def move_file(src, dst_dir):
     filename = os.path.basename(src)
@@ -110,11 +110,7 @@ def create_article(title, description, date, content_html, category="Article"):
     meta_date = soup.find(class_='article-meta-small')
     if meta_date: meta_date.string = f"{date} • 5 min read"
 
-    # Navigation (Fix links to point to ../)
-    # The template already has ../ links, so we represent the article as being in articles/ folder
-    
-    # Body Content (Find 'Paragraph text goes here...')
-    # We replace the entire article body content area except the H1 and Meta
+    # Body Content
     article_body = soup.find(class_='article-body')
     if article_body:
         # Keep H1 and Meta
@@ -135,7 +131,7 @@ def create_article(title, description, date, content_html, category="Article"):
     # Save to Drafts by default
     save_path = os.path.join(PATHS["draft_articles"], slug)
     with open(save_path, 'w', encoding='utf-8') as f:
-        f.write(str(soup)) # formatting not strict
+        f.write(str(soup))
 
     return save_path
 
@@ -148,7 +144,6 @@ def toggle_section(section_id, hide=True):
         if hide:
             section['style'] = "display: none !important;"
         else:
-            # Remove style or set to block
              del section['style']
              
     with open(PATHS["index"], 'w', encoding='utf-8') as f:
@@ -189,10 +184,250 @@ def backup_drafts():
 
 st.title("⚡ AI Portfolio Dashboard")
 
+# DEBUG INFO (Remove later)
+with st.expander("Debug: Check Paths"):
+    st.write(f"**Root Dir:** `{ROOT_DIR}`")
+    st.write(f"**Articles Dir:** `{PATHS['public_articles']}` (Exists: {os.path.exists(PATHS['public_articles'])})")
+    st.write(f"**Files Found:** {len(get_files(PATHS['public_articles']))}")
+
 tabs = st.tabs(["📄 Articles", "🚀 Projects", "🎨 Sections & Menu", "📝 New Content", "⚙️ Deploy & Backup"])
 
 # --- TAB 1: ARTICLES ---
-# ... (rest of code) ...
+with tabs[0]:
+    st.header("Manage Articles")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.subheader("🟢 Public / Unlisted")
+        public_files = get_files(PATHS["public_articles"])
+        for p in public_files:
+            if "template.html" in p: continue
+            name = os.path.basename(p)
+            
+            # Check visibility
+            is_unlisted = False
+            with open(p, 'r') as f:
+                if 'content="unlisted"' in f.read():
+                    is_unlisted = True
+            
+            status_icon = "🟡" if is_unlisted else "🟢"
+            
+            with st.expander(f"{status_icon} {name}"):
+                c1, c2, c3 = st.columns(3)
+                if c1.button("Make Public", key=f"pub_{name}"):
+                    set_visibility(p, 'public')
+                    st.rerun()
+                if c2.button("Make Unlisted", key=f"unl_{name}"):
+                    set_visibility(p, 'unlisted')
+                    st.rerun()
+                if c3.button("Move to Drafts 🔴", key=f"pvt_{name}"):
+                    set_visibility(p, 'private')
+                    st.rerun()
+
+    with col2:
+        st.subheader("🔴 Drafts (Private)")
+        draft_files = get_files(PATHS["draft_articles"])
+        for d in draft_files:
+            name = os.path.basename(d)
+            st.write(f"📄 {name}")
+            if st.button("Publish 🟢", key=f"pub_draft_{name}"):
+                set_visibility(d, 'public')
+                st.rerun()
+
+def toggle_project_card(file_path, card_title, hide=True):
+    with open(file_path, 'r', encoding='utf-8') as f:
+        soup = BeautifulSoup(f, 'html.parser')
+    
+    # Find all article cards
+    cards = soup.find_all('article', class_='article-card')
+    found = False
+    
+    for card in cards:
+        h3 = card.find('h3')
+        if h3 and h3.get_text(strip=True) == card_title:
+             if hide:
+                 card['style'] = "display: none !important;"
+             else:
+                 if 'style' in card.attrs:
+                     del card['style']
+             found = True
+             break
+             
+    if found:
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(str(soup))
+        return True
+    return False
+
+def get_project_cards(file_path):
+    with open(file_path, 'r', encoding='utf-8') as f:
+        soup = BeautifulSoup(f, 'html.parser')
+    
+    cards = soup.find_all('article', class_='article-card')
+    project_list = []
+    
+    for card in cards:
+        h3 = card.find('h3')
+        a_tag = card.find('a', class_='article-read-btn')
+        
+        if h3:
+            title = h3.get_text(strip=True)
+            is_hidden = 'display: none' in card.get('style', '')
+            
+            # Resolve Target File
+            target_path = None
+            if a_tag and a_tag.get('href'):
+                href = a_tag.get('href')
+                # Handle relative links like ../articles/foo.html
+                if href.startswith('../'):
+                    # clean path
+                    clean_rel = href.replace('../', '')
+                    # check public loc
+                    pot_path = os.path.join(ROOT_DIR, clean_rel)
+                    target_path = pot_path
+            
+            project_list.append({
+                "title": title,
+                "hidden": is_hidden,
+                "target": target_path
+            })
+            
+    return project_list
+
+def manage_project_item(ml_page, title, target_file, action):
+    # 1. Update Card Visibility in HTML
+    hide_card = (action != 'public') # Hide for unlisted and private
+    toggle_project_card(ml_page, title, hide=hide_card)
+    
+    # 2. Update File Visibility (if target exists or is in drafts)
+    if not target_file: return
+    
+    # Detect if file is currently in drafts to find it
+    fname = os.path.basename(target_file)
+    draft_path = os.path.join(PATHS["draft_articles"], fname)
+    public_path = target_file
+    
+    # Check where the file really is right now
+    real_path = public_path
+    if not os.path.exists(public_path) and os.path.exists(draft_path):
+        real_path = draft_path
+    
+    if os.path.exists(real_path):
+        set_visibility(real_path, action)
+
+# --- TAB 2: PROJECTS ---
+with tabs[1]:
+    st.header("Manage Projects")
+    
+    col1, col2 = st.columns(2)
+    
+    # 1. Page Level Control
+    with col1:
+        st.subheader("📂 Project Pages (Files)")
+        public_projs = get_files(PATHS["public_projects"])
+        for p in public_projs:
+            name = os.path.basename(p)
+            with st.expander(f"🟢 {name}"):
+                if st.button("Move to Drafts 🔴", key=f"proj_pvt_{name}"):
+                    set_visibility(p, 'private')
+                    st.rerun()
+
+    # 2. Individual ML Projects Control
+    with col2:
+        st.subheader("🧩 Machine Learning Projects (Items)")
+        ml_page = os.path.join(PATHS["public_projects"], "machine_learning.html")
+        
+        if os.path.exists(ml_page):
+            cards = get_project_cards(ml_page)
+            if not cards:
+                st.info("No project cards found in machine_learning.html")
+            
+            for item in cards:
+                title = item['title']
+                is_hidden = item['hidden']
+                target = item['target']
+                
+                # Determine Visual Status
+                status_icon = "�"
+                if is_hidden: status_icon = "�" # Hidden or Draft
+                # Check if unlisted meta exists in target
+                if target and os.path.exists(target):
+                     with open(target, 'r') as f:
+                        if 'content="unlisted"' in f.read():
+                            status_icon = "🟡"
+                
+                with st.expander(f"{status_icon} {title}"):
+                    c1, c2, c3 = st.columns(3)
+                    
+                    if c1.button("Make Public", key=f"c_pub_{title}"):
+                        manage_project_item(ml_page, title, target, 'public')
+                        st.rerun()
+                        
+                    if c2.button("Make Unlisted", key=f"c_unl_{title}"):
+                        manage_project_item(ml_page, title, target, 'unlisted')
+                        st.rerun()
+                        
+                    if c3.button("Move to Drafts 🔴", key=f"c_drf_{title}"):
+                        manage_project_item(ml_page, title, target, 'private')
+                        st.rerun()
+        else:
+            st.warning("machine_learning.html not found!")
+
+    st.divider()
+
+# --- TAB 3: SECTIONS ---
+with tabs[2]:
+    st.header("Homepage Sections")
+    
+    # Read index to check current state
+    with open(PATHS["index"], 'r') as f:
+        index_html = f.read()
+    
+    sections = {
+        "projects": "Guided Projects Section",
+        "articles": "Latest Articles Section",
+        "courses": "Recommended Resources"
+    }
+    
+    for sec_id, label in sections.items():
+        # Check if currently hidden
+        is_hidden = f'id="{sec_id}"' in index_html and 'style="display: none !important;"' in index_html
+        
+        st.write(f"**{label}**")
+        if is_hidden:
+            if st.button(f"Show {label}", key=f"show_{sec_id}"):
+                toggle_section(sec_id, hide=False)
+                st.rerun()
+        else:
+            if st.button(f"Hide {label}", key=f"hide_{sec_id}"):
+                toggle_section(sec_id, hide=True)
+                st.rerun()
+        st.divider()
+
+# --- TAB 4: NEW CONTENT ---
+with tabs[3]:
+    st.header("Write New Article")
+    
+    new_title = st.text_input("Title")
+    new_desc = st.text_area("Description (for SEO and Cards)")
+    new_date = st.date_input("Date", datetime.date.today())
+    
+    # Markdown Editor
+    new_content = st.text_area("Content (Markdown supported)", height=400)
+    
+    if st.button("Create Draft"):
+        if new_title and new_content:
+            try:
+                import markdown
+                html_content = markdown.markdown(new_content)
+            except:
+                html_content = f"<p>{new_content}</p>"
+            
+            save_path = create_article(new_title, new_desc, new_date.strftime("%b %d, %Y"), html_content)
+            st.success(f"Draft created at {save_path}")
+        else:
+            st.error("Please fill title and content")
 
 # --- TAB 5: DEPLOY ---
 with tabs[4]:
