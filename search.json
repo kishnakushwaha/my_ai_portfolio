@@ -361,7 +361,7 @@
   },
   {
     "title": "NLP Techniques Every Data Scientist Should Know",
-    "description": "Natural Language Processing (NLP) is a critical field in data science, especially with the growth in data generated from online sources like social me...",
+    "description": "Natural\n                                Language Processing (NLP) is a critical field in data science, especially\n                        with the gro...",
     "url": "articles/nlp-techniques-every-data-scientist-should-know.html",
     "category": "Article",
     "date": "Oct 30, 2025",
@@ -1281,7 +1281,7 @@
   },
   {
     "title": "Reverse a String using Python",
-    "description": "A string is a sequence of characters enclosed in single or double-quotes. String inversion is one of the most common problems in computer science. Her...",
+    "description": "A string is a sequence of characters enclosed in single or double-quotes. String inversion is one\n                        of the most common problems ...",
     "url": "articles/reverse-a-string-using-python.html",
     "category": "Article",
     "date": "Oct 21, 2025",

@@ -1,91 +1,113 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<!-- Title to be replaced for each article -->
-<title>NLP Techniques Every Data Scientist Should Know | Kishna Kushwaha</title>
-<meta content="Article Description" name="description"/>
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
-<!-- Font Awesome -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-<!-- Highlight.js Theme (VS Code Dark style) -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
-<!-- Custom CSS -->
-<link href="../css/style.css" rel="stylesheet"/>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <!-- Title to be replaced for each article -->
+    <title>NLP Techniques Every Data Scientist Should Know | Kishna Kushwaha</title>
+    <meta content="Article Description" name="description" />
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <!-- Highlight.js Theme (VS Code Dark style) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css"
+        rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="../css/style.css" rel="stylesheet" />
 </head>
+
 <body>
-<!-- Navigation -->
-<header>
-<div class="container nav-container">
-<a class="logo" href="../index.html">
-<div class="logo-circle"></div>
+    <!-- Navigation -->
+    <header>
+        <div class="container nav-container">
+            <a class="logo" href="../index.html">
+                <div class="logo-circle"></div>
                 Kishna Kushwaha
             </a>
-<button aria-label="Toggle navigation" class="mobile-menu-btn">
-<i class="fas fa-bars"></i>
-</button>
-<ul class="nav-links">
-<li><a href="../index.html">Home</a></li>
-<li><a href="../about.html">About</a></li>
-<li><a href="../articles.html">Articles</a></li>
-<li><a href="../projects/machine_learning.html">Projects</a></li>
-<li><a href="../index.html#courses">Recommended Resources</a></li>
-<li>
-<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
-<i class="fas fa-search"></i>
-</button>
-</li></ul>
-</div>
-</header>
-<main>
-<!-- Top Ad Banner -->
-<div class="container" style="margin-top:2rem;">
-<div class="ad-unit ad-leaderboard">
-<span>Advertisement (Leaderboard)</span>
-</div>
-</div>
-<div class="single-article-container">
-<!-- Left: Main Content -->
-<div class="article-main">
-<article class="article-body">
-<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+            <button aria-label="Toggle navigation" class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../articles.html">Articles</a></li>
+                <li><a href="../projects/machine_learning.html">Projects</a></li>
+                <li><a href="../index.html#courses">Recommended Resources</a></li>
+                <li>
+                    <button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <main>
+        <!-- Top Ad Banner -->
+        <div class="container" style="margin-top:2rem;">
+            <div class="ad-unit ad-leaderboard">
+                <span>Advertisement (Leaderboard)</span>
+            </div>
+        </div>
+        <div class="single-article-container">
+            <!-- Left: Main Content -->
+            <div class="article-main">
+                <article class="article-body">
+                    <h1
+                        style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
                         NLP Techniques Every Data Scientist Should Know</h1>
-<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 30, 2025 • 5 min read</div>
-<p><strong><a href="https://my-ai-portfolio.com/2022/08/29/process-of-nlp-using-python/">Natural Language Processing</a></strong> (NLP) is a critical field in data science, especially with the growth in data generated from online sources like social media, reviews, and more. It doesn’t matter if you are looking for a career in NLP or not, there are some NLP techniques every Data Scientist should know while working with textual datasets. So, if you want to learn about the essential NLP techniques you should know, this article is for you. In this article, I’ll take you through some NLP techniques every Data Scientist should know with implementation using Python.</p>
-<h2 class="wp-block-heading">NLP Techniques Every Data Scientist Should Know</h2>
-<p>Here are some NLP techniques that every Data Scientist should know while working with textual datasets:</p>
-<ol class="wp-block-list">
-<li>Tokenization</li>
-<li>Stop words removal</li>
-<li>Stemming and Lemmatization</li>
-<li>Named Entity Recognition</li>
-<li>Term Frequency-Inverse Document Frequency</li>
-<li>Bag of Words</li>
-</ol>
-<p>Let’s explore all these NLP techniques in detail with implementation using Python.</p>
-<h4 class="wp-block-heading">Tokenization</h4>
-<p>Tokenization is the process of breaking down text into smaller pieces, called tokens, which could be words, sentences, or other units. It’s often the first step in text preprocessing for tasks like <strong><a href="https://my-ai-portfolio.com/2023/12/04/app-reviews-sentiment-analysis-using-python/">sentiment analysis</a></strong> or <strong><a href="https://my-ai-portfolio.com/2topic-modelling-using-pythonkishna023/02/13/topic-modelling-using-python/">topic modelling</a></strong>.</p>
-<p>It converts text into a structured form that algorithms can manipulate.</p>
-<p>Here’s how to implement tokenization using Python:</p>
-<pre><code class="language-python">import nltk
+                    <div class="article-meta-small" style="margin-bottom: 2rem;">Oct 30, 2025 • 5 min read</div>
+                    <p><strong><a href="https://my-ai-portfolio.com/2022/08/29/process-of-nlp-using-python/">Natural
+                                Language Processing</a></strong> (NLP) is a critical field in data science, especially
+                        with the growth in data generated from online sources like social media, reviews, and more. It
+                        doesn’t matter if you are looking for a career in NLP or not, there are some NLP techniques
+                        every Data Scientist should know while working with textual datasets. So, if you want to learn
+                        about the essential NLP techniques you should know, this article is for you. In this article,
+                        I’ll take you through some NLP techniques every Data Scientist should know with implementation
+                        using Python.</p>
+                    <h2 class="wp-block-heading">NLP Techniques Every Data Scientist Should Know</h2>
+                    <p>Here are some NLP techniques that every Data Scientist should know while working with textual
+                        datasets:</p>
+                    <ol class="wp-block-list">
+                        <li>Tokenization</li>
+                        <li>Stop words removal</li>
+                        <li>Stemming and Lemmatization</li>
+                        <li>Named Entity Recognition</li>
+                        <li>Term Frequency-Inverse Document Frequency</li>
+                        <li>Bag of Words</li>
+                    </ol>
+                    <p>Let’s explore all these NLP techniques in detail with implementation using Python.</p>
+                    <h4 class="wp-block-heading">Tokenization</h4>
+                    <p>Tokenization is the process of breaking down text into smaller pieces, called tokens, which could
+                        be words, sentences, or other units. It’s often the first step in text preprocessing for tasks
+                        like <strong><a
+                                href="https://my-ai-portfolio.com/2023/12/04/app-reviews-sentiment-analysis-using-python/">sentiment
+                                analysis</a></strong> or <strong><a
+                                href="https://my-ai-portfolio.com/2topic-modelling-using-pythonkishna023/02/13/topic-modelling-using-python/">topic
+                                modelling</a></strong>.</p>
+                    <p>It converts text into a structured form that algorithms can manipulate.</p>
+                    <p>Here’s how to implement tokenization using Python:</p>
+                    <pre><code class="language-python">import nltk
 from nltk.tokenize import word_tokenize
 nltk.download('punkt')
 
 text = "Hi, my name is Kishna Kushwaha"
 tokens = word_tokenize(text)
 print(tokens)</code></pre>
-<pre class="wp-block-preformatted has-small-font-size"><strong>['Hi', ',', 'my', 'name', 'is', 'Aman', 'Kharwal']</strong></pre>
-<h4 class="wp-block-heading">Stop Words Removal</h4>
-<p>Stop words are common words like “and”, “the”, “a”, which often don’t contribute much to the meaning of a sentence, particularly in tasks like sentiment analysis or topic modeling.</p>
-<p>Removing these can reduce the dataset size and improve the processing time.</p>
-<p>Here’s how to remove stop words from a piece of text using Python:</p>
-<pre><code class="language-python">from nltk.corpus import stopwords
+                    <pre
+                        class="wp-block-preformatted has-small-font-size"><strong>['Hi', ',', 'my', 'name', 'is', 'Kishna', 'Kushwaha']</strong></pre>
+                    <h4 class="wp-block-heading">Stop Words Removal</h4>
+                    <p>Stop words are common words like “and”, “the”, “a”, which often don’t contribute much to the
+                        meaning of a sentence, particularly in tasks like sentiment analysis or topic modeling.</p>
+                    <p>Removing these can reduce the dataset size and improve the processing time.</p>
+                    <p>Here’s how to remove stop words from a piece of text using Python:</p>
+                    <pre><code class="language-python">from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 
 nltk.download('stopwords')
@@ -95,13 +117,16 @@ text = "Hi, my name is Kishna Kushwaha."
 tokens = word_tokenize(text)
 filtered_tokens = [word for word in tokens if not word in stop_words]
 print(filtered_tokens)</code></pre>
-<pre class="wp-block-preformatted has-small-font-size"><strong>['Hi', ',', 'name', 'Kishna', 'Kushwaha', '.']</strong></pre>
-<h4 class="wp-block-heading">Stemming and Lemmatization</h4>
-<p>These techniques are used to reduce words to their base or root form. Stemming might not always produce actual words but cuts off prefixes and suffixes (e.g., “running” becomes “run”).</p>
-<p>On the other hand, Lemmatization reduces words to their lexicographically correct base form based on their usage in a sentence (e.g., “better” becomes “good” when used as an adjective).</p>
-<p>These methods are useful in search engines and recommendation systems.</p>
-<p>Here’s how to implement Stemming and Lemmatization using Python:</p>
-<pre><code class="language-python">from nltk.stem import PorterStemmer, WordNetLemmatizer
+                    <pre
+                        class="wp-block-preformatted has-small-font-size"><strong>['Hi', ',', 'name', 'Kishna', 'Kushwaha', '.']</strong></pre>
+                    <h4 class="wp-block-heading">Stemming and Lemmatization</h4>
+                    <p>These techniques are used to reduce words to their base or root form. Stemming might not always
+                        produce actual words but cuts off prefixes and suffixes (e.g., “running” becomes “run”).</p>
+                    <p>On the other hand, Lemmatization reduces words to their lexicographically correct base form based
+                        on their usage in a sentence (e.g., “better” becomes “good” when used as an adjective).</p>
+                    <p>These methods are useful in search engines and recommendation systems.</p>
+                    <p>Here’s how to implement Stemming and Lemmatization using Python:</p>
+                    <pre><code class="language-python">from nltk.stem import PorterStemmer, WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 
 nltk.download('wordnet')
@@ -118,12 +143,15 @@ lemmatized_words = [lemmatizer.lemmatize(word) for word in tokens]
 
 print("Stemmed:", stemmed_words)
 print("Lemmatized:", lemmatized_words)</code></pre>
-<pre class="wp-block-preformatted has-small-font-size"><strong>Stemmed: ['run', 'run', 'ran']<br/>Lemmatized: ['running', 'run', 'ran']</strong></pre>
-<h4 class="wp-block-heading">Named Entity Recognition (NER)</h4>
-<p>NER identifies and classifies named entities in text into pre-defined categories such as the names of persons, organizations, locations, expressions of times, quantities, monetary values, etc.</p>
-<p>It is crucial for data extraction in business intelligence, summarization, and more.</p>
-<p>Here’s how to identify named entities from a piece of text using Python:</p>
-<pre><code class="language-python">import spacy
+                    <pre
+                        class="wp-block-preformatted has-small-font-size"><strong>Stemmed: ['run', 'run', 'ran']<br/>Lemmatized: ['running', 'run', 'ran']</strong></pre>
+                    <h4 class="wp-block-heading">Named Entity Recognition (NER)</h4>
+                    <p>NER identifies and classifies named entities in text into pre-defined categories such as the
+                        names of persons, organizations, locations, expressions of times, quantities, monetary values,
+                        etc.</p>
+                    <p>It is crucial for data extraction in business intelligence, summarization, and more.</p>
+                    <p>Here’s how to identify named entities from a piece of text using Python:</p>
+                    <pre><code class="language-python">import spacy
 from spacy import displacy
 nlp = spacy.load("en_core_web_sm")
 
@@ -131,12 +159,29 @@ text = "Hi, my name is Kishna Kushwaha, I work at Statso.io"
 doc = nlp(text)
 
 displacy.render(doc, style='ent', jupyter=True, options={'ents': ['PERSON', 'ORG'], 'colors': {'PERSON': 'lightblue', 'ORG': 'lime'}})</code></pre>
-<figure class="wp-block-image aligncenter size-full is-resized"><img alt="named entity recognition" class="wp-image-23388" data-attachment-id="23388" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="image" data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image.png?fit=938%2C78&amp;ssl=1" data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image.png?fit=300%2C25&amp;ssl=1" data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image.png?fit=938%2C78&amp;ssl=1" data-orig-size="938,78" data-permalink="https://my-ai-portfolio.com/2024/05/07/nlp-techniques-every-data-scientist-should-know/image-151/" data-recalc-dims="1" decoding="async" height="78" sizes="(max-width: 938px) 100vw, 938px" src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image.png?resize=938%2C78&amp;ssl=1" srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image.png?w=938&amp;ssl=1 938w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image.png?resize=300%2C25&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image.png?resize=768%2C64&amp;ssl=1 768w" style="width:673px;height:auto" width="938"/></figure>
-<h4 class="wp-block-heading">TF-IDF (Term Frequency-Inverse Document Frequency)</h4>
-<p>TF-IDF is a statistical measure used to evaluate how important a word is to a document in a collection or corpus. It is often used in document search and information retrieval, helping to determine which documents are most relevant to a query based on the words they contain.</p>
-<p>This technique is crucial for feature extraction in <strong><a href="https://amzn.eu/d/3Bgb8IK">machine learning</a></strong> models for text classification.</p>
-<p>Here’s how to implement TF-IDF using Python:</p>
-<pre><code class="language-python">from sklearn.feature_extraction.text import TfidfVectorizer
+                    <figure class="wp-block-image aligncenter size-full is-resized"><img alt="named entity recognition"
+                            class="wp-image-23388" data-attachment-id="23388" data-comments-opened="1"
+                            data-image-caption="" data-image-description=""
+                            data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}'
+                            data-image-title="image"
+                            data-large-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image.png?fit=938%2C78&amp;ssl=1"
+                            data-medium-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image.png?fit=300%2C25&amp;ssl=1"
+                            data-orig-file="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image.png?fit=938%2C78&amp;ssl=1"
+                            data-orig-size="938,78"
+                            data-permalink="https://my-ai-portfolio.com/2024/05/07/nlp-techniques-every-data-scientist-should-know/image-151/"
+                            data-recalc-dims="1" decoding="async" height="78" sizes="(max-width: 938px) 100vw, 938px"
+                            src="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image.png?resize=938%2C78&amp;ssl=1"
+                            srcset="https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image.png?w=938&amp;ssl=1 938w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image.png?resize=300%2C25&amp;ssl=1 300w, https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image.png?resize=768%2C64&amp;ssl=1 768w"
+                            style="width:673px;height:auto" width="938" /></figure>
+                    <h4 class="wp-block-heading">TF-IDF (Term Frequency-Inverse Document Frequency)</h4>
+                    <p>TF-IDF is a statistical measure used to evaluate how important a word is to a document in a
+                        collection or corpus. It is often used in document search and information retrieval, helping to
+                        determine which documents are most relevant to a query based on the words they contain.</p>
+                    <p>This technique is crucial for feature extraction in <strong><a
+                                href="https://amzn.eu/d/3Bgb8IK">machine learning</a></strong> models for text
+                        classification.</p>
+                    <p>Here’s how to implement TF-IDF using Python:</p>
+                    <pre><code class="language-python">from sklearn.feature_extraction.text import TfidfVectorizer
 
 # sample documents
 documents = [
@@ -158,12 +203,16 @@ first_document_vector = tfidf_matrix[0]
 print("Feature names:", feature_names)
 print("TF-IDF values for the first document:")
 print(first_document_vector.toarray())</code></pre>
-<pre class="wp-block-preformatted has-small-font-size"><strong>Feature names: ['aman' 'are' 'at' 'io' 'is' 'kharwal' 'learning' 'my' 'name' 'nlp'<br/> 'statso' 'techniques' 'today' 'we' 'work']<br/>TF-IDF values for the first document:<br/>[[0.4472136 0.        0.        0.        0.4472136 0.4472136 0.<br/>  0.4472136 0.4472136 0.        0.        0.        0.        0.<br/>  0.       ]]</strong></pre>
-<h4 class="wp-block-heading">Bag of Words</h4>
-<p>The Bag of Words model is a simplified representation used in NLP and information retrieval. In this model, a text (such as a sentence or a document) is represented as the bag (multiset) of its words, disregarding grammar and even word order but keeping multiplicity.</p>
-<p>BoW is commonly used in document classification where the frequency of each word is used as a feature for training a classifier.</p>
-<p>Here’s how to use the Bag of Words model using Python:</p>
-<pre><code class="language-python">from sklearn.feature_extraction.text import CountVectorizer
+                    <pre
+                        class="wp-block-preformatted has-small-font-size"><strong>Feature names: ['are' 'at' 'io' 'is' 'kishna' 'kushwaha' 'learning' 'my' 'name' 'nlp'<br/> 'statso' 'techniques' 'today' 'we' 'work']<br/>TF-IDF values for the first document:<br/>[[0.        0.        0.        0.4472136 0.4472136 0.<br/>  0.4472136 0.4472136 0.        0.        0.        0.        0.<br/>  0.       ]]</strong></pre>
+                    <h4 class="wp-block-heading">Bag of Words</h4>
+                    <p>The Bag of Words model is a simplified representation used in NLP and information retrieval. In
+                        this model, a text (such as a sentence or a document) is represented as the bag (multiset) of
+                        its words, disregarding grammar and even word order but keeping multiplicity.</p>
+                    <p>BoW is commonly used in document classification where the frequency of each word is used as a
+                        feature for training a classifier.</p>
+                    <p>Here’s how to use the Bag of Words model using Python:</p>
+                    <pre><code class="language-python">from sklearn.feature_extraction.text import CountVectorizer
 
 # sample documents
 documents = [
@@ -186,72 +235,81 @@ bow_array = bow_matrix.toarray()
 print("Feature names:", feature_names)
 print("Bag of Words Array:")
 print(bow_array)</code></pre>
-<pre class="wp-block-preformatted has-small-font-size"><strong>Feature names: ['and' 'are' 'cat' 'cats' 'dog' 'dogs' 'house' 'in' 'is' 'on' 'pets'<br/> 'table' 'the']<br/>Bag of Words Array:<br/>[[0 0 1 0 0 0 0 0 1 1 0 1 2]<br/> [0 0 0 0 1 0 1 1 1 0 0 0 2]<br/> [1 1 0 1 0 1 0 0 0 0 1 0 0]]</strong></pre>
-<h3 class="wp-block-heading">Summary</h3>
-<p>So, below are some NLP techniques that every Data Scientist should know while working with textual datasets:</p>
-<ol class="wp-block-list">
-<li>Tokenization</li>
-<li>Stop words removal</li>
-<li>Stemming and Lemmatization</li>
-<li>Named Entity Recognition</li>
-<li>Term Frequency-Inverse Document Frequency</li>
-<li>Bag of Words</li>
-</ol>
-<!-- CONTENT END 1 -->
-</article>
-<!-- Navigation Bottom -->
-<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
-<a href="llm-project-ideas-for-resume.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                    <pre
+                        class="wp-block-preformatted has-small-font-size"><strong>Feature names: ['and' 'are' 'cat' 'cats' 'dog' 'dogs' 'house' 'in' 'is' 'on' 'pets'<br/> 'table' 'the']<br/>Bag of Words Array:<br/>[[0 0 1 0 0 0 0 0 1 1 0 1 2]<br/> [0 0 0 0 1 0 1 1 1 0 0 0 2]<br/> [1 1 0 1 0 1 0 0 0 0 1 0 0]]</strong></pre>
+                    <h3 class="wp-block-heading">Summary</h3>
+                    <p>So, below are some NLP techniques that every Data Scientist should know while working with
+                        textual datasets:</p>
+                    <ol class="wp-block-list">
+                        <li>Tokenization</li>
+                        <li>Stop words removal</li>
+                        <li>Stemming and Lemmatization</li>
+                        <li>Named Entity Recognition</li>
+                        <li>Term Frequency-Inverse Document Frequency</li>
+                        <li>Bag of Words</li>
+                    </ol>
+                    <!-- CONTENT END 1 -->
+                </article>
+                <!-- Navigation Bottom -->
+                <div
+                    style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+                    <a href="llm-project-ideas-for-resume.html"
+                        style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
                         Previous Article</a>
-<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
-<a href="generative-ai-projects-with-python.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                    <a href="../articles.html"
+                        style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+                    <a href="generative-ai-projects-with-python.html"
+                        style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
                         Article →</a>
-</div>
-</div>
-<!-- Right: Sticky Sidebar -->
-<aside class="sidebar-area">
-<div class="sticky-sidebar-content">
-<!-- Search Widget (Optional) -->
-<!-- <div class="sidebar-widget"> ... </div> -->
-<!-- Sidebar Ad -->
-<div class="ad-unit ad-sidebar-vertical">
-<span>Advertisement (Vertical)</span>
-</div>
-<!-- Popular Posts -->
-<div class="sidebar-widget">
-<h3 class="widget-title">Popular Articles</h3>
-<ul class="popular-posts-list">
-<li><a href="#">Building AI Agents with LangChain</a></li>
-<li><a href="#">Optimizing PyTorch Loops</a></li>
-<li><a href="#">Data Structures for ML Engineers</a></li>
-</ul>
-</div>
-</div>
-</aside>
-</div>
-</main>
-<!-- Footer -->
-<footer class="main-footer">
-<div class="container">
-<div class="footer-content">
-<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
-<div class="footer-links">
-<a href="#">Privacy Policy</a>
-<a href="#">Terms of Service</a>
-</div>
-</div>
-</div>
-<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
-</footer>
-<script src="../js/script.js"></script>
-<!-- Highlight.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-<script>hljs.highlightAll();</script>
-<div class="search-overlay" id="search-overlay">
-<div class="search-container">
-<button class="search-close-btn" id="search-close">×</button>
-<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
-<div class="search-results" id="search-results"></div>
-</div>
-</div><script src="../js/search.js"></script></body>
+                </div>
+            </div>
+            <!-- Right: Sticky Sidebar -->
+            <aside class="sidebar-area">
+                <div class="sticky-sidebar-content">
+                    <!-- Search Widget (Optional) -->
+                    <!-- <div class="sidebar-widget"> ... </div> -->
+                    <!-- Sidebar Ad -->
+                    <div class="ad-unit ad-sidebar-vertical">
+                        <span>Advertisement (Vertical)</span>
+                    </div>
+                    <!-- Popular Posts -->
+                    <div class="sidebar-widget">
+                        <h3 class="widget-title">Popular Articles</h3>
+                        <ul class="popular-posts-list">
+                            <li><a href="#">Building AI Agents with LangChain</a></li>
+                            <li><a href="#">Optimizing PyTorch Loops</a></li>
+                            <li><a href="#">Data Structures for ML Engineers</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+        <a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+    </footer>
+    <script src="../js/script.js"></script>
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <div class="search-overlay" id="search-overlay">
+        <div class="search-container">
+            <button class="search-close-btn" id="search-close">×</button>
+            <input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text" />
+            <div class="search-results" id="search-results"></div>
+        </div>
+    </div>
+    <script src="../js/search.js"></script>
+</body>
+
 </html>
