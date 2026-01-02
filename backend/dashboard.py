@@ -228,7 +228,8 @@ def render_bulk_actions(selected_items, item_type="files", custom_handler=None, 
         st.caption("Select items to perform actions.")
         return
 
-    c1, c2, c3 = st.columns(3)
+    # Right-aligned Buttons: Spacer takes up 5/8 of width
+    c_spacer, c1, c2, c3 = st.columns([5, 1, 1, 1])
     
     def process_bulk(action):
         count = 0
@@ -243,18 +244,18 @@ def render_bulk_actions(selected_items, item_type="files", custom_handler=None, 
         st.rerun()
 
     with c1:
-        if st.button(f"Make Public 🟢 ({len(selected_items)})", key=f"bulk_pub_{key_suffix}"):
+        if st.button(f"Make Public 🟢", key=f"bulk_pub_{key_suffix}", help=f"Apply to {len(selected_items)} items"):
             process_bulk('public')
     with c2:
-        if st.button(f"Make Unlisted 🟡 ({len(selected_items)})", key=f"bulk_unl_{key_suffix}"):
+        if st.button(f"Make Unlisted 🟡", key=f"bulk_unl_{key_suffix}", help=f"Apply to {len(selected_items)} items"):
             process_bulk('unlisted')
     with c3:
-        if st.button(f"Move to Drafts 🔴 ({len(selected_items)})", key=f"bulk_drf_{key_suffix}"):
+        if st.button(f"Drafts 🔴", key=f"bulk_drf_{key_suffix}", help=f"Apply to {len(selected_items)} items"):
             process_bulk('private')
 
 def render_file_list(files, key_suffix=""):
     selected = []
-    st.markdown("---")
+    # No header divider inside the scroll box
     for p in files:
         if "template.html" in p: continue
         name = os.path.basename(p)
@@ -266,7 +267,8 @@ def render_file_list(files, key_suffix=""):
                 if 'content="unlisted"' in f.read():
                     status_icon = "🟡"
         
-        col1, col2 = st.columns([0.5, 10])
+        # Dense row
+        col1, col2 = st.columns([0.5, 12])
         with col1:
              if st.checkbox("", key=f"chk_{key_suffix}_{name}"):
                  selected.append(p)
@@ -278,9 +280,9 @@ def render_file_list(files, key_suffix=""):
 
 st.title("⚡ AI Portfolio Dashboard")
 
+# DEBUG INFO (Collapsed)
 with st.expander("Debug: Check Paths"):
     st.write(f"**Root Dir:** `{ROOT_DIR}`")
-    st.write(f"**Articles Dir:** `{PATHS['public_articles']}` (Exists: {os.path.exists(PATHS['public_articles'])})")
     st.write(f"**Files Found:** {len(get_files(PATHS['public_articles']))}")
 
 tabs = st.tabs(["📄 Articles", "🚀 Projects", "🎨 Sections & Menu", "📝 New Content", "⚙️ Deploy & Backup"])
@@ -294,15 +296,19 @@ with tabs[0]:
     with col_pub:
         st.subheader("🟢 Public / Unlisted")
         public_files = get_files(PATHS["public_articles"])
-        sel_pub = render_file_list(public_files, "art_pub")
-        st.markdown("---")
+        
+        with st.container(height=500, border=True):
+             sel_pub = render_file_list(public_files, "art_pub")
+        
         render_bulk_actions(sel_pub, "articles", key_suffix="art_pub_act")
 
     with col_draft:
         st.subheader("🔴 Drafts")
         draft_files = get_files(PATHS["draft_articles"])
-        sel_draft = render_file_list(draft_files, "art_draft")
-        st.markdown("---")
+        
+        with st.container(height=500, border=True):
+            sel_draft = render_file_list(draft_files, "art_draft")
+            
         render_bulk_actions(sel_draft, "drafts", key_suffix="art_draft_act")
 
 # --- TAB 2: PROJECTS ---
@@ -314,8 +320,10 @@ with tabs[1]:
     with c_page:
         st.subheader("📂 Project Pages (Files)")
         all_proj_files = get_files(PATHS["public_projects"])
-        sel_projs = render_file_list(all_proj_files, "proj_main")
-        st.markdown("---")
+        
+        with st.container(height=500, border=True):
+            sel_projs = render_file_list(all_proj_files, "proj_main")
+            
         render_bulk_actions(sel_projs, "projects", key_suffix="proj_main_act")
 
     with c_items:
@@ -328,26 +336,25 @@ with tabs[1]:
                 st.info("No items found.")
             
             selected_items = []
-            st.markdown("---")
-            for item in cards:
-                title = item['title']
-                is_hidden = item['hidden']
-                target = item['target']
-                
-                status_icon = "🔴" if is_hidden else "🟢"
-                if target and os.path.exists(target):
-                     with open(target, 'r', errors='ignore') as f:
-                        if 'content="unlisted"' in f.read():
-                            status_icon = "🟡"
-                
-                col1, col2 = st.columns([0.5, 10])
-                with col1:
-                    if st.checkbox("", key=f"chk_ml_{title}"):
-                        selected_items.append(item)
-                with col2:
-                    st.write(f"{status_icon} {title}")
             
-            st.markdown("---")
+            with st.container(height=500, border=True):
+                for item in cards:
+                    title = item['title']
+                    is_hidden = item['hidden']
+                    target = item['target']
+                    
+                    status_icon = "🔴" if is_hidden else "🟢"
+                    if target and os.path.exists(target):
+                         with open(target, 'r', errors='ignore') as f:
+                            if 'content="unlisted"' in f.read():
+                                status_icon = "🟡"
+                    
+                    col1, col2 = st.columns([0.5, 12])
+                    with col1:
+                        if st.checkbox("", key=f"chk_ml_{title}"):
+                            selected_items.append(item)
+                    with col2:
+                        st.write(f"{status_icon} {title}")
             
             def ml_handler(item, action):
                 manage_project_item(ml_page, item['title'], item['target'], action)
