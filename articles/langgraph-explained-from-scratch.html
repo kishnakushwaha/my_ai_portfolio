@@ -204,7 +204,7 @@ inputs_2 = {"messages": [HumanMessage(content="Tell me a fun fact about history.
 for event in app.stream(inputs_2):
     for key, value in event.items():
         print(f"Finished running: {key}")</code></pre>
-<pre class="wp-block-preformatted"><strong>(env) (base) amankharwal@Amans-MacBook-Pro aiagent % python lang.py<br/><br/>--- TEST 1: Math ---<br/>Finished running: categorizer<br/>--- 🧮 Entering Math Node ---<br/>Finished running: math_node<br/><br/>--- TEST 2: General ---<br/>Finished running: categorizer<br/>--- 💬 Entering General Chat Node ---<br/>Finished running: general_node<br/>(env) (base) amankharwal@Amans-MacBook-Pro aiagent % </strong></pre>
+<pre class="wp-block-preformatted"><strong>(env) (base) kishna@MacBook-Pro aiagent % python lang.py<br/><br/>--- TEST 1: Math ---<br/>Finished running: categorizer<br/>--- 🧮 Entering Math Node ---<br/>Finished running: math_node<br/><br/>--- TEST 2: General ---<br/>Finished running: categorizer<br/>--- 💬 Entering General Chat Node ---<br/>Finished running: general_node<br/>(env) (base) kishna@MacBook-Pro aiagent % </strong></pre>
 <p>In Test 1, the console shows that it finished running the categoriser and then moved to math_node. In Test 2, it runs the categoriser and then goes to general_node.</p>
 <h3 class="wp-block-heading">Closing Thoughts</h3>
 <p>What we built might look simple; a few if/else statements could do the job. But imagine the Math Node tries to solve a problem, finds a mistake, and needs to try again. In a regular Python script, this logic can get messy quickly. With LangGraph, it’s just an edge that points back to itself.</p>
