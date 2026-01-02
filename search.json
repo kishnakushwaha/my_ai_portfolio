@@ -1536,6 +1536,14 @@
     "image": ""
   },
   {
+    "title": "Stock Price Prediction with LSTM",
+    "description": "LSTM stands for Long Short Term Memory Networks. It is a type of recurrent neural network that is commonly used for regression and time series forecas...",
+    "url": "articles/stock-price-prediction-with-lstm.html",
+    "category": "Article",
+    "date": "Oct 19, 2025",
+    "image": "assets/datasets/apple-stocks-price-prediction-with-lstm.png"
+  },
+  {
     "title": "Data Science Project Ideas on Clustering Analysis",
     "description": "Clustering analysis is a Machine Learning technique used to group a set of objects in a way that the data points in the same group (called a cluster) ...",
     "url": "articles/data-science-project-ideas-on-clustering-analysis.html",
@@ -2341,14 +2349,6 @@
     "url": "articles/how-i-use-ai-to-automate-my-machine-learning-workflow.html",
     "category": "Article",
     "date": "Dec 17, 2025",
-    "image": ""
-  },
-  {
-    "title": "Backend testing",
-    "description": "this is to test the backend",
-    "url": "articles/backend-testing.html",
-    "category": "Article",
-    "date": "Aug 04, 2025",
     "image": ""
   },
   {
