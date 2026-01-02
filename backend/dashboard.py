@@ -426,26 +426,104 @@ with tabs[2]:
 
 # --- TAB 4: NEW CONTENT ---
 with tabs[3]:
-    st.header("Write New Article")
+    st.header("📝 Write New Article")
     
-    new_title = st.text_input("Title")
-    new_desc = st.text_area("Description (for SEO and Cards)")
-    new_date = st.date_input("Date", datetime.date.today())
+    # Initialize session state for content if not exists
+    if 'editor_content' not in st.session_state:
+        st.session_state.editor_content = ""
     
-    new_content = st.text_area("Content (Markdown supported)", height=400)
+    # 1. Metadata
+    with st.expander("Article Metadata", expanded=True):
+        c1, c2 = st.columns([3, 1])
+        with c1:
+            new_title = st.text_input("Title", placeholder="e.g., 10 AI Projects for 2026")
+        with c2:
+            new_date = st.date_input("Date", datetime.date.today())
+        new_desc = st.text_area("Description (SEO)", height=70, placeholder="Brief summary for search engines and cards...")
+
+    # 2. Asset Uploader
+    with st.expander("📂 Upload Images & Files"):
+        uploaded_file = st.file_uploader("Choose an image...", type=['png', 'jpg', 'jpeg', 'gif', 'svg'])
+        
+        if uploaded_file is not None:
+             # Ensure directory exists
+             upload_dir = os.path.join(ROOT_DIR, "assets", "uploads")
+             os.makedirs(upload_dir, exist_ok=True)
+             
+             # Save file
+             file_path = os.path.join(upload_dir, uploaded_file.name)
+             with open(file_path, "wb") as f:
+                 f.write(uploaded_file.getbuffer())
+             
+             # Show snippet
+             rel_path = f"assets/uploads/{uploaded_file.name}" # simplified path
+             snippet = f"![Image Descriptions](../{rel_path})"
+             st.success(f"Saved!")
+             st.code(snippet, language="markdown")
+             st.caption("Copy the snippet above and paste it into the editor.")
+
+    # 3. Editor Toolbar helpers
+    def add_text(text):
+        st.session_state.editor_content += text
+
+    # 4. Main Editor Interface
+    st.subheader("Content Editor")
     
-    if st.button("Create Draft"):
-        if new_title and new_content:
+    # Toolbar
+    tb1, tb2, tb3, tb4, tb5, tb6, tb7 = st.columns([1, 1, 1, 1, 1, 1, 6])
+    with tb1: 
+        if st.button("Bd", help="Bold"): add_text("**bold text**")
+    with tb2: 
+        if st.button("It", help="Italic"): add_text("*italic text*")
+    with tb3: 
+        if st.button("Cd", help="Code"): add_text("`code`")
+    with tb4: 
+        if st.button("Lk", help="Link"): add_text("[Link Text](url)")
+    with tb5: 
+        if st.button("Img", help="Image"): add_text("![Alt Text](image_url)")
+    with tb6:
+        if st.button("Blk", help="Code Block"): add_text("\n```python\nprint('Hello')\n```\n")
+
+    # Split View
+    c_edit, c_view = st.columns(2)
+    
+    with c_edit:
+        st.caption("Markdown Input")
+        # Text Area bound to session state
+        content_input = st.text_area(
+            "Type here...", 
+            value=st.session_state.editor_content, 
+            height=600, 
+            label_visibility="collapsed",
+            key="editor_key"
+        )
+        # Sync back to session state logic (if user typed manually)
+        st.session_state.editor_content = content_input
+
+    with c_view:
+        st.caption("Live Preview")
+        with st.container(height=600, border=True):
+            if st.session_state.editor_content:
+                st.markdown(st.session_state.editor_content)
+            else:
+                st.info("Preview will appear here...")
+
+    # 5. Create Action
+    st.divider()
+    if st.button("Create Draft Article 🚀", type="primary", use_container_width=True):
+        if new_title and st.session_state.editor_content:
             try:
                 import markdown
-                html_content = markdown.markdown(new_content)
+                # Basic Extensions for better rendering transparency
+                html_content = markdown.markdown(st.session_state.editor_content, extensions=['fenced_code', 'tables'])
             except:
-                html_content = f"<p>{new_content}</p>"
+                html_content = f"<p>{st.session_state.editor_content}</p>"
             
             save_path = create_article(new_title, new_desc, new_date.strftime("%b %d, %Y"), html_content)
-            st.success(f"Draft created at {save_path}")
+            st.success(f"Draft created successfully at: `{save_path}`")
+            st.balloons()
         else:
-            st.error("Please fill title and content")
+            st.error("Please provide at least a Title and Content.")
 
 # --- TAB 5: DEPLOY ---
 with tabs[4]:
