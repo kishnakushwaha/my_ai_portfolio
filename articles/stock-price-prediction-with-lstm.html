@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Stock Price Prediction with LSTM | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+                        Stock Price Prediction with LSTM</h1>
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 19, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="deep-learning-nlp-project-ideas.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="python-problems-for-coding-interviews.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article →</a>
+</div>
+<p>LSTM stands for Long Short Term Memory Networks. It is a type of recurrent neural network that is commonly used for regression and time series forecasting in machine learning. It can memorize data for long periods, which differentiates LSTM neural networks from other <strong><a href="types-of-neural-networks.html" target="">neural networks</a></strong>. If you want to learn how to predict stock prices with LSTM, this article is for you. In this article, I will walk you through the task of stock price prediction with LSTM using Python.</p>
+<h2 class="wp-block-heading" id="stock-price-prediction-with-lstm">Stock Price Prediction with LSTM</h2>
+<p>Using LSTM is one of the best machine learning approaches for time series forecasting. LSTMs are recurrent neural networks designed to remember data for a longer period. So, whenever you are working on a problem where your neural network fails to memorize data, you can use LSTM neural network. You can read more about LSTMs <strong><a href="https://web.stanford.edu/class/cs379c/archive/2018/class_messages_listing/content/Artificial_Neural_Network_Technology_Tutorials/OlahLSTM-NEURAL-NETWORK-TUTORIAL-15.pdf">here</a></strong>.</p>
+<p>Now in this section, I will take you through the task of Stock price prediction with LSTM using the Python programming language. I will start this task by importing all the necessary Python libraries and collecting the latest stock price data of Apple:</p>
+<pre><code class="language-python">import pandas as pd
+import yfinance as yf
+import datetime
+from datetime import date, timedelta
+today = date.today()
+
+d1 = today.strftime("%Y-%m-%d")
+end_date = d1
+d2 = date.today() - timedelta(days=5000)
+d2 = d2.strftime("%Y-%m-%d")
+start_date = d2
+
+data = yf.download('AAPL', 
+                      start=start_date, 
+                      end=end_date, 
+                      progress=False)
+data["Date"] = data.index
+data = data[["Date", "Open", "High", "Low", "Close", 
+             "Adj Close", "Volume"]]
+data.reset_index(drop=True, inplace=True)
+data.tail()</code></pre>
+<pre class="wp-block-preformatted"><strong>           Date        Open        High  ...       Close   Adj Close    Volume
+3441 2021-12-27  177.089996  180.419998  ...  180.330002  180.330002  74919600
+3442 2021-12-28  180.160004  181.330002  ...  179.289993  179.289993  79144300
+3443 2021-12-29  179.330002  180.630005  ...  179.380005  179.380005  62348900
+3444 2021-12-30  179.470001  180.570007  ...  178.199997  178.199997  59773000
+3445 2021-12-31  178.089996  179.229996  ...  177.570007  177.570007  64025500
+
+[5 rows x 7 columns]</strong></pre>
+<p>A candlestick chart gives a clear picture of the increase and decrease in stock prices, so let’s visualize a candlestick chart of the data before moving further:</p>
+<pre><code class="language-python">import plotly.graph_objects as go
+figure = go.Figure(data=[go.Candlestick(x=data["Date"],
+                                        open=data["Open"], 
+                                        high=data["High"],
+                                        low=data["Low"], 
+                                        close=data["Close"])])
+figure.update_layout(title = "Apple Stock Price Analysis", 
+                     xaxis_rangeslider_visible=False)
+figure.show()</code></pre>
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img alt="Stock Price Prediction with LSTM" class="wp-image-16513" data-attachment-id="16513" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="apple-stocks-price-prediction-with-lstm" data-orig-size="1158,525" data-recalc-dims="1" decoding="async" height="321" sizes="(max-width: 708px) 100vw, 708px" src="../assets/datasets/apple-stocks-price-prediction-with-lstm.png" width="708"/></figure></div>
+<p>Now let’s have a look at the correlation of all the columns with the Close column as it is the target column:</p>
+<pre><code class="language-python">correlation = data.corr()
+print(correlation["Close"].sort_values(ascending=False))</code></pre>
+<pre class="wp-block-preformatted"><strong>Close        1.000000
+Low          0.999890
+High         0.999887
+Adj Close    0.999845
+Open         0.999783
+Volume      -0.496325
+Name: Close, dtype: float64</strong></pre>
+<h2 class="wp-block-heading" id="training-lstm-for-stock-price-prediction">Training LSTM for Stock Price Prediction</h2>
+<p>Now I will start with training an LSTM model for predicting stock prices. I will first split the data into training and test sets:</p>
+<pre><code class="language-python">x = data[["Open", "High", "Low", "Volume"]]
+y = data["Close"]
+x = x.to_numpy()
+y = y.to_numpy()
+y = y.reshape(-1, 1)
+
+from sklearn.model_selection import train_test_split
+xtrain, xtest, ytrain, ytest = train_test_split(x, y, test_size=0.2, random_state=42)</code></pre>
+<p>Now I will prepare a neural network architecture for LSTM:</p>
+<pre><code class="language-python">from keras.models import Sequential
+from keras.layers import Dense, LSTM
+model = Sequential()
+model.add(LSTM(128, return_sequences=True, input_shape= (xtrain.shape[1], 1)))
+model.add(LSTM(64, return_sequences=False))
+model.add(Dense(25))
+model.add(Dense(1))
+model.summary()</code></pre>
+<pre class="wp-block-preformatted"><strong>Model: "sequential_6"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ lstm_12 (LSTM)              (None, 4, 128)            66560     
+                                                                 
+ lstm_13 (LSTM)              (None, 64)                49408     
+                                                                 
+ dense_12 (Dense)            (None, 25)                1625      
+                                                                 
+ dense_13 (Dense)            (None, 1)                 26        
+                                                                 
+=================================================================
+Total params: 117,619
+Trainable params: 117,619
+Non-trainable params: 0
+_________________________________________________________________</strong></pre>
+<p>Now here is how we can train our neural network model for stock price prediction:</p>
+<pre><code class="language-python">model.compile(optimizer='adam', loss='mean_squared_error')
+model.fit(xtrain, ytrain, batch_size=1, epochs=30)</code></pre>
+<pre class="wp-block-preformatted"><strong>Epoch 1/30
+2756/2756 [==============================] - 18s 5ms/step - loss: 6.7984
+Epoch 2/30
+2756/2756 [==============================] - 15s 5ms/step - loss: 4.4978
+Epoch 3/30
+2756/2756 [==============================] - 15s 5ms/step - loss: 5.6511
+Epoch 4/30
+2756/2756 [==============================] - 15s 5ms/step - loss: 6.8347
+Epoch 5/30
+2756/2756 [==============================] - 15s 5ms/step - loss: 9.5083
+Epoch 6/30
+2756/2756 [==============================] - 15s 5ms/step - loss: 7.4367
+Epoch 7/30
+2756/2756 [==============================] - 15s 5ms/step - loss: 4.3043
+Epoch 8/30
+2756/2756 [==============================] - 15s 6ms/step - loss: 4.2213
+Epoch 9/30
+2756/2756 [==============================] - 15s 5ms/step - loss: 5.7352
+Epoch 10/30
+2756/2756 [==============================] - 15s 6ms/step - loss: 5.2137
+Epoch 11/30
+2756/2756 [==============================] - 15s 5ms/step - loss: 6.0945
+Epoch 12/30
+2756/2756 [==============================] - 14s 5ms/step - loss: 4.1032
+Epoch 13/30
+2756/2756 [==============================] - 15s 5ms/step - loss: 4.3637
+Epoch 14/30
+2756/2756 [==============================] - 15s 5ms/step - loss: 6.2240
+Epoch 15/30
+2756/2756 [==============================] - 15s 5ms/step - loss: 1.9857
+Epoch 16/30
+2756/2756 [==============================] - 15s 5ms/step - loss: 6.3982
+Epoch 17/30
+2756/2756 [==============================] - 15s 5ms/step - loss: 3.3015
+Epoch 18/30
+2756/2756 [==============================] - 15s 5ms/step - loss: 3.9104
+Epoch 19/30
+2756/2756 [==============================] - 15s 5ms/step - loss: 4.6564
+Epoch 20/30
+2756/2756 [==============================] - 15s 5ms/step - loss: 3.3215
+Epoch 21/30
+2756/2756 [==============================] - 15s 6ms/step - loss: 4.3116
+Epoch 22/30
+2756/2756 [==============================] - 15s 5ms/step - loss: 2.8147
+Epoch 23/30
+2756/2756 [==============================] - 15s 5ms/step - loss: 5.7586
+Epoch 24/30
+2756/2756 [==============================] - 16s 6ms/step - loss: 4.1890
+Epoch 25/30
+2756/2756 [==============================] - 17s 6ms/step - loss: 3.6991
+Epoch 26/30
+2756/2756 [==============================] - 15s 6ms/step - loss: 4.0951
+Epoch 27/30
+2756/2756 [==============================] - 15s 5ms/step - loss: 3.5940
+Epoch 28/30
+2756/2756 [==============================] - 16s 6ms/step - loss: 3.7180
+Epoch 29/30
+2756/2756 [==============================] - 15s 6ms/step - loss: 3.5864
+Epoch 30/30
+2756/2756 [==============================] - 15s 5ms/step - loss: 3.7422
+&lt;keras.callbacks.History at 0x7f8c37686790&gt;</strong></pre>
+<p>Now let’s test this model by giving input values according to the features that we have used to train this model and predicting the final result:</p>
+<pre><code class="language-python">import numpy as np
+#features = [Open, High, Low, Adj Close, Volume]
+features = np.array([[177.089996, 180.419998, 177.070007, 74919600]])
+model.predict(features)</code></pre>
+<pre class="wp-block-preformatted"><strong>array([[179.95299]], dtype=float32)</strong></pre>
+<p>So this is how we can use LSTM neural network architecture for the task of stock price prediction.</p>
+<h3 class="wp-block-heading" id="summary">Summary</h3>
+<p>LSTM stands for Long Short Term Memory Networks. It is a recurrent neural network designed to remember data for longer. Using LSTM is one of the best machine learning approaches for time series forecasting. I hope you liked this article on predicting stock prices with LSTM using Python. Feel free to ask valuable questions in the comments section below.</p>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="deep-learning-nlp-project-ideas.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+                        Previous Article</a>
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="python-problems-for-coding-interviews.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+                        Article →</a>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+</body>
+</html>
