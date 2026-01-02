@@ -79,6 +79,13 @@ def set_visibility(file_path, status):
 
     with open(target_path, 'w', encoding='utf-8') as f:
         f.write(str(soup))
+        
+    # Auto-update homepage if public change
+    if "public" in target_path or status == 'unlisted':
+        try:
+            update_homepage_listings()
+        except Exception as e:
+            print(f"Warning: Failed to update homepage listings: {e}")
 
 def create_article(title, description, date, content_html, category="Article"):
     with open(PATHS["template"], 'r', encoding='utf-8') as f:
@@ -138,7 +145,12 @@ def run_git_push():
 def run_search_index():
     try:
         subprocess.run(["python3", "generate_search_index.py"], cwd=ROOT_DIR, check=True)
-        return True, "Index Updated!"
+        # Also auto-update homepage listings
+        try:
+             update_homepage_listings()
+        except:
+             pass
+        return True, "Index and Homepage Listings Updated!"
     except Exception as e:
         return False, str(e)
 
@@ -222,6 +234,99 @@ def manage_project_item(ml_page, title, target_file, action):
     
     if os.path.exists(real_path):
         set_visibility(real_path, action)
+
+def update_homepage_listings():
+    """
+    Refreshes the 'Latest Articles' list in index.html
+    """
+    import random
+    
+    # 1. Gather Articles
+    files = get_files(PATHS["public_articles"])
+    articles = []
+    
+    for p in files:
+        if "template.html" in p: continue
+        
+        with open(p, 'r', errors='ignore') as f:
+            soup = BeautifulSoup(f, 'html.parser')
+            
+        # Skip Unlisted
+        meta_vis = soup.find('meta', attrs={'name': 'visibility'})
+        if meta_vis and meta_vis.get('content') == 'unlisted':
+            continue
+            
+        title = soup.title.string.split('|')[0].strip() if soup.title else "Untitled"
+        
+        # Date
+        date_str = ""
+        date_obj = datetime.datetime.min
+        meta_date = soup.find(class_='article-meta-small')
+        if meta_date:
+            txt = meta_date.get_text().strip().split('•')[0].strip()
+            date_str = txt
+            try:
+                date_obj = datetime.datetime.strptime(txt, "%b %d, %Y")
+            except:
+                pass
+                
+        # Link
+        link = f"articles/{os.path.basename(p)}"
+        
+        articles.append({
+            "title": title,
+            "date": date_str,
+            "dt": date_obj,
+            "link": link
+        })
+        
+    # 2. Sort & Pick Top 3
+    articles.sort(key=lambda x: x['dt'], reverse=True)
+    top_3 = articles[:3]
+    
+    # 3. Generate HTML
+    new_cards_html = ""
+    gradients = [
+        "linear-gradient(135deg, #2563EB, #1E40AF)",
+        "linear-gradient(135deg, #10B981, #059669)",
+        "linear-gradient(135deg, #8B5CF6, #6D28D9)", 
+        "linear-gradient(135deg, #F59E0B, #D97706)",
+        "linear-gradient(135deg, #EC4899, #DB2777)"
+    ]
+    
+    for i, art in enumerate(top_3):
+        grad = gradients[i % len(gradients)]
+        card = f"""
+        <article class="article-card">
+            <div class="article-card-image">
+                <div class="placeholder-img" style="background: {grad};"></div>
+                <div class="blog-overlay"><i class="fas fa-robot"></i></div>
+            </div>
+            <div class="article-card-content">
+                <span class="article-meta-small">{art['date']}</span>
+                <h3>{art['title']}</h3>
+                <a href="{art['link']}" class="article-read-btn">Read Article</a>
+            </div>
+        </article>
+        """
+        new_cards_html += card
+
+    # 4. Update index.html
+    with open(PATHS["index"], 'r', encoding='utf-8') as f:
+        main_soup = BeautifulSoup(f, 'html.parser')
+        
+    grid = main_soup.find('div', class_='articles-grid')
+    if grid:
+        grid.clear()
+        # Parse new HTML and append
+        # BeautifulSoup parsing of fragment
+        frag = BeautifulSoup(new_cards_html, 'html.parser')
+        grid.append(frag)
+        
+        with open(PATHS["index"], 'w', encoding='utf-8') as f:
+            f.write(str(main_soup))
+            
+    return True
 
 def render_bulk_actions(selected_items, item_type="files", custom_handler=None, key_suffix=""):
     """

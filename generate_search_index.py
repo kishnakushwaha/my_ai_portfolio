@@ -13,6 +13,12 @@ def parse_article(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
         soup = BeautifulSoup(f, 'html.parser')
 
+    # Check Key Visibility
+    meta_vis = soup.find('meta', attrs={'name': 'visibility'})
+    if meta_vis and meta_vis.get('content') == 'unlisted':
+        # Return a special marker or raising exception to skip
+        return None
+
     title = soup.title.string.split('|')[0].strip() if soup.title else "Untitled Article"
     
     # Try to find description meta tag
@@ -118,7 +124,7 @@ def main():
             continue
         try:
             data = parse_article(file_path)
-            if data['title'] not in ["Articles", "404 Not Found"]: # Skip non-content pages
+            if data and data['title'] not in ["Articles", "404 Not Found"]: # Skip non-content pages
                 search_index.append(data)
         except Exception as e:
             print(f"Error parsing {file_path}: {e}")
