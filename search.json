@@ -409,7 +409,7 @@
   },
   {
     "title": "Build An End-to-End Machine Learning Model",
-    "description": "An End-to-End Machine Learning Model is a comprehensive system that contains all the stages of a machine learning project, from data collection and pr...",
+    "description": "An End-to-End Machine\n                                Learning Model is a comprehensive system that contains all the stages of a\n                     ...",
     "url": "articles/build-an-end-to-end-machine-learning-model.html",
     "category": "Article",
     "date": "Sep 21, 2025",
@@ -761,7 +761,7 @@
   },
   {
     "title": "Build an AI Resume Screener with Python & Llama 3",
-    "description": "Recruiters often have to sort through hundreds of PDFs to find the right candidate. In this article, we\u2019ll create a local AI Resume Screener using Pyt...",
+    "description": "Recruiters often have to sort through hundreds of PDFs to find the right candidate. In this\n                        article, we\u2019ll create a local AI R...",
     "url": "articles/build-an-ai-resume-screener-with-python-llama-3.html",
     "category": "Article",
     "date": "Oct 24, 2025",
@@ -1889,7 +1889,7 @@
   },
   {
     "title": "Search Queries Anomaly Detection using Python",
-    "description": "Search Queries Anomaly Detection means identifying queries that are outliers according to their performance metrics. It is valuable for businesses to ...",
+    "description": "Search Queries Anomaly Detection means identifying queries that are outliers according to their\n                        performance metrics. It is val...",
     "url": "articles/search-queries-anomaly-detection-using-python.html",
     "category": "Article",
     "date": "Sep 19, 2025",
@@ -1961,11 +1961,11 @@
   },
   {
     "title": "AI Image Caption Recommendation System",
-    "description": "Applications like Instagram still lack a caption-generation tool because most LLMs don\u2019t write captions; they describe the image instead. This is wher...",
+    "description": "Applications like Instagram still lack a caption-generation tool because most LLMs don\u2019t write\n                        captions; they describe the ima...",
     "url": "articles/ai-image-caption-recommendation-system.html",
     "category": "Article",
     "date": "Oct 05, 2025",
-    "image": "assets/datasets/aman.png"
+    "image": "assets/datasets/image_caption_system.png"
   },
   {
     "title": "Stock Market Crash Analysis with Python",
