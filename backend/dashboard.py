@@ -542,13 +542,23 @@ with tabs[0]:
     st.divider()
 
     # 2. Drafts
-    st.subheader("🔴 Drafts")
+    c_head_draft, c_search_draft = st.columns([2, 1])
+    with c_head_draft:
+        st.subheader("🔴 Drafts")
+    with c_search_draft:
+        search_draft = st.text_input("Search", key="s_draft", placeholder="🔍 Filter drafts...", label_visibility="collapsed")
+
     c3, c4 = st.columns([3, 1])
     
     with c3:
-        draft_files = get_files(PATHS["draft_articles"])
+        draft_all = get_files(PATHS["draft_articles"])
+        draft_files = draft_all
+        
+        if search_draft:
+            draft_files = [f for f in draft_files if search_draft.lower() in os.path.basename(f).lower()]
+            
         with st.container(height=300, border=True):
-            render_file_list(draft_files, "selected_draft_articles", key_suffix="art_draft")
+            render_file_list(draft_files, "selected_draft_articles", all_items=draft_all, key_suffix="art_draft")
     with c4:
         render_bulk_actions("selected_draft_articles", "drafts", key_suffix="art_draft_act")
 
