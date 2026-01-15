@@ -149,6 +149,23 @@ def run_git_push():
         git_password = None
         debug_log = []
         
+        # DEBUG: Inspect Environment
+        try:
+             debug_log.append(f"CWD: {os.getcwd()}")
+             debug_log.append(f"User: {os.getlogin()}")
+             if os.path.exists("/opt/homebrew"):
+                 debug_log.append("/opt/homebrew exists")
+                 # Check if we can list it
+                 try:
+                     files = os.listdir("/opt/homebrew/Cellar/git")
+                     debug_log.append(f"Git versions in cellar: {files}")
+                 except Exception as e:
+                     debug_log.append(f"Cannot list git cellar: {e}")
+             else:
+                 debug_log.append("/opt/homebrew NOT found")
+        except Exception as e:
+             debug_log.append(f"Env Check Failed: {e}")
+
         # 1. Try to find helper using Glob (Verified to work on this machine)
         found_helpers = glob.glob("/opt/homebrew/Cellar/git/*/libexec/git-core/git-credential-osxkeychain")
         
