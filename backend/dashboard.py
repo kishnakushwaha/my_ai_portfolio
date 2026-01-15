@@ -149,69 +149,46 @@ def run_git_push():
         git_password = None
         debug_log = []
         
-        # DEBUG: Inspect Environment
-        try:
-             debug_log.append(f"CWD: {os.getcwd()}")
-             debug_log.append(f"User: {os.getlogin()}")
-             if os.path.exists("/opt/homebrew"):
-                 debug_log.append("/opt/homebrew exists")
-                 # Check if we can list it
-                 try:
-                     files = os.listdir("/opt/homebrew/Cellar/git")
-                     debug_log.append(f"Git versions in cellar: {files}")
-                 except Exception as e:
-                     debug_log.append(f"Cannot list git cellar: {e}")
-             else:
-                 debug_log.append("/opt/homebrew NOT found")
-        except Exception as e:
-             debug_log.append(f"Env Check Failed: {e}")
 
-        # --------------------------------------------------------------------------------
-        # ROBUST AUTHENTICATION STRATEGY (GitHub CLI Method)
-        # --------------------------------------------------------------------------------
-        # Since 'git-credential-osxkeychain' is hard to locate in the sandboxed env,
-        # we found that 'gh' CLI is installed and authenticated. We can use it!
-        git_password = None
-        
-        try:
-             # Try to get token from GitHub CLI
-             # We use full path to be safe, but 'gh' might be in PATH
-             # Let's try finding 'gh' first
-             import shutil
-             gh_path = shutil.which("gh")
-             if not gh_path:
-                 # Try common locations
-                 if os.path.exists("/opt/homebrew/bin/gh"):
-                     gh_path = "/opt/homebrew/bin/gh"
-                 elif os.path.exists("/usr/local/bin/gh"):
-                     gh_path = "/usr/local/bin/gh"
-            
-             if gh_path:
-                 debug_log.append(f"Found gh CLI at: {gh_path}")
-                 proc = subprocess.run([gh_path, "auth", "token"], text=True, capture_output=True, check=True)
-                 token = proc.stdout.strip()
-                 if token:
-                     git_password = token
-                     debug_log.append("Successfully retrieved token from gh CLI.")
+        # 1. Direct Token Injection (from UI) -> PRIORITY for Streamlit Cloud
+        if token and len(token) > 5:
+            git_password = token
+            debug_log.append("Using provided UI token.")
+        else:
+            # 2. GitHub CLI (Local Dev)
+            try:
+                 import shutil
+                 gh_path = shutil.which("gh")
+                 if not gh_path:
+                     if os.path.exists("/opt/homebrew/bin/gh"): gh_path = "/opt/homebrew/bin/gh"
+                     elif os.path.exists("/usr/local/bin/gh"): gh_path = "/usr/local/bin/gh"
+                
+                 if gh_path:
+                     debug_log.append(f"Found gh CLI at: {gh_path}")
+                     proc = subprocess.run([gh_path, "auth", "token"], text=True, capture_output=True, check=True)
+                     found_token = proc.stdout.strip()
+                     if found_token:
+                         git_password = found_token
+                         debug_log.append("Successfully retrieved token from gh CLI.")
+                     else:
+                         debug_log.append("gh auth token returned empty string.")
                  else:
-                     debug_log.append("gh auth token returned empty string.")
-             else:
-                 debug_log.append("gh CLI not found in PATH or standard locations.")
-                 
-        except Exception as e:
-            debug_log.append(f"gh auth token failed: {str(e)}")
+                     debug_log.append("gh CLI not found.")
+            except Exception as e:
+                debug_log.append(f"gh auth check failed: {str(e)}")
 
-        # 2. Configure Remote URL with Credentials (if found) or Username (fallback)
+        # Configure Remote URL with Credentials
         if git_password:
             # INJECT CREDENTIALS: https://user:pass@github.com/...
+            # Mask token in logs
+            masked_token = git_password[:4] + "..."
+            debug_log.append(f"Authenticating with token: {masked_token}")
             remote_url = f"https://kishnakushwaha91-afk:{git_password}@github.com/kishnakushwaha91-afk/my_ai_portfolio.git"
-            debug_log.append("Using authenticated remote URL.")
         else:
             # FALLBACK: Just username
             remote_url = "https://kishnakushwaha91-afk@github.com/kishnakushwaha91-afk/my_ai_portfolio.git"
-            debug_log.append("Falling back to unauthenticated remote URL.")
+            debug_log.append("Falling back to unauthenticated remote URL (no token found).")
         
-
 
         # Set the remote URL
         subprocess.run(["git", "remote", "set-url", "origin", remote_url], cwd=ROOT_DIR, check=False)
@@ -238,6 +215,10 @@ def run_git_push():
         except subprocess.CalledProcessError as push_err:
             # Attach our debug log to the error message so the user sees it
             debug_msg = " | ".join(debug_log)
+            # Remove secret from log if present
+            if git_password and git_password in debug_msg:
+                 debug_msg = debug_msg.replace(git_password, "***")
+            
             raise Exception(f"Push Failed. Log: {debug_msg} \nGit Error: {push_err.stderr}")
             
         return True, "Successfully pushed to GitHub!"
@@ -948,9 +929,13 @@ with tabs[4]:
     with col3:
         st.subheader("3. Push to GitHub")
         st.caption("Make your changes live.")
+        
+        # Token Input for Cloud Deployment
+        git_token = st.text_input("GitHub Token (Required for Cloud)", type="password", key="git_token_input", help="Generate a Classic Token with 'repo' scope from GitHub Developer Settings.")
+        
         if st.button("Deploy to Website 🚀"):
             with st.spinner("Pushing to GitHub..."):
-                ok, msg = run_git_push()
+                ok, msg = run_git_push(token=git_token)
                 if ok: st.success(msg)
                 else: st.error(msg)
 
