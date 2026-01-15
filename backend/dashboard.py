@@ -136,6 +136,13 @@ def run_git_push():
         subprocess.run(["git", "config", "user.email", "kishnakushwaha91@gmail.com"], cwd=ROOT_DIR, check=False)
         subprocess.run(["git", "config", "user.name", "CMS Bot"], cwd=ROOT_DIR, check=False)
         
+        # Force Remote URL with Username to prevent "could not read Username" prompt
+        # This ensures we use the kwarg-based URL which helps credentials helpers
+        subprocess.run([
+            "git", "remote", "set-url", "origin", 
+            "https://kishnakushwaha91-afk@github.com/kishnakushwaha91-afk/my_ai_portfolio.git"
+        ], cwd=ROOT_DIR, check=False)
+        
         # Use capture_output=True to get error messages
         subprocess.run(["git", "add", "."], cwd=ROOT_DIR, check=True, capture_output=True)
         subprocess.run(["git", "commit", "-m", "CMS Update: Content changes"], cwd=ROOT_DIR, check=True, capture_output=True)
