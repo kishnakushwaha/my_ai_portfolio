@@ -148,36 +148,32 @@ def run_git_push():
             "https://kishnakushwaha91-afk@github.com/kishnakushwaha91-afk/my_ai_portfolio.git"
         ], cwd=ROOT_DIR, check=False)
 
-        # START AUTH FIX: Ensure git-credential-osxkeychain is in PATH
-        # We look for the Homebrew git installation to get the helper path
-        git_core_path = "/opt/homebrew/Cellar/git/2.52.0_1/libexec/git-core"
+        # FINAL AUTH FIX: Configure absolute path to credential helper
+        # This bypasses PATH issues completely
+        import glob
+        found_helpers = glob.glob("/opt/homebrew/Cellar/git/*/libexec/git-core/git-credential-osxkeychain")
         
-        # Prepare environment with augmented PATH
-        env = os.environ.copy()
-        if os.path.exists(git_core_path):
-            current_path = env.get("PATH", "")
-            env["PATH"] = f"{git_core_path}:{current_path}"
-        
-        # Also try to ensure the 'osxkeychain' helper is configured if not already
-        # We do this gently without hardcoding absolute path in config, since we fixed PATH
-        subprocess.run(["git", "config", "credential.helper", "osxkeychain"], cwd=ROOT_DIR, env=env, check=False)
-        # END AUTH FIX
+        if found_helpers:
+            helper_path = found_helpers[-1] # Use the latest version found
+            subprocess.run(["git", "config", "credential.helper", helper_path], cwd=ROOT_DIR, check=False)
+        else:
+            # Fallback for other systems or non-homebrew
+            subprocess.run(["git", "config", "credential.helper", "osxkeychain"], cwd=ROOT_DIR, check=False)
 
-        # Use capture_output=True to get error messages, pass 'env' to find helpers
-        subprocess.run(["git", "add", "."], cwd=ROOT_DIR, env=env, check=True, capture_output=True)
+        # Use capture_output=True to get error messages
+        subprocess.run(["git", "add", "."], cwd=ROOT_DIR, check=True, capture_output=True)
         
         # Commit changes (handle "nothing to commit" case gracefully)
-        commit_proc = subprocess.run(["git", "commit", "-m", "CMS Update: Content changes"], cwd=ROOT_DIR, env=env, check=False, capture_output=True, text=True)
+        commit_proc = subprocess.run(["git", "commit", "-m", "CMS Update: Content changes"], cwd=ROOT_DIR, check=False, capture_output=True, text=True)
         
         if commit_proc.returncode != 0:
             # Check if failure is just "nothing to commit"
             if "nothing to commit" in commit_proc.stdout or "nothing to commit" in commit_proc.stderr:
-                # This is fine, just proceed to push
                 pass
             else:
                 commit_proc.check_returncode()
         
-        subprocess.run(["git", "push"], cwd=ROOT_DIR, env=env, check=True, capture_output=True)
+        subprocess.run(["git", "push"], cwd=ROOT_DIR, check=True, capture_output=True)
         return True, "Successfully pushed to GitHub!"
     except subprocess.CalledProcessError as e:
         # Return the stderr from the failed command
