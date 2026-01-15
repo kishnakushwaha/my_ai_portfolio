@@ -149,53 +149,44 @@ def run_git_push():
         git_password = None
         debug_log = []
         
-        # Locate the helper
-        try:
-            # 1. Ask git where its core binaries are (reliable across versions/installs)
-            exec_path_proc = subprocess.run(["git", "--exec-path"], text=True, capture_output=True, check=True)
-            git_exec_dir = exec_path_proc.stdout.strip()
-            
-            # 2. Construct path to helper
-            possible_helper = os.path.join(git_exec_dir, "git-credential-osxkeychain")
-            
-            # 3. FALBACKS: If standard execution path doesn't have it (e.g. system git vs brew git), try known Homebrew locations
-            if not os.path.exists(possible_helper):
-                 debug_log.append(f"Standard helper missing at {possible_helper}")
-                 # Try Homebrew path (Apple Silicon)
-                 brew_helper = "/opt/homebrew/opt/git/libexec/git-core/git-credential-osxkeychain"
-                 if os.path.exists(brew_helper):
-                     possible_helper = brew_helper
-                     debug_log.append("Found Homebrew helper fallback.")
-                 else:
-                     # Try finding it in PATH
-                     import shutil
-                     which_helper = shutil.which("git-credential-osxkeychain")
-                     if which_helper:
-                         possible_helper = which_helper
-                         debug_log.append(f"Found helper in PATH: {which_helper}")
+        # 1. Try to find helper using Glob (Verified to work on this machine)
+        found_helpers = glob.glob("/opt/homebrew/Cellar/git/*/libexec/git-core/git-credential-osxkeychain")
+        
+        possible_helper = None
+        if found_helpers:
+            possible_helper = found_helpers[-1]
+            debug_log.append(f"Found helper via Glob: {possible_helper}")
+        else:
+            # 2. Fallback: Ask git where its core binaries are
+            try:
+                exec_path_proc = subprocess.run(["git", "--exec-path"], text=True, capture_output=True, check=True)
+                git_exec_dir = exec_path_proc.stdout.strip()
+                git_exec_helper = os.path.join(git_exec_dir, "git-credential-osxkeychain")
+                if os.path.exists(git_exec_helper):
+                    possible_helper = git_exec_helper
+                    debug_log.append(f"Found helper via --exec-path: {possible_helper}")
+            except:
+                pass
 
-            if os.path.exists(possible_helper):
-                helper_path = possible_helper
-                debug_log.append(f"Using helper: {helper_path}")
-                
-                 # Invoke helper to get credentials
-                input_data = "protocol=https\nhost=github.com\nusername=kishnakushwaha91-afk\n"
-                proc = subprocess.run([helper_path, "get"], input=input_data, text=True, capture_output=True, check=True)
-                debug_log.append("Helper executed successfully.")
-                
-                # Parse output for 'password=...'
-                for line in proc.stdout.splitlines():
-                    if line.startswith("password="):
-                        git_password = line.split("=", 1)[1]
-                        debug_log.append("Password found in output.")
-                        break
-                if not git_password:
-                     debug_log.append("No password line in helper output.")
-            else:
-                debug_log.append(f"Helper not found. Checked: {possible_helper}")
-                
-        except Exception as e:
-            debug_log.append(f"Auth discovery failed: {str(e)}")
+        if possible_helper and os.path.exists(possible_helper):
+            helper_path = possible_helper
+            debug_log.append(f"Using helper: {helper_path}")
+            
+             # Invoke helper to get credentials
+            input_data = "protocol=https\nhost=github.com\nusername=kishnakushwaha91-afk\n"
+            proc = subprocess.run([helper_path, "get"], input=input_data, text=True, capture_output=True, check=True)
+            debug_log.append("Helper executed successfully.")
+            
+            # Parse output for 'password=...'
+            for line in proc.stdout.splitlines():
+                if line.startswith("password="):
+                    git_password = line.split("=", 1)[1]
+                    debug_log.append("Password found in output.")
+                    break
+            if not git_password:
+                 debug_log.append("No password line in helper output.")
+        else:
+            debug_log.append("Helper not found via Glob or --exec-path.")
         
         # 2. Configure Remote URL with Credentials (if found) or Username (fallback)
         if git_password:
