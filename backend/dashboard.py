@@ -10,6 +10,8 @@ import re
 # Page Config
 st.set_page_config(page_title="AI Portfolio CMS", layout="wide", page_icon="⚡")
 
+import sys
+
 # --- PATHS ---
 BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(BACKEND_DIR)
@@ -140,8 +142,17 @@ def run_git_push():
 def run_search_index():
     try:
         # Now this script rebuilds articles.html and search.json
-        subprocess.run(["python3", "generate_search_index.py"], cwd=ROOT_DIR, check=True)
+        # Use sys.executable to ensure we use the same python env
+        result = subprocess.run(
+            [sys.executable, "generate_search_index.py"], 
+            cwd=ROOT_DIR, 
+            capture_output=True, 
+            text=True, 
+            check=True
+        )
         return True, "Site Rebuilt: Search Index and Article Listings Updated!"
+    except subprocess.CalledProcessError as e:
+        return False, f"Error running output script: {e.stderr}"
     except Exception as e:
         return False, str(e)
 
@@ -319,10 +330,12 @@ def update_homepage_listings():
             
     return True
 
-def render_bulk_actions(selected_items, item_type="files", custom_handler=None, key_suffix=""):
+def render_bulk_actions(selection_key, item_type="files", custom_handler=None, key_suffix=""):
     """
-    Renders Vertical Action Buttons (Toolbar style)
+    Renders Vertical Action Buttons (Toolbar style) using session state
     """
+    selected_items = st.session_state.get(selection_key, set())
+    
     if not selected_items:
         st.info("👈 Select items to see actions")
         return
@@ -347,7 +360,9 @@ def render_bulk_actions(selected_items, item_type="files", custom_handler=None, 
                 st.toast(msg, icon="✅")
             else:
                 st.error(f"Site rebuild failed: {msg}")
-                
+        
+        # Clear selection after action
+        st.session_state[selection_key] = set()
         st.success(f"Updated {count} {item_type} to '{action}' and rebuilt site!")
         st.rerun()
 
@@ -361,28 +376,86 @@ def render_bulk_actions(selected_items, item_type="files", custom_handler=None, 
     if st.button(f"Move to Drafts 🔴", key=f"bulk_drf_{key_suffix}", use_container_width=True):
         process_bulk('private')
 
-def render_file_list(files, key_suffix=""):
-    selected = []
-    # No header divider inside the scroll box
-    for p in files:
-        if "template.html" in p: continue
-        name = os.path.basename(p)
-        status_icon = "🟢"
-        if "drafts" in p: 
-            status_icon = "🔴"
+def render_file_list(files, selection_key, key_suffix=""):
+    """
+    Renders file list with persistent selection state.
+    Returns: None (Uses st.session_state[selection_key])
+    """
+    # Initialize session state for this selection group if not exists
+    if selection_key not in st.session_state:
+        st.session_state[selection_key] = set()
+
+    # Helpers to manage selection
+    def toggle_item(item_id):
+        if item_id in st.session_state[selection_key]:
+            st.session_state[selection_key].remove(item_id)
         else:
-            with open(p, 'r', errors='ignore') as f:
-                if 'content="unlisted"' in f.read():
-                    status_icon = "🟡"
+            st.session_state[selection_key].add(item_id)
+            
+    def select_all_visible():
+        for p in files:
+             # handle complex objects if files contains dicts (Projects ML items)
+             val = p if isinstance(p, str) else p['title']
+             st.session_state[selection_key].add(val)
+             
+    def deselect_all_visible():
+        for p in files:
+             val = p if isinstance(p, str) else p['title']
+             if val in st.session_state[selection_key]:
+                 st.session_state[selection_key].remove(val)
+
+    # Bulk Controls specifically for the *visible* list (filtered)
+    c_all, c_none = st.columns(2)
+    with c_all:
+        if st.button("Select All Visible", key=f"sel_all_{key_suffix}", use_container_width=True):
+            select_all_visible()
+    with c_none:
+        if st.button("Deselect Visible", key=f"desel_all_{key_suffix}", use_container_width=True):
+            deselect_all_visible()
+
+    # Render List
+    for p in files:
+        if isinstance(p, str) and "template.html" in p: continue
         
-        # Dense row
+        # Determine Value and Display String
+        if isinstance(p, str):
+            value = p
+            name = os.path.basename(p)
+            status_icon = "🟢"
+            if "drafts" in p: 
+                status_icon = "🔴"
+            else:
+                with open(p, 'r', errors='ignore') as f:
+                    if 'content="unlisted"' in f.read():
+                        status_icon = "🟡"
+        else:
+            # Complex object (e.g., from project cards)
+            value = p['title']
+            name = p['title']
+            
+            # Reconstruct status logic from the dict
+            is_hidden = p.get('hidden', False)
+            status_icon = "🔴" if is_hidden else "🟢"
+            target = p.get('target')
+            if target and os.path.exists(target):
+                 with open(target, 'r', errors='ignore') as f:
+                    if 'content="unlisted"' in f.read():
+                        status_icon = "🟡"
+
+        # Check interaction
+        is_selected = value in st.session_state[selection_key]
+        
+        # Uniquely identify the checkbox
+        # We manually handle the 'value' param and 'on_change' to persist state properly? 
+        # Actually simplest is just to verify state before rendering property
+        
         col1, col2 = st.columns([0.1, 1])
         with col1:
-             if st.checkbox("", key=f"chk_{key_suffix}_{name}"):
-                 selected.append(p)
+             # We use the callback to toggle state
+             if st.checkbox("", value=is_selected, key=f"chk_{key_suffix}_{name}", on_change=toggle_item, args=(value,)):
+                 pass # Logic handled in on_change
         with col2:
             st.write(f"{status_icon} {name}")
-    return selected
 
 # --- UI ---
 
@@ -417,9 +490,9 @@ with tabs[0]:
             public_files = [f for f in public_files if search_pub.lower() in os.path.basename(f).lower()]
             
         with st.container(height=400, border=True):
-             sel_pub = render_file_list(public_files, "art_pub")
+             render_file_list(public_files, "selected_pub_articles", key_suffix="art_pub")
     with c2:
-        render_bulk_actions(sel_pub, "articles", key_suffix="art_pub_act")
+        render_bulk_actions("selected_pub_articles", "articles", key_suffix="art_pub_act")
 
     st.divider()
 
@@ -430,9 +503,9 @@ with tabs[0]:
     with c3:
         draft_files = get_files(PATHS["draft_articles"])
         with st.container(height=300, border=True):
-            sel_draft = render_file_list(draft_files, "art_draft")
+            render_file_list(draft_files, "selected_draft_articles", key_suffix="art_draft")
     with c4:
-        render_bulk_actions(sel_draft, "drafts", key_suffix="art_draft_act")
+        render_bulk_actions("selected_draft_articles", "drafts", key_suffix="art_draft_act")
 
 # --- TAB 2: PROJECTS ---
 with tabs[1]:
@@ -445,9 +518,9 @@ with tabs[1]:
     with c1:
         all_proj_files = get_files(PATHS["public_projects"])
         with st.container(height=300, border=True):
-            sel_projs = render_file_list(all_proj_files, "proj_main")
+            render_file_list(all_proj_files, "selected_projects", key_suffix="proj_main")
     with c2:
-        render_bulk_actions(sel_projs, "projects", key_suffix="proj_main_act")
+        render_bulk_actions("selected_projects", "projects", key_suffix="proj_main_act")
 
     st.divider()
 
@@ -472,32 +545,29 @@ with tabs[1]:
         with c3:
             if not cards:
                 st.info("No items found.")
-            selected_items = []
             
             with st.container(height=500, border=True):
-                for item in cards:
-                    title = item['title']
-                    is_hidden = item['hidden']
-                    target = item['target']
-                    
-                    status_icon = "🔴" if is_hidden else "🟢"
-                    if target and os.path.exists(target):
-                         with open(target, 'r', errors='ignore') as f:
-                            if 'content="unlisted"' in f.read():
-                                status_icon = "🟡"
-                    
-                    col1, col2 = st.columns([0.1, 1])
-                    with col1:
-                        if st.checkbox("", key=f"chk_ml_{title}"):
-                            selected_items.append(item)
-                    with col2:
-                        st.write(f"{status_icon} {title}")
+                # We need to map cards back to the objects needed by render_file_list
+                # Actually render_file_list now handles dicts, so we pass cards directly
+                render_file_list(cards, "selected_ml_items", key_suffix="ml_items")
         
         with c4:
-            def ml_handler(item, action):
-                manage_project_item(ml_page, item['title'], item['target'], action)
+            # We need to reconstruct the objects for the handler from the keys (titles)
+            # The bulk action generic handler passes the *item* from the set
+            # But our set now stores TITLES for cards.
+            # So we need a wrapper to find the full object if needed, OR just pass title if that's enough.
+            # manage_project_item needs: ml_page, title, target_file, action
+            # To get target_file, we need to look it up from the title.
+            
+            # Let's rebuild the map for quick lookup
+            title_to_card_map = {c['title']: c for c in get_project_cards(ml_page)} # Re-read full list for lookup
+            
+            def ml_handler(item_title, action):
+                card_data = title_to_card_map.get(item_title)
+                if card_data:
+                    manage_project_item(ml_page, card_data['title'], card_data['target'], action)
                 
-            render_bulk_actions(selected_items, "ML Items", custom_handler=ml_handler, key_suffix="ml_act")
+            render_bulk_actions("selected_ml_items", "ML Items", custom_handler=ml_handler, key_suffix="ml_act")
             
     else:
         st.warning("machine_learning.html not found")
