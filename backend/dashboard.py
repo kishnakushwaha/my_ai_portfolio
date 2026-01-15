@@ -137,11 +137,18 @@ def run_git_push():
         subprocess.run(["git", "config", "user.name", "CMS Bot"], cwd=ROOT_DIR, check=False)
         
         # Force Remote URL with Username to prevent "could not read Username" prompt
-        # This ensures we use the kwarg-based URL which helps credentials helpers
         subprocess.run([
             "git", "remote", "set-url", "origin", 
             "https://kishnakushwaha91-afk@github.com/kishnakushwaha91-afk/my_ai_portfolio.git"
         ], cwd=ROOT_DIR, check=False)
+
+        # Force Git to use the system credential helper (if PATH is broken in Streamlit)
+        # We try to use the one found in Homebrew first, or fallback to just "osxkeychain"
+        helper_path = "/opt/homebrew/Cellar/git/2.52.0_1/libexec/git-core/git-credential-osxkeychain"
+        if os.path.exists(helper_path):
+            subprocess.run(["git", "config", "credential.helper", helper_path], cwd=ROOT_DIR, check=False)
+        else:
+            subprocess.run(["git", "config", "credential.helper", "osxkeychain"], cwd=ROOT_DIR, check=False)
         
         # Use capture_output=True to get error messages
         subprocess.run(["git", "add", "."], cwd=ROOT_DIR, check=True, capture_output=True)
