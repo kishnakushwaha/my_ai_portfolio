@@ -547,6 +547,19 @@ with tabs[1]:
 
     st.divider()
 
+    # 2. Draft Projects
+    st.subheader("📂 Draft Project Pages")
+    c3, c4 = st.columns([3, 1])
+    
+    with c3:
+        draft_proj_files = get_files(PATHS["draft_projects"])
+        with st.container(height=300, border=True):
+            render_file_list(draft_proj_files, "selected_draft_projects", key_suffix="proj_draft")
+    with c4:
+        render_bulk_actions("selected_draft_projects", "projects", key_suffix="proj_draft_act")
+
+    st.divider()
+
     # 2. Specific Items
     c_head2, c_search2 = st.columns([2, 1])
     with c_head2:
