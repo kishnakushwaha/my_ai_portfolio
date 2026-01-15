@@ -142,23 +142,44 @@ def run_git_push():
             "https://kishnakushwaha91-afk@github.com/kishnakushwaha91-afk/my_ai_portfolio.git"
         ], cwd=ROOT_DIR, check=False)
 
-        # Force Remote URL to avoid username prompt
-        subprocess.run([
-            "git", "remote", "set-url", "origin", 
-            "https://kishnakushwaha91-afk@github.com/kishnakushwaha91-afk/my_ai_portfolio.git"
-        ], cwd=ROOT_DIR, check=False)
-
-        # FINAL AUTH FIX: Configure absolute path to credential helper
-        # This bypasses PATH issues completely
+        # --------------------------------------------------------------------------------
+        # ROBUST AUTHENTICATION STRATEGY
+        # --------------------------------------------------------------------------------
+        # 1. Try to find the password using the available credential helper directly.
+        #    This is necessary because Streamlit's environment often breaks 'git credential' path resolution.
         import glob
-        found_helpers = glob.glob("/opt/homebrew/Cellar/git/*/libexec/git-core/git-credential-osxkeychain")
+        git_password = None
         
+        # Locate the helper
+        found_helpers = glob.glob("/opt/homebrew/Cellar/git/*/libexec/git-core/git-credential-osxkeychain")
         if found_helpers:
-            helper_path = found_helpers[-1] # Use the latest version found
-            subprocess.run(["git", "config", "credential.helper", helper_path], cwd=ROOT_DIR, check=False)
+            helper_path = found_helpers[-1]
+            # Invoke helper to get credentials
+            input_data = "protocol=https\nhost=github.com\nusername=kishnakushwaha91-afk\n"
+            try:
+                proc = subprocess.run([helper_path, "get"], input=input_data, text=True, capture_output=True, check=True)
+                # Parse output for 'password=...'
+                for line in proc.stdout.splitlines():
+                    if line.startswith("password="):
+                        git_password = line.split("=", 1)[1]
+                        break
+            except Exception as e:
+                print(f"Auth Helper Failed: {e}")
+
+        # 2. Configure Remote URL with Credentials (if found) or Username (fallback)
+        if git_password:
+            # INJECT CREDENTIALS: https://user:pass@github.com/...
+            remote_url = f"https://kishnakushwaha91-afk:{git_password}@github.com/kishnakushwaha91-afk/my_ai_portfolio.git"
         else:
-            # Fallback for other systems or non-homebrew
-            subprocess.run(["git", "config", "credential.helper", "osxkeychain"], cwd=ROOT_DIR, check=False)
+            # FALLBACK: Just username, hope for the best
+            remote_url = "https://kishnakushwaha91-afk@github.com/kishnakushwaha91-afk/my_ai_portfolio.git"
+
+        # Set the remote URL
+        subprocess.run(["git", "remote", "set-url", "origin", remote_url], cwd=ROOT_DIR, check=False)
+
+        # 3. Clean up config to avoid 'command not found' errors from bad previous attempts
+        subprocess.run(["git", "config", "--unset", "credential.helper"], cwd=ROOT_DIR, check=False)
+        # --------------------------------------------------------------------------------
 
         # Use capture_output=True to get error messages
         subprocess.run(["git", "add", "."], cwd=ROOT_DIR, check=True, capture_output=True)
@@ -167,12 +188,12 @@ def run_git_push():
         commit_proc = subprocess.run(["git", "commit", "-m", "CMS Update: Content changes"], cwd=ROOT_DIR, check=False, capture_output=True, text=True)
         
         if commit_proc.returncode != 0:
-            # Check if failure is just "nothing to commit"
             if "nothing to commit" in commit_proc.stdout or "nothing to commit" in commit_proc.stderr:
                 pass
             else:
                 commit_proc.check_returncode()
         
+        # Push (credentials are now in the remote URL if retrieval worked)
         subprocess.run(["git", "push"], cwd=ROOT_DIR, check=True, capture_output=True)
         return True, "Successfully pushed to GitHub!"
     except subprocess.CalledProcessError as e:
