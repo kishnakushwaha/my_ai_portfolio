@@ -403,11 +403,29 @@ def render_file_list(files, selection_key, key_suffix=""):
              val = p if isinstance(p, str) else p['title']
              st.session_state[selection_key].add(val)
              
+             # Sync widget state
+             if isinstance(p, str):
+                 name = os.path.basename(p)
+             else:
+                 name = p['title']
+             widget_key = f"chk_{key_suffix}_{name}"
+             st.session_state[widget_key] = True
+        st.rerun()
+
     def deselect_all_visible():
         for p in files:
              val = p if isinstance(p, str) else p['title']
              if val in st.session_state[selection_key]:
                  st.session_state[selection_key].remove(val)
+             
+             # Sync widget state
+             if isinstance(p, str):
+                 name = os.path.basename(p)
+             else:
+                 name = p['title']
+             widget_key = f"chk_{key_suffix}_{name}"
+             st.session_state[widget_key] = False
+        st.rerun()
 
     # Bulk Controls specifically for the *visible* list (filtered)
     c_all, c_none = st.columns(2)
