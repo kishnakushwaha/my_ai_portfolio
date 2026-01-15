@@ -158,9 +158,25 @@ def run_git_push():
             # 2. Construct path to helper
             possible_helper = os.path.join(git_exec_dir, "git-credential-osxkeychain")
             
+            # 3. FALBACKS: If standard execution path doesn't have it (e.g. system git vs brew git), try known Homebrew locations
+            if not os.path.exists(possible_helper):
+                 debug_log.append(f"Standard helper missing at {possible_helper}")
+                 # Try Homebrew path (Apple Silicon)
+                 brew_helper = "/opt/homebrew/opt/git/libexec/git-core/git-credential-osxkeychain"
+                 if os.path.exists(brew_helper):
+                     possible_helper = brew_helper
+                     debug_log.append("Found Homebrew helper fallback.")
+                 else:
+                     # Try finding it in PATH
+                     import shutil
+                     which_helper = shutil.which("git-credential-osxkeychain")
+                     if which_helper:
+                         possible_helper = which_helper
+                         debug_log.append(f"Found helper in PATH: {which_helper}")
+
             if os.path.exists(possible_helper):
                 helper_path = possible_helper
-                debug_log.append(f"Found helper via --exec-path: {helper_path}")
+                debug_log.append(f"Using helper: {helper_path}")
                 
                  # Invoke helper to get credentials
                 input_data = "protocol=https\nhost=github.com\nusername=kishnakushwaha91-afk\n"
@@ -176,7 +192,7 @@ def run_git_push():
                 if not git_password:
                      debug_log.append("No password line in helper output.")
             else:
-                debug_log.append(f"Helper not found at expected path: {possible_helper}")
+                debug_log.append(f"Helper not found. Checked: {possible_helper}")
                 
         except Exception as e:
             debug_log.append(f"Auth discovery failed: {str(e)}")
