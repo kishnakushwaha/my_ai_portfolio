@@ -166,45 +166,41 @@ def run_git_push():
         except Exception as e:
              debug_log.append(f"Env Check Failed: {e}")
 
-        # 1. Try to find helper using Glob (Verified to work on this machine)
-        found_helpers = glob.glob("/opt/homebrew/Cellar/git/*/libexec/git-core/git-credential-osxkeychain")
+        # --------------------------------------------------------------------------------
+        # ROBUST AUTHENTICATION STRATEGY (GitHub CLI Method)
+        # --------------------------------------------------------------------------------
+        # Since 'git-credential-osxkeychain' is hard to locate in the sandboxed env,
+        # we found that 'gh' CLI is installed and authenticated. We can use it!
+        git_password = None
         
-        possible_helper = None
-        if found_helpers:
-            possible_helper = found_helpers[-1]
-            debug_log.append(f"Found helper via Glob: {possible_helper}")
-        else:
-            # 2. Fallback: Ask git where its core binaries are
-            try:
-                exec_path_proc = subprocess.run(["git", "--exec-path"], text=True, capture_output=True, check=True)
-                git_exec_dir = exec_path_proc.stdout.strip()
-                git_exec_helper = os.path.join(git_exec_dir, "git-credential-osxkeychain")
-                if os.path.exists(git_exec_helper):
-                    possible_helper = git_exec_helper
-                    debug_log.append(f"Found helper via --exec-path: {possible_helper}")
-            except:
-                pass
+        try:
+             # Try to get token from GitHub CLI
+             # We use full path to be safe, but 'gh' might be in PATH
+             # Let's try finding 'gh' first
+             import shutil
+             gh_path = shutil.which("gh")
+             if not gh_path:
+                 # Try common locations
+                 if os.path.exists("/opt/homebrew/bin/gh"):
+                     gh_path = "/opt/homebrew/bin/gh"
+                 elif os.path.exists("/usr/local/bin/gh"):
+                     gh_path = "/usr/local/bin/gh"
+            
+             if gh_path:
+                 debug_log.append(f"Found gh CLI at: {gh_path}")
+                 proc = subprocess.run([gh_path, "auth", "token"], text=True, capture_output=True, check=True)
+                 token = proc.stdout.strip()
+                 if token:
+                     git_password = token
+                     debug_log.append("Successfully retrieved token from gh CLI.")
+                 else:
+                     debug_log.append("gh auth token returned empty string.")
+             else:
+                 debug_log.append("gh CLI not found in PATH or standard locations.")
+                 
+        except Exception as e:
+            debug_log.append(f"gh auth token failed: {str(e)}")
 
-        if possible_helper and os.path.exists(possible_helper):
-            helper_path = possible_helper
-            debug_log.append(f"Using helper: {helper_path}")
-            
-             # Invoke helper to get credentials
-            input_data = "protocol=https\nhost=github.com\nusername=kishnakushwaha91-afk\n"
-            proc = subprocess.run([helper_path, "get"], input=input_data, text=True, capture_output=True, check=True)
-            debug_log.append("Helper executed successfully.")
-            
-            # Parse output for 'password=...'
-            for line in proc.stdout.splitlines():
-                if line.startswith("password="):
-                    git_password = line.split("=", 1)[1]
-                    debug_log.append("Password found in output.")
-                    break
-            if not git_password:
-                 debug_log.append("No password line in helper output.")
-        else:
-            debug_log.append("Helper not found via Glob or --exec-path.")
-        
         # 2. Configure Remote URL with Credentials (if found) or Username (fallback)
         if git_password:
             # INJECT CREDENTIALS: https://user:pass@github.com/...
@@ -214,6 +210,8 @@ def run_git_push():
             # FALLBACK: Just username
             remote_url = "https://kishnakushwaha91-afk@github.com/kishnakushwaha91-afk/my_ai_portfolio.git"
             debug_log.append("Falling back to unauthenticated remote URL.")
+        
+
 
         # Set the remote URL
         subprocess.run(["git", "remote", "set-url", "origin", remote_url], cwd=ROOT_DIR, check=False)
