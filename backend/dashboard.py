@@ -152,7 +152,19 @@ def run_git_push():
         
         # Use capture_output=True to get error messages
         subprocess.run(["git", "add", "."], cwd=ROOT_DIR, check=True, capture_output=True)
-        subprocess.run(["git", "commit", "-m", "CMS Update: Content changes"], cwd=ROOT_DIR, check=True, capture_output=True)
+        
+        # Commit changes (handle "nothing to commit" case gracefully)
+        commit_proc = subprocess.run(["git", "commit", "-m", "CMS Update: Content changes"], cwd=ROOT_DIR, check=False, capture_output=True, text=True)
+        
+        if commit_proc.returncode != 0:
+            # Check if failure is just "nothing to commit"
+            if "nothing to commit" in commit_proc.stdout or "nothing to commit" in commit_proc.stderr:
+                # This is fine, just proceed to push (in case local commits exist but weren't pushed)
+                pass
+            else:
+                # Real error, raise it
+                commit_proc.check_returncode()
+        
         subprocess.run(["git", "push"], cwd=ROOT_DIR, check=True, capture_output=True)
         return True, "Successfully pushed to GitHub!"
     except subprocess.CalledProcessError as e:
