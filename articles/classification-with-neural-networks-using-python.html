@@ -18,7 +18,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
 <!-- Custom CSS -->
 <link href="../css/style.css" rel="stylesheet"/>
-</head>
+<meta content="unlisted" name="visibility"/></head>
 <body>
 <!-- Navigation -->
 <header>
@@ -80,7 +80,8 @@ fashion = keras.datasets.fashion_mnist
 image = xtrain[imgIndex]
 print("Image Label :",ytrain[imgIndex])
 plt.imshow(image)</code></pre>
-<pre class="wp-block-preformatted"><strong>Image Label : 5</strong></pre>
+<pre class="wp-block-preformatted"><strong>Image Label : 5
+</strong></pre>
 <figure class="wp-block-image size-full"><img alt="Fashion MNIST sample" class="wp-image-16568" data-attachment-id="16568" data-comments-opened="1" data-image-caption="" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="mnistsample" data-orig-size="186,185" data-recalc-dims="1" decoding="async" height="185" sizes="(max-width: 186px) 100vw, 186px" src="../assets/datasets/mnistsample.png" width="186"/></figure>
 <p>Now let’s have a look at the shape of both the training and test data:</p>
 <pre><code class="language-python">print(xtrain.shape)

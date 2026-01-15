@@ -1,104 +1,94 @@
 <!DOCTYPE html>
 
 <html lang="en">
-
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <!-- Title to be replaced for each article -->
-    <title>Build an AI Resume Screener with Python &amp; Llama 3 | Kishna Kushwaha</title>
-    <meta content="Article Description" name="description" />
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
-        rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet" />
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
-    <!-- Highlight.js Theme (VS Code Dark style) -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css"
-        rel="stylesheet" />
-    <!-- Custom CSS -->
-    <link href="../css/style.css" rel="stylesheet" />
-</head>
-
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Title to be replaced for each article -->
+<title>Build an AI Resume Screener with Python &amp; Llama 3 | Kishna Kushwaha</title>
+<meta content="Article Description" name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Highlight.js Theme (VS Code Dark style) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+<meta content="unlisted" name="visibility"/></head>
 <body>
-    <!-- Navigation -->
-    <header>
-        <div class="container nav-container">
-            <a class="logo" href="../index.html">
-                <div class="logo-circle"></div>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
                 Kishna Kushwaha
             </a>
-            <button aria-label="Toggle navigation" class="mobile-menu-btn">
-                <i class="fas fa-bars"></i>
-            </button>
-            <ul class="nav-links">
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="../about.html">About</a></li>
-                <li><a href="../articles.html">Articles</a></li>
-                <li><a href="../projects/machine_learning.html">Projects</a></li>
-                <li><a href="../index.html#courses">Recommended Resources</a></li>
-                <li>
-                    <button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </li>
-            </ul>
-        </div>
-    </header>
-    <main>
-        <!-- Top Ad Banner -->
-        <div class="container" style="margin-top:2rem;">
-            <div class="ad-unit ad-leaderboard">
-                <span>Advertisement (Leaderboard)</span>
-            </div>
-        </div>
-        <div class="single-article-container">
-            <!-- Left: Main Content -->
-            <div class="article-main">
-                <article class="article-body">
-                    <h1
-                        style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a href="../projects/machine_learning.html">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<!-- Top Ad Banner -->
+<div class="container" style="margin-top:2rem;">
+<div class="ad-unit ad-leaderboard">
+<span>Advertisement (Leaderboard)</span>
+</div>
+</div>
+<div class="single-article-container">
+<!-- Left: Main Content -->
+<div class="article-main">
+<article class="article-body">
+<h1 style="font-size: 2.5rem; line-height: 1.2; font-weight: 800; margin-bottom: 0.5rem; color: #111827;">
                         Build an AI Resume Screener with Python &amp; Llama 3</h1>
-                    <div class="article-meta-small" style="margin-bottom: 2rem;">Oct 24, 2025 • 5 min read</div>
-                    <!-- Navigation Top -->
-                    <div
-                        style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
-                        <a class="nav-prev" href="build-a-multi-agent-system-with-langgraph.html"
-                            style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous
+<div class="article-meta-small" style="margin-bottom: 2rem;">Oct 24, 2025 • 5 min read</div>
+<!-- Navigation Top -->
+<div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a class="nav-prev" href="build-a-multi-agent-system-with-langgraph.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">← Previous
                             Article</a>
-                        <a href="../articles.html"
-                            style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
-                        <a class="nav-next" href="building-a-multi-agent-system-using-gemini-api.html"
-                            style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a class="nav-next" href="building-a-multi-agent-system-using-gemini-api.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next Article
                             →</a>
-                    </div>
-                    <p>Recruiters often have to sort through hundreds of PDFs to find the right candidate. In this
+</div>
+<p>Recruiters often have to sort through hundreds of PDFs to find the right candidate. In this
                         article, we’ll create a <strong>local AI Resume Screener</strong> using Python and <strong>Llama
                             3</strong> with Ollama. This project goes beyond simple automation. It shows how Large
                         Language Models can help turn unstructured resume data into useful information for making
                         decisions.</p>
-                    <h2 class="wp-block-heading">The Setup</h2>
-                    <p>Before writing code, we need to set up our environment. We are keeping this <strong>private and
+<h2 class="wp-block-heading">The Setup</h2>
+<p>Before writing code, we need to set up our environment. We are keeping this <strong>private and
                             free</strong> by running the AI locally on your machine.</p>
-                    <p>First, we need an engine to run our AI model. <strong>Ollama</strong> is the easiest way to run
-                        open-source LLMs locally. Download it from <strong><a
-                                href="http://ollama.com">ollama.com</a></strong>.</p>
-                    <p>Once installed, open your terminal/command prompt and run:</p>
-                    <pre class="wp-block-preformatted"><strong>ollama pull llama3 </strong></pre>
-                    <p>Next, we need Python to interact with Ollama and to read PDF files. Run this in your terminal:
+<p>First, we need an engine to run our AI model. <strong>Ollama</strong> is the easiest way to run
+                        open-source LLMs locally. Download it from <strong><a href="http://ollama.com">ollama.com</a></strong>.</p>
+<p>Once installed, open your terminal/command prompt and run:</p>
+<pre class="wp-block-preformatted"><strong>ollama pull llama3 </strong></pre>
+<p>Next, we need Python to interact with Ollama and to read PDF files. Run this in your terminal:
                     </p>
-                    <pre class="wp-block-preformatted"><strong>pip install ollama pymupdf </strong></pre>
-                    <h2 class="wp-block-heading">Building the AI Resume Screener with Python &amp; Llama 3</h2>
-                    <p>Now, let’s get started with building the AI Resume Screener with Python and Llama3. We’ll break
+<pre class="wp-block-preformatted"><strong>pip install ollama pymupdf </strong></pre>
+<h2 class="wp-block-heading">Building the AI Resume Screener with Python &amp; Llama 3</h2>
+<p>Now, let’s get started with building the AI Resume Screener with Python and Llama3. We’ll break
                         the process into three digestible parts: <strong>The Reader</strong>, <strong>The
                             Brain</strong>, and <strong>The Execution</strong>.</p>
-                    <h4 class="wp-block-heading">Step 1: The Reader</h4>
-                    <p>LLMs can’t see PDF files directly; they need raw text. We will use PyMuPDF to strip the text
+<h4 class="wp-block-heading">Step 1: The Reader</h4>
+<p>LLMs can’t see PDF files directly; they need raw text. We will use PyMuPDF to strip the text
                         layer from the document:</p>
-                    <pre><code class="language-python">import fitz
+<pre><code class="language-python">import fitz
 
 def extract_text_from_pdf(pdf_path):
     doc = fitz.open(pdf_path)
@@ -106,14 +96,14 @@ def extract_text_from_pdf(pdf_path):
     for page in doc:
         text += page.get_text()
     return text</code></pre>
-                    <p>Data ingestion is often the messiest part of Data Science. If you feed garbage text (encoding
+<p>Data ingestion is often the messiest part of Data Science. If you feed garbage text (encoding
                         errors, weird formatting) into the AI, you will get garbage results. This function iterates
                         through every page and stitches the text together.</p>
-                    <h4 class="wp-block-heading">Step 2: The Brain</h4>
-                    <p>This is the key part of our AI Resume Screener. We aren’t just sending text; we are
+<h4 class="wp-block-heading">Step 2: The Brain</h4>
+<p>This is the key part of our AI Resume Screener. We aren’t just sending text; we are
                         <strong>prompt engineering</strong>. We will give the AI a persona (of Senior Technical
                         Recruiter) and specific constraints (JSON format):</p>
-                    <pre><code class="language-python">import ollama
+<pre><code class="language-python">import ollama
 
 def screen_resume(resume_text, job_description):
     prompt = f"""
@@ -148,14 +138,14 @@ def screen_resume(resume_text, job_description):
     ])
     
     return response['message']['content']</code></pre>
-                    <p>Here, we are telling the AI that it has 20 years of experience. It actually changes how it
+<p>Here, we are telling the AI that it has 20 years of experience. It actually changes how it
                         behaves. It tends to be more critical and nuanced than a standard generic prompt.</p>
-                    <p>Next, we are explicitly asking for a valid JSON format only. This is crucial because we want to
+<p>Next, we are explicitly asking for a valid JSON format only. This is crucial because we want to
                         use the data programmatically later (like, saving it to a database).</p>
-                    <h4 class="wp-block-heading">Step 3: The Execution</h4>
-                    <p>Now, we will define our standard (the Job Description), load our input (the Resume), and handle
+<h4 class="wp-block-heading">Step 3: The Execution</h4>
+<p>Now, we will define our standard (the Job Description), load our input (the Resume), and handle
                         the output:</p>
-                    <pre><code class="language-python">import json
+<pre><code class="language-python">import json
 
 # 1. Define the Job Description (The Standard)
 job_description = """
@@ -198,87 +188,81 @@ try:
 except json.JSONDecodeError:
     print("Failed to parse JSON. Raw output:")
     print(result_json_string)        </code></pre>
-                    <p>Before running the code, make sure to change the resume path to your path. Here’s the output I
+<p>Before running the code, make sure to change the resume path to your path. Here’s the output I
                         got with my resume:</p>
-                    <pre
-                        class="wp-block-preformatted"><strong>Resume loaded. Length: 2802 characters.<br/>AI is analyzing the candidate... (this may take a few seconds on local hardware)<br/><br/>--- SCREENING REPORT ---<br/>Candidate: Kishna Kushwaha<br/>Score: 92/100<br/>Decision: INTERVIEW<br/>Reasoning: Kishna has demonstrated strong technical skills in machine learning and Python, making him a suitable candidate for the Junior Data Scientist role. However, he lacks direct experience with SQL, which are critical requirements for this position.</strong></pre>
-                    <p>If your resume lists “Linear Regression” and “Random Forests,” but the JD asks for “Machine
+<pre class="wp-block-preformatted"><strong>Resume loaded. Length: 2802 characters.<br/>AI is analyzing the candidate... (this may take a few seconds on local hardware)<br/><br/>--- SCREENING REPORT ---<br/>Candidate: Kishna Kushwaha<br/>Score: 92/100<br/>Decision: INTERVIEW<br/>Reasoning: Kishna has demonstrated strong technical skills in machine learning and Python, making him a suitable candidate for the Junior Data Scientist role. However, he lacks direct experience with SQL, which are critical requirements for this position.</strong></pre>
+<p>If your resume lists “Linear Regression” and “Random Forests,” but the JD asks for “Machine
                         Learning algorithms,” a traditional keyword search might fail. <strong>Llama 3 understands that
                             those are machine learning algorithms.</strong></p>
-                    <h3 class="wp-block-heading">Closing Thoughts</h3>
-                    <p>So, this is how to build an AI Resume Screener with Python and Llama 3. This project teaches you
+<h3 class="wp-block-heading">Closing Thoughts</h3>
+<p>So, this is how to build an AI Resume Screener with Python and Llama 3. This project teaches you
                         three critical GenAI skills:</p>
-                    <ol class="wp-block-list">
-                        <li><strong>Context Window Management:</strong> Understanding how much text (Resume + JD) fits
+<ol class="wp-block-list">
+<li><strong>Context Window Management:</strong> Understanding how much text (Resume + JD) fits
                             into the prompt.</li>
-                        <li><strong>Structured Output:</strong> Forcing a creative writer (the LLM) to act like a
+<li><strong>Structured Output:</strong> Forcing a creative writer (the LLM) to act like a
                             database (JSON).</li>
-                        <li><strong>Local Inference:</strong> Running AI without sending private data to the cloud
+<li><strong>Local Inference:</strong> Running AI without sending private data to the cloud
                             (crucial for GDPR and privacy in HR).</li>
-                    </ol>
-                    <!-- CONTENT END 1 -->
-                </article>
-                <!-- Navigation Bottom -->
-                <div
-                    style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
-                    <a href="build-a-multi-agent-system-with-langgraph.html"
-                        style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
+</ol>
+<!-- CONTENT END 1 -->
+</article>
+<!-- Navigation Bottom -->
+<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-between;">
+<a href="build-a-multi-agent-system-with-langgraph.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">←
                         Previous Article</a>
-                    <a href="../articles.html"
-                        style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
-                    <a href="building-a-multi-agent-system-using-gemini-api.html"
-                        style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
+<a href="../articles.html" style="text-decoration: none; color: var(--text-muted); font-weight: 500;">All Articles</a>
+<a href="building-a-multi-agent-system-using-gemini-api.html" style="text-decoration: none; color: var(--primary-color); font-weight: 600;">Next
                         Article →</a>
-                </div>
-            </div>
-            <!-- Right: Sticky Sidebar -->
-            <aside class="sidebar-area">
-                <div class="sticky-sidebar-content">
-                    <!-- Search Widget (Optional) -->
-                    <!-- <div class="sidebar-widget"> ... </div> -->
-                    <!-- Sidebar Ad -->
-                    <div class="ad-unit ad-sidebar-vertical">
-                        <span>Advertisement (Vertical)</span>
-                    </div>
-                    <!-- Popular Posts -->
-                    <div class="sidebar-widget">
-                        <h3 class="widget-title">Popular Articles</h3>
-                        <ul class="popular-posts-list">
-                            <li><a href="#">Building AI Agents with LangChain</a></li>
-                            <li><a href="#">Optimizing PyTorch Loops</a></li>
-                            <li><a href="#">Data Structures for ML Engineers</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </aside>
-        </div>
-    </main>
-    <!-- Footer -->
-    <footer class="main-footer">
-        <div class="container">
-            <div class="footer-content">
-                <p>© 2025 Kishna Kushwaha. All rights reserved.</p>
-                <div class="footer-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
-                </div>
-            </div>
-        </div>
-        <a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
-    </footer>
-    <script src="../js/script.js"></script>
-    <script src="../js/search.js"></script>
-    <!-- Highlight.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
-    <!-- Search Overlay -->
-    <div class="search-overlay" id="search-overlay">
-        <div class="search-container">
-            <button class="search-close-btn" id="search-close">×</button>
-            <input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text" />
-            <div class="search-results" id="search-results"></div>
-        </div>
-    </div>
+</div>
+</div>
+<!-- Right: Sticky Sidebar -->
+<aside class="sidebar-area">
+<div class="sticky-sidebar-content">
+<!-- Search Widget (Optional) -->
+<!-- <div class="sidebar-widget"> ... </div> -->
+<!-- Sidebar Ad -->
+<div class="ad-unit ad-sidebar-vertical">
+<span>Advertisement (Vertical)</span>
+</div>
+<!-- Popular Posts -->
+<div class="sidebar-widget">
+<h3 class="widget-title">Popular Articles</h3>
+<ul class="popular-posts-list">
+<li><a href="#">Building AI Agents with LangChain</a></li>
+<li><a href="#">Optimizing PyTorch Loops</a></li>
+<li><a href="#">Data Structures for ML Engineers</a></li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+<div class="footer-links">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<a aria-label="Go to top" class="go-top-btn" href="#"><i class="fas fa-arrow-up"></i></a>
+</footer>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Highlight.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
 </body>
-
 </html>
