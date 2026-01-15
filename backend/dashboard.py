@@ -150,16 +150,23 @@ def run_git_push():
         debug_log = []
         
         # Locate the helper
-        found_helpers = glob.glob("/opt/homebrew/Cellar/git/*/libexec/git-core/git-credential-osxkeychain")
-        
-        if found_helpers:
-            helper_path = found_helpers[-1]
-            debug_log.append(f"Found helper: {helper_path}")
-            # Invoke helper to get credentials
-            input_data = "protocol=https\nhost=github.com\nusername=kishnakushwaha91-afk\n"
-            try:
+        try:
+            # 1. Ask git where its core binaries are (reliable across versions/installs)
+            exec_path_proc = subprocess.run(["git", "--exec-path"], text=True, capture_output=True, check=True)
+            git_exec_dir = exec_path_proc.stdout.strip()
+            
+            # 2. Construct path to helper
+            possible_helper = os.path.join(git_exec_dir, "git-credential-osxkeychain")
+            
+            if os.path.exists(possible_helper):
+                helper_path = possible_helper
+                debug_log.append(f"Found helper via --exec-path: {helper_path}")
+                
+                 # Invoke helper to get credentials
+                input_data = "protocol=https\nhost=github.com\nusername=kishnakushwaha91-afk\n"
                 proc = subprocess.run([helper_path, "get"], input=input_data, text=True, capture_output=True, check=True)
                 debug_log.append("Helper executed successfully.")
+                
                 # Parse output for 'password=...'
                 for line in proc.stdout.splitlines():
                     if line.startswith("password="):
@@ -168,11 +175,12 @@ def run_git_push():
                         break
                 if not git_password:
                      debug_log.append("No password line in helper output.")
-            except Exception as e:
-                debug_log.append(f"Auth Helper execution failed: {str(e)}")
-        else:
-             debug_log.append("No git-credential-osxkeychain found in /opt/homebrew.")
-
+            else:
+                debug_log.append(f"Helper not found at expected path: {possible_helper}")
+                
+        except Exception as e:
+            debug_log.append(f"Auth discovery failed: {str(e)}")
+        
         # 2. Configure Remote URL with Credentials (if found) or Username (fallback)
         if git_password:
             # INJECT CREDENTIALS: https://user:pass@github.com/...
