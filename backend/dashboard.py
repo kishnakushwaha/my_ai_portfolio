@@ -525,26 +525,53 @@ with tabs[0]:
     
     # Left: List | Right: Controls
     
-    # 1. Public Articles
+    # 1. Split Public vs Unlisted
+    all_public_raw = get_files(PATHS["public_articles"])
+    real_public = []
+    unlisted_articles = []
+    
+    for p in all_public_raw:
+        is_unlisted = False
+        try:
+            with open(p, 'r', errors='ignore') as f:
+                if 'content="unlisted"' in f.read():
+                    is_unlisted = True
+        except:
+            pass
+            
+        if is_unlisted:
+            unlisted_articles.append(p)
+        else:
+            real_public.append(p)
+
+    # --- Section 1: Public Articles ---
     c_head, c_search = st.columns([2, 1])
     with c_head:
-         st.subheader("🟢 Public / Unlisted")
+         st.subheader("🟢 Public Articles")
     with c_search:
-         search_pub = st.text_input("Search", key="s_pub", placeholder="🔍 Filter articles...", label_visibility="collapsed")
+         search_pub = st.text_input("Search", key="s_pub", placeholder="🔍 Filter public...", label_visibility="collapsed")
 
     c1, c2 = st.columns([3, 1])
-    
     with c1:
-        public_all = get_files(PATHS["public_articles"])
-        public_files = public_all
-        # Filter
+        display_public = real_public
         if search_pub:
-            public_files = [f for f in public_files if search_pub.lower() in os.path.basename(f).lower()]
+            display_public = [f for f in display_public if search_pub.lower() in os.path.basename(f).lower()]
             
         with st.container(height=400, border=True):
-             render_file_list(public_files, "selected_pub_articles", all_items=public_all, key_suffix="art_pub")
+             render_file_list(display_public, "selected_pub_articles", all_items=real_public, key_suffix="art_pub")
     with c2:
         render_bulk_actions("selected_pub_articles", "articles", key_suffix="art_pub_act")
+
+    st.divider()
+
+    # --- Section 2: Unlisted Articles ---
+    st.subheader("🟡 Unlisted Articles")
+    c_unl_1, c_unl_2 = st.columns([3, 1])
+    with c_unl_1:
+         with st.container(height=250, border=True):
+             render_file_list(unlisted_articles, "selected_unlisted_articles", key_suffix="art_unl")
+    with c_unl_2:
+         render_bulk_actions("selected_unlisted_articles", "articles", key_suffix="art_unl_act")
 
     st.divider()
 
@@ -573,16 +600,44 @@ with tabs[0]:
 with tabs[1]:
     st.header("Manage Projects")
     
-    # 1. Page Files
-    st.subheader("📂 Project Pages")
+    # 1. Project Pages (Split Public vs Unlisted)
+    all_proj_raw = get_files(PATHS["public_projects"])
+    real_proj = []
+    unlisted_proj = []
+    
+    for p in all_proj_raw:
+        is_unlisted = False
+        try:
+             with open(p, 'r', errors='ignore') as f:
+                    if 'content="unlisted"' in f.read():
+                        is_unlisted = True
+        except: pass
+        
+        if is_unlisted:
+            unlisted_proj.append(p)
+        else:
+            real_proj.append(p)
+
+    # Public Projects
+    st.subheader("📂 Public Project Pages")
     c1, c2 = st.columns([3, 1])
     
     with c1:
-        all_proj_files = get_files(PATHS["public_projects"])
         with st.container(height=300, border=True):
-            render_file_list(all_proj_files, "selected_projects", key_suffix="proj_main")
+            render_file_list(real_proj, "selected_projects", key_suffix="proj_main")
     with c2:
         render_bulk_actions("selected_projects", "projects", key_suffix="proj_main_act")
+
+    st.divider()
+
+    # Unlisted Projects
+    st.subheader("🟡 Unlisted Project Pages")
+    c_u1, c_u2 = st.columns([3, 1])
+    with c_u1:
+         with st.container(height=200, border=True):
+             render_file_list(unlisted_proj, "selected_unlisted_projects", key_suffix="proj_unl")
+    with c_u2:
+         render_bulk_actions("selected_unlisted_projects", "projects", key_suffix="proj_unl_act")
 
     st.divider()
 
