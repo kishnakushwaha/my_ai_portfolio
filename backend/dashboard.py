@@ -132,10 +132,15 @@ def toggle_section(section_id, hide=True):
 
 def run_git_push():
     try:
-        subprocess.run(["git", "add", "."], cwd=ROOT_DIR, check=True)
-        subprocess.run(["git", "commit", "-m", "CMS Update: Content changes"], cwd=ROOT_DIR, check=True)
-        subprocess.run(["git", "push"], cwd=ROOT_DIR, check=True)
+        # Use capture_output=True to get error messages
+        subprocess.run(["git", "add", "."], cwd=ROOT_DIR, check=True, capture_output=True)
+        subprocess.run(["git", "commit", "-m", "CMS Update: Content changes"], cwd=ROOT_DIR, check=True, capture_output=True)
+        subprocess.run(["git", "push"], cwd=ROOT_DIR, check=True, capture_output=True)
         return True, "Successfully pushed to GitHub!"
+    except subprocess.CalledProcessError as e:
+        # Return the stderr from the failed command
+        error_msg = e.stderr.decode().strip() if e.stderr else str(e)
+        return False, f"Git Error: {error_msg}"
     except Exception as e:
         return False, str(e)
 
