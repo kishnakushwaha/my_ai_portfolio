@@ -130,7 +130,7 @@ def toggle_section(section_id, hide=True):
     with open(PATHS["index"], 'w', encoding='utf-8') as f:
         f.write(str(soup))
 
-def run_git_push():
+def run_git_push(token=None):
     try:
         # Configure Git Identity (Required for Streamlit Cloud / Containers)
         subprocess.run(["git", "config", "user.email", "kishnakushwaha91@gmail.com"], cwd=ROOT_DIR, check=False)
