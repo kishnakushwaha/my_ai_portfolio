@@ -1,357 +1,312 @@
 <!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Machine Learning Projects | Kishna Kushwaha</title>
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
-        rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
-    <!-- Custom CSS -->
-    <link href="../css/style.css" rel="stylesheet" />
-    <!-- Custom JS -->
-    <script src="../js/script.js"></script>
-    <script src="../js/search.js"></script>
-    <!-- Note: js is in parent dir relative to projects/ -->
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Machine Learning Projects | Kishna Kushwaha</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="../css/style.css" rel="stylesheet"/>
+<!-- Custom JS -->
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<!-- Note: js is in parent dir relative to projects/ -->
 </head>
-
 <body>
-    <!-- Search Overlay -->
-    <div id="search-overlay" class="search-overlay">
-        <div class="search-container">
-            <button id="search-close" class="search-close-btn">&times;</button>
-            <input type="text" id="search-input" placeholder="Search articles, projects..." autocomplete="off">
-            <div id="search-results" class="search-results"></div>
-        </div>
-    </div>
-    <!-- Navigation -->
-    <header>
-        <div class="container nav-container">
-            <a class="logo" href="../index.html">
-                <div class="logo-circle"></div>
+<!-- Search Overlay -->
+<div class="search-overlay" id="search-overlay">
+<div class="search-container">
+<button class="search-close-btn" id="search-close">×</button>
+<input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text"/>
+<div class="search-results" id="search-results"></div>
+</div>
+</div>
+<!-- Navigation -->
+<header>
+<div class="container nav-container">
+<a class="logo" href="../index.html">
+<div class="logo-circle"></div>
                 Kishna Kushwaha
             </a>
-
-            <button class="mobile-menu-btn" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
-            <ul class="nav-links">
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="../about.html">About</a></li>
-                <li><a href="../articles.html">Articles</a></li>
-                <li><a href="#" class="active">Projects</a></li>
-                <li><a href="../index.html#courses">Recommended Resources</a></li>
-                <li>
-                    <button id="search-trigger" class="search-trigger-btn nav-link-btn" aria-label="Search">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </li>
-            </ul>
-        </div>
-    </header>
-
-    <main>
-        <section class="section">
-            <div class="container">
-                <div class="section-header text-center" style="margin-top: 4rem; margin-bottom: 3rem;">
-                    <h1 class="section-title">Machine Learning Projects</h1>
-                    <p class="section-subtitle">Hands-on guided projects to help you master ML pipelines</p>
-                </div>
-                <div class="articles-grid">
-
-                    <article class="article-card">
-                        <div class="article-card-image">
-                            <div class="placeholder-img" style="background: linear-gradient(135deg, #2563EB, #1E40AF);">
-                            </div>
-                            <div class="blog-overlay"><i class="fas fa-brain"></i></div>
-                        </div>
-                        <div class="article-card-content">
-                            <span class="article-meta-small">Guided Project</span>
-                            <h3>Building a Predictive Keyboard Model</h3>
-                            <a href="../articles/building-a-predictive-keyboard-model-with-pytorch.html"
-                                class="article-read-btn">Start Project</a>
-                        </div>
-                    </article>
-
-                    <article class="article-card">
-                        <div class="article-card-image">
-                            <div class="placeholder-img" style="background: linear-gradient(135deg, #10B981, #059669);">
-                            </div>
-                            <div class="blog-overlay"><i class="fas fa-robot"></i></div>
-                        </div>
-                        <div class="article-card-content">
-                            <span class="article-meta-small">Guided Project</span>
-                            <h3>Text Classification Pipeline</h3>
-                            <a href="../articles/text-classification-pipeline-with-hugging-face-transformers.html"
-                                class="article-read-btn">Start Project</a>
-                        </div>
-                    </article>
-
-                    <article class="article-card">
-                        <div class="article-card-image">
-                            <div class="placeholder-img" style="background: linear-gradient(135deg, #8B5CF6, #6D28D9);">
-                            </div>
-                            <div class="blog-overlay"><i class="fas fa-database"></i></div>
-                        </div>
-                        <div class="article-card-content">
-                            <span class="article-meta-small">Guided Project</span>
-                            <h3>Fine-tuning LLMs on Your Own Data</h3>
-                            <a href="../articles/fine-tuning-llms-on-your-own-data.html" class="article-read-btn">Start
+<button aria-label="Toggle navigation" class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="../about.html">About</a></li>
+<li><a href="../articles.html">Articles</a></li>
+<li><a class="active" href="#">Projects</a></li>
+<li><a href="../index.html#courses">Recommended Resources</a></li>
+<li>
+<button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+<i class="fas fa-search"></i>
+</button>
+</li>
+</ul>
+</div>
+</header>
+<main>
+<section class="section">
+<div class="container">
+<div class="section-header text-center" style="margin-top: 4rem; margin-bottom: 3rem;">
+<h1 class="section-title">Machine Learning Projects</h1>
+<p class="section-subtitle">Hands-on guided projects to help you master ML pipelines</p>
+</div>
+<div class="articles-grid">
+<article class="article-card" style="display: none !important;">
+<div class="article-card-image">
+<div class="placeholder-img" style="background: linear-gradient(135deg, #2563EB, #1E40AF);">
+</div>
+<div class="blog-overlay"><i class="fas fa-brain"></i></div>
+</div>
+<div class="article-card-content">
+<span class="article-meta-small">Guided Project</span>
+<h3>Building a Predictive Keyboard Model</h3>
+<a class="article-read-btn" href="../articles/building-a-predictive-keyboard-model-with-pytorch.html">Start Project</a>
+</div>
+</article>
+<article class="article-card">
+<div class="article-card-image">
+<div class="placeholder-img" style="background: linear-gradient(135deg, #10B981, #059669);">
+</div>
+<div class="blog-overlay"><i class="fas fa-robot"></i></div>
+</div>
+<div class="article-card-content">
+<span class="article-meta-small">Guided Project</span>
+<h3>Text Classification Pipeline</h3>
+<a class="article-read-btn" href="../articles/text-classification-pipeline-with-hugging-face-transformers.html">Start Project</a>
+</div>
+</article>
+<article class="article-card" style="display: none !important;">
+<div class="article-card-image">
+<div class="placeholder-img" style="background: linear-gradient(135deg, #8B5CF6, #6D28D9);">
+</div>
+<div class="blog-overlay"><i class="fas fa-database"></i></div>
+</div>
+<div class="article-card-content">
+<span class="article-meta-small">Guided Project</span>
+<h3>Fine-tuning LLMs on Your Own Data</h3>
+<a class="article-read-btn" href="../articles/fine-tuning-llms-on-your-own-data.html">Start
                                 Project</a>
-                        </div>
-                    </article>
-
-                    <article class="article-card">
-                        <div class="article-card-image">
-                            <div class="placeholder-img" style="background: linear-gradient(135deg, #F59E0B, #D97706);">
-                            </div>
-                            <div class="blog-overlay"><i class="fas fa-code"></i></div>
-                        </div>
-                        <div class="article-card-content">
-                            <span class="article-meta-small">Guided Project</span>
-                            <h3>Fine-Tuning LLMs using LoRA</h3>
-                            <a href="../articles/a-guide-to-fine-tuning-llms-using-lora.html"
-                                class="article-read-btn">Start Project</a>
-                        </div>
-                    </article>
-
-                    <article class="article-card">
-                        <div class="article-card-image">
-                            <div class="placeholder-img" style="background: linear-gradient(135deg, #EC4899, #DB2777);">
-                            </div>
-                            <div class="blog-overlay"><i class="fas fa-server"></i></div>
-                        </div>
-                        <div class="article-card-content">
-                            <span class="article-meta-small">Guided Project</span>
-                            <h3>Build Your First RAG System From Scratch</h3>
-                            <a href="../articles/build-your-first-rag-system-from-scratch.html"
-                                class="article-read-btn">Start Project</a>
-                        </div>
-                    </article>
-
-                    <article class="article-card">
-                        <div class="article-card-image">
-                            <div class="placeholder-img" style="background: linear-gradient(135deg, #2563EB, #1E40AF);">
-                            </div>
-                            <div class="blog-overlay"><i class="fas fa-brain"></i></div>
-                        </div>
-                        <div class="article-card-content">
-                            <span class="article-meta-small">Guided Project</span>
-                            <h3>Building a Multimodal AI Model</h3>
-                            <a href="../articles/building-a-multimodal-ai-model-with-python.html"
-                                class="article-read-btn">Start Project</a>
-                        </div>
-                    </article>
-
-                    <article class="article-card">
-                        <div class="article-card-image">
-                            <div class="placeholder-img" style="background: linear-gradient(135deg, #10B981, #059669);">
-                            </div>
-                            <div class="blog-overlay"><i class="fas fa-robot"></i></div>
-                        </div>
-                        <div class="article-card-content">
-                            <span class="article-meta-small">Guided Project</span>
-                            <h3>AI Image Generation using Diffusion Models</h3>
-                            <a href="../articles/ai-image-generation-using-diffusion-models.html"
-                                class="article-read-btn">Start Project</a>
-                        </div>
-                    </article>
-
-                    <article class="article-card">
-                        <div class="article-card-image">
-                            <div class="placeholder-img" style="background: linear-gradient(135deg, #8B5CF6, #6D28D9);">
-                            </div>
-                            <div class="blog-overlay"><i class="fas fa-database"></i></div>
-                        </div>
-                        <div class="article-card-content">
-                            <span class="article-meta-small">Guided Project</span>
-                            <h3>Building a Diffusion Model From Scratch</h3>
-                            <a href="../articles/building-a-diffusion-model-from-scratch.html"
-                                class="article-read-btn">Start Project</a>
-                        </div>
-                    </article>
-
-                    <article class="article-card">
-                        <div class="article-card-image">
-                            <div class="placeholder-img" style="background: linear-gradient(135deg, #F59E0B, #D97706);">
-                            </div>
-                            <div class="blog-overlay"><i class="fas fa-code"></i></div>
-                        </div>
-                        <div class="article-card-content">
-                            <span class="article-meta-small">Guided Project</span>
-                            <h3>Building Synthetic Medical Records using GANs</h3>
-                            <a href="../articles/building-synthetic-medical-records-using-gans.html"
-                                class="article-read-btn">Start Project</a>
-                        </div>
-                    </article>
-
-                    <article class="article-card">
-                        <div class="article-card-image">
-                            <div class="placeholder-img" style="background: linear-gradient(135deg, #EC4899, #DB2777);">
-                            </div>
-                            <div class="blog-overlay"><i class="fas fa-server"></i></div>
-                        </div>
-                        <div class="article-card-content">
-                            <span class="article-meta-small">Guided Project</span>
-                            <h3>Build an AI Agent to Master a Game</h3>
-                            <a href="../articles/build-an-ai-agent-to-master-a-game-using-python.html"
-                                class="article-read-btn">Start Project</a>
-                        </div>
-                    </article>
-
-                    <article class="article-card">
-                        <div class="article-card-image">
-                            <div class="placeholder-img" style="background: linear-gradient(135deg, #2563EB, #1E40AF);">
-                            </div>
-                            <div class="blog-overlay"><i class="fas fa-brain"></i></div>
-                        </div>
-                        <div class="article-card-content">
-                            <span class="article-meta-small">Guided Project</span>
-                            <h3>Building AI Agents with CrewAI</h3>
-                            <a href="../articles/building-ai-agents-with-crewai-using-python.html"
-                                class="article-read-btn">Start Project</a>
-                        </div>
-                    </article>
-
-                    <article class="article-card">
-                        <div class="article-card-image">
-                            <div class="placeholder-img" style="background: linear-gradient(135deg, #10B981, #059669);">
-                            </div>
-                            <div class="blog-overlay"><i class="fas fa-robot"></i></div>
-                        </div>
-                        <div class="article-card-content">
-                            <span class="article-meta-small">Guided Project</span>
-                            <h3>Building a Multi-Agent System using Gemini API</h3>
-                            <a href="../articles/building-a-multi-agent-system-using-gemini-api.html"
-                                class="article-read-btn">Start Project</a>
-                        </div>
-                    </article>
-
-                    <article class="article-card">
-                        <div class="article-card-image">
-                            <div class="placeholder-img" style="background: linear-gradient(135deg, #8B5CF6, #6D28D9);">
-                            </div>
-                            <div class="blog-overlay"><i class="fas fa-database"></i></div>
-                        </div>
-                        <div class="article-card-content">
-                            <span class="article-meta-small">Guided Project</span>
-                            <h3>Build an AI Resume Screener</h3>
-                            <a href="../articles/build-an-ai-resume-screener-with-python-llama-3.html"
-                                class="article-read-btn">Start Project</a>
-                        </div>
-                    </article>
-
-                    <article class="article-card">
-                        <div class="article-card-image">
-                            <div class="placeholder-img" style="background: linear-gradient(135deg, #F59E0B, #D97706);">
-                            </div>
-                            <div class="blog-overlay"><i class="fas fa-code"></i></div>
-                        </div>
-                        <div class="article-card-content">
-                            <span class="article-meta-small">Guided Project</span>
-                            <h3>Build a Multi-Agent System With LangGraph</h3>
-                            <a href="../articles/build-a-multi-agent-system-with-langgraph.html"
-                                class="article-read-btn">Start Project</a>
-                        </div>
-                    </article>
-
-                    <article class="article-card">
-                        <div class="article-card-image">
-                            <div class="placeholder-img" style="background: linear-gradient(135deg, #EC4899, #DB2777);">
-                            </div>
-                            <div class="blog-overlay"><i class="fas fa-server"></i></div>
-                        </div>
-                        <div class="article-card-content">
-                            <span class="article-meta-small">Guided Project</span>
-                            <h3>Build a Real-Time Voice AI Assistant</h3>
-                            <a href="../articles/build-a-real-time-voice-ai-assistant.html"
-                                class="article-read-btn">Start Project</a>
-                        </div>
-                    </article>
-
-                    <article class="article-card">
-                        <div class="article-card-image">
-                            <div class="placeholder-img" style="background: linear-gradient(135deg, #2563EB, #1E40AF);">
-                            </div>
-                            <div class="blog-overlay"><i class="fas fa-brain"></i></div>
-                        </div>
-                        <div class="article-card-content">
-                            <span class="article-meta-small">Guided Project</span>
-                            <h3>Build Your Personal AI Data Analyst</h3>
-                            <a href="../articles/build-your-personal-ai-data-analyst.html"
-                                class="article-read-btn">Start Project</a>
-                        </div>
-                    </article>
-
-                    <article class="article-card">
-                        <div class="article-card-image">
-                            <div class="placeholder-img" style="background: linear-gradient(135deg, #10B981, #059669);">
-                            </div>
-                            <div class="blog-overlay"><i class="fas fa-robot"></i></div>
-                        </div>
-                        <div class="article-card-content">
-                            <span class="article-meta-small">Guided Project</span>
-                            <h3>Build a Real-Time AI Assistant Using RAG + LangChain</h3>
-                            <a href="../articles/build-a-real-time-ai-assistant-using-rag-langchain.html"
-                                class="article-read-btn">Start Project</a>
-                        </div>
-                    </article>
-
-                    <article class="article-card">
-                        <div class="article-card-image">
-                            <div class="placeholder-img" style="background: linear-gradient(135deg, #8B5CF6, #6D28D9);">
-                            </div>
-                            <div class="blog-overlay"><i class="fas fa-database"></i></div>
-                        </div>
-                        <div class="article-card-content">
-                            <span class="article-meta-small">Guided Project</span>
-                            <h3>Build a Live Machine Learning App in 5 Minutes</h3>
-                            <a href="../articles/build-a-live-machine-learning-app-in-5-minutes.html"
-                                class="article-read-btn">Start Project</a>
-                        </div>
-                    </article>
-
-                    <article class="article-card">
-                        <div class="article-card-image">
-                            <div class="placeholder-img" style="background: linear-gradient(135deg, #F59E0B, #D97706);">
-                            </div>
-                            <div class="blog-overlay"><i class="fas fa-code"></i></div>
-                        </div>
-                        <div class="article-card-content">
-                            <span class="article-meta-small">Guided Project</span>
-                            <h3>Deploy Your First ML Model as a REST API</h3>
-                            <a href="../articles/deploy-your-first-ml-model-as-a-rest-api.html"
-                                class="article-read-btn">Start Project</a>
-                        </div>
-                    </article>
-
-                    <article class="article-card">
-                        <div class="article-card-image">
-                            <div class="placeholder-img" style="background: linear-gradient(135deg, #EC4899, #DB2777);">
-                            </div>
-                            <div class="blog-overlay"><i class="fas fa-server"></i></div>
-                        </div>
-                        <div class="article-card-content">
-                            <span class="article-meta-small">Guided Project</span>
-                            <h3>Deploy a Machine Learning Model with Docker</h3>
-                            <a href="../articles/deploy-a-machine-learning-model-with-docker.html"
-                                class="article-read-btn">Start Project</a>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="main-footer">
-        <div class="container">
-            <div class="footer-content">
-                <p>&copy; 2025 Kishna Kushwaha. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+</div>
+</article>
+<article class="article-card" style="display: none !important;">
+<div class="article-card-image">
+<div class="placeholder-img" style="background: linear-gradient(135deg, #F59E0B, #D97706);">
+</div>
+<div class="blog-overlay"><i class="fas fa-code"></i></div>
+</div>
+<div class="article-card-content">
+<span class="article-meta-small">Guided Project</span>
+<h3>Fine-Tuning LLMs using LoRA</h3>
+<a class="article-read-btn" href="../articles/a-guide-to-fine-tuning-llms-using-lora.html">Start Project</a>
+</div>
+</article>
+<article class="article-card" style="display: none !important;">
+<div class="article-card-image">
+<div class="placeholder-img" style="background: linear-gradient(135deg, #EC4899, #DB2777);">
+</div>
+<div class="blog-overlay"><i class="fas fa-server"></i></div>
+</div>
+<div class="article-card-content">
+<span class="article-meta-small">Guided Project</span>
+<h3>Build Your First RAG System From Scratch</h3>
+<a class="article-read-btn" href="../articles/build-your-first-rag-system-from-scratch.html">Start Project</a>
+</div>
+</article>
+<article class="article-card" style="display: none !important;">
+<div class="article-card-image">
+<div class="placeholder-img" style="background: linear-gradient(135deg, #2563EB, #1E40AF);">
+</div>
+<div class="blog-overlay"><i class="fas fa-brain"></i></div>
+</div>
+<div class="article-card-content">
+<span class="article-meta-small">Guided Project</span>
+<h3>Building a Multimodal AI Model</h3>
+<a class="article-read-btn" href="../articles/building-a-multimodal-ai-model-with-python.html">Start Project</a>
+</div>
+</article>
+<article class="article-card" style="display: none !important;">
+<div class="article-card-image">
+<div class="placeholder-img" style="background: linear-gradient(135deg, #10B981, #059669);">
+</div>
+<div class="blog-overlay"><i class="fas fa-robot"></i></div>
+</div>
+<div class="article-card-content">
+<span class="article-meta-small">Guided Project</span>
+<h3>AI Image Generation using Diffusion Models</h3>
+<a class="article-read-btn" href="../articles/ai-image-generation-using-diffusion-models.html">Start Project</a>
+</div>
+</article>
+<article class="article-card" style="display: none !important;">
+<div class="article-card-image">
+<div class="placeholder-img" style="background: linear-gradient(135deg, #8B5CF6, #6D28D9);">
+</div>
+<div class="blog-overlay"><i class="fas fa-database"></i></div>
+</div>
+<div class="article-card-content">
+<span class="article-meta-small">Guided Project</span>
+<h3>Building a Diffusion Model From Scratch</h3>
+<a class="article-read-btn" href="../articles/building-a-diffusion-model-from-scratch.html">Start Project</a>
+</div>
+</article>
+<article class="article-card" style="display: none !important;">
+<div class="article-card-image">
+<div class="placeholder-img" style="background: linear-gradient(135deg, #F59E0B, #D97706);">
+</div>
+<div class="blog-overlay"><i class="fas fa-code"></i></div>
+</div>
+<div class="article-card-content">
+<span class="article-meta-small">Guided Project</span>
+<h3>Building Synthetic Medical Records using GANs</h3>
+<a class="article-read-btn" href="../articles/building-synthetic-medical-records-using-gans.html">Start Project</a>
+</div>
+</article>
+<article class="article-card" style="display: none !important;">
+<div class="article-card-image">
+<div class="placeholder-img" style="background: linear-gradient(135deg, #EC4899, #DB2777);">
+</div>
+<div class="blog-overlay"><i class="fas fa-server"></i></div>
+</div>
+<div class="article-card-content">
+<span class="article-meta-small">Guided Project</span>
+<h3>Build an AI Agent to Master a Game</h3>
+<a class="article-read-btn" href="../articles/build-an-ai-agent-to-master-a-game-using-python.html">Start Project</a>
+</div>
+</article>
+<article class="article-card" style="display: none !important;">
+<div class="article-card-image">
+<div class="placeholder-img" style="background: linear-gradient(135deg, #2563EB, #1E40AF);">
+</div>
+<div class="blog-overlay"><i class="fas fa-brain"></i></div>
+</div>
+<div class="article-card-content">
+<span class="article-meta-small">Guided Project</span>
+<h3>Building AI Agents with CrewAI</h3>
+<a class="article-read-btn" href="../articles/building-ai-agents-with-crewai-using-python.html">Start Project</a>
+</div>
+</article>
+<article class="article-card" style="display: none !important;">
+<div class="article-card-image">
+<div class="placeholder-img" style="background: linear-gradient(135deg, #10B981, #059669);">
+</div>
+<div class="blog-overlay"><i class="fas fa-robot"></i></div>
+</div>
+<div class="article-card-content">
+<span class="article-meta-small">Guided Project</span>
+<h3>Building a Multi-Agent System using Gemini API</h3>
+<a class="article-read-btn" href="../articles/building-a-multi-agent-system-using-gemini-api.html">Start Project</a>
+</div>
+</article>
+<article class="article-card" style="display: none !important;">
+<div class="article-card-image">
+<div class="placeholder-img" style="background: linear-gradient(135deg, #8B5CF6, #6D28D9);">
+</div>
+<div class="blog-overlay"><i class="fas fa-database"></i></div>
+</div>
+<div class="article-card-content">
+<span class="article-meta-small">Guided Project</span>
+<h3>Build an AI Resume Screener</h3>
+<a class="article-read-btn" href="../articles/build-an-ai-resume-screener-with-python-llama-3.html">Start Project</a>
+</div>
+</article>
+<article class="article-card" style="display: none !important;">
+<div class="article-card-image">
+<div class="placeholder-img" style="background: linear-gradient(135deg, #F59E0B, #D97706);">
+</div>
+<div class="blog-overlay"><i class="fas fa-code"></i></div>
+</div>
+<div class="article-card-content">
+<span class="article-meta-small">Guided Project</span>
+<h3>Build a Multi-Agent System With LangGraph</h3>
+<a class="article-read-btn" href="../articles/build-a-multi-agent-system-with-langgraph.html">Start Project</a>
+</div>
+</article>
+<article class="article-card" style="display: none !important;">
+<div class="article-card-image">
+<div class="placeholder-img" style="background: linear-gradient(135deg, #EC4899, #DB2777);">
+</div>
+<div class="blog-overlay"><i class="fas fa-server"></i></div>
+</div>
+<div class="article-card-content">
+<span class="article-meta-small">Guided Project</span>
+<h3>Build a Real-Time Voice AI Assistant</h3>
+<a class="article-read-btn" href="../articles/build-a-real-time-voice-ai-assistant.html">Start Project</a>
+</div>
+</article>
+<article class="article-card" style="display: none !important;">
+<div class="article-card-image">
+<div class="placeholder-img" style="background: linear-gradient(135deg, #2563EB, #1E40AF);">
+</div>
+<div class="blog-overlay"><i class="fas fa-brain"></i></div>
+</div>
+<div class="article-card-content">
+<span class="article-meta-small">Guided Project</span>
+<h3>Build Your Personal AI Data Analyst</h3>
+<a class="article-read-btn" href="../articles/build-your-personal-ai-data-analyst.html">Start Project</a>
+</div>
+</article>
+<article class="article-card" style="display: none !important;">
+<div class="article-card-image">
+<div class="placeholder-img" style="background: linear-gradient(135deg, #10B981, #059669);">
+</div>
+<div class="blog-overlay"><i class="fas fa-robot"></i></div>
+</div>
+<div class="article-card-content">
+<span class="article-meta-small">Guided Project</span>
+<h3>Build a Real-Time AI Assistant Using RAG + LangChain</h3>
+<a class="article-read-btn" href="../articles/build-a-real-time-ai-assistant-using-rag-langchain.html">Start Project</a>
+</div>
+</article>
+<article class="article-card" style="display: none !important;">
+<div class="article-card-image">
+<div class="placeholder-img" style="background: linear-gradient(135deg, #8B5CF6, #6D28D9);">
+</div>
+<div class="blog-overlay"><i class="fas fa-database"></i></div>
+</div>
+<div class="article-card-content">
+<span class="article-meta-small">Guided Project</span>
+<h3>Build a Live Machine Learning App in 5 Minutes</h3>
+<a class="article-read-btn" href="../articles/build-a-live-machine-learning-app-in-5-minutes.html">Start Project</a>
+</div>
+</article>
+<article class="article-card" style="display: none !important;">
+<div class="article-card-image">
+<div class="placeholder-img" style="background: linear-gradient(135deg, #F59E0B, #D97706);">
+</div>
+<div class="blog-overlay"><i class="fas fa-code"></i></div>
+</div>
+<div class="article-card-content">
+<span class="article-meta-small">Guided Project</span>
+<h3>Deploy Your First ML Model as a REST API</h3>
+<a class="article-read-btn" href="../articles/deploy-your-first-ml-model-as-a-rest-api.html">Start Project</a>
+</div>
+</article>
+<article class="article-card" style="display: none !important;">
+<div class="article-card-image">
+<div class="placeholder-img" style="background: linear-gradient(135deg, #EC4899, #DB2777);">
+</div>
+<div class="blog-overlay"><i class="fas fa-server"></i></div>
+</div>
+<div class="article-card-content">
+<span class="article-meta-small">Guided Project</span>
+<h3>Deploy a Machine Learning Model with Docker</h3>
+<a class="article-read-btn" href="../articles/deploy-a-machine-learning-model-with-docker.html">Start Project</a>
+</div>
+</article>
+</div>
+</div>
+</section>
+</main>
+<footer class="main-footer">
+<div class="container">
+<div class="footer-content">
+<p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+</div>
+</div>
+</footer>
 </body>
-
 </html>
