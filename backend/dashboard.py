@@ -132,6 +132,10 @@ def toggle_section(section_id, hide=True):
 
 def run_git_push():
     try:
+        # Configure Git Identity (Required for Streamlit Cloud / Containers)
+        subprocess.run(["git", "config", "user.email", "kishnakushwaha91@gmail.com"], cwd=ROOT_DIR, check=False)
+        subprocess.run(["git", "config", "user.name", "CMS Bot"], cwd=ROOT_DIR, check=False)
+        
         # Use capture_output=True to get error messages
         subprocess.run(["git", "add", "."], cwd=ROOT_DIR, check=True, capture_output=True)
         subprocess.run(["git", "commit", "-m", "CMS Update: Content changes"], cwd=ROOT_DIR, check=True, capture_output=True)
@@ -381,9 +385,10 @@ def render_bulk_actions(selection_key, item_type="files", custom_handler=None, k
     if st.button(f"Move to Drafts 🔴", key=f"bulk_drf_{key_suffix}", use_container_width=True):
         process_bulk('private')
 
-def render_file_list(files, selection_key, key_suffix=""):
+def render_file_list(files, selection_key, all_items=None, key_suffix=""):
     """
     Renders file list with persistent selection state.
+    all_items: Optional, list of all available items (unfiltered) to allow global selection.
     Returns: None (Uses st.session_state[selection_key])
     """
     # Initialize session state for this selection group if not exists
@@ -397,8 +402,8 @@ def render_file_list(files, selection_key, key_suffix=""):
         else:
             st.session_state[selection_key].add(item_id)
             
-    def select_all_visible():
-        for p in files:
+    def select_list(items_to_select):
+        for p in items_to_select:
              # handle complex objects if files contains dicts (Projects ML items)
              val = p if isinstance(p, str) else p['title']
              st.session_state[selection_key].add(val)
@@ -409,8 +414,20 @@ def render_file_list(files, selection_key, key_suffix=""):
              else:
                  name = p['title']
              widget_key = f"chk_{key_suffix}_{name}"
+             
+             # Only update widget key if it exists/we are going to render it?
+             # Actually, if we select GLOBAL, we might select items NOT visible.
+             # We should only update the widget key if we think Streamlit needs it.
+             # Setting it safely doesn't hurt.
              st.session_state[widget_key] = True
         st.rerun()
+
+    def select_all_visible():
+        select_list(files)
+        
+    def select_global():
+        if all_items:
+            select_list(all_items)
 
     def deselect_all_visible():
         for p in files:
@@ -427,14 +444,21 @@ def render_file_list(files, selection_key, key_suffix=""):
              st.session_state[widget_key] = False
         st.rerun()
 
-    # Bulk Controls specifically for the *visible* list (filtered)
-    c_all, c_none = st.columns(2)
-    with c_all:
+    # Bulk Controls
+    # Layout: [Select Visible] [Deselect Visible] ... [Select Global (if filtered)]
+    cols = st.columns(3 if (all_items and len(files) < len(all_items)) else 2)
+    
+    with cols[0]:
         if st.button("Select All Visible", key=f"sel_all_{key_suffix}", use_container_width=True):
             select_all_visible()
-    with c_none:
+    with cols[1]:
         if st.button("Deselect Visible", key=f"desel_all_{key_suffix}", use_container_width=True):
             deselect_all_visible()
+            
+    if all_items and len(files) < len(all_items):
+         with cols[2]:
+             if st.button(f"Select Entire Library ({len(all_items)})", key=f"sel_glob_{key_suffix}", use_container_width=True):
+                 select_global()
 
     # Render List
     for p in files:
@@ -469,9 +493,6 @@ def render_file_list(files, selection_key, key_suffix=""):
         is_selected = value in st.session_state[selection_key]
         
         # Uniquely identify the checkbox
-        # We manually handle the 'value' param and 'on_change' to persist state properly? 
-        # Actually simplest is just to verify state before rendering property
-        
         col1, col2 = st.columns([0.1, 1])
         with col1:
              # We use the callback to toggle state
@@ -507,13 +528,14 @@ with tabs[0]:
     c1, c2 = st.columns([3, 1])
     
     with c1:
-        public_files = get_files(PATHS["public_articles"])
+        public_all = get_files(PATHS["public_articles"])
+        public_files = public_all
         # Filter
         if search_pub:
             public_files = [f for f in public_files if search_pub.lower() in os.path.basename(f).lower()]
             
         with st.container(height=400, border=True):
-             render_file_list(public_files, "selected_pub_articles", key_suffix="art_pub")
+             render_file_list(public_files, "selected_pub_articles", all_items=public_all, key_suffix="art_pub")
     with c2:
         render_bulk_actions("selected_pub_articles", "articles", key_suffix="art_pub_act")
 
