@@ -145,39 +145,48 @@ def run_git_push():
         # --------------------------------------------------------------------------------
         # ROBUST AUTHENTICATION STRATEGY
         # --------------------------------------------------------------------------------
-        # 1. Try to find the password using the available credential helper directly.
-        #    This is necessary because Streamlit's environment often breaks 'git credential' path resolution.
         import glob
         git_password = None
+        debug_log = []
         
         # Locate the helper
         found_helpers = glob.glob("/opt/homebrew/Cellar/git/*/libexec/git-core/git-credential-osxkeychain")
+        
         if found_helpers:
             helper_path = found_helpers[-1]
+            debug_log.append(f"Found helper: {helper_path}")
             # Invoke helper to get credentials
             input_data = "protocol=https\nhost=github.com\nusername=kishnakushwaha91-afk\n"
             try:
                 proc = subprocess.run([helper_path, "get"], input=input_data, text=True, capture_output=True, check=True)
+                debug_log.append("Helper executed successfully.")
                 # Parse output for 'password=...'
                 for line in proc.stdout.splitlines():
                     if line.startswith("password="):
                         git_password = line.split("=", 1)[1]
+                        debug_log.append("Password found in output.")
                         break
+                if not git_password:
+                     debug_log.append("No password line in helper output.")
             except Exception as e:
-                print(f"Auth Helper Failed: {e}")
+                debug_log.append(f"Auth Helper execution failed: {str(e)}")
+        else:
+             debug_log.append("No git-credential-osxkeychain found in /opt/homebrew.")
 
         # 2. Configure Remote URL with Credentials (if found) or Username (fallback)
         if git_password:
             # INJECT CREDENTIALS: https://user:pass@github.com/...
             remote_url = f"https://kishnakushwaha91-afk:{git_password}@github.com/kishnakushwaha91-afk/my_ai_portfolio.git"
+            debug_log.append("Using authenticated remote URL.")
         else:
-            # FALLBACK: Just username, hope for the best
+            # FALLBACK: Just username
             remote_url = "https://kishnakushwaha91-afk@github.com/kishnakushwaha91-afk/my_ai_portfolio.git"
+            debug_log.append("Falling back to unauthenticated remote URL.")
 
         # Set the remote URL
         subprocess.run(["git", "remote", "set-url", "origin", remote_url], cwd=ROOT_DIR, check=False)
 
-        # 3. Clean up config to avoid 'command not found' errors from bad previous attempts
+        # 3. Clean up config
         subprocess.run(["git", "config", "--unset", "credential.helper"], cwd=ROOT_DIR, check=False)
         # --------------------------------------------------------------------------------
 
@@ -193,8 +202,14 @@ def run_git_push():
             else:
                 commit_proc.check_returncode()
         
-        # Push (credentials are now in the remote URL if retrieval worked)
-        subprocess.run(["git", "push"], cwd=ROOT_DIR, check=True, capture_output=True)
+        # Push
+        try:
+            subprocess.run(["git", "push"], cwd=ROOT_DIR, check=True, capture_output=True)
+        except subprocess.CalledProcessError as push_err:
+            # Attach our debug log to the error message so the user sees it
+            debug_msg = " | ".join(debug_log)
+            raise Exception(f"Push Failed. Log: {debug_msg} \nGit Error: {push_err.stderr}")
+            
         return True, "Successfully pushed to GitHub!"
     except subprocess.CalledProcessError as e:
         # Return the stderr from the failed command
