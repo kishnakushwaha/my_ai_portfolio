@@ -8,14 +8,6 @@
     "image": "https://i0.wp.com/my-ai-portfolio.com/wp-content/uploads/2024/05/image.png?resize=938%2C78&ssl=1"
   },
   {
-    "title": "Text Classification Pipeline with Hugging Face Transformers",
-    "description": "Text classification is one of the most practical tasks in NLP. If you\u2019re starting out and want to build your first real-world text classification pipe...",
-    "url": "articles/text-classification-pipeline-with-hugging-face-transformers.html",
-    "category": "Article",
-    "date": "Oct 29, 2025",
-    "image": "assets/datasets/image-1.png"
-  },
-  {
     "title": "Roadmap to Learn NLP and LLMs",
     "description": "If you are aiming for a career in Natural language Processing (NLP), learning about Large Language Models (LLMs) is a must for you now. Although you w...",
     "url": "articles/roadmap-to-learn-nlp-and-llms.html",
