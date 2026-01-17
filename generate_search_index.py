@@ -193,14 +193,40 @@ def generate_listings(articles):
 
 def parse_projects():
     projects = []
-    if os.path.exists(PROJECTS_FILE):
-        projects.append({
-            "title": "Machine Learning Projects",
-            "description": "A collection of machine learning projects and case studies.",
-            "url": "projects/machine_learning.html",
-            "category": "Project",
-            "date": ""
-        })
+    projects_dir = os.path.join(BASE_DIR, 'projects')
+    if not os.path.exists(projects_dir):
+        return projects
+        
+    for file_path in glob.glob(os.path.join(projects_dir, '*.html')):
+        if file_path.endswith('template.html'): continue
+        
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                soup = BeautifulSoup(f, 'html.parser')
+                
+            # Check Visibility
+            meta_vis = soup.find('meta', attrs={'name': 'visibility'})
+            if meta_vis and meta_vis.get('content') == 'unlisted':
+                continue
+
+            title_tag = soup.find('h1', class_='section-title')
+            title = title_tag.get_text(strip=True) if title_tag else os.path.basename(file_path).replace('.html', '').replace('_', ' ').title()
+            
+            desc_tag = soup.find('p', class_='section-subtitle')
+            desc = desc_tag.get_text(strip=True) if desc_tag else "A collection of projects."
+
+            rel_path = os.path.relpath(file_path, BASE_DIR)
+            
+            projects.append({
+                "title": title,
+                "description": desc,
+                "url": rel_path,
+                "category": "Project",
+                "date": ""
+            })
+        except Exception as e:
+            print(f"Error parsing project {file_path}: {e}")
+            
     return projects
 
 def main():
