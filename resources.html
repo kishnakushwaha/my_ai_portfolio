@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Recommended Resources | Kishna Kushwaha</title>
+    <meta content="Curated list of courses, books, and tools for AI and Data Science." name="description" />
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- Navigation -->
+    <header>
+        <div class="container nav-container">
+            <a class="logo" href="index.html">
+                <div class="logo-circle"></div>
+                Kishna Kushwaha
+            </a>
+            <button aria-label="Toggle navigation" class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="articles.html">Articles</a></li>
+                <li><a href="projects/machine_learning.html">Projects</a></li>
+                <li><a class="active" href="resources.html">Recommended Resources</a></li>
+                <li>
+                    <button aria-label="Search" class="search-trigger-btn nav-link-btn" id="search-trigger">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <main>
+        <section class="section">
+            <div class="container">
+                <div class="section-header text-center" style="margin-top: 4rem; margin-bottom: 3rem;">
+                    <h1 class="section-title">Recommended Resources</h1>
+                    <p class="section-subtitle">A curated collection of courses, books, and tools.</p>
+                </div>
+
+                <div class="articles-grid">
+                    <!-- Placeholder content -->
+                    <div
+                        style="grid-column: 1 / -1; text-align: center; padding: 3rem; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-color);">
+                        <i class="fas fa-books"
+                            style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+                        <h3>Content Coming Soon</h3>
+                        <p style="color: var(--text-muted);">I am currently compiling the best resources for you. Check
+                            back later!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2025 Kishna Kushwaha. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <!-- Custom JS -->
+    <script src="js/script.js"></script>
+    <script src="js/search.js"></script>
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="search-overlay">
+        <div class="search-container">
+            <button class="search-close-btn" id="search-close">×</button>
+            <input autocomplete="off" id="search-input" placeholder="Search articles, projects..." type="text" />
+            <div class="search-results" id="search-results"></div>
+        </div>
+    </div>
+</body>
+
+</html>
