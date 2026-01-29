@@ -139,7 +139,7 @@ def run_git_push(token=None):
         # Force Remote URL with Username to prevent "could not read Username" prompt
         subprocess.run([
             "git", "remote", "set-url", "origin", 
-            "https://kishnakushwaha91-afk@github.com/kishnakushwaha91-afk/my_ai_portfolio.git"
+            "https://kishnakushwaha@github.com/kishnakushwaha/my_ai_portfolio.git"
         ], cwd=ROOT_DIR, check=False)
 
         # --------------------------------------------------------------------------------
@@ -183,10 +183,10 @@ def run_git_push(token=None):
             # Mask token in logs
             masked_token = git_password[:4] + "..."
             debug_log.append(f"Authenticating with token: {masked_token}")
-            remote_url = f"https://kishnakushwaha91-afk:{git_password}@github.com/kishnakushwaha91-afk/my_ai_portfolio.git"
+            remote_url = f"https://kishnakushwaha:{git_password}@github.com/kishnakushwaha/my_ai_portfolio.git"
         else:
             # FALLBACK: Just username
-            remote_url = "https://kishnakushwaha91-afk@github.com/kishnakushwaha91-afk/my_ai_portfolio.git"
+            remote_url = "https://kishnakushwaha@github.com/kishnakushwaha/my_ai_portfolio.git"
             debug_log.append("Falling back to unauthenticated remote URL (no token found).")
         
 
